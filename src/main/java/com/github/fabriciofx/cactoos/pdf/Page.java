@@ -47,6 +47,11 @@ public final class Page implements Object {
     private final int generation;
 
     /**
+     * Resources.
+     */
+    private final List<Object> resources;
+
+    /**
      * Page contents.
      */
     private final List<Object> contents;
@@ -55,16 +60,20 @@ public final class Page implements Object {
      * Ctor.
      *
      * @param number Object number
-     * @param generation Object generarion
+     * @param generation Object generation
+     * @param resources List of resources
      * @param contents Page contents
+     * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Page(
         final int number,
         final int generation,
+        final List<Object> resources,
         final Object... contents
     ) {
         this.number = number;
         this.generation = generation;
+        this.resources = resources;
         this.contents = new ListOf<>(contents);
     }
 
@@ -86,19 +95,26 @@ public final class Page implements Object {
         for (final Object content : this.contents) {
             cntnts.append(content.reference());
         }
+        final StringBuilder resrcs = new StringBuilder();
+        for (final Object resrc : this.resources) {
+            resrcs.append(resrc.reference());
+        }
         baos.write(
             new FormattedText(
                 new Joined(
                     " ",
-                    "%d %d obj\n<< /Type /Page /Parent 3 0 R /Resources",
-                    "<< /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont",
-                    "/Times-Roman >> >> >> /Contents %s >>\nendobj\n"
+                    "%d %d obj\n<< /Type /Page /Parent 3 0 R /Resources %s",
+                    "/Contents %s >>\nendobj\n"
                 ),
                 this.number,
                 this.generation,
+                resrcs.toString(),
                 cntnts.toString()
             ).asString().getBytes()
         );
+        for (final Object resrc : this.resources) {
+            baos.write(resrc.asBytes());
+        }
         for (final Object content : this.contents) {
             baos.write(content.asBytes());
         }

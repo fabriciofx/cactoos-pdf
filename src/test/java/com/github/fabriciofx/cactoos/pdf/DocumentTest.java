@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.File;
 import java.nio.file.Files;
+import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
@@ -56,8 +57,16 @@ final class DocumentTest {
                             new Page(
                                 4,
                                 0,
+                                new ListOf<>(
+                                    new Font(
+                                        5,
+                                        0,
+                                        new FontFamily("Times-Roman", "Type1"),
+                                        "F1"
+                                    )
+                                ),
                                 new TextStream(
-                                    5,
+                                    6,
                                     0,
                                     18,
                                     0,
@@ -77,9 +86,10 @@ final class DocumentTest {
                         "1 0 obj\n<< /Title (Hello World) >>\nendobj",
                         "2 0 obj\n<< /Type /Catalog /Pages 3 0 R >>\nendobj",
                         "3 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595 842] >>\nendobj",
-                        "4 0 obj\n<< /Type /Page /Parent 3 0 R /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >> >> >> /Contents 5 0 R >>\nendobj",
-                        "5 0 obj\n<< /Length 55 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello World) Tj ET\nendstream\nendobj",
-                        "trailer << /Root 2 0 R /Size 5 >>",
+                        "4 0 obj\n<< /Type /Page /Parent 3 0 R /Resources 5 0 R /Contents 6 0 R >>\nendobj",
+                        "5 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
+                        "6 0 obj\n<< /Length 55 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello World) Tj ET\nendstream\nendobj",
+                        "trailer << /Root 2 0 R /Size 6 >>",
                         "%%%%%%%%EOF"
                     ),
                     title
@@ -106,8 +116,16 @@ final class DocumentTest {
                         new Page(
                             4,
                             0,
+                            new ListOf<>(
+                                new Font(
+                                    5,
+                                    0,
+                                    new FontFamily("Times-Roman", "Type1"),
+                                    "F1"
+                                )
+                            ),
                             new TextStream(
-                                5,
+                                6,
                                 0,
                                 18,
                                 0,

@@ -23,75 +23,38 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
 
 /**
- * PDF Metadata.
+ * Count.
  *
  * @since 0.0.1
  */
-public final class Metadata implements Object {
+public final class Count implements Scalar<Integer> {
     /**
-     * Object number.
+     * Seed.
      */
-    private final int number;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
-    /**
-     * PDF title.
-     */
-    private final String title;
+    private final AtomicInteger seed;
 
     /**
      * Ctor.
-     *
-     * @param count Counter
-     * @param title PDF title
      */
-    public Metadata(final Count count, final String title) {
-        this(count.value(), 0, title);
+    public Count() {
+        this(new AtomicInteger());
     }
 
     /**
      * Ctor.
      *
-     * @param number Object number
-     * @param generation Object generation
-     * @param title PDF title
+     * @param seed Seed to start counting
      */
-    public Metadata(
-        final int number,
-        final int generation,
-        final String title
-    ) {
-        this.number = number;
-        this.generation = generation;
-        this.title = title;
+    public Count(final AtomicInteger seed) {
+        this.seed = seed;
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
-    }
-
-    @Override
-    public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "%d %d obj\n<< /Title (%s) >>\nendobj\n",
-            this.number,
-            this.generation,
-            this.title
-        ).asString().getBytes();
+    public Integer value() {
+        return this.seed.incrementAndGet();
     }
 }

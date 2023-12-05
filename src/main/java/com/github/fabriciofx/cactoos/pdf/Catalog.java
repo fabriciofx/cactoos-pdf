@@ -51,6 +51,16 @@ public final class Catalog implements Object {
     /**
      * Ctor.
      *
+     * @param count Counter
+     * @param pages Pages
+     */
+    public Catalog(final Count count, final Pages pages) {
+        this(count.value(), 0, pages);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param number Object number
      * @param generation Object generation
      * @param pages Pages

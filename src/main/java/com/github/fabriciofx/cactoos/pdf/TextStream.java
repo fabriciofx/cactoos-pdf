@@ -65,6 +65,26 @@ public final class TextStream implements Object {
     /**
      * Ctor.
      *
+     * @param count Counter
+     * @param size Font size
+     * @param posx Text X position
+     * @param posy Text Y position
+     * @param content Text content
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public TextStream(
+        final Count count,
+        final int size,
+        final int posx,
+        final int posy,
+        final String content
+    ) {
+        this(count.value(), 0, size, posx, posy, content);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param number Object number
      * @param generation Object generation
      * @param size Font size

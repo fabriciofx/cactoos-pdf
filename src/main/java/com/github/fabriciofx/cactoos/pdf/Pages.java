@@ -53,6 +53,16 @@ public final class Pages implements Object {
     /**
      * Ctor.
      *
+     * @param count Counter
+     * @param kids Pages
+     */
+    public Pages(final Count count, final Page... kids) {
+        this(count.value(), 0, kids);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param number Object number
      * @param generation Object generation
      * @param kids Pages
@@ -91,7 +101,14 @@ public final class Pages implements Object {
             ).asString().getBytes()
         );
         for (final Page page : this.kids) {
-            baos.write(page.asBytes());
+            baos.write(
+                new String(
+                    page.asBytes()
+                ).replaceAll(
+                    "/Parent [0-9]+ [0-9]+ R",
+                    new FormattedText("/Parent %s", this.reference()).asString()
+                ).getBytes()
+            );
         }
         return baos.toByteArray();
     }

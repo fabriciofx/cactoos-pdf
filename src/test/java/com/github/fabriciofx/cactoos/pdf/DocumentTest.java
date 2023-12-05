@@ -43,31 +43,27 @@ final class DocumentTest {
     @Test
     void buildDocument() {
         final String title = "Hello World";
+        final Count count = new Count();
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
                 new Document(
-                    new Metadata(1, 0, title),
+                    new Metadata(count, title),
                     new Catalog(
-                        2,
-                        0,
+                        count,
                         new Pages(
-                            3,
-                            0,
+                            count,
                             new Page(
-                                4,
-                                0,
+                                count,
                                 new ListOf<>(
                                     new Font(
-                                        5,
-                                        0,
+                                        count,
                                         new FontFamily("Times-Roman", "Type1"),
                                         "F1"
                                     )
                                 ),
                                 new TextStream(
-                                    6,
-                                    0,
+                                    count,
                                     18,
                                     0,
                                     0,
@@ -84,12 +80,12 @@ final class DocumentTest {
                         "\n",
                         "%%PDF-1.3\n%%���������",
                         "1 0 obj\n<< /Title (Hello World) >>\nendobj",
-                        "2 0 obj\n<< /Type /Catalog /Pages 3 0 R >>\nendobj",
-                        "3 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595 842] >>\nendobj",
-                        "4 0 obj\n<< /Type /Page /Parent 3 0 R /Resources 5 0 R /Contents 6 0 R >>\nendobj",
-                        "5 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                        "6 0 obj\n<< /Length 55 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello World) Tj ET\nendstream\nendobj",
-                        "trailer << /Root 2 0 R /Size 6 >>",
+                        "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
+                        "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595 842] >>\nendobj",
+                        "4 0 obj\n<< /Type /Page /Parent 5 0 R /Resources 2 0 R /Contents 3 0 R >>\nendobj",
+                        "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
+                        "3 0 obj\n<< /Length 55 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello World) Tj ET\nendstream\nendobj",
+                        "trailer << /Root 6 0 R /Size 6 >>",
                         "%%%%%%%%EOF"
                     ),
                     title
@@ -100,33 +96,29 @@ final class DocumentTest {
 
     @Disabled
     @Test
-    void build() throws Exception {
+    void buildFile() throws Exception {
         final String title = "Hello World";
         final File file = new File("HelloWorld.pdf");
+        final Count count = new Count();
         Files.write(
             file.toPath(),
             new Document(
-                new Metadata(1, 0, title),
+                new Metadata(count, title),
                 new Catalog(
-                    2,
-                    0,
+                    count,
                     new Pages(
-                        3,
-                        0,
+                        count,
                         new Page(
-                            4,
-                            0,
+                            count,
                             new ListOf<>(
                                 new Font(
-                                    5,
-                                    0,
+                                    count,
                                     new FontFamily("Times-Roman", "Type1"),
                                     "F1"
                                 )
                             ),
                             new TextStream(
-                                6,
-                                0,
+                                count,
                                 18,
                                 0,
                                 0,

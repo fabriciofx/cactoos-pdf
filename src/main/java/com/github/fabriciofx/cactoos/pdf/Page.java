@@ -59,6 +59,21 @@ public final class Page implements Object {
     /**
      * Ctor.
      *
+     * @param count Counter
+     * @param resources List of resources
+     * @param contents Page contents
+     */
+    public Page(
+        final Count count,
+        final List<Object> resources,
+        final Object... contents
+    ) {
+        this(count.value(), 0, resources, contents);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param number Object number
      * @param generation Object generation
      * @param resources List of resources

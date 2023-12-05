@@ -55,6 +55,17 @@ public final class Font implements Object {
     /**
      * Ctor.
      *
+     * @param count Counter
+     * @param family Font family
+     * @param name Font name
+     */
+    public Font(final Count count, final FontFamily family, final String name) {
+        this(count.value(), 0, family, name);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param number Object number
      * @param generation Object generation
      * @param family Font family

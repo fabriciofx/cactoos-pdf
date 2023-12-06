@@ -41,7 +41,7 @@ public final class Count implements Scalar<Integer> {
      * Ctor.
      */
     public Count() {
-        this(new AtomicInteger());
+        this(new AtomicInteger(1));
     }
 
     /**
@@ -55,6 +55,6 @@ public final class Count implements Scalar<Integer> {
 
     @Override
     public Integer value() {
-        return this.seed.incrementAndGet();
+        return this.seed.getAndIncrement();
     }
 }

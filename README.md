@@ -58,12 +58,14 @@ Files.write(
                             "F1"
                         )
                     ),
-                    new Text(
-                        count,
-                        18,
-                        0,
-                        0,
-                        "Hello World"
+                    new Contents(
+                        new Text(
+                            count,
+                            18,
+                            0,
+                            0,
+                            "Hello World"
+                        )
                     )
                 )
             )

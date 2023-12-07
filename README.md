@@ -34,6 +34,8 @@ Java version required: 1.8+.
 
 ### Usage
 
+**WARNING**: Cactoos PDF is in a VERY early development stage. So the API can change at any moment.
+
 Here an example how to build a Hello World PDF file using our API:
 
 ```java
@@ -47,16 +49,17 @@ Files.write(
             count,
             new Pages(
                 count,
+                PageSize.A4,
                 new Page(
                     count,
-                    new ListOf<>(
+                    new Resources(
                         new Font(
                             count,
                             new FontFamily("Times-Roman", "Type1"),
                             "F1"
                         )
                     ),
-                    new TextStream(
+                    new Text(
                         count,
                         18,
                         0,

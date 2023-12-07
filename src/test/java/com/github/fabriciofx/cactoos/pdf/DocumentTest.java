@@ -62,7 +62,7 @@ final class DocumentTest {
                                         "F1"
                                     )
                                 ),
-                                new TextStream(
+                                new Text(
                                     count,
                                     18,
                                     0,
@@ -118,7 +118,7 @@ final class DocumentTest {
                                     "F1"
                                 )
                             ),
-                            new TextStream(
+                            new Text(
                                 count,
                                 18,
                                 0,

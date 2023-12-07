@@ -31,7 +31,7 @@ import org.cactoos.text.UncheckedText;
  *
  * @since 0.0.1
  */
-public final class TextStream implements Object {
+public final class Text implements Object {
     /**
      * Object number.
      */
@@ -72,7 +72,7 @@ public final class TextStream implements Object {
      * @param content Text content
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public TextStream(
+    public Text(
         final Count count,
         final int size,
         final int posx,
@@ -93,7 +93,7 @@ public final class TextStream implements Object {
      * @param content Text content
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public TextStream(
+    public Text(
         final int number,
         final int generation,
         final int size,

@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
@@ -102,10 +103,9 @@ public final class Pages implements Object {
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final StringBuilder rfs = new StringBuilder();
-        for (final Page page : this.kids) {
-            rfs.append(page.reference());
-        }
+        final String kds = this.kids.stream()
+            .map(Page::reference)
+            .collect(Collectors.joining(" "));
         baos.write(
             new FormattedText(
                 new Joined(
@@ -115,7 +115,7 @@ public final class Pages implements Object {
                 ),
                 this.number,
                 this.generation,
-                rfs.toString(),
+                kds,
                 this.kids.size(),
                 this.size.asString()
             ).asString().getBytes()

@@ -27,6 +27,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
 
 /**
@@ -46,6 +47,11 @@ public final class Pages implements Object {
     private final int generation;
 
     /**
+     * Pages size.
+     */
+    private final PageSize size;
+
+    /**
      * Pages.
      */
     private final List<Page> kids;
@@ -54,10 +60,11 @@ public final class Pages implements Object {
      * Ctor.
      *
      * @param count Counter
+     * @param size Page's size
      * @param kids Pages
      */
-    public Pages(final Count count, final Page... kids) {
-        this(count.value(), 0, kids);
+    public Pages(final Count count, final PageSize size, final Page... kids) {
+        this(count.value(), 0, size, kids);
     }
 
     /**
@@ -65,11 +72,19 @@ public final class Pages implements Object {
      *
      * @param number Object number
      * @param generation Object generation
+     * @param size Page's size
      * @param kids Pages
+     * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Pages(final int number, final int generation, final Page... kids) {
+    public Pages(
+        final int number,
+        final int generation,
+        final PageSize size,
+        final Page... kids
+    ) {
         this.number = number;
         this.generation = generation;
+        this.size = size;
         this.kids = new ListOf<>(kids);
     }
 
@@ -93,11 +108,16 @@ public final class Pages implements Object {
         }
         baos.write(
             new FormattedText(
-                "%d %d obj\n<< /Type /Pages /Kids [%s] /Count %d /MediaBox [0 0 595 842] >>\nendobj\n",
+                new Joined(
+                    " ",
+                    "%d %d obj\n<< /Type /Pages /Kids [%s]",
+                    "/Count %d /MediaBox [0 0 %s] >>\nendobj\n"
+                ),
                 this.number,
                 this.generation,
                 rfs.toString(),
-                this.kids.size()
+                this.kids.size(),
+                this.size.asString()
             ).asString().getBytes()
         );
         for (final Page page : this.kids) {

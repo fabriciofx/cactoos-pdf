@@ -105,7 +105,7 @@ public final class Pages implements Object {
                 new String(
                     page.asBytes()
                 ).replaceAll(
-                    "/Parent [0-9]+ [0-9]+ R",
+                    "/Parent",
                     new FormattedText("/Parent %s", this.reference()).asString()
                 ).getBytes()
             );

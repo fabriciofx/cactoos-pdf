@@ -118,8 +118,8 @@ public final class Page implements Object {
             new FormattedText(
                 new Joined(
                     " ",
-                    "%d %d obj\n<< /Type /Page /Parent 3 0 R /Resources %s",
-                    "/Contents %s >>\nendobj\n"
+                    "%d %d obj\n<< /Type /Page /Resources %s",
+                    "/Contents %s /Parent >>\nendobj\n"
                 ),
                 this.number,
                 this.generation,

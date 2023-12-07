@@ -81,7 +81,7 @@ final class DocumentTest {
                         "1 0 obj\n<< /Title (Hello World) >>\nendobj",
                         "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
                         "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595 842] >>\nendobj",
-                        "4 0 obj\n<< /Type /Page /Parent 5 0 R /Resources 2 0 R /Contents 3 0 R >>\nendobj",
+                        "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
                         "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
                         "3 0 obj\n<< /Length 55 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello World) Tj ET\nendstream\nendobj",
                         "trailer << /Root 6 0 R /Size 6 >>",

@@ -45,6 +45,7 @@ final class DocumentTest {
             "Must represent a PDF document",
             new TextOf(
                 new Document(
+                    count,
                     new Metadata(count, "Hello World"),
                     new Catalog(
                         count,
@@ -84,7 +85,7 @@ final class DocumentTest {
                     "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
                     "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
                     "3 0 obj\n<< /Length 62 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello World with \\(, \\), \\\\ and \\r) Tj ET\nendstream\nendobj",
-                    "trailer << /Root 6 0 R /Size 6 >>",
+                    "trailer << /Root 6 0 R /Size 7 >>",
                     "%%%%EOF"
                 )
             )
@@ -99,6 +100,7 @@ final class DocumentTest {
         Files.write(
             file.toPath(),
             new Document(
+                count,
                 new Metadata(count, "Hello World"),
                 new Catalog(
                     count,

@@ -53,6 +53,11 @@ public final class Document implements Bytes {
     private static final String EOF = "%%%%EOF";
 
     /**
+     * Count.
+     */
+    private final Count count;
+
+    /**
      * PDF metadata.
      */
     private final Metadata metadata;
@@ -65,10 +70,16 @@ public final class Document implements Bytes {
     /**
      * Ctor.
      *
+     * @param count Count
      * @param metadata Metadata
      * @param catalog Catalog
      */
-    public Document(final Metadata metadata, final Catalog catalog) {
+    public Document(
+        final Count count,
+        final Metadata metadata,
+        final Catalog catalog
+    ) {
+        this.count = count;
         this.metadata = metadata;
         this.catalog = catalog;
     }
@@ -87,8 +98,9 @@ public final class Document implements Bytes {
         baos.write(this.catalog.asBytes());
         baos.write(
             new FormattedText(
-                "trailer << /Root %s /Size 6 >>\n",
-                this.catalog.reference()
+                "trailer << /Root %s /Size %d >>\n",
+                this.catalog.reference(),
+                this.count.value()
             ).asString().getBytes()
         );
         baos.write(Document.EOF.getBytes());

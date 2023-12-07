@@ -39,10 +39,11 @@ Here an example how to build a Hello World PDF file using our API:
 
 ```java
 final File file = new File("HelloWorld.pdf");
-final Count count = new Count();
+final Count count = new ObjectCount();
 Files.write(
     file.toPath(),
     new Document(
+        count,
         new Metadata(count, "Hello World"),
         new Catalog(
             count,

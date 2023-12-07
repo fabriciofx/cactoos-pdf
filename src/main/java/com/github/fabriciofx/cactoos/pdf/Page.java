@@ -66,7 +66,7 @@ public final class Page implements Object {
         final Resources resources,
         final Contents contents
     ) {
-        this(count.value(), 0, resources, contents);
+        this(count.increment(), 0, resources, contents);
     }
 
     /**

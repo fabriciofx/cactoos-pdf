@@ -64,7 +64,7 @@ public final class Pages implements Object {
      * @param kids Pages
      */
     public Pages(final Count count, final PageSize size, final Page... kids) {
-        this(count.value(), 0, size, kids);
+        this(count.increment(), 0, size, kids);
     }
 
     /**

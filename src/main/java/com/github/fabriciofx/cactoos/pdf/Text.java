@@ -79,7 +79,7 @@ public final class Text implements Object {
         final int posy,
         final String content
     ) {
-        this(count.value(), 0, size, posx, posy, content);
+        this(count.increment(), 0, size, posx, posy, content);
     }
 
     /**

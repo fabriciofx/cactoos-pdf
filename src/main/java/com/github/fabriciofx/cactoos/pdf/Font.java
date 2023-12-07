@@ -60,7 +60,7 @@ public final class Font implements Object {
      * @param name Font name
      */
     public Font(final Count count, final FontFamily family, final String name) {
-        this(count.value(), 0, family, name);
+        this(count.increment(), 0, family, name);
     }
 
     /**

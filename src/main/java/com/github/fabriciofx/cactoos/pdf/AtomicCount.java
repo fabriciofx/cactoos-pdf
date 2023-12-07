@@ -23,18 +23,42 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import org.cactoos.Scalar;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Count.
+ * AtomicCount.
  *
  * @since 0.0.1
  */
-public interface Count extends Scalar<Integer> {
+public final class AtomicCount implements Count {
     /**
-     * Return the last counter integer and increment it.
-     *
-     * @return The last counter integer
+     * Seed.
      */
-    int increment();
+    private final AtomicInteger seed;
+
+    /**
+     * Ctor.
+     */
+    public AtomicCount() {
+        this(new AtomicInteger(1));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param seed Seed to start counting
+     */
+    public AtomicCount(final AtomicInteger seed) {
+        this.seed = seed;
+    }
+
+    @Override
+    public Integer value() {
+        return this.seed.get();
+    }
+
+    @Override
+    public int increment() {
+        return this.seed.getAndIncrement();
+    }
 }

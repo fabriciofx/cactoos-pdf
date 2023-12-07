@@ -55,7 +55,7 @@ public final class Catalog implements Object {
      * @param pages Pages
      */
     public Catalog(final Count count, final Pages pages) {
-        this(count.value(), 0, pages);
+        this(count.increment(), 0, pages);
     }
 
     /**

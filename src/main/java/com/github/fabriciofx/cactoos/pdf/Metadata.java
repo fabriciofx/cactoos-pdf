@@ -54,7 +54,7 @@ public final class Metadata implements Object {
      * @param title PDF title
      */
     public Metadata(final Count count, final String title) {
-        this(count.value(), 0, title);
+        this(count.increment(), 0, title);
     }
 
     /**

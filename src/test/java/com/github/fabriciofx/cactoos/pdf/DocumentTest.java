@@ -40,7 +40,7 @@ import org.llorllale.cactoos.matchers.IsText;
 final class DocumentTest {
     @Test
     void buildDocument() {
-        final Count count = new AtomicCount();
+        final Count count = new ObjectCount();
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
@@ -96,7 +96,7 @@ final class DocumentTest {
     @Test
     void buildFile() throws Exception {
         final File file = new File("HelloWorld.pdf");
-        final Count count = new AtomicCount();
+        final Count count = new ObjectCount();
         Files.write(
             file.toPath(),
             new Document(

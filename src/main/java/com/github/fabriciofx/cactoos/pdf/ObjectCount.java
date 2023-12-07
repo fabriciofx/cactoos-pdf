@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @since 0.0.1
  */
-public final class AtomicCount implements Count {
+public final class ObjectCount implements Count {
     /**
      * Seed.
      */
@@ -39,7 +39,7 @@ public final class AtomicCount implements Count {
     /**
      * Ctor.
      */
-    public AtomicCount() {
+    public ObjectCount() {
         this(new AtomicInteger(1));
     }
 
@@ -48,7 +48,7 @@ public final class AtomicCount implements Count {
      *
      * @param seed Seed to start counting
      */
-    public AtomicCount(final AtomicInteger seed) {
+    public ObjectCount(final AtomicInteger seed) {
         this.seed = seed;
     }
 

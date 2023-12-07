@@ -25,7 +25,6 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.File;
 import java.nio.file.Files;
-import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
@@ -55,7 +54,7 @@ final class DocumentTest {
                             count,
                             new Page(
                                 count,
-                                new ListOf<>(
+                                new Resources(
                                     new Font(
                                         count,
                                         new FontFamily("Times-Roman", "Type1"),
@@ -110,7 +109,7 @@ final class DocumentTest {
                         count,
                         new Page(
                             count,
-                            new ListOf<>(
+                            new Resources(
                                 new Font(
                                     count,
                                     new FontFamily("Times-Roman", "Type1"),

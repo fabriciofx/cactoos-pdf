@@ -49,7 +49,7 @@ public final class Page implements Object {
     /**
      * Resources.
      */
-    private final List<Object> resources;
+    private final Resources resources;
 
     /**
      * Page contents.
@@ -65,7 +65,7 @@ public final class Page implements Object {
      */
     public Page(
         final Count count,
-        final List<Object> resources,
+        final Resources resources,
         final Object... contents
     ) {
         this(count.value(), 0, resources, contents);
@@ -83,7 +83,7 @@ public final class Page implements Object {
     public Page(
         final int number,
         final int generation,
-        final List<Object> resources,
+        final Resources resources,
         final Object... contents
     ) {
         this.number = number;
@@ -123,13 +123,11 @@ public final class Page implements Object {
                 ),
                 this.number,
                 this.generation,
-                resrcs.toString(),
+                this.resources.reference(),
                 cntnts.toString()
             ).asString().getBytes()
         );
-        for (final Object resrc : this.resources) {
-            baos.write(resrc.asBytes());
-        }
+        baos.write(this.resources.asBytes());
         for (final Object content : this.contents) {
             baos.write(content.asBytes());
         }

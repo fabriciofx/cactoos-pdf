@@ -24,8 +24,6 @@
 package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
-import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
@@ -54,7 +52,7 @@ public final class Page implements Object {
     /**
      * Page contents.
      */
-    private final List<Object> contents;
+    private final Contents contents;
 
     /**
      * Ctor.
@@ -66,7 +64,7 @@ public final class Page implements Object {
     public Page(
         final Count count,
         final Resources resources,
-        final Object... contents
+        final Contents contents
     ) {
         this(count.value(), 0, resources, contents);
     }
@@ -84,12 +82,12 @@ public final class Page implements Object {
         final int number,
         final int generation,
         final Resources resources,
-        final Object... contents
+        final Contents contents
     ) {
         this.number = number;
         this.generation = generation;
         this.resources = resources;
-        this.contents = new ListOf<>(contents);
+        this.contents = contents;
     }
 
     @Override
@@ -106,10 +104,6 @@ public final class Page implements Object {
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final StringBuilder cntnts = new StringBuilder();
-        for (final Object content : this.contents) {
-            cntnts.append(content.reference());
-        }
         baos.write(
             new FormattedText(
                 new Joined(
@@ -120,13 +114,11 @@ public final class Page implements Object {
                 this.number,
                 this.generation,
                 this.resources.reference(),
-                cntnts.toString()
+                this.contents.reference()
             ).asString().getBytes()
         );
         baos.write(this.resources.asBytes());
-        for (final Object content : this.contents) {
-            baos.write(content.asBytes());
-        }
+        baos.write(this.contents.asBytes());
         return baos.toByteArray();
     }
 }

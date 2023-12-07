@@ -62,12 +62,14 @@ final class DocumentTest {
                                         "F1"
                                     )
                                 ),
-                                new Text(
-                                    count,
-                                    18,
-                                    0,
-                                    0,
-                                    title
+                                new Contents(
+                                    new Text(
+                                        count,
+                                        18,
+                                        0,
+                                        0,
+                                        title
+                                    )
                                 )
                             )
                         )
@@ -118,12 +120,14 @@ final class DocumentTest {
                                     "F1"
                                 )
                             ),
-                            new Text(
-                                count,
-                                18,
-                                0,
-                                0,
-                                title
+                            new Contents(
+                                new Text(
+                                    count,
+                                    18,
+                                    0,
+                                    0,
+                                    title
+                                )
                             )
                         )
                     )

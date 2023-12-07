@@ -6,8 +6,7 @@
 [![Javadoc](https://www.javadoc.io/badge/com.github.fabriciofx/cactoos-pdf.svg)](http://www.javadoc.io/doc/com.github.fabriciofx/cactoos-pdf)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/fabriciofx/cactoos-pdf/blob/master/LICENSE.txt)
 
-[![Hits-of-Code](https://hitsofcode.com/github/fabriciofx/cactoos-pdf)](https://hitsofcode.com/view/github/fabriciofx/cactoos-pdf)
-
+[![Hits-of-Code](https://hitsofcode.com/github/fabriciofx/cactoos-pdf?branch=main&label=Hits-of-Code)](https://hitsofcode.com/github/fabriciofx/cactoos-pdf/view?branch=main&label=Hits-of-Code)
 
 ## Introduction
 

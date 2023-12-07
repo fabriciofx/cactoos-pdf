@@ -110,10 +110,6 @@ public final class Page implements Object {
         for (final Object content : this.contents) {
             cntnts.append(content.reference());
         }
-        final StringBuilder resrcs = new StringBuilder();
-        for (final Object resrc : this.resources) {
-            resrcs.append(resrc.reference());
-        }
         baos.write(
             new FormattedText(
                 new Joined(

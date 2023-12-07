@@ -122,15 +122,19 @@ public final class Text implements Object {
 
     @Override
     public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "%d %d obj\n<< /Length %d >>\nstream\nBT /F1 %d Tf %d %d Td (%s) Tj ET\nendstream\nendobj\n",
-            this.number,
-            this.generation,
-            55,
+        final String stream = new FormattedText(
+            "BT /F1 %d Tf %d %d Td (%s) Tj ET",
             this.size,
             this.posx,
             this.posy,
             this.content
+        ).asString();
+        return new FormattedText(
+            "%d %d obj\n<< /Length %d >>\nstream\n%s\nendstream\nendobj\n",
+            this.number,
+            this.generation,
+            stream.length(),
+            stream
         ).asString().getBytes();
     }
 }

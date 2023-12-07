@@ -127,7 +127,7 @@ public final class Text implements Object {
             this.size,
             this.posx,
             this.posy,
-            this.content
+            new Escaped(this.content).asString()
         ).asString();
         return new FormattedText(
             "%d %d obj\n<< /Length %d >>\nstream\n%s\nendstream\nendobj\n",

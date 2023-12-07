@@ -25,7 +25,6 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.File;
 import java.nio.file.Files;
-import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Disabled;
@@ -41,13 +40,12 @@ import org.llorllale.cactoos.matchers.IsText;
 final class DocumentTest {
     @Test
     void buildDocument() {
-        final String title = "Hello World";
         final Count count = new Count();
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
                 new Document(
-                    new Metadata(count, title),
+                    new Metadata(count, "Hello World"),
                     new Catalog(
                         count,
                         new Pages(
@@ -68,7 +66,7 @@ final class DocumentTest {
                                         18,
                                         0,
                                         0,
-                                        title
+                                        "Hello World with (, ), \\ and \r"
                                     )
                                 )
                             )
@@ -77,20 +75,17 @@ final class DocumentTest {
                 )
             ),
             new IsText(
-                new FormattedText(
-                    new Joined(
-                        "\n",
-                        "%%PDF-1.3\n%%���������",
-                        "1 0 obj\n<< /Title (Hello World) >>\nendobj",
-                        "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
-                        "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
-                        "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
-                        "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                        "3 0 obj\n<< /Length 39 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello World) Tj ET\nendstream\nendobj",
-                        "trailer << /Root 6 0 R /Size 6 >>",
-                        "%%%%%%%%EOF"
-                    ),
-                    title
+                new Joined(
+                    "\n",
+                    "%PDF-1.3\n%���������",
+                    "1 0 obj\n<< /Title (Hello World) >>\nendobj",
+                    "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
+                    "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
+                    "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
+                    "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
+                    "3 0 obj\n<< /Length 62 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello World with \\(, \\), \\\\ and \\r) Tj ET\nendstream\nendobj",
+                    "trailer << /Root 6 0 R /Size 6 >>",
+                    "%%%%EOF"
                 )
             )
         ).affirm();
@@ -99,13 +94,12 @@ final class DocumentTest {
     @Disabled
     @Test
     void buildFile() throws Exception {
-        final String title = "Hello World";
         final File file = new File("HelloWorld.pdf");
         final Count count = new Count();
         Files.write(
             file.toPath(),
             new Document(
-                new Metadata(count, title),
+                new Metadata(count, "Hello World"),
                 new Catalog(
                     count,
                     new Pages(
@@ -126,7 +120,7 @@ final class DocumentTest {
                                     18,
                                     0,
                                     0,
-                                    title
+                                    "Hello World with (, ), \\ and \r"
                                 )
                             )
                         )

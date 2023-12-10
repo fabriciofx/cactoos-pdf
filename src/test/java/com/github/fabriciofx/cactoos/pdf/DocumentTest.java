@@ -94,6 +94,96 @@ final class DocumentTest {
     }
 
     @Test
+    void buildMultiTextDocument() {
+        final Count count = new ObjectCount();
+        new Assertion<>(
+            "Must represent a PDF document",
+            new TextOf(
+                new Document(
+                    count,
+                    new Metadata(count, "Hello World"),
+                    new Catalog(
+                        count,
+                        new Pages(
+                            count,
+                            PageSize.A4,
+                            new Page(
+                                count,
+                                new Resources(
+                                    new Font(
+                                        count,
+                                        new FontFamily("Times-Roman", "Type1"),
+                                        "F1"
+                                    )
+                                ),
+                                new Contents(
+                                    new MultiText(
+                                        count,
+                                        18,
+                                        0,
+                                        0,
+                                        50,
+                                        20,
+                                        new Joined(
+                                            " ",
+                                            "Lorem ea et aliquip culpa aute",
+                                            "amet elit nostrud culpa veniam",
+                                            "dolore eu irure incididunt.",
+                                            "Velit officia occaecat est",
+                                            "adipisicing mollit veniam.",
+                                            "Minim sunt est culpa labore.",
+                                            "Ut culpa et nulla sunt labore",
+                                            "aliqua ipsum laborum nostrud sit",
+                                            "deserunt officia labore. Sunt",
+                                            "laboris id labore sit ex. Eiusmod",
+                                            "nulla eu incididunt excepteur",
+                                            "minim officia dolore veniam",
+                                            "labore enim quis reprehenderit.",
+                                            "Magna in laboris irure enim non",
+                                            "deserunt laborum mollit labore",
+                                            "id amet."
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            ),
+            new IsText(
+                new Joined(
+                    "\n",
+                    "%PDF-1.3\n%���������",
+                    "1 0 obj\n<< /Title (Hello World) >>\nendobj",
+                    "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
+                    "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
+                    "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
+                    "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
+                    "3 0 obj",
+                    "<< /Length 567 >>",
+                    "stream",
+                    "BT /F1 18 Tf 0 0 Td 20 TL",
+                    "(Lorem ea et aliquip culpa aute amet elit nostrud) Tj T*",
+                    "(culpa veniam dolore eu irure incididunt. Velit) Tj T*",
+                    "(officia occaecat est adipisicing mollit veniam.) Tj T*",
+                    "(Minim sunt est culpa labore. Ut culpa et nulla) Tj T*",
+                    "(sunt labore aliqua ipsum laborum nostrud sit) Tj T*",
+                    "(deserunt officia labore. Sunt laboris id labore) Tj T*",
+                    "(sit ex. Eiusmod nulla eu incididunt excepteur) Tj T*",
+                    "(minim officia dolore veniam labore enim quis) Tj T*",
+                    "(reprehenderit. Magna in laboris irure enim non) Tj T*",
+                    "(deserunt laborum mollit labore id amet.) Tj",
+                    "ET",
+                    "endstream",
+                    "endobj",
+                    "trailer << /Root 6 0 R /Size 7 >>",
+                    "%%%%EOF"
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
     void buildTwoPagesDocument() {
         final Count count = new ObjectCount();
         new Assertion<>(
@@ -219,6 +309,66 @@ final class DocumentTest {
                                     0,
                                     0,
                                     "World"
+                                )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
+    }
+
+    @Disabled
+    @Test
+    void buildMultiFile() throws Exception {
+        final File file = new File("HelloWorld.pdf");
+        final Count count = new ObjectCount();
+        Files.write(
+            file.toPath(),
+            new Document(
+                count,
+                new Metadata(count, "Hello World"),
+                new Catalog(
+                    count,
+                    new Pages(
+                        count,
+                        PageSize.A4,
+                        new Page(
+                            count,
+                            new Resources(
+                                new Font(
+                                    count,
+                                    new FontFamily("Times-Roman", "Type1"),
+                                    "F1"
+                                )
+                            ),
+                            new Contents(
+                                new MultiText(
+                                    count,
+                                    18,
+                                    0,
+                                    500,
+                                    80,
+                                    20,
+                                    new Joined(
+                                        " ",
+                                        "Lorem ea et aliquip culpa aute",
+                                        "amet elit nostrud culpa veniam",
+                                        "dolore eu irure incididunt.",
+                                        "Velit officia occaecat est",
+                                        "adipisicing mollit veniam.",
+                                        "Minim sunt est culpa labore.",
+                                        "Ut culpa et nulla sunt labore",
+                                        "aliqua ipsum laborum nostrud sit",
+                                        "deserunt officia labore. Sunt",
+                                        "laboris id labore sit ex. Eiusmod",
+                                        "nulla eu incididunt excepteur",
+                                        "minim officia dolore veniam",
+                                        "labore enim quis reprehenderit.",
+                                        "Magna in laboris irure enim non",
+                                        "deserunt laborum mollit labore",
+                                        "id amet."
+                                    )
                                 )
                             )
                         )

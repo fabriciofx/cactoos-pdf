@@ -49,7 +49,7 @@ Files.write(
             count,
             new Pages(
                 count,
-                PageSize.A4,
+                PageFormat.A4,
                 new Page(
                     count,
                     new Resources(

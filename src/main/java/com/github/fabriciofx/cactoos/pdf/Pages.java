@@ -50,7 +50,7 @@ public final class Pages implements Object {
     /**
      * Pages size.
      */
-    private final PageSize size;
+    private final PageFormat size;
 
     /**
      * Pages.
@@ -64,7 +64,7 @@ public final class Pages implements Object {
      * @param size Page's size
      * @param kids Pages
      */
-    public Pages(final Count count, final PageSize size, final Page... kids) {
+    public Pages(final Count count, final PageFormat size, final Page... kids) {
         this(count.increment(), 0, size, kids);
     }
 
@@ -80,7 +80,7 @@ public final class Pages implements Object {
     public Pages(
         final int number,
         final int generation,
-        final PageSize size,
+        final PageFormat size,
         final Page... kids
     ) {
         this.number = number;

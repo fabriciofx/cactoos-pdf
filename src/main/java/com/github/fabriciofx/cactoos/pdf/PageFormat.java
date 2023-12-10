@@ -32,7 +32,7 @@ import org.cactoos.text.UncheckedText;
  *
  * @since 0.0.1
  */
-public enum PageSize implements Text {
+public enum PageFormat implements Text {
     /**
      * A1 page size.
      */
@@ -94,7 +94,7 @@ public enum PageSize implements Text {
      * @param width Page's width
      * @param height Page's height
      */
-    PageSize(final double width, final double height) {
+    PageFormat(final double width, final double height) {
         this.width = width;
         this.height = height;
     }

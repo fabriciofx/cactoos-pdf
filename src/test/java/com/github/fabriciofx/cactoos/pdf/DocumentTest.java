@@ -96,7 +96,7 @@ final class DocumentTest {
                     "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
                     "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
                     "3 0 obj\n<< /Length 62 >>\nstream\nBT /F1 18 Tf 0 0 Td\n(Hello World with \\(, \\), \\\\ and \\r) Tj\nET\nendstream\nendobj",
-                    "trailer << /Root 6 0 R /Size 7 >>",
+                    "trailer << /Root 6 0 R /Size 7 /Info 1 0 R >>",
                     "%%%%EOF"
                 )
             )
@@ -186,7 +186,7 @@ final class DocumentTest {
                     "ET",
                     "endstream",
                     "endobj",
-                    "trailer << /Root 6 0 R /Size 7 >>",
+                    "trailer << /Root 6 0 R /Size 7 /Info 1 0 R >>",
                     "%%%%EOF"
                 )
             )
@@ -262,7 +262,7 @@ final class DocumentTest {
                     "7 0 obj\n<< /Type /Page /Resources 5 0 R /Contents 6 0 R /Parent 8 0 R >>\nendobj",
                     "5 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
                     "6 0 obj\n<< /Length 33 >>\nstream\nBT /F1 18 Tf 0 0 Td\n(World) Tj\nET\nendstream\nendobj",
-                    "trailer << /Root 9 0 R /Size 10 >>",
+                    "trailer << /Root 9 0 R /Size 10 /Info 1 0 R >>",
                     "%%%%EOF"
                 )
             )

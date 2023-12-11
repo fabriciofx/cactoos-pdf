@@ -98,9 +98,10 @@ public final class Document implements Bytes {
         baos.write(this.catalog.asBytes());
         baos.write(
             new FormattedText(
-                "trailer << /Root %s /Size %d >>\n",
+                "trailer << /Root %s /Size %d /Info %s >>\n",
                 this.catalog.reference(),
-                this.count.value()
+                this.count.value(),
+                this.information.reference()
             ).asString().getBytes()
         );
         baos.write(Document.EOF.getBytes());

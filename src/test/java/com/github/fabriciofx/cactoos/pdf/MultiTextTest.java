@@ -87,9 +87,9 @@ final class MultiTextTest {
                     "(deserunt laborum mollit labore id amet.) Tj",
                     "ET",
                     "endstream",
-                    "endobj"
+                    "endobj\n"
                 )
             )
-        );
+        ).affirm();
     }
 }

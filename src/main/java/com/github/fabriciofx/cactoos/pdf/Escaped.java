@@ -24,18 +24,14 @@
 package com.github.fabriciofx.cactoos.pdf;
 
 import org.cactoos.Text;
+import org.cactoos.text.TextEnvelope;
 
 /**
  * Escape a text with special characters: '(', ')', '\' and '\r'.
  *
  * @since 0.0.1
  */
-public final class Escaped implements Text {
-    /**
-     * Text to be escaped.
-     */
-    private final Text text;
-
+public final class Escaped extends TextEnvelope implements Text {
     /**
      * Ctor.
      *
@@ -51,15 +47,12 @@ public final class Escaped implements Text {
      * @param text Text to be escaped.
      */
     public Escaped(final Text text) {
-        this.text = text;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        return this.text.asString()
-            .replaceAll("\\\\", "\\\\\\\\")
-            .replaceAll("\r", "\\\\r")
-            .replaceAll("\\(", "\\\\(")
-            .replaceAll("\\)", "\\\\)");
+        super(
+            () -> text.asString()
+                .replaceAll("\\\\", "\\\\\\\\")
+                .replaceAll("\r", "\\\\r")
+                .replaceAll("\\(", "\\\\(")
+                .replaceAll("\\)", "\\\\)")
+        );
     }
 }

@@ -68,7 +68,9 @@ final class DocumentTest {
                                         18,
                                         0,
                                         0,
-                                        "Hello World with (, ), \\ and \r"
+                                        new TextOf(
+                                            "Hello World with (, ), \\ and \r"
+                                        )
                                     )
                                 )
                             )
@@ -212,7 +214,7 @@ final class DocumentTest {
                                         18,
                                         0,
                                         0,
-                                        "Hello"
+                                        new TextOf("Hello")
                                     )
                                 )
                             ),
@@ -231,7 +233,7 @@ final class DocumentTest {
                                         18,
                                         0,
                                         0,
-                                        "World"
+                                        new TextOf("World")
                                     )
                                 )
                             )
@@ -289,7 +291,7 @@ final class DocumentTest {
                                     18,
                                     0,
                                     0,
-                                    "Hello"
+                                    new TextOf("Hello")
                                 )
                             )
                         ),
@@ -308,7 +310,7 @@ final class DocumentTest {
                                     18,
                                     0,
                                     0,
-                                    "World"
+                                    new TextOf("World")
                                 )
                             )
                         )

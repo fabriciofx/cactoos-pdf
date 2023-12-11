@@ -60,7 +60,7 @@ public final class Text implements Object {
     /**
      * Content.
      */
-    private final String content;
+    private final org.cactoos.Text content;
 
     /**
      * Ctor.
@@ -77,7 +77,7 @@ public final class Text implements Object {
         final int size,
         final int posx,
         final int posy,
-        final String content
+        final org.cactoos.Text content
     ) {
         this(count.increment(), 0, size, posx, posy, content);
     }
@@ -99,7 +99,7 @@ public final class Text implements Object {
         final int size,
         final int posx,
         final int posy,
-        final String content
+        final org.cactoos.Text content
     ) {
         this.number = number;
         this.generation = generation;

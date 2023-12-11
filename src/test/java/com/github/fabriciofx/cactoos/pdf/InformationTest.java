@@ -30,17 +30,17 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Test case for {@link Metadata}.
+ * Test case for {@link Information}.
  *
  * @since 0.0.1
  */
-final class MetadataTest {
+final class InformationTest {
     @Test
-    void metadata() throws Exception {
+    void info() throws Exception {
         final String title = "Hello World";
         new Assertion<>(
             "Must contain metadata contents",
-            new TextOf(new Metadata(1, 0, title).with()),
+            new TextOf(new Information(1, 0, title).with()),
             new IsText(
                 new FormattedText(
                     "1 0 obj\n<< /Title (Hello World) >>\nendobj\n",

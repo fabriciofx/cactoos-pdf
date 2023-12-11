@@ -27,11 +27,11 @@ import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
 /**
- * PDF Metadata.
+ * Document Information Dictionary.
  *
  * @since 0.0.1
  */
-public final class Metadata implements Object {
+public final class Information implements Object {
     /**
      * Object number.
      */
@@ -53,7 +53,7 @@ public final class Metadata implements Object {
      * @param count Counter
      * @param title PDF title
      */
-    public Metadata(final Count count, final String title) {
+    public Information(final Count count, final String title) {
         this(count.increment(), 0, title);
     }
 
@@ -64,7 +64,7 @@ public final class Metadata implements Object {
      * @param generation Object generation
      * @param title PDF title
      */
-    public Metadata(
+    public Information(
         final int number,
         final int generation,
         final String title

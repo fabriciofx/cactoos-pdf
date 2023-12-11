@@ -47,7 +47,7 @@ final class DocumentTest {
             new TextOf(
                 new Document(
                     count,
-                    new Metadata(count, "Hello World"),
+                    new Information(count, "Hello World"),
                     new Catalog(
                         count,
                         new Pages(
@@ -101,7 +101,7 @@ final class DocumentTest {
             new TextOf(
                 new Document(
                     count,
-                    new Metadata(count, "Hello World"),
+                    new Information(count, "Hello World"),
                     new Catalog(
                         count,
                         new Pages(
@@ -191,7 +191,7 @@ final class DocumentTest {
             new TextOf(
                 new Document(
                     count,
-                    new Metadata(count, "Hello World"),
+                    new Information(count, "Hello World"),
                     new Catalog(
                         count,
                         new Pages(
@@ -268,7 +268,7 @@ final class DocumentTest {
             file.toPath(),
             new Document(
                 count,
-                new Metadata(count, "Hello World"),
+                new Information(count, "Hello World"),
                 new Catalog(
                     count,
                     new Pages(
@@ -327,7 +327,7 @@ final class DocumentTest {
             file.toPath(),
             new Document(
                 count,
-                new Metadata(count, "Hello World"),
+                new Information(count, "Hello World"),
                 new Catalog(
                     count,
                     new Pages(

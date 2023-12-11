@@ -60,7 +60,7 @@ public final class Document implements Bytes {
     /**
      * PDF metadata.
      */
-    private final Metadata metadata;
+    private final Information information;
 
     /**
      * Catalog.
@@ -71,16 +71,16 @@ public final class Document implements Bytes {
      * Ctor.
      *
      * @param count Count
-     * @param metadata Metadata
+     * @param information Metadata
      * @param catalog Catalog
      */
     public Document(
         final Count count,
-        final Metadata metadata,
+        final Information information,
         final Catalog catalog
     ) {
         this.count = count;
-        this.metadata = metadata;
+        this.information = information;
         this.catalog = catalog;
     }
 
@@ -94,7 +94,7 @@ public final class Document implements Bytes {
             ).asString().getBytes()
         );
         baos.write(Document.SIGNATURE);
-        baos.write(this.metadata.with());
+        baos.write(this.information.with());
         baos.write(this.catalog.with());
         baos.write(
             new FormattedText(

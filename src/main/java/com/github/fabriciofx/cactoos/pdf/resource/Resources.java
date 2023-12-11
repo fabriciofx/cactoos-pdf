@@ -21,21 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.resource;
+
+import com.github.fabriciofx.cactoos.pdf.Object;
+import com.github.fabriciofx.cactoos.pdf.Resource;
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.cactoos.Bytes;
+import org.cactoos.list.ListEnvelope;
+import org.cactoos.list.ListOf;
 
 /**
- * PageDefault.
+ * Resources.
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.ExtendsObject")
-public interface Page extends Object {
+public final class Resources extends ListEnvelope<Resource>
+    implements Object, Bytes {
     /**
-     * Build a PDF page.
+     * Ctor.
      *
-     * @param parent Pages parent
-     * @return An array of bytes that represents a PDF page
-     * @throws Exception if fails
+     * @param objects An array of objects
      */
-    byte[] with(Pages parent) throws Exception;
+    public Resources(final Resource... objects) {
+        this(new ListOf<>(objects));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param list A list of objects
+     */
+    public Resources(final List<Resource> list) {
+        super(list);
+    }
+
+    @Override
+    public String reference() {
+        return this.stream()
+            .map(Resource::reference)
+            .collect(Collectors.joining(" "));
+    }
+
+    @Override
+    public byte[] asBytes() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        for (final Bytes obj : this) {
+            baos.write(obj.asBytes());
+        }
+        return baos.toByteArray();
+    }
 }

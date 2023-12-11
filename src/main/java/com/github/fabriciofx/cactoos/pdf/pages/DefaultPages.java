@@ -21,17 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.pages;
 
+import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Page;
+import com.github.fabriciofx.cactoos.pdf.Pages;
+import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.cactoos.text.FormattedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
 
 /**
- * Font.
+ * Pages.
  *
  * @since 0.0.1
  */
-public final class Font implements Object {
+public final class DefaultPages implements Pages {
     /**
      * Object number.
      */
@@ -43,24 +52,28 @@ public final class Font implements Object {
     private final int generation;
 
     /**
-     * Font family.
+     * Pages size.
      */
-    private final FontFamily family;
+    private final PageFormat size;
 
     /**
-     * Font name.
+     * Pages.
      */
-    private final String name;
+    private final List<Page> kids;
 
     /**
      * Ctor.
      *
      * @param count Counter
-     * @param family Font family
-     * @param name Font name
+     * @param size Page's size
+     * @param kids Pages
      */
-    public Font(final Count count, final FontFamily family, final String name) {
-        this(count.increment(), 0, family, name);
+    public DefaultPages(
+        final Count count,
+        final PageFormat size,
+        final Page... kids
+    ) {
+        this(count.increment(), 0, size, kids);
     }
 
     /**
@@ -68,20 +81,20 @@ public final class Font implements Object {
      *
      * @param number Object number
      * @param generation Object generation
-     * @param family Font family
-     * @param name Font name
+     * @param size Page's size
+     * @param kids Pages
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Font(
+    public DefaultPages(
         final int number,
         final int generation,
-        final FontFamily family,
-        final String name
+        final PageFormat size,
+        final Page... kids
     ) {
         this.number = number;
         this.generation = generation;
-        this.family = family;
-        this.name = name;
+        this.size = size;
+        this.kids = Arrays.asList(kids);
     }
 
     @Override
@@ -96,13 +109,33 @@ public final class Font implements Object {
     }
 
     @Override
-    public byte[] with(final Object... objects) throws Exception {
-        return new FormattedText(
-            "%d %d obj\n<< /Font << /%s %s >> >>\nendobj\n",
-            this.number,
-            this.generation,
-            this.name,
-            new String(this.family.asBytes())
-        ).asString().getBytes();
+    public byte[] asBytes() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final String kds = this.kids.stream()
+            .map(Page::reference)
+            .collect(Collectors.joining(" "));
+        baos.write(
+            new FormattedText(
+                new Joined(
+                    " ",
+                    "%d %d obj\n<< /Type /Pages /Kids [%s]",
+                    "/Count %d /MediaBox [0 0 %s] >>\nendobj\n"
+                ),
+                this.number,
+                this.generation,
+                kds,
+                this.kids.size(),
+                this.size.asString()
+            ).asString().getBytes()
+        );
+        for (final Page page : this.kids) {
+            baos.write(page.with(this));
+        }
+        return baos.toByteArray();
+    }
+
+    @Override
+    public void add(final Page page) {
+        this.kids.add(page);
     }
 }

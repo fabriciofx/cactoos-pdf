@@ -21,52 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
-
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-import org.cactoos.list.ListEnvelope;
-import org.cactoos.list.ListOf;
 
 /**
- * Resources.
+ * Content.
  *
  * @since 0.0.1
  */
-public final class Resources extends ListEnvelope<Object> implements Object {
-    /**
-     * Ctor.
-     *
-     * @param objects An array of objects
-     */
-    public Resources(final Object... objects) {
-        this(new ListOf<>(objects));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param list A list of objects
-     */
-    public Resources(final List<Object> list) {
-        super(list);
-    }
-
-    @Override
-    public String reference() {
-        final StringBuilder out = new StringBuilder();
-        for (final Object obj : this) {
-            out.append(obj.reference());
-        }
-        return out.toString();
-    }
-
-    @Override
-    public byte[] with(final Object... objects) throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (final Object obj : this) {
-            baos.write(obj.with());
-        }
-        return baos.toByteArray();
-    }
-}
+package com.github.fabriciofx.cactoos.pdf.content;

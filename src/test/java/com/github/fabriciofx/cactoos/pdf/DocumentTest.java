@@ -23,6 +23,14 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.content.Contents;
+import com.github.fabriciofx.cactoos.pdf.content.Text;
+import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
+import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
+import com.github.fabriciofx.cactoos.pdf.resource.Font;
+import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
+import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.text.Joined;
@@ -50,10 +58,10 @@ final class DocumentTest {
                     new Information(count, "Hello World"),
                     new Catalog(
                         count,
-                        new Pages(
+                        new DefaultPages(
                             count,
                             PageFormat.A4,
-                            new Page(
+                            new DefaultPage(
                                 count,
                                 new Resources(
                                     new Font(
@@ -106,10 +114,10 @@ final class DocumentTest {
                     new Information(count, "Hello World"),
                     new Catalog(
                         count,
-                        new Pages(
+                        new DefaultPages(
                             count,
                             PageFormat.A4,
-                            new Page(
+                            new DefaultPage(
                                 count,
                                 new Resources(
                                     new Font(
@@ -196,10 +204,10 @@ final class DocumentTest {
                     new Information(count, "Hello World"),
                     new Catalog(
                         count,
-                        new Pages(
+                        new DefaultPages(
                             count,
                             PageFormat.A4,
-                            new Page(
+                            new DefaultPage(
                                 count,
                                 new Resources(
                                     new Font(
@@ -218,7 +226,7 @@ final class DocumentTest {
                                     )
                                 )
                             ),
-                            new Page(
+                            new DefaultPage(
                                 count,
                                 new Resources(
                                     new Font(
@@ -273,10 +281,10 @@ final class DocumentTest {
                 new Information(count, "Hello World"),
                 new Catalog(
                     count,
-                    new Pages(
+                    new DefaultPages(
                         count,
                         PageFormat.A4,
-                        new Page(
+                        new DefaultPage(
                             count,
                             new Resources(
                                 new Font(
@@ -295,7 +303,7 @@ final class DocumentTest {
                                 )
                             )
                         ),
-                        new Page(
+                        new DefaultPage(
                             count,
                             new Resources(
                                 new Font(
@@ -332,10 +340,10 @@ final class DocumentTest {
                 new Information(count, "Hello World"),
                 new Catalog(
                     count,
-                    new Pages(
+                    new DefaultPages(
                         count,
                         PageFormat.A4,
-                        new Page(
+                        new DefaultPage(
                             count,
                             new Resources(
                                 new Font(

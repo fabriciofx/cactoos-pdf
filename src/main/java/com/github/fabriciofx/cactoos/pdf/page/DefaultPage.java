@@ -21,18 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.page;
 
-import org.cactoos.Bytes;
+import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Page;
+import com.github.fabriciofx.cactoos.pdf.Pages;
+import com.github.fabriciofx.cactoos.pdf.content.Contents;
+import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import java.io.ByteArrayOutputStream;
 import org.cactoos.text.FormattedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
 
 /**
- * Document Information Dictionary.
+ * PageDefault.
  *
  * @since 0.0.1
  */
-public final class Information implements Object, Bytes {
+public final class DefaultPage implements Page {
     /**
      * Object number.
      */
@@ -44,18 +50,28 @@ public final class Information implements Object, Bytes {
     private final int generation;
 
     /**
-     * PDF title.
+     * Resources.
      */
-    private final String title;
+    private final Resources resources;
+
+    /**
+     * Page contents.
+     */
+    private final Contents contents;
 
     /**
      * Ctor.
      *
      * @param count Counter
-     * @param title PDF title
+     * @param resources List of resources
+     * @param contents Page contents
      */
-    public Information(final Count count, final String title) {
-        this(count.increment(), 0, title);
+    public DefaultPage(
+        final Count count,
+        final Resources resources,
+        final Contents contents
+    ) {
+        this(count.increment(), 0, resources, contents);
     }
 
     /**
@@ -63,16 +79,20 @@ public final class Information implements Object, Bytes {
      *
      * @param number Object number
      * @param generation Object generation
-     * @param title PDF title
+     * @param resources List of resources
+     * @param contents Page contents
+     * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Information(
+    public DefaultPage(
         final int number,
         final int generation,
-        final String title
+        final Resources resources,
+        final Contents contents
     ) {
         this.number = number;
         this.generation = generation;
-        this.title = title;
+        this.resources = resources;
+        this.contents = contents;
     }
 
     @Override
@@ -87,12 +107,24 @@ public final class Information implements Object, Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "%d %d obj\n<< /Title (%s) >>\nendobj\n",
-            this.number,
-            this.generation,
-            this.title
-        ).asString().getBytes();
+    public byte[] with(final Pages parent) throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write(
+            new FormattedText(
+                new Joined(
+                    " ",
+                    "%d %d obj\n<< /Type /Page /Resources %s",
+                    "/Contents %s /Parent %s >>\nendobj\n"
+                ),
+                this.number,
+                this.generation,
+                this.resources.reference(),
+                this.contents.reference(),
+                parent.reference()
+            ).asString().getBytes()
+        );
+        baos.write(this.resources.asBytes());
+        baos.write(this.contents.asBytes());
+        return baos.toByteArray();
     }
 }

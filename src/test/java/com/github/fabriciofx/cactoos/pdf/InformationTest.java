@@ -40,7 +40,7 @@ final class InformationTest {
         final String title = "Hello World";
         new Assertion<>(
             "Must contain metadata contents",
-            new TextOf(new Information(1, 0, title).with()),
+            new TextOf(new Information(1, 0, title)),
             new IsText(
                 new FormattedText(
                     "1 0 obj\n<< /Title (Hello World) >>\nendobj\n",

@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.content.Text;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ final class TextTest {
                     50,
                     20,
                     new TextOf("Hello World")
-                ).with()
+                )
             ),
             new IsText(
                 new Joined(
@@ -97,7 +98,7 @@ final class TextTest {
                         "deserunt laborum mollit labore",
                         "id amet."
                     )
-                ).with()
+                )
             ),
             new IsText(
                 new Joined(

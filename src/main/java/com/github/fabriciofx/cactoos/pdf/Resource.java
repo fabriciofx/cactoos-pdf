@@ -23,23 +23,13 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsText;
+import org.cactoos.Bytes;
 
 /**
- * Test case for {@link PageFormat}.
+ * Resource.
  *
  * @since 0.0.1
  */
-final class PageFormatTest {
-    @Test
-    void size() {
-        new Assertion<>(
-            "Must print correct A4 page's width and height",
-            PageFormat.A4,
-            new IsText("595.28 841.89")
-        ).affirm();
-    }
+@SuppressWarnings("PMD.ExtendsObject")
+public interface Resource extends Object, Bytes {
 }

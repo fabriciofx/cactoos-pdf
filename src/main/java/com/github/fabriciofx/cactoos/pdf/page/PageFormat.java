@@ -21,78 +21,92 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.page;
 
-import org.cactoos.Bytes;
+import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
 /**
- * Document Information Dictionary.
+ * PageSize.
  *
  * @since 0.0.1
  */
-public final class Information implements Object, Bytes {
+public enum PageFormat implements Text {
     /**
-     * Object number.
+     * A1 page size.
      */
-    private final int number;
+    A1(1683.78, 2383.94),
 
     /**
-     * Object generation.
+     * A2 page size.
      */
-    private final int generation;
+    A2(1190.55, 1683.78),
 
     /**
-     * PDF title.
+     * A3 page size.
      */
-    private final String title;
+    A3(841.89, 1190.55),
+
+    /**
+     * A4 page size.
+     */
+    A4(595.28, 841.89),
+
+    /**
+     * A5 page size.
+     */
+    A5(420.94, 595.28),
+
+    /**
+     * A6 page size.
+     */
+    A6(297.64, 420.94),
+
+    /**
+     * Letter page size.
+     */
+    LETTER(612, 792),
+
+    /**
+     * Legal page size.
+     */
+    LEGAL(612, 1008),
+
+    /**
+     * Tabloid page size.
+     */
+    TABLOID(792, 1224);
+
+    /**
+     * Width.
+     */
+    private final double width;
+
+    /**
+     * Height.
+     */
+    private final double height;
 
     /**
      * Ctor.
      *
-     * @param count Counter
-     * @param title PDF title
+     * @param width Page's width
+     * @param height Page's height
      */
-    public Information(final Count count, final String title) {
-        this(count.increment(), 0, title);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param number Object number
-     * @param generation Object generation
-     * @param title PDF title
-     */
-    public Information(
-        final int number,
-        final int generation,
-        final String title
-    ) {
-        this.number = number;
-        this.generation = generation;
-        this.title = title;
+    PageFormat(final double width, final double height) {
+        this.width = width;
+        this.height = height;
     }
 
     @Override
-    public String reference() {
+    public String asString() throws Exception {
         return new UncheckedText(
             new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
+                "%.2f %.2f",
+                this.width,
+                this.height
             )
         ).asString();
-    }
-
-    @Override
-    public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "%d %d obj\n<< /Title (%s) >>\nendobj\n",
-            this.number,
-            this.generation,
-            this.title
-        ).asString().getBytes();
     }
 }

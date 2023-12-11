@@ -23,50 +23,13 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-import org.cactoos.list.ListEnvelope;
-import org.cactoos.list.ListOf;
+import org.cactoos.Bytes;
 
 /**
- * Contents.
+ * Content.
  *
  * @since 0.0.1
  */
-public final class Contents extends ListEnvelope<Object> implements Object {
-    /**
-     * Ctor.
-     *
-     * @param objects An array of objects
-     */
-    public Contents(final Object... objects) {
-        this(new ListOf<>(objects));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param list A list of objects
-     */
-    public Contents(final List<Object> list) {
-        super(list);
-    }
-
-    @Override
-    public String reference() {
-        final StringBuilder out = new StringBuilder();
-        for (final Object obj : this) {
-            out.append(obj.reference());
-        }
-        return out.toString();
-    }
-
-    @Override
-    public byte[] with(final Object... objects) throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (final Object obj : this) {
-            baos.write(obj.with());
-        }
-        return baos.toByteArray();
-    }
+@SuppressWarnings("PMD.ExtendsObject")
+public interface Content extends Object, Bytes {
 }

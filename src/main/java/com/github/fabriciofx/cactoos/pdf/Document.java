@@ -94,8 +94,8 @@ public final class Document implements Bytes {
             ).asString().getBytes()
         );
         baos.write(Document.SIGNATURE);
-        baos.write(this.information.with());
-        baos.write(this.catalog.with());
+        baos.write(this.information.asBytes());
+        baos.write(this.catalog.asBytes());
         baos.write(
             new FormattedText(
                 "trailer << /Root %s /Size %d >>\n",

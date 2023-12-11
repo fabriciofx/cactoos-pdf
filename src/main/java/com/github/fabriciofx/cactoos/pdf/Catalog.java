@@ -24,6 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.ByteArrayOutputStream;
+import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -32,7 +33,7 @@ import org.cactoos.text.UncheckedText;
  *
  * @since 0.0.1
  */
-public final class Catalog implements Object {
+public final class Catalog implements Object, Bytes {
     /**
      * Object number.
      */
@@ -83,7 +84,7 @@ public final class Catalog implements Object {
     }
 
     @Override
-    public byte[] with(final Object... objects) throws Exception {
+    public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
@@ -93,7 +94,7 @@ public final class Catalog implements Object {
                 this.pages.reference()
             ).asString().getBytes()
         );
-        baos.write(this.pages.with());
+        baos.write(this.pages.asBytes());
         return baos.toByteArray();
     }
 }

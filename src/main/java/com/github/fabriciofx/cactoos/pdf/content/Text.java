@@ -21,8 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.content;
 
+import com.github.fabriciofx.cactoos.pdf.Content;
+import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Escaped;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -32,7 +35,7 @@ import org.cactoos.text.UncheckedText;
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.UseStringBufferForStringAppends")
-public final class Text implements Object {
+public final class Text implements Content {
     /**
      * New line character.
      */
@@ -177,7 +180,7 @@ public final class Text implements Object {
     }
 
     @Override
-    public byte[] with(final Object... objects) throws Exception {
+    public byte[] asBytes() throws Exception {
         final StringBuilder out = new StringBuilder();
         final String[] lines = breakLines(this.content.asString(), this.max);
         for (int idx = 0; idx < lines.length - 1; ++idx) {

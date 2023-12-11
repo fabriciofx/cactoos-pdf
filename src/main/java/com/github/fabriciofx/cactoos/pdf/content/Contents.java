@@ -21,25 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.content;
 
-import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsText;
+import com.github.fabriciofx.cactoos.pdf.Content;
+import com.github.fabriciofx.cactoos.pdf.Object;
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.cactoos.Bytes;
+import org.cactoos.list.ListEnvelope;
+import org.cactoos.list.ListOf;
 
 /**
- * Test case for {@link PageFormat}.
+ * Contents.
  *
  * @since 0.0.1
  */
-final class PageFormatTest {
-    @Test
-    void size() {
-        new Assertion<>(
-            "Must print correct A4 page's width and height",
-            PageFormat.A4,
-            new IsText("595.28 841.89")
-        ).affirm();
+public final class Contents extends ListEnvelope<Content>
+    implements Object, Bytes {
+    /**
+     * Ctor.
+     *
+     * @param objects An array of objects
+     */
+    public Contents(final Content... objects) {
+        this(new ListOf<>(objects));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param list A list of objects
+     */
+    public Contents(final List<Content> list) {
+        super(list);
+    }
+
+    @Override
+    public String reference() {
+        return this.stream()
+            .map(Content::reference)
+            .collect(Collectors.joining(" "));
+    }
+
+    @Override
+    public byte[] asBytes() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        for (final Bytes obj : this) {
+            baos.write(obj.asBytes());
+        }
+        return baos.toByteArray();
     }
 }

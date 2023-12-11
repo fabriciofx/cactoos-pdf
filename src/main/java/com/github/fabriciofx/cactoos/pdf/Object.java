@@ -34,12 +34,4 @@ public interface Object {
      * @return The object reference.
      */
     String reference();
-
-    /**
-     * Build part of a PDF document.
-     * @param objects Other objects
-     * @return An array of bytes that represents a PDF document
-     * @throws Exception if fails
-     */
-    byte[] with(Object... objects) throws Exception;
 }

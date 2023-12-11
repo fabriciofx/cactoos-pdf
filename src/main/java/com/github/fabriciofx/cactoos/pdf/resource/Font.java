@@ -21,18 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.resource;
 
-import org.cactoos.Bytes;
+import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
 /**
- * Document Information Dictionary.
+ * Font.
  *
  * @since 0.0.1
  */
-public final class Information implements Object, Bytes {
+public final class Font implements Resource {
     /**
      * Object number.
      */
@@ -44,18 +45,24 @@ public final class Information implements Object, Bytes {
     private final int generation;
 
     /**
-     * PDF title.
+     * Font family.
      */
-    private final String title;
+    private final FontFamily family;
+
+    /**
+     * Font name.
+     */
+    private final String name;
 
     /**
      * Ctor.
      *
      * @param count Counter
-     * @param title PDF title
+     * @param family Font family
+     * @param name Font name
      */
-    public Information(final Count count, final String title) {
-        this(count.increment(), 0, title);
+    public Font(final Count count, final FontFamily family, final String name) {
+        this(count.increment(), 0, family, name);
     }
 
     /**
@@ -63,16 +70,20 @@ public final class Information implements Object, Bytes {
      *
      * @param number Object number
      * @param generation Object generation
-     * @param title PDF title
+     * @param family Font family
+     * @param name Font name
+     * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Information(
+    public Font(
         final int number,
         final int generation,
-        final String title
+        final FontFamily family,
+        final String name
     ) {
         this.number = number;
         this.generation = generation;
-        this.title = title;
+        this.family = family;
+        this.name = name;
     }
 
     @Override
@@ -89,10 +100,11 @@ public final class Information implements Object, Bytes {
     @Override
     public byte[] asBytes() throws Exception {
         return new FormattedText(
-            "%d %d obj\n<< /Title (%s) >>\nendobj\n",
+            "%d %d obj\n<< /Font << /%s %s >> >>\nendobj\n",
             this.number,
             this.generation,
-            this.title
+            this.name,
+            new String(this.family.asBytes())
         ).asString().getBytes();
     }
 }

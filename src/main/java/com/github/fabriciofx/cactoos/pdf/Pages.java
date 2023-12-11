@@ -23,106 +23,19 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.cactoos.list.ListOf;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.Joined;
-import org.cactoos.text.UncheckedText;
+import org.cactoos.Bytes;
 
 /**
  * Pages.
  *
  * @since 0.0.1
  */
-public final class Pages implements Object {
+@SuppressWarnings("PMD.ExtendsObject")
+public interface Pages extends Object, Bytes {
     /**
-     * Object number.
-     */
-    private final int number;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
-    /**
-     * Pages size.
-     */
-    private final PageFormat size;
-
-    /**
-     * Pages.
-     */
-    private final List<Page> kids;
-
-    /**
-     * Ctor.
+     * Add a {@link Page}.
      *
-     * @param count Counter
-     * @param size Page's size
-     * @param kids Pages
+     * @param page An PDF page
      */
-    public Pages(final Count count, final PageFormat size, final Page... kids) {
-        this(count.increment(), 0, size, kids);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param number Object number
-     * @param generation Object generation
-     * @param size Page's size
-     * @param kids Pages
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public Pages(
-        final int number,
-        final int generation,
-        final PageFormat size,
-        final Page... kids
-    ) {
-        this.number = number;
-        this.generation = generation;
-        this.size = size;
-        this.kids = new ListOf<>(kids);
-    }
-
-    @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
-    }
-
-    @Override
-    public byte[] with(final Object... objects) throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final String kds = this.kids.stream()
-            .map(Page::reference)
-            .collect(Collectors.joining(" "));
-        baos.write(
-            new FormattedText(
-                new Joined(
-                    " ",
-                    "%d %d obj\n<< /Type /Pages /Kids [%s]",
-                    "/Count %d /MediaBox [0 0 %s] >>\nendobj\n"
-                ),
-                this.number,
-                this.generation,
-                kds,
-                this.kids.size(),
-                this.size.asString()
-            ).asString().getBytes()
-        );
-        for (final Page page : this.kids) {
-            baos.write(page.with(this));
-        }
-        return baos.toByteArray();
-    }
+    void add(Page page);
 }

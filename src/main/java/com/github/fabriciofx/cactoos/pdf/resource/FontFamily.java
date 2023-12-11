@@ -21,92 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.resource;
 
-import org.cactoos.Text;
+import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
- * PageSize.
+ * Font Family.
  *
  * @since 0.0.1
  */
-public enum PageFormat implements Text {
+public final class FontFamily implements Bytes {
     /**
-     * A1 page size.
+     * Font base.
      */
-    A1(1683.78, 2383.94),
+    private final String base;
 
     /**
-     * A2 page size.
+     * Font subtype.
      */
-    A2(1190.55, 1683.78),
-
-    /**
-     * A3 page size.
-     */
-    A3(841.89, 1190.55),
-
-    /**
-     * A4 page size.
-     */
-    A4(595.28, 841.89),
-
-    /**
-     * A5 page size.
-     */
-    A5(420.94, 595.28),
-
-    /**
-     * A6 page size.
-     */
-    A6(297.64, 420.94),
-
-    /**
-     * Letter page size.
-     */
-    LETTER(612, 792),
-
-    /**
-     * Legal page size.
-     */
-    LEGAL(612, 1008),
-
-    /**
-     * Tabloid page size.
-     */
-    TABLOID(792, 1224);
-
-    /**
-     * Width.
-     */
-    private final double width;
-
-    /**
-     * Height.
-     */
-    private final double height;
+    private final String subtype;
 
     /**
      * Ctor.
      *
-     * @param width Page's width
-     * @param height Page's height
+     * @param base Font base
+     * @param subtype Font subtype
      */
-    PageFormat(final double width, final double height) {
-        this.width = width;
-        this.height = height;
+    public FontFamily(final String base, final String subtype) {
+        this.base = base;
+        this.subtype = subtype;
     }
 
     @Override
-    public String asString() throws Exception {
-        return new UncheckedText(
-            new FormattedText(
-                "%.2f %.2f",
-                this.width,
-                this.height
-            )
-        ).asString();
+    public byte[] asBytes() throws Exception {
+        return new FormattedText(
+            "<< /Type /Font /BaseFont /%s /Subtype /%s >>",
+            this.base,
+            this.subtype
+        ).asString().getBytes();
     }
 }

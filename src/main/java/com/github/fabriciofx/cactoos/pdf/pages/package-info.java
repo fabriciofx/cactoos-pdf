@@ -21,44 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
-
-import org.cactoos.Bytes;
-import org.cactoos.text.FormattedText;
 
 /**
- * Font Family.
+ * Pages.
  *
  * @since 0.0.1
  */
-public final class FontFamily implements Bytes {
-    /**
-     * Font base.
-     */
-    private final String base;
-
-    /**
-     * Font subtype.
-     */
-    private final String subtype;
-
-    /**
-     * Ctor.
-     *
-     * @param base Font base
-     * @param subtype Font subtype
-     */
-    public FontFamily(final String base, final String subtype) {
-        this.base = base;
-        this.subtype = subtype;
-    }
-
-    @Override
-    public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "<< /Type /Font /BaseFont /%s /Subtype /%s >>",
-            this.base,
-            this.subtype
-        ).asString().getBytes();
-    }
-}
+package com.github.fabriciofx.cactoos.pdf.pages;

@@ -30,17 +30,48 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Test case for {@link MultiText}.
+ * Test case for {@link Text}.
  *
  * @since 0.0.1
  */
-final class MultiTextTest {
+final class TextTest {
+    @Test
+    void oneline() throws Exception {
+        new Assertion<>(
+            "Must don't break a small text",
+            new TextOf(
+                new Text(
+                    new ObjectCount(),
+                    18,
+                    0,
+                    0,
+                    50,
+                    20,
+                    new TextOf("Hello World")
+                ).with()
+            ),
+            new IsText(
+                new Joined(
+                    "\n",
+                    "1 0 obj",
+                    "<< /Length 39 >>",
+                    "stream",
+                    "BT /F1 18 Tf 0 0 Td",
+                    "(Hello World) Tj",
+                    "ET",
+                    "endstream",
+                    "endobj\n"
+                )
+            )
+        ).affirm();
+    }
+
     @Test
     void multiLines() throws Exception {
         new Assertion<>(
             "Must break a big text into multiline",
             new TextOf(
-                new MultiText(
+                new Text(
                     new ObjectCount(),
                     18,
                     0,

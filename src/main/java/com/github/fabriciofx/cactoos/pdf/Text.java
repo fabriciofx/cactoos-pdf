@@ -27,18 +27,34 @@ import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
 /**
- * Represents a Text.
+ * MultiText.
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.UseStringBufferForStringAppends")
 public final class Text implements Object {
     /**
-     * Object number.
+     * New line character.
+     */
+    private static final char NEW_LINE = '\n';
+
+    /**
+     * Space separator.
+     */
+    private static final String SPACE_SEPARATOR = " ";
+
+    /**
+     * Split regular expression.
+     */
+    private static final String SPLIT_REGEX = "\\s+";
+
+    /**
+     * Number.
      */
     private final int number;
 
     /**
-     * Object generation.
+     * Generation.
      */
     private final int generation;
 
@@ -48,27 +64,37 @@ public final class Text implements Object {
     private final int size;
 
     /**
-     * Text X position.
+     * Position X.
      */
     private final int posx;
 
     /**
-     * Text Y position.
+     * Position Y.
      */
     private final int posy;
 
     /**
-     * Content.
+     * Max line length.
+     */
+    private final int max;
+
+    /**
+     * Space between lines.
+     */
+    private final int space;
+
+    /**
+     * Text content.
      */
     private final org.cactoos.Text content;
 
     /**
      * Ctor.
      *
-     * @param count Counter
+     * @param count Count object
      * @param size Font size
-     * @param posx Text X position
-     * @param posy Text Y position
+     * @param posx Position X
+     * @param posy Position Y
      * @param content Text content
      * @checkstyle ParameterNumberCheck (10 lines)
      */
@@ -79,7 +105,31 @@ public final class Text implements Object {
         final int posy,
         final org.cactoos.Text content
     ) {
-        this(count.increment(), 0, size, posx, posy, content);
+        this(count.increment(), 0, size, posx, posy, 80, 20, content);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param count Count object
+     * @param size Font size
+     * @param posx Position X
+     * @param posy Position Y
+     * @param max Max line length
+     * @param space Space between lines
+     * @param content Text content
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Text(
+        final Count count,
+        final int size,
+        final int posx,
+        final int posy,
+        final int max,
+        final int space,
+        final org.cactoos.Text content
+    ) {
+        this(count.increment(), 0, size, posx, posy, max, space, content);
     }
 
     /**
@@ -88,8 +138,10 @@ public final class Text implements Object {
      * @param number Object number
      * @param generation Object generation
      * @param size Font size
-     * @param posx Text X position
-     * @param posy Text Y position
+     * @param posx Position X
+     * @param posy Position Y
+     * @param max Max line length
+     * @param space Space between lines
      * @param content Text content
      * @checkstyle ParameterNumberCheck (10 lines)
      */
@@ -99,6 +151,8 @@ public final class Text implements Object {
         final int size,
         final int posx,
         final int posy,
+        final int max,
+        final int space,
         final org.cactoos.Text content
     ) {
         this.number = number;
@@ -106,7 +160,9 @@ public final class Text implements Object {
         this.size = size;
         this.posx = posx;
         this.posy = posy;
-        this.content = content;
+        this.max = max;
+        this.space = space;
+        this.content = new Escaped(content);
     }
 
     @Override
@@ -122,13 +178,41 @@ public final class Text implements Object {
 
     @Override
     public byte[] with(final Object... objects) throws Exception {
-        final String stream = new FormattedText(
-            "BT /F1 %d Tf %d %d Td (%s) Tj ET",
-            this.size,
-            this.posx,
-            this.posy,
-            new Escaped(this.content).asString()
-        ).asString();
+        final StringBuilder out = new StringBuilder();
+        final String[] lines = breakLines(this.content.asString(), this.max);
+        for (int idx = 0; idx < lines.length - 1; ++idx) {
+            out.append(
+                new FormattedText(
+                    "(%s) Tj T*\n",
+                    lines[idx]
+                ).asString()
+            );
+        }
+        out.append(
+            new FormattedText(
+                "(%s) Tj",
+                lines[lines.length - 1]
+            ).asString()
+        );
+        final String stream;
+        if (lines.length > 1) {
+            stream = new FormattedText(
+                "BT /F1 %d Tf %d %d Td %d TL\n%s\nET",
+                this.size,
+                this.posx,
+                this.posy,
+                this.space,
+                out.toString()
+            ).asString();
+        } else {
+            stream = new FormattedText(
+                "BT /F1 %d Tf %d %d Td\n%s\nET",
+                this.size,
+                this.posx,
+                this.posy,
+                out.toString()
+            ).asString();
+        }
         return new FormattedText(
             "%d %d obj\n<< /Length %d >>\nstream\n%s\nendstream\nendobj\n",
             this.number,
@@ -136,5 +220,37 @@ public final class Text implements Object {
             stream.length(),
             stream
         ).asString().getBytes();
+    }
+
+    /**
+     * Break a big text into lines.
+     *
+     * @param input String to be split
+     * @param max Max line length
+     * @return The lines
+     */
+    private static String[] breakLines(final String input, final int max) {
+        final String[] words = input.split(Text.SPLIT_REGEX);
+        final StringBuilder output = new StringBuilder();
+        int length = 0;
+        for (int idx = 0; idx < words.length; ++idx) {
+            String word = words[idx];
+            if (
+                length + (Text.SPACE_SEPARATOR + word).length() > max
+            ) {
+                if (idx > 0) {
+                    output.append(Text.NEW_LINE);
+                }
+                length = 0;
+            }
+            if (idx < words.length - 1
+                && length + (word + Text.SPACE_SEPARATOR).length()
+                + words[idx + 1].length() <= max) {
+                word = word + Text.SPACE_SEPARATOR;
+            }
+            output.append(word);
+            length = length + word.length();
+        }
+        return output.toString().split("\n");
     }
 }

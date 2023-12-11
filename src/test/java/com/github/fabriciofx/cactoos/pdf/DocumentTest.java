@@ -87,7 +87,7 @@ final class DocumentTest {
                     "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
                     "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
                     "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                    "3 0 obj\n<< /Length 62 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello World with \\(, \\), \\\\ and \\r) Tj ET\nendstream\nendobj",
+                    "3 0 obj\n<< /Length 62 >>\nstream\nBT /F1 18 Tf 0 0 Td\n(Hello World with \\(, \\), \\\\ and \\r) Tj\nET\nendstream\nendobj",
                     "trailer << /Root 6 0 R /Size 7 >>",
                     "%%%%EOF"
                 )
@@ -119,7 +119,7 @@ final class DocumentTest {
                                     )
                                 ),
                                 new Contents(
-                                    new MultiText(
+                                    new Text(
                                         count,
                                         18,
                                         0,
@@ -250,10 +250,10 @@ final class DocumentTest {
                     "8 0 obj\n<< /Type /Pages /Kids [4 0 R 7 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
                     "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 8 0 R >>\nendobj",
                     "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                    "3 0 obj\n<< /Length 33 >>\nstream\nBT /F1 18 Tf 0 0 Td (Hello) Tj ET\nendstream\nendobj",
+                    "3 0 obj\n<< /Length 33 >>\nstream\nBT /F1 18 Tf 0 0 Td\n(Hello) Tj\nET\nendstream\nendobj",
                     "7 0 obj\n<< /Type /Page /Resources 5 0 R /Contents 6 0 R /Parent 8 0 R >>\nendobj",
                     "5 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                    "6 0 obj\n<< /Length 33 >>\nstream\nBT /F1 18 Tf 0 0 Td (World) Tj ET\nendstream\nendobj",
+                    "6 0 obj\n<< /Length 33 >>\nstream\nBT /F1 18 Tf 0 0 Td\n(World) Tj\nET\nendstream\nendobj",
                     "trailer << /Root 9 0 R /Size 10 >>",
                     "%%%%EOF"
                 )
@@ -345,7 +345,7 @@ final class DocumentTest {
                                 )
                             ),
                             new Contents(
-                                new MultiText(
+                                new Text(
                                     count,
                                     18,
                                     0,

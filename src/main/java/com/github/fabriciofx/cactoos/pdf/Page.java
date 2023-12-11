@@ -29,7 +29,7 @@ import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
 
 /**
- * Page.
+ * PageDefault.
  *
  * @since 0.0.1
  */
@@ -102,23 +102,24 @@ public final class Page implements Object {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] with(final Object... objects) throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
                 new Joined(
                     " ",
                     "%d %d obj\n<< /Type /Page /Resources %s",
-                    "/Contents %s /Parent >>\nendobj\n"
+                    "/Contents %s /Parent %s >>\nendobj\n"
                 ),
                 this.number,
                 this.generation,
                 this.resources.reference(),
-                this.contents.reference()
+                this.contents.reference(),
+                objects[0].reference()
             ).asString().getBytes()
         );
-        baos.write(this.resources.asBytes());
-        baos.write(this.contents.asBytes());
+        baos.write(this.resources.with());
+        baos.write(this.contents.with());
         return baos.toByteArray();
     }
 }

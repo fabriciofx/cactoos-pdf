@@ -45,7 +45,7 @@ final class FontTest {
                     0,
                     new FontFamily("Times-Roman", "Type1"),
                     "F0"
-                ).asBytes()
+                ).with()
             ),
             new IsText(
                 new Joined(

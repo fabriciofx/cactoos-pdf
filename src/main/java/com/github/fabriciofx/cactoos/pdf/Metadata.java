@@ -86,7 +86,7 @@ public final class Metadata implements Object {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] with(final Object... objects) throws Exception {
         return new FormattedText(
             "%d %d obj\n<< /Title (%s) >>\nendobj\n",
             this.number,

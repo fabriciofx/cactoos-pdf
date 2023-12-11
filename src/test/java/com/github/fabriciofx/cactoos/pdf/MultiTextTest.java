@@ -36,7 +36,7 @@ import org.llorllale.cactoos.matchers.IsText;
  */
 final class MultiTextTest {
     @Test
-    void multiLines() {
+    void multiLines() throws Exception {
         new Assertion<>(
             "Must break a big text into multiline",
             new TextOf(
@@ -66,7 +66,7 @@ final class MultiTextTest {
                         "deserunt laborum mollit labore",
                         "id amet."
                     )
-                )
+                ).with()
             ),
             new IsText(
                 new Joined(

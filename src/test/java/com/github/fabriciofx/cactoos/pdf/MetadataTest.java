@@ -36,11 +36,11 @@ import org.llorllale.cactoos.matchers.IsText;
  */
 final class MetadataTest {
     @Test
-    void metadata() {
+    void metadata() throws Exception {
         final String title = "Hello World";
         new Assertion<>(
             "Must contain metadata contents",
-            new TextOf(new Metadata(1, 0, title)),
+            new TextOf(new Metadata(1, 0, title).with()),
             new IsText(
                 new FormattedText(
                     "1 0 obj\n<< /Title (Hello World) >>\nendobj\n",

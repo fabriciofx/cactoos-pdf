@@ -121,7 +121,7 @@ public final class Text implements Object {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] with(final Object... objects) throws Exception {
         final String stream = new FormattedText(
             "BT /F1 %d Tf %d %d Td (%s) Tj ET",
             this.size,

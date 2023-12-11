@@ -83,7 +83,7 @@ public final class Catalog implements Object {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] with(final Object... objects) throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
@@ -93,7 +93,7 @@ public final class Catalog implements Object {
                 this.pages.reference()
             ).asString().getBytes()
         );
-        baos.write(this.pages.asBytes());
+        baos.write(this.pages.with());
         return baos.toByteArray();
     }
 }

@@ -158,7 +158,7 @@ public final class MultiText implements Object {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] with(final Object... objects) throws Exception {
         final StringBuilder out = new StringBuilder();
         final String[] lines = breakLines(this.content.asString(), this.max);
         for (int idx = 0; idx < lines.length - 1; ++idx) {

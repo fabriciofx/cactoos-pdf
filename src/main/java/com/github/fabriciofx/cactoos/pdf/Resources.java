@@ -62,10 +62,10 @@ public final class Resources extends ListEnvelope<Object> implements Object {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] with(final Object... objects) throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (final Object obj : this) {
-            baos.write(obj.asBytes());
+            baos.write(obj.with());
         }
         return baos.toByteArray();
     }

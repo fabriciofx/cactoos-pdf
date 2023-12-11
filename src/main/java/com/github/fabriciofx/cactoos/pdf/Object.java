@@ -23,17 +23,23 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import org.cactoos.Bytes;
-
 /**
  * Represent any PDF object.
  *
  * @since 0.0.1
  */
-public interface Object extends Bytes {
+public interface Object {
     /**
      * Object reference.
      * @return The object reference.
      */
     String reference();
+
+    /**
+     * Build part of a PDF document.
+     * @param objects Other objects
+     * @return An array of bytes that represents a PDF document
+     * @throws Exception if fails
+     */
+    byte[] with(Object... objects) throws Exception;
 }

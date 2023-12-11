@@ -96,7 +96,7 @@ public final class Font implements Object {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] with(final Object... objects) throws Exception {
         return new FormattedText(
             "%d %d obj\n<< /Font << /%s %s >> >>\nendobj\n",
             this.number,

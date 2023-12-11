@@ -101,7 +101,7 @@ public final class Pages implements Object {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] with(final Object... objects) throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final String kds = this.kids.stream()
             .map(Page::reference)
@@ -121,14 +121,7 @@ public final class Pages implements Object {
             ).asString().getBytes()
         );
         for (final Page page : this.kids) {
-            baos.write(
-                new String(
-                    page.asBytes()
-                ).replaceAll(
-                    "/Parent",
-                    new FormattedText("/Parent %s", this.reference()).asString()
-                ).getBytes()
-            );
+            baos.write(page.with(this));
         }
         return baos.toByteArray();
     }

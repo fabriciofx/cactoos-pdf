@@ -91,39 +91,40 @@ public final class Information implements Object, Bytes {
 
     @Override
     public byte[] asBytes() throws Exception {
-        final StringBuilder params = new StringBuilder(128);
-        params.append(this.number)
+        final StringBuilder data = new StringBuilder(128);
+        data.append(this.number)
             .append(' ')
             .append(this.generation)
             .append(" obj\n<<");
-        addIfContains(params, this.metadata, "Title");
-        addIfContains(params, this.metadata, "Subject");
-        addIfContains(params, this.metadata, "Author");
-        addIfContains(params, this.metadata, "Creator");
-        addIfContains(params, this.metadata, "Producer");
-        addIfContains(params, this.metadata, "CreationDate");
-        addIfContains(params, this.metadata, "ModDate");
-        addIfContains(params, this.metadata, "Keywords");
-        params.append(" >>\nendobj\n");
-        return params.toString().getBytes();
+        addIfContains(data, this.metadata, "Title");
+        addIfContains(data, this.metadata, "Subject");
+        addIfContains(data, this.metadata, "Author");
+        addIfContains(data, this.metadata, "Creator");
+        addIfContains(data, this.metadata, "Producer");
+        addIfContains(data, this.metadata, "CreationDate");
+        addIfContains(data, this.metadata, "ModDate");
+        addIfContains(data, this.metadata, "Keywords");
+        data.append(" >>\nendobj\n");
+        return data.toString().getBytes();
     }
 
     /**
-     * Add a metadata to builder if metadata contains data.
+     * Add a metadata to data if metadata contains name.
      *
-     * @param builder A StringBuilder
-     * @param metadata The metadata map
-     * @param data The data
+     * @param data A data builder
+     * @param metadata The metadata
+     * @param name The metadata name
      */
     private static void addIfContains(
-        final StringBuilder builder,
+        final StringBuilder data,
         final Map<String, String> metadata,
-        final String data
+        final String name
     ) {
-        if (metadata.containsKey(data)) {
-            builder.append(" /")
-                .append(data).append(" (")
-                .append(metadata.get(data))
+        if (metadata.containsKey(name)) {
+            data.append(" /")
+                .append(name)
+                .append(" (")
+                .append(metadata.get(name))
                 .append(')');
         }
     }

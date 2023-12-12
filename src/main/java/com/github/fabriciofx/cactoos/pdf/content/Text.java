@@ -84,7 +84,7 @@ public final class Text implements Content {
     /**
      * Space between lines.
      */
-    private final int space;
+    private final int leading;
 
     /**
      * Text content.
@@ -119,7 +119,7 @@ public final class Text implements Content {
      * @param posx Position X
      * @param posy Position Y
      * @param max Max line length
-     * @param space Space between lines
+     * @param leading Space between lines
      * @param content Text content
      * @checkstyle ParameterNumberCheck (10 lines)
      */
@@ -129,10 +129,10 @@ public final class Text implements Content {
         final int posx,
         final int posy,
         final int max,
-        final int space,
+        final int leading,
         final org.cactoos.Text content
     ) {
-        this(count.increment(), 0, size, posx, posy, max, space, content);
+        this(count.increment(), 0, size, posx, posy, max, leading, content);
     }
 
     /**
@@ -144,7 +144,7 @@ public final class Text implements Content {
      * @param posx Position X
      * @param posy Position Y
      * @param max Max line length
-     * @param space Space between lines
+     * @param leading Space between lines
      * @param content Text content
      * @checkstyle ParameterNumberCheck (10 lines)
      */
@@ -155,7 +155,7 @@ public final class Text implements Content {
         final int posx,
         final int posy,
         final int max,
-        final int space,
+        final int leading,
         final org.cactoos.Text content
     ) {
         this.number = number;
@@ -164,7 +164,7 @@ public final class Text implements Content {
         this.posx = posx;
         this.posy = posy;
         this.max = max;
-        this.space = space;
+        this.leading = leading;
         this.content = new Escaped(content);
     }
 
@@ -204,7 +204,7 @@ public final class Text implements Content {
                 this.size,
                 this.posx,
                 this.posy,
-                this.space,
+                this.leading,
                 out.toString()
             ).asString();
         } else {

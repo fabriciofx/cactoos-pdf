@@ -32,4 +32,11 @@ import org.cactoos.Bytes;
  */
 @SuppressWarnings("PMD.ExtendsObject")
 public interface Content extends Object, Bytes {
+    /**
+     * Stream of a content.
+     *
+     * @return The stream content
+     * @throws Exception if fails
+     */
+    byte[] stream() throws Exception;
 }

@@ -180,7 +180,7 @@ public final class Text implements Content {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] stream() throws Exception {
         final StringBuilder out = new StringBuilder();
         final String[] lines = breakLines(this.content.asString(), this.max);
         for (int idx = 0; idx < lines.length - 1; ++idx) {
@@ -216,12 +216,18 @@ public final class Text implements Content {
                 out.toString()
             ).asString();
         }
+        return stream.getBytes();
+    }
+
+    @Override
+    public byte[] asBytes() throws Exception {
+        final byte[] stream = this.stream();
         return new FormattedText(
             "%d %d obj\n<< /Length %d >>\nstream\n%s\nendstream\nendobj\n",
             this.number,
             this.generation,
-            stream.length(),
-            stream
+            stream.length,
+            new String(stream)
         ).asString().getBytes();
     }
 

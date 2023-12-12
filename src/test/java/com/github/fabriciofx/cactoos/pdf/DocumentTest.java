@@ -487,4 +487,84 @@ final class DocumentTest {
             ).asBytes()
         );
     }
+
+    @Disabled
+    @Test
+    void buildEncodedFile() throws Exception {
+        final File file = new File("HelloWorld.pdf");
+        final Count count = new ObjectCount();
+        final Date date = new Date(
+            ZonedDateTime.of(
+                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
+                ZoneId.of("Etc/GMT-3")
+            )
+        );
+        Files.write(
+            file.toPath(),
+            new Document(
+                count,
+                new Information(
+                    count,
+                    new MapOf<>(
+                        new MapEntry<>("Title", "Hello World"),
+                        new MapEntry<>("Subject", "PDF document"),
+                        new MapEntry<>("Author", "Fabricio Cabral"),
+                        new MapEntry<>("Creator", "cactoos-pdf"),
+                        new MapEntry<>("Producer", "cactoos-pdf"),
+                        new MapEntry<>("CreationDate", date.asString()),
+                        new MapEntry<>("ModDate", date.asString()),
+                        new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                    )
+                ),
+                new Catalog(
+                    count,
+                    new DefaultPages(
+                        count,
+                        PageFormat.A4,
+                        new DefaultPage(
+                            count,
+                            new Resources(
+                                new Font(
+                                    count,
+                                    new FontFamily("Times-Roman", "Type1"),
+                                    "F1"
+                                )
+                            ),
+                            new Contents(
+                                new FlateEncode(
+                                    new Text(
+                                        count,
+                                        18,
+                                        0,
+                                        500,
+                                        80,
+                                        20,
+                                        new Joined(
+                                            " ",
+                                            "Lorem ea et aliquip culpa aute",
+                                            "amet elit nostrud culpa veniam",
+                                            "dolore eu irure incididunt.",
+                                            "Velit officia occaecat est",
+                                            "adipisicing mollit veniam.",
+                                            "Minim sunt est culpa labore.",
+                                            "Ut culpa et nulla sunt labore",
+                                            "aliqua ipsum laborum nostrud sit",
+                                            "deserunt officia labore. Sunt",
+                                            "laboris id labore sit ex. Eiusmod",
+                                            "nulla eu incididunt excepteur",
+                                            "minim officia dolore veniam",
+                                            "labore enim quis reprehenderit.",
+                                            "Magna in laboris irure enim non",
+                                            "deserunt laborum mollit labore",
+                                            "id amet."
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
+    }
 }

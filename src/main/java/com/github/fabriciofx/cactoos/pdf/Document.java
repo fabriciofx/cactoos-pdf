@@ -50,7 +50,7 @@ public final class Document implements Bytes {
     /**
      * PDF end of file.
      */
-    private static final String EOF = "%%%%EOF";
+    private static final String EOF = "%%EOF";
 
     /**
      * Count.

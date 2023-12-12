@@ -117,7 +117,7 @@ final class DocumentTest {
                     "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
                     "3 0 obj\n<< /Length 62 >>\nstream\nBT /F1 18 Tf 0 0 Td\n(Hello World with \\(, \\), \\\\ and \\r) Tj\nET\nendstream\nendobj",
                     "trailer << /Root 6 0 R /Size 7 /Info 1 0 R >>",
-                    "%%%%EOF"
+                    "%%EOF"
                 )
             )
         ).affirm();
@@ -220,7 +220,7 @@ final class DocumentTest {
                     "endstream",
                     "endobj",
                     "trailer << /Root 6 0 R /Size 7 /Info 1 0 R >>",
-                    "%%%%EOF"
+                    "%%EOF"
                 )
             )
         ).affirm();
@@ -309,7 +309,7 @@ final class DocumentTest {
                     "5 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
                     "6 0 obj\n<< /Length 33 >>\nstream\nBT /F1 18 Tf 0 0 Td\n(World) Tj\nET\nendstream\nendobj",
                     "trailer << /Root 9 0 R /Size 10 /Info 1 0 R >>",
-                    "%%%%EOF"
+                    "%%EOF"
                 )
             )
         ).affirm();

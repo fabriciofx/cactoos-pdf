@@ -39,18 +39,31 @@ Here an example how to build a Hello World PDF file using our API:
 
 ```java
 final File file = new File("HelloWorld.pdf");
+final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
 final Count count = new ObjectCount();
 Files.write(
     file.toPath(),
     new Document(
         count,
-        new Metadata(count, "Hello World"),
+        new Information(
+            count,
+            new MapOf<>(
+                new MapEntry<>("Title", "Hello World"),
+                new MapEntry<>("Subject", "PDF document"),
+                new MapEntry<>("Author", "Fabricio Cabral"),
+                new MapEntry<>("Creator", "cactoos-pdf"),
+                new MapEntry<>("Producer", "cactoos-pdf"),
+                new MapEntry<>("CreationDate", date.asString()),
+                new MapEntry<>("ModDate", date.asString()),
+                new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+            )
+        ),
         new Catalog(
             count,
-            new Pages(
+            new DefaultPages(
                 count,
                 PageFormat.A4,
-                new Page(
+                new DefaultPage(
                     count,
                     new Resources(
                         new Font(
@@ -60,12 +73,14 @@ Files.write(
                         )
                     ),
                     new Contents(
-                        new Text(
-                            count,
-                            18,
-                            0,
-                            0,
-                            "Hello World"
+                        new FlateEncode(
+                            new Text(
+                                count,
+                                18,
+                                0,
+                                0,
+                                "Hello World"
+                            )
                         )
                     )
                 )

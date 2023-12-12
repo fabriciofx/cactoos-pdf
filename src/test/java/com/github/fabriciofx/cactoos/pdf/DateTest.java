@@ -23,9 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
@@ -40,12 +37,7 @@ final class DateTest {
     void show() throws Exception {
         new Assertion<>(
             "Must represent a PDF date",
-            new Date(
-                ZonedDateTime.of(
-                    LocalDateTime.of(2023, 12, 11, 20, 11, 32),
-                    ZoneId.of("Etc/GMT-3")
-                )
-            ),
+            new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3"),
             new IsText("D:20231211201132+03'00'")
         ).affirm();
     }

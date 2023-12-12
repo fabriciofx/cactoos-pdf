@@ -23,6 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.cactoos.Text;
@@ -44,6 +46,35 @@ public final class Date implements Text {
      */
     public Date() {
         this(ZonedDateTime.now());
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param year Year
+     * @param month Month
+     * @param day Day
+     * @param hour Hour
+     * @param minute Minute
+     * @param second Seconde
+     * @param zone Zone ID
+     * @checkstyle ParameterNumberCheck (15 lines)
+     */
+    public Date(
+        final int year,
+        final int month,
+        final int day,
+        final int hour,
+        final int minute,
+        final int second,
+        final String zone
+    ) {
+        this(
+            ZonedDateTime.of(
+                LocalDateTime.of(year, month, day, hour, minute, second),
+                ZoneId.of(zone)
+            )
+        );
     }
 
     /**

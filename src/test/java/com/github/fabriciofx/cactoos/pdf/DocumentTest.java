@@ -33,9 +33,6 @@ import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import java.io.File;
 import java.nio.file.Files;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.text.Joined;
@@ -60,12 +57,7 @@ final class DocumentTest {
     @Test
     void buildDocument() throws Exception {
         final Count count = new ObjectCount();
-        final Date date = new Date(
-            ZonedDateTime.of(
-                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
-                ZoneId.of("Etc/GMT-3")
-            )
-        );
+        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
@@ -134,12 +126,7 @@ final class DocumentTest {
     @Test
     void buildMultiTextDocument() throws Exception {
         final Count count = new ObjectCount();
-        final Date date = new Date(
-            ZonedDateTime.of(
-                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
-                ZoneId.of("Etc/GMT-3")
-            )
-        );
+        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
@@ -242,12 +229,7 @@ final class DocumentTest {
     @Test
     void buildTwoPagesDocument() throws Exception {
         final Count count = new ObjectCount();
-        final Date date = new Date(
-            ZonedDateTime.of(
-                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
-                ZoneId.of("Etc/GMT-3")
-            )
-        );
+        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         new Assertion<>(
             "Must represent a two pages PDF document",
             new TextOf(
@@ -338,12 +320,7 @@ final class DocumentTest {
     void buildFile() throws Exception {
         final File file = new File("HelloWorld.pdf");
         final Count count = new ObjectCount();
-        final Date date = new Date(
-            ZonedDateTime.of(
-                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
-                ZoneId.of("Etc/GMT-3")
-            )
-        );
+        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         Files.write(
             file.toPath(),
             new Document(
@@ -415,12 +392,7 @@ final class DocumentTest {
     void buildMultiFile() throws Exception {
         final File file = new File("HelloWorld.pdf");
         final Count count = new ObjectCount();
-        final Date date = new Date(
-            ZonedDateTime.of(
-                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
-                ZoneId.of("Etc/GMT-3")
-            )
-        );
+        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         Files.write(
             file.toPath(),
             new Document(
@@ -493,12 +465,7 @@ final class DocumentTest {
     void buildEncodedFile() throws Exception {
         final File file = new File("HelloWorld.pdf");
         final Count count = new ObjectCount();
-        final Date date = new Date(
-            ZonedDateTime.of(
-                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
-                ZoneId.of("Etc/GMT-3")
-            )
-        );
+        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         Files.write(
             file.toPath(),
             new Document(

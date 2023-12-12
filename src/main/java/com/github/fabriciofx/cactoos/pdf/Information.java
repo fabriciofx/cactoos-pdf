@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import java.util.Map;
 import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
@@ -44,18 +45,20 @@ public final class Information implements Object, Bytes {
     private final int generation;
 
     /**
-     * PDF title.
+     * Metadata.
      */
-    private final String title;
+    private final Map<String, String> metadata;
 
     /**
      * Ctor.
      *
      * @param count Counter
-     * @param title PDF title
+     * @param metadata Metadata
      */
-    public Information(final Count count, final String title) {
-        this(count.increment(), 0, title);
+    public Information(
+        final Count count, final Map<String, String> metadata
+    ) {
+        this(count.increment(), 0, metadata);
     }
 
     /**
@@ -63,16 +66,16 @@ public final class Information implements Object, Bytes {
      *
      * @param number Object number
      * @param generation Object generation
-     * @param title PDF title
+     * @param metadata Metadata
      */
     public Information(
         final int number,
         final int generation,
-        final String title
+        final Map<String, String> metadata
     ) {
         this.number = number;
         this.generation = generation;
-        this.title = title;
+        this.metadata = metadata;
     }
 
     @Override
@@ -88,11 +91,40 @@ public final class Information implements Object, Bytes {
 
     @Override
     public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "%d %d obj\n<< /Title (%s) >>\nendobj\n",
-            this.number,
-            this.generation,
-            this.title
-        ).asString().getBytes();
+        final StringBuilder params = new StringBuilder(128);
+        params.append(this.number)
+            .append(' ')
+            .append(this.generation)
+            .append(" obj\n<<");
+        addIfContains(params, this.metadata, "Title");
+        addIfContains(params, this.metadata, "Subject");
+        addIfContains(params, this.metadata, "Author");
+        addIfContains(params, this.metadata, "Creator");
+        addIfContains(params, this.metadata, "Producer");
+        addIfContains(params, this.metadata, "CreationDate");
+        addIfContains(params, this.metadata, "ModDate");
+        addIfContains(params, this.metadata, "Keywords");
+        params.append(" >>\nendobj\n");
+        return params.toString().getBytes();
+    }
+
+    /**
+     * Add a metadata to builder if metadata contains data.
+     *
+     * @param builder A StringBuilder
+     * @param metadata The metadata map
+     * @param data The data
+     */
+    private static void addIfContains(
+        final StringBuilder builder,
+        final Map<String, String> metadata,
+        final String data
+    ) {
+        if (metadata.containsKey(data)) {
+            builder.append(" /")
+                .append(data).append(" (")
+                .append(metadata.get(data))
+                .append(')');
+        }
     }
 }

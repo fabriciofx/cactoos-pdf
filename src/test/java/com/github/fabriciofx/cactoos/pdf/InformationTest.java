@@ -23,7 +23,13 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
 import org.cactoos.text.FormattedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -37,14 +43,46 @@ import org.llorllale.cactoos.matchers.IsText;
 final class InformationTest {
     @Test
     void info() throws Exception {
-        final String title = "Hello World";
+        final Date date = new Date(
+            ZonedDateTime.of(
+                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
+                ZoneId.of("Etc/GMT-3")
+            )
+        );
         new Assertion<>(
             "Must contain metadata contents",
-            new TextOf(new Information(1, 0, title)),
+            new TextOf(
+                new Information(
+                    new ObjectCount(),
+                    new MapOf<>(
+                        new MapEntry<>("Title", "Hello World"),
+                        new MapEntry<>("Subject", "PDF document"),
+                        new MapEntry<>("Author", "Fabricio Cabral"),
+                        new MapEntry<>("Creator", "cactoos-pdf"),
+                        new MapEntry<>("Producer", "cactoos-pdf"),
+                        new MapEntry<>("CreationDate", date.asString()),
+                        new MapEntry<>("ModDate", date.asString()),
+                        new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                    )
+                )
+            ),
             new IsText(
                 new FormattedText(
-                    "1 0 obj\n<< /Title (Hello World) >>\nendobj\n",
-                    title
+                    new Joined(
+                        " ",
+                        "1 0 obj\n<<",
+                        "/Title (Hello World)",
+                        "/Subject (PDF document)",
+                        "/Author (Fabricio Cabral)",
+                        "/Creator (cactoos-pdf)",
+                        "/Producer (cactoos-pdf)",
+                        "/CreationDate (%s)",
+                        "/ModDate (%s)",
+                        "/Keywords (cactoos pdf elegant objects)",
+                        ">>\nendobj\n"
+                    ),
+                    date.asString(),
+                    date.asString()
                 )
             )
         ).affirm();

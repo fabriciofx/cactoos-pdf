@@ -33,6 +33,11 @@ import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import java.io.File;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Disabled;
@@ -45,17 +50,40 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings(
+    {
+        "PMD.AvoidDuplicateLiterals",
+        "PMD.ExcessiveMethodLength"
+    }
+)
 final class DocumentTest {
     @Test
-    void buildDocument() {
+    void buildDocument() throws Exception {
         final Count count = new ObjectCount();
+        final Date date = new Date(
+            ZonedDateTime.of(
+                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
+                ZoneId.of("Etc/GMT-3")
+            )
+        );
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
                 new Document(
                     count,
-                    new Information(count, "Hello World"),
+                    new Information(
+                        count,
+                        new MapOf<>(
+                            new MapEntry<>("Title", "Hello World"),
+                            new MapEntry<>("Subject", "PDF document"),
+                            new MapEntry<>("Author", "Fabricio Cabral"),
+                            new MapEntry<>("Creator", "cactoos-pdf"),
+                            new MapEntry<>("Producer", "cactoos-pdf"),
+                            new MapEntry<>("CreationDate", date.asString()),
+                            new MapEntry<>("ModDate", date.asString()),
+                            new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                        )
+                    ),
                     new Catalog(
                         count,
                         new DefaultPages(
@@ -90,7 +118,7 @@ final class DocumentTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "1 0 obj\n<< /Title (Hello World) >>\nendobj",
+                    "1 0 obj\n<< /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>\nendobj",
                     "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
                     "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
                     "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
@@ -104,14 +132,32 @@ final class DocumentTest {
     }
 
     @Test
-    void buildMultiTextDocument() {
+    void buildMultiTextDocument() throws Exception {
         final Count count = new ObjectCount();
+        final Date date = new Date(
+            ZonedDateTime.of(
+                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
+                ZoneId.of("Etc/GMT-3")
+            )
+        );
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
                 new Document(
                     count,
-                    new Information(count, "Hello World"),
+                    new Information(
+                        count,
+                        new MapOf<>(
+                            new MapEntry<>("Title", "Hello World"),
+                            new MapEntry<>("Subject", "PDF document"),
+                            new MapEntry<>("Author", "Fabricio Cabral"),
+                            new MapEntry<>("Creator", "cactoos-pdf"),
+                            new MapEntry<>("Producer", "cactoos-pdf"),
+                            new MapEntry<>("CreationDate", date.asString()),
+                            new MapEntry<>("ModDate", date.asString()),
+                            new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                        )
+                    ),
                     new Catalog(
                         count,
                         new DefaultPages(
@@ -164,7 +210,7 @@ final class DocumentTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "1 0 obj\n<< /Title (Hello World) >>\nendobj",
+                    "1 0 obj\n<< /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>\nendobj",
                     "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
                     "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
                     "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
@@ -194,14 +240,32 @@ final class DocumentTest {
     }
 
     @Test
-    void buildTwoPagesDocument() {
+    void buildTwoPagesDocument() throws Exception {
         final Count count = new ObjectCount();
+        final Date date = new Date(
+            ZonedDateTime.of(
+                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
+                ZoneId.of("Etc/GMT-3")
+            )
+        );
         new Assertion<>(
             "Must represent a two pages PDF document",
             new TextOf(
                 new Document(
                     count,
-                    new Information(count, "Hello World"),
+                    new Information(
+                        count,
+                        new MapOf<>(
+                            new MapEntry<>("Title", "Hello World"),
+                            new MapEntry<>("Subject", "PDF document"),
+                            new MapEntry<>("Author", "Fabricio Cabral"),
+                            new MapEntry<>("Creator", "cactoos-pdf"),
+                            new MapEntry<>("Producer", "cactoos-pdf"),
+                            new MapEntry<>("CreationDate", date.asString()),
+                            new MapEntry<>("ModDate", date.asString()),
+                            new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                        )
+                    ),
                     new Catalog(
                         count,
                         new DefaultPages(
@@ -253,7 +317,7 @@ final class DocumentTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "1 0 obj\n<< /Title (Hello World) >>\nendobj",
+                    "1 0 obj\n<< /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>\nendobj",
                     "9 0 obj\n<< /Type /Catalog /Pages 8 0 R >>\nendobj",
                     "8 0 obj\n<< /Type /Pages /Kids [4 0 R 7 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
                     "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 8 0 R >>\nendobj",
@@ -274,11 +338,29 @@ final class DocumentTest {
     void buildFile() throws Exception {
         final File file = new File("HelloWorld.pdf");
         final Count count = new ObjectCount();
+        final Date date = new Date(
+            ZonedDateTime.of(
+                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
+                ZoneId.of("Etc/GMT-3")
+            )
+        );
         Files.write(
             file.toPath(),
             new Document(
                 count,
-                new Information(count, "Hello World"),
+                new Information(
+                    count,
+                    new MapOf<>(
+                        new MapEntry<>("Title", "Hello World"),
+                        new MapEntry<>("Subject", "PDF document"),
+                        new MapEntry<>("Author", "Fabricio Cabral"),
+                        new MapEntry<>("Creator", "cactoos-pdf"),
+                        new MapEntry<>("Producer", "cactoos-pdf"),
+                        new MapEntry<>("CreationDate", date.asString()),
+                        new MapEntry<>("ModDate", date.asString()),
+                        new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                    )
+                ),
                 new Catalog(
                     count,
                     new DefaultPages(
@@ -333,11 +415,29 @@ final class DocumentTest {
     void buildMultiFile() throws Exception {
         final File file = new File("HelloWorld.pdf");
         final Count count = new ObjectCount();
+        final Date date = new Date(
+            ZonedDateTime.of(
+                LocalDateTime.of(2023, 12, 11, 20, 11, 32),
+                ZoneId.of("Etc/GMT-3")
+            )
+        );
         Files.write(
             file.toPath(),
             new Document(
                 count,
-                new Information(count, "Hello World"),
+                new Information(
+                    count,
+                    new MapOf<>(
+                        new MapEntry<>("Title", "Hello World"),
+                        new MapEntry<>("Subject", "PDF document"),
+                        new MapEntry<>("Author", "Fabricio Cabral"),
+                        new MapEntry<>("Creator", "cactoos-pdf"),
+                        new MapEntry<>("Producer", "cactoos-pdf"),
+                        new MapEntry<>("CreationDate", date.asString()),
+                        new MapEntry<>("ModDate", date.asString()),
+                        new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                    )
+                ),
                 new Catalog(
                     count,
                     new DefaultPages(

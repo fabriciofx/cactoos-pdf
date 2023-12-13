@@ -71,11 +71,7 @@ final class DocumentTest {
         );
         final Count count = new ObjectCount();
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final String filename = new Joined(
-            "/",
-            "src/test/resources/com/github/fabriciofx/cactoos/pdf",
-            "HelloWorld.pdf"
-        ).asString();
+        final String filename = "src/test/resources/document/HelloWorld.pdf";
         final byte[] expected = Files.readAllBytes(
             new File(filename).toPath()
         );

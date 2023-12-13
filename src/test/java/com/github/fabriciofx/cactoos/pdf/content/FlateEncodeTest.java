@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.content;
 
-import com.github.fabriciofx.cactoos.pdf.content.Text;
+import com.github.fabriciofx.cactoos.pdf.Content;
+import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;

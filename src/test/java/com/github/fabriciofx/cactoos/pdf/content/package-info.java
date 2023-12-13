@@ -21,44 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * AtomicCount.
+ * Tests for Content.
  *
  * @since 0.0.1
  */
-public final class ObjectCount implements Count {
-    /**
-     * Seed.
-     */
-    private final AtomicInteger seed;
-
-    /**
-     * Ctor.
-     */
-    public ObjectCount() {
-        this(new AtomicInteger(1));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param seed Seed to start counting
-     */
-    public ObjectCount(final AtomicInteger seed) {
-        this.seed = seed;
-    }
-
-    @Override
-    public Integer value() {
-        return this.seed.get();
-    }
-
-    @Override
-    public int increment() {
-        return this.seed.getAndIncrement();
-    }
-}
+package com.github.fabriciofx.cactoos.pdf.content;

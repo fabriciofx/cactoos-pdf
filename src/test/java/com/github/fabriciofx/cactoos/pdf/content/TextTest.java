@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.content;
 
-import com.github.fabriciofx.cactoos.pdf.content.Text;
+import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;

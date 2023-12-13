@@ -39,11 +39,10 @@ import java.nio.file.Files;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.text.Joined;
-import org.cactoos.text.TextOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Document}.
@@ -59,179 +58,119 @@ import org.llorllale.cactoos.matchers.IsText;
 final class DocumentTest {
     @Test
     void buildDocument() throws Exception {
+        final org.cactoos.Text content = new Joined(
+            " ",
+            "Lorem ea et aliquip culpa aute amet elit nostrud culpa veniam",
+            "dolore eu irure incididunt. Velit officia occaecat est",
+            "adipisicing mollit veniam. Minim sunt est culpa labore.",
+            "Ut culpa et nulla sunt labore aliqua ipsum laborum nostrud sit",
+            "deserunt officia labore. Sunt laboris id labore sit ex. Eiusmod",
+            "nulla eu incididunt excepteur minim officia dolore veniam",
+            "labore enim quis reprehenderit. Magna in laboris irure enim non",
+            "deserunt laborum mollit labore id amet."
+        );
         final Count count = new ObjectCount();
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        new Assertion<>(
-            "Must represent a PDF document",
-            new TextOf(
-                new Document(
+        final String filename = new Joined(
+            "/",
+            "src/test/resources/com/github/fabriciofx/cactoos/pdf",
+            "HelloWorld.pdf"
+        ).asString();
+        final byte[] expected = Files.readAllBytes(
+            new File(filename).toPath()
+        );
+        final byte[] actual = new Document(
+            count,
+            new Information(
+                count,
+                new MapOf<>(
+                    new MapEntry<>("Title", "Hello World"),
+                    new MapEntry<>("Subject", "PDF document"),
+                    new MapEntry<>("Author", "Fabricio Cabral"),
+                    new MapEntry<>("Creator", "cactoos-pdf"),
+                    new MapEntry<>("Producer", "cactoos-pdf"),
+                    new MapEntry<>("CreationDate", date.asString()),
+                    new MapEntry<>("ModDate", date.asString()),
+                    new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                )
+            ),
+            new Catalog(
+                count,
+                new DefaultPages(
                     count,
-                    new Information(
+                    PageFormat.A4,
+                    new DefaultPage(
                         count,
-                        new MapOf<>(
-                            new MapEntry<>("Title", "Hello World"),
-                            new MapEntry<>("Subject", "PDF document"),
-                            new MapEntry<>("Author", "Fabricio Cabral"),
-                            new MapEntry<>("Creator", "cactoos-pdf"),
-                            new MapEntry<>("Producer", "cactoos-pdf"),
-                            new MapEntry<>("CreationDate", date.asString()),
-                            new MapEntry<>("ModDate", date.asString()),
-                            new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                        new Resources(
+                            new Font(
+                                count,
+                                new FontFamily("Times-Roman", "Type1"),
+                                "F1"
+                            )
+                        ),
+                        new Contents(
+                            new FlateEncode(
+                                new Text(count, 18, 0, 500, 80, 20, content)
+                            )
                         )
                     ),
-                    new Catalog(
-                        count,
-                        new DefaultPages(
+                    new Rotate(
+                        new DefaultPage(
                             count,
-                            PageFormat.A4,
-                            new DefaultPage(
-                                count,
-                                new Resources(
-                                    new Font(
-                                        count,
-                                        new FontFamily("Times-Roman", "Type1"),
-                                        "F1"
-                                    )
-                                ),
-                                new Contents(
-                                    new Text(
-                                        count,
-                                        18,
-                                        0,
-                                        0,
-                                        new TextOf(
-                                            "Hello World with (, ), \\ and \r"
-                                        )
-                                    )
+                            new Resources(
+                                new Font(
+                                    count,
+                                    new FontFamily("Times-Roman", "Type1"),
+                                    "F1"
                                 )
+                            ),
+                            new Contents(
+                                new FlateEncode(
+                                    new Text(count, 18, 0, 500, 80, 20, content)
+                                )
+                            )
+                        ),
+                        90
+                    ),
+                    new DefaultPage(
+                        count,
+                        new Resources(
+                            new Font(
+                                count,
+                                new FontFamily("Times-Roman", "Type1"),
+                                "F1"
+                            )
+                        ),
+                        new Contents(
+                            new FlateEncode(
+                                new Text(count, 18, 0, 500, 80, 20, content)
                             )
                         )
                     )
                 )
-            ),
-            new IsText(
-                new Joined(
-                    "\n",
-                    "%PDF-1.3\n%���������",
-                    "1 0 obj\n<< /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>\nendobj",
-                    "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
-                    "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
-                    "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
-                    "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                    "3 0 obj\n<< /Length 62 >>\nstream\nBT /F1 18 Tf 0 0 Td\n(Hello World with \\(, \\), \\\\ and \\r) Tj\nET\nendstream\nendobj",
-                    "trailer << /Root 6 0 R /Size 7 /Info 1 0 R >>",
-                    "%%EOF"
-                )
             )
-        ).affirm();
-    }
-
-    @Test
-    void buildMultiTextDocument() throws Exception {
-        final Count count = new ObjectCount();
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
+        ).asBytes();
         new Assertion<>(
-            "Must represent a PDF document",
-            new TextOf(
-                new Document(
-                    count,
-                    new Information(
-                        count,
-                        new MapOf<>(
-                            new MapEntry<>("Title", "Hello World"),
-                            new MapEntry<>("Subject", "PDF document"),
-                            new MapEntry<>("Author", "Fabricio Cabral"),
-                            new MapEntry<>("Creator", "cactoos-pdf"),
-                            new MapEntry<>("Producer", "cactoos-pdf"),
-                            new MapEntry<>("CreationDate", date.asString()),
-                            new MapEntry<>("ModDate", date.asString()),
-                            new MapEntry<>("Keywords", "cactoos pdf elegant objects")
-                        )
-                    ),
-                    new Catalog(
-                        count,
-                        new DefaultPages(
-                            count,
-                            PageFormat.A4,
-                            new DefaultPage(
-                                count,
-                                new Resources(
-                                    new Font(
-                                        count,
-                                        new FontFamily("Times-Roman", "Type1"),
-                                        "F1"
-                                    )
-                                ),
-                                new Contents(
-                                    new Text(
-                                        count,
-                                        18,
-                                        0,
-                                        0,
-                                        50,
-                                        20,
-                                        new Joined(
-                                            " ",
-                                            "Lorem ea et aliquip culpa aute",
-                                            "amet elit nostrud culpa veniam",
-                                            "dolore eu irure incididunt.",
-                                            "Velit officia occaecat est",
-                                            "adipisicing mollit veniam.",
-                                            "Minim sunt est culpa labore.",
-                                            "Ut culpa et nulla sunt labore",
-                                            "aliqua ipsum laborum nostrud sit",
-                                            "deserunt officia labore. Sunt",
-                                            "laboris id labore sit ex. Eiusmod",
-                                            "nulla eu incididunt excepteur",
-                                            "minim officia dolore veniam",
-                                            "labore enim quis reprehenderit.",
-                                            "Magna in laboris irure enim non",
-                                            "deserunt laborum mollit labore",
-                                            "id amet."
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            ),
-            new IsText(
-                new Joined(
-                    "\n",
-                    "%PDF-1.3\n%���������",
-                    "1 0 obj\n<< /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>\nendobj",
-                    "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
-                    "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
-                    "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 5 0 R >>\nendobj",
-                    "2 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                    "3 0 obj",
-                    "<< /Length 567 >>",
-                    "stream",
-                    "BT /F1 18 Tf 0 0 Td 20 TL",
-                    "(Lorem ea et aliquip culpa aute amet elit nostrud) Tj T*",
-                    "(culpa veniam dolore eu irure incididunt. Velit) Tj T*",
-                    "(officia occaecat est adipisicing mollit veniam.) Tj T*",
-                    "(Minim sunt est culpa labore. Ut culpa et nulla) Tj T*",
-                    "(sunt labore aliqua ipsum laborum nostrud sit) Tj T*",
-                    "(deserunt officia labore. Sunt laboris id labore) Tj T*",
-                    "(sit ex. Eiusmod nulla eu incididunt excepteur) Tj T*",
-                    "(minim officia dolore veniam labore enim quis) Tj T*",
-                    "(reprehenderit. Magna in laboris irure enim non) Tj T*",
-                    "(deserunt laborum mollit labore id amet.) Tj",
-                    "ET",
-                    "endstream",
-                    "endobj",
-                    "trailer << /Root 6 0 R /Size 7 /Info 1 0 R >>",
-                    "%%EOF"
-                )
-            )
+            "Must match with HelloWorld PDF document",
+            expected,
+            new IsEqual<>(actual)
         ).affirm();
     }
 
     @Disabled
     @Test
     void buildFile() throws Exception {
+        final org.cactoos.Text content = new Joined(
+            " ",
+            "Lorem ea et aliquip culpa aute amet elit nostrud culpa veniam",
+            "dolore eu irure incididunt. Velit officia occaecat est",
+            "adipisicing mollit veniam. Minim sunt est culpa labore.",
+            "Ut culpa et nulla sunt labore aliqua ipsum laborum nostrud sit",
+            "deserunt officia labore. Sunt laboris id labore sit ex. Eiusmod",
+            "nulla eu incididunt excepteur minim officia dolore veniam",
+            "labore enim quis reprehenderit. Magna in laboris irure enim non",
+            "deserunt laborum mollit labore id amet."
+        );
         final File file = new File("HelloWorld.pdf");
         final Count count = new ObjectCount();
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
@@ -249,7 +188,10 @@ final class DocumentTest {
                         new MapEntry<>("Producer", "cactoos-pdf"),
                         new MapEntry<>("CreationDate", date.asString()),
                         new MapEntry<>("ModDate", date.asString()),
-                        new MapEntry<>("Keywords", "cactoos pdf elegant objects")
+                        new MapEntry<>(
+                            "Keywords",
+                            "cactoos pdf elegant objects"
+                        )
                     )
                 ),
                 new Catalog(
@@ -267,141 +209,11 @@ final class DocumentTest {
                                 )
                             ),
                             new Contents(
-                                new Text(
-                                    count,
-                                    18,
-                                    0,
-                                    0,
-                                    new TextOf("Hello")
+                                new FlateEncode(
+                                    new Text(count, 18, 0, 500, 80, 20, content)
                                 )
                             )
                         ),
-                        new DefaultPage(
-                            count,
-                            new Resources(
-                                new Font(
-                                    count,
-                                    new FontFamily("Times-Roman", "Type1"),
-                                    "F1"
-                                )
-                            ),
-                            new Contents(
-                                new Text(
-                                    count,
-                                    18,
-                                    0,
-                                    0,
-                                    new TextOf("World")
-                                )
-                            )
-                        )
-                    )
-                )
-            ).asBytes()
-        );
-    }
-
-    @Disabled
-    @Test
-    void buildMultiFile() throws Exception {
-        final File file = new File("HelloWorld.pdf");
-        final Count count = new ObjectCount();
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        Files.write(
-            file.toPath(),
-            new Document(
-                count,
-                new Information(
-                    count,
-                    new MapOf<>(
-                        new MapEntry<>("Title", "Hello World"),
-                        new MapEntry<>("Subject", "PDF document"),
-                        new MapEntry<>("Author", "Fabricio Cabral"),
-                        new MapEntry<>("Creator", "cactoos-pdf"),
-                        new MapEntry<>("Producer", "cactoos-pdf"),
-                        new MapEntry<>("CreationDate", date.asString()),
-                        new MapEntry<>("ModDate", date.asString()),
-                        new MapEntry<>("Keywords", "cactoos pdf elegant objects")
-                    )
-                ),
-                new Catalog(
-                    count,
-                    new DefaultPages(
-                        count,
-                        PageFormat.A4,
-                        new DefaultPage(
-                            count,
-                            new Resources(
-                                new Font(
-                                    count,
-                                    new FontFamily("Times-Roman", "Type1"),
-                                    "F1"
-                                )
-                            ),
-                            new Contents(
-                                new Text(
-                                    count,
-                                    18,
-                                    0,
-                                    500,
-                                    80,
-                                    20,
-                                    new Joined(
-                                        " ",
-                                        "Lorem ea et aliquip culpa aute",
-                                        "amet elit nostrud culpa veniam",
-                                        "dolore eu irure incididunt.",
-                                        "Velit officia occaecat est",
-                                        "adipisicing mollit veniam.",
-                                        "Minim sunt est culpa labore.",
-                                        "Ut culpa et nulla sunt labore",
-                                        "aliqua ipsum laborum nostrud sit",
-                                        "deserunt officia labore. Sunt",
-                                        "laboris id labore sit ex. Eiusmod",
-                                        "nulla eu incididunt excepteur",
-                                        "minim officia dolore veniam",
-                                        "labore enim quis reprehenderit.",
-                                        "Magna in laboris irure enim non",
-                                        "deserunt laborum mollit labore",
-                                        "id amet."
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            ).asBytes()
-        );
-    }
-
-    @Disabled
-    @Test
-    void buildEncodedFile() throws Exception {
-        final File file = new File("HelloWorld.pdf");
-        final Count count = new ObjectCount();
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        Files.write(
-            file.toPath(),
-            new Document(
-                count,
-                new Information(
-                    count,
-                    new MapOf<>(
-                        new MapEntry<>("Title", "Hello World"),
-                        new MapEntry<>("Subject", "PDF document"),
-                        new MapEntry<>("Author", "Fabricio Cabral"),
-                        new MapEntry<>("Creator", "cactoos-pdf"),
-                        new MapEntry<>("Producer", "cactoos-pdf"),
-                        new MapEntry<>("CreationDate", date.asString()),
-                        new MapEntry<>("ModDate", date.asString()),
-                        new MapEntry<>("Keywords", "cactoos pdf elegant objects")
-                    )
-                ),
-                new Catalog(
-                    count,
-                    new DefaultPages(
-                        count,
-                        PageFormat.A4,
                         new Rotate(
                             new DefaultPage(
                                 count,
@@ -421,30 +233,27 @@ final class DocumentTest {
                                             500,
                                             80,
                                             20,
-                                            new Joined(
-                                                " ",
-                                                "Lorem ea et aliquip culpa aute",
-                                                "amet elit nostrud culpa veniam",
-                                                "dolore eu irure incididunt.",
-                                                "Velit officia occaecat est",
-                                                "adipisicing mollit veniam.",
-                                                "Minim sunt est culpa labore.",
-                                                "Ut culpa et nulla sunt labore",
-                                                "aliqua ipsum laborum nostrud sit",
-                                                "deserunt officia labore. Sunt",
-                                                "laboris id labore sit ex. Eiusmod",
-                                                "nulla eu incididunt excepteur",
-                                                "minim officia dolore veniam",
-                                                "labore enim quis reprehenderit.",
-                                                "Magna in laboris irure enim non",
-                                                "deserunt laborum mollit labore",
-                                                "id amet."
-                                            )
+                                            content
                                         )
                                     )
                                 )
                             ),
                             90
+                        ),
+                        new DefaultPage(
+                            count,
+                            new Resources(
+                                new Font(
+                                    count,
+                                    new FontFamily("Times-Roman", "Type1"),
+                                    "F1"
+                                )
+                            ),
+                            new Contents(
+                                new FlateEncode(
+                                    new Text(count, 18, 0, 500, 80, 20, content)
+                                )
+                            )
                         )
                     )
                 )

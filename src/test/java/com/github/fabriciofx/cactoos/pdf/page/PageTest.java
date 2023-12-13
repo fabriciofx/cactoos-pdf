@@ -44,7 +44,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Test case for {@link Page}.
+ * Test case for {@link com.github.fabriciofx.cactoos.pdf.Page}.
  *
  * @since 0.0.1
  */

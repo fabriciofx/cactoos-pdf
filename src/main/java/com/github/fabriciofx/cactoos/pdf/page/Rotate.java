@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
-import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
@@ -33,99 +32,56 @@ import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
 /**
- * PageDefault.
+ * Rotate a Page in a angle.
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
-public final class DefaultPage implements Page {
+public final class Rotate implements Page {
     /**
-     * Object number.
+     * The Page.
      */
-    private final int number;
+    private final Page origin;
 
     /**
-     * Object generation.
+     * Angle.
      */
-    private final int generation;
-
-    /**
-     * Resources.
-     */
-    private final Resources resources;
-
-    /**
-     * Page contents.
-     */
-    private final Contents contents;
+    private final int angle;
 
     /**
      * Ctor.
      *
-     * @param count Counter
-     * @param resources List of resources
-     * @param contents Page contents
+     * @param page The Page
+     * @param angle The angle
      */
-    public DefaultPage(
-        final Count count,
-        final Resources resources,
-        final Contents contents
-    ) {
-        this(count.increment(), 0, resources, contents);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param number Object number
-     * @param generation Object generation
-     * @param resources List of resources
-     * @param contents Page contents
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public DefaultPage(
-        final int number,
-        final int generation,
-        final Resources resources,
-        final Contents contents
-    ) {
-        this.number = number;
-        this.generation = generation;
-        this.resources = resources;
-        this.contents = contents;
+    public Rotate(final Page page, final int angle) {
+        this.origin = page;
+        this.angle = angle;
     }
 
     @Override
     public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+        return this.origin.reference();
     }
 
     @Override
     public String dictionary(final Pages parent) {
         return new UncheckedText(
             new FormattedText(
-                "/Type /Page /Resources %s /Contents %s /Parent %s",
-                this.resources.reference(),
-                this.contents.reference(),
-                parent.reference()
+                "%s /Rotate %d",
+                this.origin.dictionary(parent),
+                this.angle
             )
         ).asString();
     }
 
     @Override
     public Resources resources() {
-        return this.resources;
+        return this.origin.resources();
     }
 
     @Override
     public Contents contents() {
-        return this.contents;
+        return this.origin.contents();
     }
 
     @Override
@@ -133,14 +89,13 @@ public final class DefaultPage implements Page {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
-                "%d %d obj\n<< %s >>\nendobj\n",
-                this.number,
-                this.generation,
+                "%s obj\n<< %s >>\nendobj\n",
+                this.origin.reference().replaceAll(" R", ""),
                 this.dictionary(parent)
             ).asString().getBytes()
         );
-        baos.write(this.resources.asBytes());
-        baos.write(this.contents.asBytes());
+        baos.write(this.resources().asBytes());
+        baos.write(this.contents().asBytes());
         return baos.toByteArray();
     }
 }

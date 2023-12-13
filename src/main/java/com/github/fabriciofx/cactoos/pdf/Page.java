@@ -23,6 +23,9 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.content.Contents;
+import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+
 /**
  * PageDefault.
  *
@@ -30,6 +33,26 @@ package com.github.fabriciofx.cactoos.pdf;
  */
 @SuppressWarnings("PMD.ExtendsObject")
 public interface Page extends Object {
+    /**
+     * Build the Page dictionary.
+     *
+     * @param parent Pages parent
+     * @return The page dictionary
+     */
+    String dictionary(Pages parent);
+
+    /**
+     * Page Resources.
+     * @return Resources
+     */
+    Resources resources();
+
+    /**
+     * Page Contents.
+     * @return Contents
+     */
+    Contents contents();
+
     /**
      * Build a PDF page.
      *

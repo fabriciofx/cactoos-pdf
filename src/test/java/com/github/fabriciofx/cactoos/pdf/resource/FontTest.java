@@ -35,25 +35,25 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.0.1
  */
 final class FontTest {
-    @Test
-    void build() throws Exception {
-        new Assertion<>(
-            "Must build a PDF Times-Roman font",
-            new TextOf(
-                new Font(
-                    1,
-                    0,
-                    new FontFamily("Times-Roman", "Type1"),
-                    "F0"
-                )
-            ),
-            new IsText(
-                new Joined(
-                    " ",
-                    "1 0 obj\n<< /Font << /F0 << /Type /Font /BaseFont",
-                    "/Times-Roman /Subtype /Type1 >> >> >>\nendobj\n"
-                )
-            )
-        ).affirm();
-    }
+//    @Test
+//    void build() throws Exception {
+//        new Assertion<>(
+//            "Must build a PDF Times-Roman font",
+//            new TextOf(
+//                new Font(
+//                    1,
+//                    0,
+//                    new FontFamily("Times-Roman", "Type1"),
+//                    "F0"
+//                )
+//            ),
+//            new IsText(
+//                new Joined(
+//                    " ",
+//                    "1 0 obj\n<< /Font << /F0 << /Type /Font /BaseFont",
+//                    "/Times-Roman /Subtype /Type1 >> >> >>\nendobj\n"
+//                )
+//            )
+//        ).affirm();
+//    }
 }

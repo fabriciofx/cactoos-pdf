@@ -21,47 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.resource;
+package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.Resource;
-import org.cactoos.text.FormattedText;
+import java.io.ByteArrayInputStream;
 
-/**
- * Font.
- *
- * @since 0.0.1
- */
-public final class Font implements Resource {
-    /**
-     * Font family.
-     */
-    private final FontFamily family;
-    /**
-     * Font name.
-     */
-    private final String name;
+public final class Flow {
+    private final ByteArrayInputStream stream;
 
-    /**
-     * Ctor.
-     *
-     * @param family Font family
-     * @param name Font name
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public Font(
-        final FontFamily family,
-        final String name
-    ) {
-        this.family = family;
-        this.name = name;
+    public Flow(final byte[] bytes) {
+        this(new ByteArrayInputStream(bytes));
     }
 
-    @Override
-    public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "/Font << /%s %s >>",
-            this.name,
-            new String(this.family.asBytes())
-        ).asString().getBytes();
+    public Flow(final ByteArrayInputStream stream) {
+        this.stream = stream;
+    }
+
+    public String asString(final int length) throws Exception {
+        return new String(this.stream.readNBytes(length));
+    }
+
+    public byte[] asBytes(final int length) throws Exception {
+        return this.stream.readNBytes(length);
+    }
+
+    public int asInt() throws Exception {
+        final byte[] bytes = this.asBytes(4);
+        return ((bytes[0] & 0xFF) << 24) |
+            ((bytes[1] & 0xFF) << 16) |
+            ((bytes[2] & 0xFF) << 8) |
+            (bytes[3] & 0xFF);
+    }
+
+    public byte asByte() throws Exception {
+        return this.asBytes(1)[0];
+    }
+
+    public long skip(final int length) throws Exception {
+        return this.stream.skip(length);
     }
 }

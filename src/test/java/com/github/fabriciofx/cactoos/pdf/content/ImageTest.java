@@ -21,47 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.resource;
+package com.github.fabriciofx.cactoos.pdf.content;
 
-import com.github.fabriciofx.cactoos.pdf.Resource;
-import org.cactoos.text.FormattedText;
+import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
+import org.junit.jupiter.api.Test;
 
-/**
- * Font.
- *
- * @since 0.0.1
- */
-public final class Font implements Resource {
-    /**
-     * Font family.
-     */
-    private final FontFamily family;
-    /**
-     * Font name.
-     */
-    private final String name;
-
-    /**
-     * Ctor.
-     *
-     * @param family Font family
-     * @param name Font name
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public Font(
-        final FontFamily family,
-        final String name
-    ) {
-        this.family = family;
-        this.name = name;
-    }
-
-    @Override
-    public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "/Font << /%s %s >>",
-            this.name,
-            new String(this.family.asBytes())
-        ).asString().getBytes();
+final class ImageTest {
+    @Test
+    void read() throws Exception {
+        final String filename = "src/test/resources/image/logo.png";
+        System.out.println(new String(new PngImage(
+            new ObjectCount(),
+            filename
+        ).asBytes()));
     }
 }

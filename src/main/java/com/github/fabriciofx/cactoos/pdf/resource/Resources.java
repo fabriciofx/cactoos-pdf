@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Object;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import java.io.ByteArrayOutputStream;
@@ -31,6 +32,8 @@ import java.util.stream.Collectors;
 import org.cactoos.Bytes;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Resources.
@@ -40,12 +43,22 @@ import org.cactoos.list.ListOf;
 public final class Resources extends ListEnvelope<Resource>
     implements Object, Bytes {
     /**
+     * Object number.
+     */
+    private final int number;
+
+    /**
+     * Object generation.
+     */
+    private final int generation;
+
+    /**
      * Ctor.
      *
      * @param objects An array of objects
      */
-    public Resources(final Resource... objects) {
-        this(new ListOf<>(objects));
+    public Resources(final Count count, final Resource... objects) {
+        this(count.increment(), 0, new ListOf<>(objects));
     }
 
     /**
@@ -53,23 +66,41 @@ public final class Resources extends ListEnvelope<Resource>
      *
      * @param list A list of objects
      */
-    public Resources(final List<Resource> list) {
+    public Resources(
+        final int number,
+        final int generation,
+        final List<Resource> list
+    ) {
         super(list);
+        this.number = number;
+        this.generation = generation;
     }
 
     @Override
     public String reference() {
-        return this.stream()
-            .map(Resource::reference)
-            .collect(Collectors.joining(" "));
+        return new UncheckedText(
+            new FormattedText(
+                "%d %d R",
+                this.number,
+                this.generation
+            )
+        ).asString();
     }
 
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write(
+            new FormattedText(
+                "%d %d obj\n<<",
+                this.number,
+                this.generation
+            ).asString().getBytes()
+        );
         for (final Bytes obj : this) {
             baos.write(obj.asBytes());
         }
+        baos.write(" >>\nendobj\n".getBytes());
         return baos.toByteArray();
     }
 }

@@ -31,5 +31,5 @@ import org.cactoos.Bytes;
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExtendsObject")
-public interface Resource extends Object, Bytes {
+public interface Resource extends Bytes {
 }

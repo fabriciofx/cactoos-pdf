@@ -53,12 +53,12 @@ import org.cactoos.Text;
  * - Other optional chunks for various purposes
  */
 public interface Header extends Text, Bytes {
-    int length();
-    int width();
-    int height();
-    int depth();
-    Color color();
-    int compression();
-    int filter();
-    int interlacing();
+    int length() throws Exception;
+    int width() throws Exception;
+    int height() throws Exception;
+    int depth() throws Exception;
+    Color color() throws Exception;
+    int compression() throws Exception;
+    int filter() throws Exception;
+    int interlacing() throws Exception;
 }

@@ -2,6 +2,11 @@ package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Reference;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Int;
+import com.github.fabriciofx.cactoos.pdf.type.Name;
+import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
@@ -47,14 +52,16 @@ public final class Image implements Content {
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+    public Dictionary dictionary() throws Exception {
+        final byte[] stream = this.stream();
+        return new Dictionary()
+            .add("Length", new Int(stream.length))
+            .with(new Stream(stream));
+    }
+
+    @Override
+    public Reference reference() {
+        return new Reference(this.number, this.generation);
     }
 
     @Override
@@ -62,14 +69,13 @@ public final class Image implements Content {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
-                "%d %d obj\n<< /Length %d >>\nstream\n",
+                "%d %d obj\n",
                 this.number,
-                this.generation,
-                this.stream().length
+                this.generation
             ).asString().getBytes()
         );
-        baos.write(this.stream());
-        baos.write("\nendstream\nendobj\n".getBytes());
+        baos.write(this.dictionary().asBytes());
+        baos.write("endobj\n".getBytes());
         baos.write(this.png.asBytes());
         return baos.toByteArray();
     }

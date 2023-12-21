@@ -25,8 +25,11 @@ package com.github.fabriciofx.cactoos.pdf.page;
 
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
+import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Int;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
@@ -59,19 +62,14 @@ public final class Rotate implements Page {
     }
 
     @Override
-    public String reference() {
+    public Reference reference() {
         return this.origin.reference();
     }
 
     @Override
-    public String dictionary(final Pages parent) {
-        return new UncheckedText(
-            new FormattedText(
-                "%s /Rotate %d",
-                this.origin.dictionary(parent),
-                this.angle
-            )
-        ).asString();
+    public Dictionary dictionary(final Pages parent) throws Exception {
+        return this.origin.dictionary(parent)
+            .add("Rotate", new Int(this.angle));
     }
 
     @Override
@@ -89,11 +87,13 @@ public final class Rotate implements Page {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
-                "%s obj\n<< %s >>\nendobj\n",
-                this.origin.reference().replaceAll(" R", ""),
-                this.dictionary(parent)
+                "%d %d obj\n",
+                this.origin.reference().number(),
+                this.origin.reference().generation()
             ).asString().getBytes()
         );
+        baos.write(this.dictionary(parent).asBytes());
+        baos.write("\nendobj\n".getBytes());
         baos.write(this.resources().asBytes());
         baos.write(this.contents().asBytes());
         return baos.toByteArray();

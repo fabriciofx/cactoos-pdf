@@ -26,6 +26,11 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Escaped;
+import com.github.fabriciofx.cactoos.pdf.Reference;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Int;
+import com.github.fabriciofx.cactoos.pdf.type.Stream;
+import java.io.ByteArrayOutputStream;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -169,14 +174,8 @@ public final class Text implements Content {
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+    public Reference reference() {
+        return new Reference(this.number, this.generation);
     }
 
     @Override
@@ -220,15 +219,26 @@ public final class Text implements Content {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public Dictionary dictionary() throws Exception {
         final byte[] stream = this.stream();
-        return new FormattedText(
-            "%d %d obj\n<< /Length %d >>\nstream\n%s\nendstream\nendobj\n",
-            this.number,
-            this.generation,
-            stream.length,
-            new String(stream)
-        ).asString().getBytes();
+        return new Dictionary()
+            .add("Length", new Int(stream.length))
+            .with(new Stream(stream));
+    }
+
+    @Override
+    public byte[] asBytes() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write(
+            new FormattedText(
+                "%d %d obj\n",
+                this.number,
+                this.generation
+            ).asString().getBytes()
+        );
+        baos.write(this.dictionary().asBytes());
+        baos.write("\nendobj\n".getBytes());
+        return baos.toByteArray();
     }
 
     /**

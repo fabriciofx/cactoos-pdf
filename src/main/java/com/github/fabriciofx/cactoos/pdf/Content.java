@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import org.cactoos.Bytes;
 
 /**
@@ -39,4 +40,6 @@ public interface Content extends Object, Bytes {
      * @throws Exception if fails
      */
     byte[] stream() throws Exception;
+
+    Dictionary dictionary() throws Exception;
 }

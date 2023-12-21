@@ -23,32 +23,32 @@
  */
 package com.github.fabriciofx.cactoos.pdf.content;
 
+import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Count;
-import com.github.fabriciofx.cactoos.pdf.Object;
-import com.github.fabriciofx.cactoos.pdf.png.Body;
+import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.png.Header;
 import com.github.fabriciofx.cactoos.pdf.png.Img;
 import com.github.fabriciofx.cactoos.pdf.png.Palette;
 import com.github.fabriciofx.cactoos.pdf.png.PngImg;
 import com.github.fabriciofx.cactoos.pdf.png.SafePngImg;
+import com.github.fabriciofx.cactoos.pdf.type.Array;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Int;
+import com.github.fabriciofx.cactoos.pdf.type.Name;
+import com.github.fabriciofx.cactoos.pdf.type.Stream;
+import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.Joined;
-import org.cactoos.text.UncheckedText;
 
-public final class PngImage implements Object, Bytes {
+public final class PngImage implements Content {
     private final int number;
     private final int generation;
-    private final Count count;
-    private final Bytes raw;
+    private final Img img;
 
-    public PngImage(
-        final Count count,
-        final String filename
-    ) {
+    public PngImage(final Count count, final String filename) {
         this(
             count.increment(),
             0,
@@ -61,67 +61,76 @@ public final class PngImage implements Object, Bytes {
         final int number,
         final int generation,
         final Count count,
-        final Bytes raw
+        final Bytes bytes
     ) {
         this.number = number;
         this.generation = generation;
-        this.count = count;
-        this.raw = raw;
+        this.img = new SafePngImg(new PngImg(count, bytes));
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+    public Reference reference() {
+        return new Reference(this.number, this.generation);
     }
 
     @Override
     public byte[] asBytes() throws Exception {
-        final Img img = new SafePngImg(new PngImg(this.count, this.raw));
-        final Header header = img.header();
-        final Body body = img.body();
-        final Palette palette = img.palette();
+        final Palette palette = this.img.palette();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
-                new Joined(
-                    "\n",
-                    "%d %d obj",
-                    "<< /Type /XObject",
-                    "/Subtype /Image",
-                    "/Width %d",
-                    "/Height %d",
-                    "/ColorSpace [/%s /DeviceRGB %d %s]",
-                    "/BitsPerComponent %d",
-                    "/Filter /FlateDecode",
-                    "/DecodeParms << /Predictor 15 /Colors %d /BitsPerComponent %d /Columns %d >>",
-                    "/Mask [0 0]",
-                    "/Length %d >>",
-                    "stream\n"
-                ),
+                "%d %d obj\n",
                 this.number,
-                this.generation,
-                header.width(),
-                header.height(),
-                header.color().space(),
-                palette.stream().length / 3 - 1,
-                palette.reference(),
-                header.depth(),
-                header.color().space().equals("DeviceRGB") ? 3 : 1,
-                header.depth(),
-                header.width(),
-                body.stream().length
+                this.generation
             ).asString().getBytes()
         );
-        baos.write(body.stream());
-        baos.write("\nendstream\nendobj\n".getBytes());
-        // Write the palette object
+        baos.write(this.dictionary().asBytes());
+        baos.write("endobj\n".getBytes());
         baos.write(palette.asBytes());
         return baos.toByteArray();
+    }
+
+    @Override
+    public byte[] stream() throws Exception {
+        return this.img.body().stream();
+    }
+
+    @Override
+    public Dictionary dictionary() throws Exception {
+        final Header header = this.img.header();
+        final Palette palette = this.img.palette();
+        final byte[] stream = this.stream();
+        return new Dictionary()
+            .add("Type", new Name("XObject"))
+            .add("Subtype", new Name("Image"))
+            .add("Width", new Int(header.width()))
+            .add("Height", new Int(header.height()))
+            .add(
+                "ColorSpace",
+                new Array(
+                    new Name(header.color().space()),
+                    new Name("DeviceRGB"),
+                    new Int(palette.stream().length / 3 - 1),
+                    new Text(palette.reference().asString())
+                )
+            )
+            .add("BitsPerComponent", new Int(header.depth()))
+            .add("Filter", new Name("FlateDecode"))
+            .add(
+                "DecodeParms",
+                new Dictionary()
+                    .add("Predictor", new Int(15))
+                    .add(
+                        "Colors",
+                        new Int(
+                            header.color().space().equals("DeviceRGB") ? 3 : 1
+                        )
+                    )
+                    .add("BitsPerComponent", new Int(header.depth()))
+                    .add("Columns", new Int(header.width()))
+            )
+            .add("Mask", new Array(new Int(0), new Int(0)))
+            .add("Length", new Int(stream.length))
+            .with(new Stream(stream));
     }
 }

@@ -21,52 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.resource;
+package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.Resource;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import org.cactoos.Text;
+import org.cactoos.text.FormattedText;
 
-/**
- * Font.
- *
- * @since 0.0.1
- */
-public final class Font implements Resource {
-    /**
-     * Font family.
-     */
-    private final FontFamily family;
-    /**
-     * Font name.
-     */
-    private final String name;
+public final class Reference implements Text {
+    private final int number;
+    private final int generation;
 
-    /**
-     * Ctor.
-     *
-     * @param family Font family
-     * @param name Font name
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public Font(
-        final FontFamily family,
-        final String name
-    ) {
-        this.family = family;
-        this.name = name;
+    public Reference(final int number, final int generation) {
+        this.number = number;
+        this.generation = generation;
+    }
+
+    public int number() {
+        return this.number;
+    }
+
+    public int generation() {
+        return this.generation;
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
-        return this.dictionary().asBytes();
-    }
-
-    @Override
-    public Dictionary dictionary() throws Exception {
-        return new Dictionary()
-            .add(
-                "Font",
-                new Dictionary().add(this.name, this.family.dictionary())
-            );
+    public String asString() throws Exception {
+        return new FormattedText(
+            "%d %d R",
+            this.number,
+            this.generation
+        ).asString();
     }
 }

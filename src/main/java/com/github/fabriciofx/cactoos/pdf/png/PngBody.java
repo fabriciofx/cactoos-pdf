@@ -25,7 +25,12 @@ package com.github.fabriciofx.cactoos.pdf.png;
 
 import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Flow;
+import com.github.fabriciofx.cactoos.pdf.Reference;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Int;
+import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
+import org.cactoos.Bytes;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.text.FormattedText;
@@ -36,13 +41,13 @@ public final class PngBody implements Body {
     private final int generation;
     private final Scalar<byte[]> bytes;
 
-    public PngBody(final Count count, final byte[] bytes) {
+    public PngBody(final Count count, final Bytes bytes) {
         this(
             count.increment(),
             0,
             new Sticky<>(
                 () -> {
-                    final Flow flow = new Flow(bytes);
+                    final Flow flow = new Flow(bytes.asBytes());
                     final ByteArrayOutputStream body = new ByteArrayOutputStream();
                     int len;
                     flow.skip(33);
@@ -75,14 +80,8 @@ public final class PngBody implements Body {
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+    public Reference reference() {
+        return new Reference(this.number, this.generation);
     }
 
     @Override
@@ -91,19 +90,25 @@ public final class PngBody implements Body {
     }
 
     @Override
+    public Dictionary dictionary() throws Exception {
+        final byte[] stream = this.stream();
+        return new Dictionary()
+            .add("Length", new Int(stream.length))
+            .with(new Stream(stream));
+    }
+
+    @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final byte[] stream = this.stream();
         baos.write(
             new FormattedText(
-                "%d %d obj\n<< /Length %d >>\nstream\n",
+                "%d %d obj\n",
                 this.number,
-                this.generation,
-                stream.length
+                this.generation
             ).asString().getBytes()
         );
-        baos.write(stream);
-        baos.write("\nendstream\nendobj\n".getBytes());
+        baos.write(this.dictionary().asBytes());
+        baos.write("\nendobj\n".getBytes());
         return baos.toByteArray();
     }
 }

@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import org.cactoos.Bytes;
 
 /**
@@ -32,4 +33,5 @@ import org.cactoos.Bytes;
  */
 @SuppressWarnings("PMD.ExtendsObject")
 public interface Resource extends Bytes {
+    Dictionary dictionary() throws Exception;
 }

@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 
 /**
  * PageDefault.
@@ -39,7 +40,7 @@ public interface Page extends Object {
      * @param parent Pages parent
      * @return The page dictionary
      */
-    String dictionary(Pages parent);
+    Dictionary dictionary(Pages parent) throws Exception;
 
     /**
      * Page Resources.

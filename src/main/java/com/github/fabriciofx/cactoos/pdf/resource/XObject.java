@@ -1,9 +1,9 @@
 package com.github.fabriciofx.cactoos.pdf.resource;
 
 import com.github.fabriciofx.cactoos.pdf.Resource;
-import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.PngImage;
-import org.cactoos.text.FormattedText;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Text;
 
 public class XObject implements Resource {
     private final String name;
@@ -16,10 +16,18 @@ public class XObject implements Resource {
 
     @Override
     public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "/XObject << /%s %s >>",
-            this.name,
-            this.png.reference()
-        ).asString().getBytes();
+        return this.dictionary().asBytes();
+    }
+
+    @Override
+    public Dictionary dictionary() throws Exception {
+        return new Dictionary()
+            .add(
+                "XObject",
+                new Dictionary().add(
+                    this.name,
+                    new Text(this.png.reference().asString())
+                )
+            );
     }
 }

@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import org.cactoos.Bytes;
 
 /**
@@ -38,4 +39,6 @@ public interface Pages extends Object, Bytes {
      * @param page An PDF page
      */
     void add(Page page);
+
+    Dictionary dictionary() throws Exception;
 }

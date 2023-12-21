@@ -79,14 +79,8 @@ public final class Information implements Object, Bytes {
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+    public Reference reference() {
+        return new Reference(this.number, this.generation);
     }
 
     @Override

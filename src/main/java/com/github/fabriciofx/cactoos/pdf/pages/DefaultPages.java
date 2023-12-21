@@ -26,7 +26,13 @@ package com.github.fabriciofx.cactoos.pdf.pages;
 import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
+import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import com.github.fabriciofx.cactoos.pdf.type.Array;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Int;
+import com.github.fabriciofx.cactoos.pdf.type.Name;
+import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -98,36 +104,22 @@ public final class DefaultPages implements Pages {
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+    public Reference reference() {
+        return new Reference(this.number, this.generation);
     }
 
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final String kds = this.kids.stream()
-            .map(Page::reference)
-            .collect(Collectors.joining(" "));
         baos.write(
             new FormattedText(
-                new Joined(
-                    " ",
-                    "%d %d obj\n<< /Type /Pages /Kids [%s]",
-                    "/Count %d /MediaBox [0 0 %s] >>\nendobj\n"
-                ),
+                "%d %d obj\n",
                 this.number,
-                this.generation,
-                kds,
-                this.kids.size(),
-                this.size.asString()
+                this.generation
             ).asString().getBytes()
         );
+        baos.write(this.dictionary().asBytes());
+        baos.write("\nendobj\n".getBytes());
         for (final Page page : this.kids) {
             baos.write(page.with(this));
         }
@@ -137,5 +129,23 @@ public final class DefaultPages implements Pages {
     @Override
     public void add(final Page page) {
         this.kids.add(page);
+    }
+
+    @Override
+    public Dictionary dictionary() throws Exception {
+        final String kds = this.kids.stream()
+            .map(page -> new UncheckedText(page.reference()).asString())
+            .collect(Collectors.joining(" "));
+        return new Dictionary()
+            .add("Type", new Name("Pages"))
+            .add("Kids", new Array(new Text(kds)))
+            .add("Count", new Int(this.kids.size()))
+            .add(
+                "MediaBox",
+                new Array(
+                    new Int(0),
+                    new Int(0),
+                    new Text(this.size.asString()))
+            );
     }
 }

@@ -24,6 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.png;
 
 import java.util.Arrays;
+import org.cactoos.Bytes;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
@@ -55,62 +56,56 @@ import org.cactoos.text.Joined;
  * - Other optional chunks for various purposes
  */
 public final class PngHeader implements Header {
-    private final byte[] bytes;
+    private final Bytes bytes;
 
-    public PngHeader(final byte[] bytes) {
-        this.bytes = Arrays.copyOfRange(bytes, 0, 33);
+    public PngHeader(final Bytes bytes) {
+        this.bytes = bytes;
     }
 
     @Override
-    public int length() {
-        return new Unchecked<>(
-            new BytesAsInteger(
-                Arrays.copyOfRange(this.bytes, 8, 12)
-            )
+    public int length() throws Exception {
+        return new BytesAsInteger(
+            Arrays.copyOfRange(this.bytes.asBytes(), 8, 12)
         ).value();
     }
 
     @Override
-    public int width() {
-        return new Unchecked<>(
-            new BytesAsInteger(
-                Arrays.copyOfRange(this.bytes, 16, 20)
-            )
+    public int width() throws Exception {
+        return new BytesAsInteger(
+            Arrays.copyOfRange(this.bytes.asBytes(), 16, 20)
         ).value();
     }
 
     @Override
-    public int height() {
-        return new Unchecked<>(
-            new BytesAsInteger(
-                Arrays.copyOfRange(this.bytes, 20, 24)
-            )
+    public int height() throws Exception {
+        return new BytesAsInteger(
+            Arrays.copyOfRange(this.bytes.asBytes(), 20, 24)
         ).value();
     }
 
     @Override
-    public int depth() {
-        return this.bytes[24];
+    public int depth() throws Exception {
+        return this.bytes.asBytes()[24];
     }
 
     @Override
-    public Color color() {
-        return new Color(this.bytes[25]);
+    public Color color() throws Exception {
+        return new Color(this.bytes.asBytes()[25]);
     }
 
     @Override
-    public int compression() {
-        return this.bytes[26];
+    public int compression() throws Exception {
+        return this.bytes.asBytes()[26];
     }
 
     @Override
-    public int filter() {
-        return this.bytes[27];
+    public int filter() throws Exception {
+        return this.bytes.asBytes()[27];
     }
 
     @Override
-    public int interlacing() {
-        return this.bytes[28];
+    public int interlacing() throws Exception {
+        return this.bytes.asBytes()[28];
     }
 
     @Override
@@ -142,6 +137,6 @@ public final class PngHeader implements Header {
 
     @Override
     public byte[] asBytes() throws Exception {
-        return this.bytes;
+        return this.bytes.asBytes();
     }
 }

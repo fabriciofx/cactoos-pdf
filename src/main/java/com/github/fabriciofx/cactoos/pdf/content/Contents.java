@@ -25,9 +25,9 @@ package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Object;
+import com.github.fabriciofx.cactoos.pdf.Reference;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.cactoos.Bytes;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
@@ -58,10 +58,13 @@ public final class Contents extends ListEnvelope<Content>
     }
 
     @Override
-    public String reference() {
-        return this.stream()
-            .map(Content::reference)
-            .collect(Collectors.joining(" "));
+    public Reference reference() {
+        if (this.isEmpty()) {
+            throw new IllegalStateException(
+                "Contents is empty; there is not any reference"
+            );
+        }
+        return this.get(0).reference();
     }
 
     @Override

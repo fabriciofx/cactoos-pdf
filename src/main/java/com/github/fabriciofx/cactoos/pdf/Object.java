@@ -33,5 +33,5 @@ public interface Object {
      * Object reference.
      * @return The object reference.
      */
-    String reference();
+    Reference reference();
 }

@@ -23,10 +23,12 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Name;
+import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Catalog.
@@ -73,14 +75,14 @@ public final class Catalog implements Object, Bytes {
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+    public Reference reference() {
+        return new Reference(this.number, this.generation);
+    }
+
+    public Dictionary dictionary() throws Exception {
+        return new Dictionary()
+            .add("Type", new Name("Catalog"))
+            .add("Pages", new Text(this.pages.reference().asString()));
     }
 
     @Override
@@ -88,12 +90,13 @@ public final class Catalog implements Object, Bytes {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
-                "%d %d obj\n<< /Type /Catalog /Pages %s >>\nendobj\n",
+                "%d %d obj\n",
                 this.number,
-                this.generation,
-                this.pages.reference()
+                this.generation
             ).asString().getBytes()
         );
+        baos.write(this.dictionary().asBytes());
+        baos.write("\nendobj\n".getBytes());
         baos.write(this.pages.asBytes());
         return baos.toByteArray();
     }

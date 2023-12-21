@@ -29,30 +29,32 @@ import java.nio.file.Files;
 import org.cactoos.Bytes;
 
 public final class PngImg implements Img {
-    private final Count count;
-    private final Bytes bytes;
+    private final Header header;
+    private final Body body;
+    private final Palette palette;
 
     public PngImg(final Count count, final String filename) {
         this(count, () -> Files.readAllBytes(new File(filename).toPath()));
     }
 
     public PngImg(final Count count, final Bytes bytes) {
-        this.count = count;
-        this.bytes = bytes;
+        this.header = new PngHeader(bytes);
+        this.body = new PngBody(count, bytes);
+        this.palette = new PngPalette(count, bytes);
     }
 
     @Override
     public Header header() throws Exception {
-        return new PngHeader(this.bytes.asBytes());
+        return this.header;
     }
 
     @Override
     public Body body() throws Exception {
-        return new PngBody(this.count, this.bytes.asBytes());
+        return this.body;
     }
 
     @Override
     public Palette palette() throws Exception {
-        return new PngPalette(this.count, this.bytes.asBytes());
+        return this.palette;
     }
 }

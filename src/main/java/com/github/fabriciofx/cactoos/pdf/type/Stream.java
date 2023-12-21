@@ -50,14 +50,14 @@ public final class Stream implements Type<byte[]> {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write("stream\n".getBytes());
         baos.write(this.value.asBytes());
-        baos.write("\nendstream\n".getBytes());
+        baos.write("\nendstream".getBytes());
         return baos.toByteArray();
     }
 
     @Override
     public String asString() throws Exception {
         return new FormattedText(
-            "stream\n%s\nendstream\n",
+            "\nstream\n%s\nendstream\n",
             new String(this.value.asBytes())
         ).asString();
     }

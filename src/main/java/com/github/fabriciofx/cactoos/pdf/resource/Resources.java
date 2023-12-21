@@ -25,15 +25,14 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 
 import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Object;
+import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.Resource;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import java.util.stream.Collectors;
-import org.cactoos.Bytes;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Resources.
@@ -41,7 +40,7 @@ import org.cactoos.text.UncheckedText;
  * @since 0.0.1
  */
 public final class Resources extends ListEnvelope<Resource>
-    implements Object, Bytes {
+    implements Object, Resource {
     /**
      * Object number.
      */
@@ -77,14 +76,17 @@ public final class Resources extends ListEnvelope<Resource>
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+    public Reference reference() {
+        return new Reference(this.number, this.generation);
+    }
+
+    @Override
+    public Dictionary dictionary() throws Exception {
+        Dictionary main = this.get(0).dictionary();
+        for (int idx = 1; idx < this.size(); ++idx) {
+            main = main.merge(this.get(idx).dictionary());
+        }
+        return main;
     }
 
     @Override
@@ -92,15 +94,13 @@ public final class Resources extends ListEnvelope<Resource>
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
-                "%d %d obj\n<<",
+                "%d %d obj\n",
                 this.number,
                 this.generation
             ).asString().getBytes()
         );
-        for (final Bytes obj : this) {
-            baos.write(obj.asBytes());
-        }
-        baos.write(" >>\nendobj\n".getBytes());
+        baos.write(this.dictionary().asBytes());
+        baos.write("\nendobj\n".getBytes());
         return baos.toByteArray();
     }
 }

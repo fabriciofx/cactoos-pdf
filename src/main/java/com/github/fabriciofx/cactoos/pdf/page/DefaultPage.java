@@ -26,8 +26,12 @@ package com.github.fabriciofx.cactoos.pdf.page;
 import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
+import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Name;
+import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
@@ -96,26 +100,17 @@ public final class DefaultPage implements Page {
     }
 
     @Override
-    public String reference() {
-        return new UncheckedText(
-            new FormattedText(
-                "%d %d R",
-                this.number,
-                this.generation
-            )
-        ).asString();
+    public Reference reference() {
+        return new Reference(this.number, this.generation);
     }
 
     @Override
-    public String dictionary(final Pages parent) {
-        return new UncheckedText(
-            new FormattedText(
-                "/Type /Page /Resources %s /Contents %s /Parent %s",
-                this.resources.reference(),
-                this.contents.reference(),
-                parent.reference()
-            )
-        ).asString();
+    public Dictionary dictionary(final Pages parent) throws Exception {
+        return new Dictionary()
+            .add("Type", new Name("Page"))
+            .add("Resources", new Text(this.resources.reference().asString()))
+            .add("Contents", new Text(this.contents.reference().asString()))
+            .add("Parent", new Text(parent.reference().asString()));
     }
 
     @Override
@@ -133,12 +128,13 @@ public final class DefaultPage implements Page {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
-                "%d %d obj\n<< %s >>\nendobj\n",
+                "%d %d obj\n",
                 this.number,
-                this.generation,
-                this.dictionary(parent)
+                this.generation
             ).asString().getBytes()
         );
+        baos.write(this.dictionary(parent).asBytes());
+        baos.write("\nendobj\n".getBytes());
         baos.write(this.resources.asBytes());
         baos.write(this.contents.asBytes());
         return baos.toByteArray();

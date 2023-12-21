@@ -23,33 +23,45 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.content.Image;
+import com.github.fabriciofx.cactoos.pdf.content.PngImage;
+import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
 import org.cactoos.text.Joined;
-import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
-/**
- * Test case for {@link Font}.
- *
- * @since 0.0.1
- */
-final class FontTest {
+final class ResourcesTest {
     @Test
-    void build() throws Exception {
+    void dictionary() throws Exception {
+        final Count count = new ObjectCount();
+        final PngImage png = new PngImage(
+            count,
+            "src/test/resources/image/logo.png"
+        );
+        final Image image = new Image(
+            count,
+            "I1",
+            png
+        );
         new Assertion<>(
-            "Must build a PDF Times-Roman font",
-            new TextOf(
+            "Must represent a resources dictionary",
+            new Resources(
+                count,
+                new ProcSet(),
                 new Font(
                     new FontFamily("Times-Roman", "Type1"),
-                    "F0"
-                )
-            ),
+                    "F1"
+                ),
+                new XObject(image.name(), png)
+            ).dictionary(),
             new IsText(
                 new Joined(
                     " ",
-                    "<< /Font << /F0 << /Type /Font /BaseFont",
-                    "/Times-Roman /Subtype /Type1 >> >> >>"
+                    "<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
+                    "/Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype",
+                    "/Type1 >> >> /XObject << /I1 1 0 R >> >>"
                 )
             )
         ).affirm();

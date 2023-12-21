@@ -308,7 +308,9 @@ final class DocumentTest {
                                 ),
                                 new XObject(image.name(), png)
                             ),
-                            new Contents(image)
+                            new Contents(
+                                image
+                            )
                         )
                     )
                 )

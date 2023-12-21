@@ -23,26 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
-import com.github.fabriciofx.cactoos.pdf.Catalog;
-import com.github.fabriciofx.cactoos.pdf.Count;
-import com.github.fabriciofx.cactoos.pdf.Date;
-import com.github.fabriciofx.cactoos.pdf.Document;
-import com.github.fabriciofx.cactoos.pdf.Information;
-import com.github.fabriciofx.cactoos.pdf.content.Contents;
-import com.github.fabriciofx.cactoos.pdf.content.Text;
-import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
-import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
-import com.github.fabriciofx.cactoos.pdf.resource.Font;
-import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
-import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import org.cactoos.map.MapEntry;
-import org.cactoos.map.MapOf;
-import org.cactoos.text.Joined;
-import org.cactoos.text.TextOf;
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsText;
-
 /**
  * Test case for {@link com.github.fabriciofx.cactoos.pdf.Page}.
  *

@@ -23,15 +23,16 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
-import org.cactoos.Bytes;
-import org.cactoos.text.FormattedText;
+import com.github.fabriciofx.cactoos.pdf.Resource;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Name;
 
 /**
  * Font Family.
  *
  * @since 0.0.1
  */
-public final class FontFamily implements Bytes {
+public final class FontFamily implements Resource {
     /**
      * Font base.
      */
@@ -55,10 +56,14 @@ public final class FontFamily implements Bytes {
 
     @Override
     public byte[] asBytes() throws Exception {
-        return new FormattedText(
-            "<< /Type /Font /BaseFont /%s /Subtype /%s >>",
-            this.base,
-            this.subtype
-        ).asString().getBytes();
+        return this.dictionary().asBytes();
+    }
+
+    @Override
+    public Dictionary dictionary() throws Exception {
+        return new Dictionary()
+            .add("Type", new Name("Font"))
+            .add("BaseFont", new Name(this.base))
+            .add("Subtype", new Name(this.subtype));
     }
 }

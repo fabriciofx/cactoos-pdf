@@ -41,5 +41,11 @@ public interface Content extends Object, Bytes {
      */
     byte[] stream() throws Exception;
 
+    /**
+     * Build an object {@link Dictionary}.
+     *
+     * @return A dictionary
+     * @throws Exception if fails
+     */
     Dictionary dictionary() throws Exception;
 }

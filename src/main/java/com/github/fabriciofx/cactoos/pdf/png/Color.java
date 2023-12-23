@@ -23,20 +23,43 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
+/**
+ * Color.
+ *
+ * @since 0.0.1
+ */
 public final class Color {
-    private int type;
-    
+    /**
+     * Color type.
+     */
+    private final int tpe;
+
+    /**
+     * Ctor.
+     *
+     * @param type Color type
+     */
     public Color(final int type) {
-        this.type = type;
+        this.tpe = type;
     }
 
+    /**
+     * Color type.
+     *
+     * @return Color type
+     */
     public int type() {
-        return this.type;
+        return this.tpe;
     }
-    
+
+    /**
+     * Color space.
+     *
+     * @return Color space
+     */
     public String space() {
         final String space;
-        switch(this.type) {
+        switch (this.tpe) {
             case 0:
             case 4:
                 space = "DeviceGray";
@@ -50,7 +73,23 @@ public final class Color {
                 break;
             default:
                 space = "Unknown";
+                break;
         }
         return space;
+    }
+
+    /**
+     * Number of colors according to color space.
+     *
+     * @return Number of colors
+     */
+    public int colors() {
+        final int clrs;
+        if (this.space().equals("DeviceRGB")) {
+            clrs = 3;
+        } else {
+            clrs = 1;
+        }
+        return clrs;
     }
 }

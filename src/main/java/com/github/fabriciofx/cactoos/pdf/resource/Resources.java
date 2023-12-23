@@ -54,6 +54,7 @@ public final class Resources extends ListEnvelope<Resource>
     /**
      * Ctor.
      *
+     * @param count Object count
      * @param objects An array of objects
      */
     public Resources(final Count count, final Resource... objects) {
@@ -63,6 +64,8 @@ public final class Resources extends ListEnvelope<Resource>
     /**
      * Ctor.
      *
+     * @param number Object number
+     * @param generation Object generation
      * @param list A list of objects
      */
     public Resources(

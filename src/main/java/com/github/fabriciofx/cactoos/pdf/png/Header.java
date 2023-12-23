@@ -27,38 +27,71 @@ import org.cactoos.Bytes;
 import org.cactoos.Text;
 
 /**
- * PNG Image Header
+ * Header.
  *
- * PNG Image Header Structure:
- * ----------------------------
- *
- * Offset  Length   Field Name       Description
- * ---------------------------------------------
- * 0       8 bytes  Signature        PNG file signature (137 80 78 71 13 10 26 10)
- * 8       4 bytes  Chunk Length     Length of the chunk data (excluding length and type)
- * 12      4 bytes  Chunk Type       Type of the chunk (e.g., IHDR for image header)
- * 16      4 bytes  Width            Width of the image in pixels
- * 20      4 bytes  Height           Height of the image in pixels
- * 24      1 byte   Bit Depth        Number of bits per sample
- * 25      1 byte   Color Type       Type of color encoding used
- * 26      1 byte   Compression      Compression method used
- * 27      1 byte   Filter Method    Filtering method used
- * 28      1 byte   Interlace Method Interlace method used
- *
- * Additional chunks (not included in the header):
- * - Data chunks (IDAT) containing the image data
- * - Palette chunks (PLTE) for indexed-color images
- * - Transparency chunks (tRNS) for specifying transparency
- * - Textual information chunks (tEXt, iTXt) for metadata
- * - Other optional chunks for various purposes
+ * @since 0.0.1
  */
 public interface Header extends Text, Bytes {
+    /**
+     * Length.
+     *
+     * @return The length
+     * @throws Exception if fails
+     */
     int length() throws Exception;
+
+    /**
+     * Width.
+     * @return Image width
+     * @throws Exception if fails
+     */
     int width() throws Exception;
+
+    /**
+     * Height.
+     *
+     * @return Image height
+     * @throws Exception if fails
+     */
     int height() throws Exception;
+
+    /**
+     * Bit Depth.
+     *
+     * @return Amount of image bit depth
+     * @throws Exception if fails
+     */
     int depth() throws Exception;
+
+    /**
+     * Color space.
+     *
+     * @return Color type and space
+     * @throws Exception if fails
+     */
     Color color() throws Exception;
+
+    /**
+     * Image compression level.
+     *
+     * @return Image compression level
+     * @throws Exception if fails
+     */
     int compression() throws Exception;
+
+    /**
+     * Image filter type.
+     *
+     * @return Image filter type
+     * @throws Exception if fails
+     */
     int filter() throws Exception;
+
+    /**
+     * Image interlacing.
+     *
+     * @return Image interlacing
+     * @throws Exception if fails
+     */
     int interlacing() throws Exception;
 }

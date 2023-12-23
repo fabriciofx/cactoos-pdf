@@ -26,16 +26,29 @@ package com.github.fabriciofx.cactoos.pdf.type;
 import com.github.fabriciofx.cactoos.pdf.Type;
 import org.cactoos.text.FormattedText;
 
+/**
+ * Literal.
+ *
+ * @since 0.0.1
+ */
 public final class Literal implements Type<String> {
-    private final String value;
+    /**
+     * Value.
+     */
+    private final String text;
 
-    public Literal(final String value) {
-        this.value = value;
+    /**
+     * Ctor.
+     *
+     * @param txt String
+     */
+    public Literal(final String txt) {
+        this.text = txt;
     }
 
     @Override
     public String value() throws Exception {
-        return this.value;
+        return this.text;
     }
 
     @Override
@@ -45,6 +58,6 @@ public final class Literal implements Type<String> {
 
     @Override
     public String asString() throws Exception {
-        return new FormattedText("(%s)", this.value).asString();
+        return new FormattedText("(%s)", this.text).asString();
     }
 }

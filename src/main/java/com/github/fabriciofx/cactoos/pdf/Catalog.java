@@ -79,6 +79,12 @@ public final class Catalog implements Object, Bytes {
         return new Reference(this.number, this.generation);
     }
 
+    /**
+     * Build a dictionary.
+     *
+     * @return A dictionary
+     * @throws Exception if fails
+     */
     public Dictionary dictionary() throws Exception {
         return new Dictionary()
             .add("Type", new Name("Catalog"))

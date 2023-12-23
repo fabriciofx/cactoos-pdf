@@ -32,7 +32,6 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Rotate a Page in a angle.

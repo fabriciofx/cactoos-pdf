@@ -25,22 +25,35 @@ package com.github.fabriciofx.cactoos.pdf.type;
 
 import com.github.fabriciofx.cactoos.pdf.Type;
 
+/**
+ * Bool.
+ *
+ * @since 0.0.1
+ */
 public final class Bool implements Type<Boolean> {
-    private final boolean value;
+    /**
+     * Value.
+     */
+    private final boolean val;
 
-    public Bool(final boolean value) {
-        this.value = value;
+    /**
+     * Ctor.
+     *
+     * @param val Value
+     */
+    public Bool(final boolean val) {
+        this.val = val;
     }
 
     @Override
     public Boolean value() throws Exception {
-        return this.value;
+        return this.val;
     }
 
     @Override
     public String asString() throws Exception {
         final String text;
-        if (this.value) {
+        if (this.val) {
             text = "true";
         } else {
             text = "false";
@@ -51,7 +64,7 @@ public final class Bool implements Type<Boolean> {
     @Override
     public byte[] asBytes() throws Exception {
         final byte[] stream = new byte[1];
-        if (this.value) {
+        if (this.val) {
             stream[0] = 1;
         } else {
             stream[0] = 0;

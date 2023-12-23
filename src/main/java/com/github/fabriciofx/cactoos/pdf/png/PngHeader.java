@@ -25,21 +25,25 @@ package com.github.fabriciofx.cactoos.pdf.png;
 
 import java.util.Arrays;
 import org.cactoos.Bytes;
-import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
 
 /**
- * PNG Image Header
+ * PngHeader: PNG Image Header.
+ *
+ * @since 0.0.1
  *
  * PNG Image Header Structure:
  * ----------------------------
  *
  * Offset  Length   Field Name       Description
  * ---------------------------------------------
- * 0       8 bytes  Signature        PNG file signature (137 80 78 71 13 10 26 10)
- * 8       4 bytes  Chunk Length     Length of the chunk data (excluding length and type)
- * 12      4 bytes  Chunk Type       Type of the chunk (e.g., IHDR for image header)
+ * 0       8 bytes  Signature        PNG file signature (137 80 78 71 13 10 26
+ *                                   10)
+ * 8       4 bytes  Chunk Length     Length of the chunk data (excluding length
+ *                                   and type)
+ * 12      4 bytes  Chunk Type       Type of the chunk (e.g., IHDR for image
+ *                                   header)
  * 16      4 bytes  Width            Width of the image in pixels
  * 20      4 bytes  Height           Height of the image in pixels
  * 24      1 byte   Bit Depth        Number of bits per sample
@@ -56,8 +60,16 @@ import org.cactoos.text.Joined;
  * - Other optional chunks for various purposes
  */
 public final class PngHeader implements Header {
+    /**
+     * PNG header bytes.
+     */
     private final Bytes bytes;
 
+    /**
+     * Ctor.
+     *
+     * @param bytes PNG header bytes
+     */
     public PngHeader(final Bytes bytes) {
         this.bytes = bytes;
     }

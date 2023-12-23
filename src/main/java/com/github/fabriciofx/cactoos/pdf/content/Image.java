@@ -1,3 +1,26 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (C) 2023 Fabrício Barros Cabral
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
@@ -5,37 +28,76 @@ import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
-import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
-import org.cactoos.text.UncheckedText;
 
+/**
+ * Image.
+ *
+ * @since 0.0.1
+ */
 public final class Image implements Content {
+    /**
+     * Object number.
+     */
     private final int number;
-    private final int generation;
-    private final String name;
-    private final PngImage png;
 
-    public Image(final Count count, final String name, final PngImage png) {
+    /**
+     * Object generation.
+     */
+    private final int generation;
+
+    /**
+     * Image name.
+     */
+    private final String label;
+
+    /**
+     * Image PNG.
+     */
+    private final Png png;
+
+    /**
+     * Ctor.
+     *
+     * @param count Object count
+     * @param name Image name
+     * @param png Raw PNG
+     */
+    public Image(final Count count, final String name, final Png png) {
         this(count.increment(), 0, name, png);
     }
 
+    /**
+     * Ctor.
+     *
+     * @param number Object number
+     * @param generation Object generation
+     * @param name Image name
+     * @param png Raw PNG
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
     public Image(
         final int number,
         final int generation,
         final String name,
-        final PngImage png
+        final Png png
     ) {
         this.number = number;
         this.generation = generation;
-        this.name = name;
+        this.label = name;
         this.png = png;
     }
 
+    /**
+     * Image name.
+     *
+     * @return The image name
+     */
     public String name() {
-        return this.name;
+        return this.label;
     }
 
     @Override
@@ -47,7 +109,7 @@ public final class Image implements Content {
                 "0.57 w",
                 "q 85.04 0 0 58.06 28.35 766.83 cm /%s Do Q"
             ),
-            this.name
+            this.label
         ).asString().getBytes();
     }
 
@@ -78,5 +140,13 @@ public final class Image implements Content {
         baos.write("endobj\n".getBytes());
         baos.write(this.png.asBytes());
         return baos.toByteArray();
+    }
+
+    /**
+     * PNG.
+     * @return The PNG
+     */
+    public Png content() {
+        return this.png;
     }
 }

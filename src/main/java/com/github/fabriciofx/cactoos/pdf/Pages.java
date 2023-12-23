@@ -40,5 +40,11 @@ public interface Pages extends Object, Bytes {
      */
     void add(Page page);
 
+    /**
+     * Build a {@link Dictionary}.
+     *
+     * @return A Dictionary
+     * @throws Exception if fails
+     */
     Dictionary dictionary() throws Exception;
 }

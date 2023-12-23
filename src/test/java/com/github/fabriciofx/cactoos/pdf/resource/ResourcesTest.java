@@ -25,18 +25,23 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 
 import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
-import com.github.fabriciofx.cactoos.pdf.content.PngImage;
+import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
 import org.cactoos.text.Joined;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
+/**
+ * Test case for {@link Resources}.
+ *
+ * @since 0.0.1
+ */
 final class ResourcesTest {
     @Test
     void dictionary() throws Exception {
         final Count count = new ObjectCount();
-        final PngImage png = new PngImage(
+        final Png png = new Png(
             count,
             "src/test/resources/image/logo.png"
         );

@@ -26,41 +26,60 @@ package com.github.fabriciofx.cactoos.pdf.png;
 import com.github.fabriciofx.cactoos.pdf.Flow;
 import java.util.Arrays;
 
-public final class SafePngImg implements Img {
+/**
+ * SafePngRaw: Safe decorator for a PNG image raw.
+ *
+ * @since 0.0.1
+ */
+public final class SafePngRaw implements Raw {
+    /**
+     * PNG file signature.
+     */
     private static final byte[] SIGNATURE = {
-        (byte) 137, 'P', 'N', 'G', '\r', '\n', 26, '\n'
+        (byte) 137, 'P', 'N', 'G', '\r', '\n', 26, '\n',
     };
-    private final PngImg origin;
 
-    public SafePngImg(final PngImg img) {
-        this.origin = img;
+    /**
+     * Raw origin.
+     */
+    private final PngRaw origin;
+
+    /**
+     * Ctor.
+     *
+     * @param raw Image raw
+     */
+    public SafePngRaw(final PngRaw raw) {
+        this.origin = raw;
     }
 
     @Override
     public Header header() throws Exception {
         final Header header = this.origin.header();
         final Flow flow = new Flow(header.asBytes());
-        if (!Arrays.equals(SafePngImg.SIGNATURE, flow.asBytes(8))) {
-            throw new Exception("Not a PNG image file");
+        if (!Arrays.equals(SafePngRaw.SIGNATURE, flow.asBytes(8))) {
+            throw new InvalidFormatException("Not a PNG image file");
         }
         flow.skip(4);
         if (!flow.asString(4).equals("IHDR")) {
-            throw new Exception("Incorrect PNG image file");
+            throw new InvalidFormatException("Incorrect PNG image file");
         }
         if (header.depth() > 8) {
-            throw new Exception("16-bit depth in PNG file not supported");
+            throw new InvalidFormatException(
+                "16-bit depth in PNG file not supported"
+            );
         }
         if (header.color().space().equals("Unknown")) {
-            throw new Exception("Unknown color type");
+            throw new InvalidFormatException("Unknown color type");
         }
         if (header.compression() != 0) {
-            throw new Exception("Unknown compression method");
+            throw new InvalidFormatException("Unknown compression method");
         }
         if (header.filter() != 0) {
-            throw new Exception("Unknown filter method");
+            throw new InvalidFormatException("Unknown filter method");
         }
         if (header.interlacing() != 0) {
-            throw new Exception("Interlacing not supported");
+            throw new InvalidFormatException("Interlacing not supported");
         }
         return this.origin.header();
     }
@@ -76,7 +95,7 @@ public final class SafePngImg implements Img {
         final Header header = this.header();
         if (header.color().space().equals("Indexed")
             && this.origin.palette().asBytes().length == 0) {
-            throw new Exception("Missing palette in PNG file");
+            throw new InvalidFormatException("Missing palette in PNG file");
         }
         return this.origin.palette();
     }

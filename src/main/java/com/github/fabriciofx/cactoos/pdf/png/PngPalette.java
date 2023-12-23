@@ -34,13 +34,34 @@ import org.cactoos.Bytes;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
+/**
+ * PngPalette: Represents a palette of a PNG image.
+ *
+ * @since 0.0.1
+ */
 public final class PngPalette implements Palette {
+    /**
+     * Number.
+     */
     private final int number;
+
+    /**
+     * Generation number.
+     */
     private final int generation;
+
+    /**
+     * Bytes that represents a palette.
+     */
     private final Scalar<byte[]> bytes;
 
+    /**
+     * Ctor.
+     *
+     * @param count Object count
+     * @param bytes Bytes that represents a palette
+     */
     public PngPalette(final Count count, final Bytes bytes) {
         this(
             count.increment(),
@@ -69,6 +90,13 @@ public final class PngPalette implements Palette {
         );
     }
 
+    /**
+     * Ctor.
+     *
+     * @param number Number
+     * @param generation Generation number
+     * @param bytes Bytes that represents a palette.
+     */
     public PngPalette(
         final int number,
         final int generation,
@@ -108,7 +136,7 @@ public final class PngPalette implements Palette {
             ).asString().getBytes()
         );
         baos.write(this.dictionary().asBytes());
-        baos.write("endobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes());
         return baos.toByteArray();
     }
 }

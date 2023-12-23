@@ -27,10 +27,10 @@ import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.png.Header;
-import com.github.fabriciofx.cactoos.pdf.png.Img;
 import com.github.fabriciofx.cactoos.pdf.png.Palette;
-import com.github.fabriciofx.cactoos.pdf.png.PngImg;
-import com.github.fabriciofx.cactoos.pdf.png.SafePngImg;
+import com.github.fabriciofx.cactoos.pdf.png.PngRaw;
+import com.github.fabriciofx.cactoos.pdf.png.Raw;
+import com.github.fabriciofx.cactoos.pdf.png.SafePngRaw;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -43,12 +43,34 @@ import java.nio.file.Files;
 import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
 
-public final class PngImage implements Content {
+/**
+ * PNG.
+ *
+ * @since 0.0.1
+ */
+public final class Png implements Content {
+    /**
+     * Object number.
+     */
     private final int number;
-    private final int generation;
-    private final Img img;
 
-    public PngImage(final Count count, final String filename) {
+    /**
+     * Object generation.
+     */
+    private final int generation;
+
+    /**
+     * Raw image.
+     */
+    private final Raw raw;
+
+    /**
+     * Ctor.
+     *
+     * @param count Object count
+     * @param filename Image file name
+     */
+    public Png(final Count count, final String filename) {
         this(
             count.increment(),
             0,
@@ -57,7 +79,16 @@ public final class PngImage implements Content {
         );
     }
 
-    public PngImage(
+    /**
+     * Ctor.
+     *
+     * @param number Object number
+     * @param generation Object generation
+     * @param count Object count
+     * @param bytes Bytes that represents a PNG image
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Png(
         final int number,
         final int generation,
         final Count count,
@@ -65,7 +96,7 @@ public final class PngImage implements Content {
     ) {
         this.number = number;
         this.generation = generation;
-        this.img = new SafePngImg(new PngImg(count, bytes));
+        this.raw = new SafePngRaw(new PngRaw(count, bytes));
     }
 
     @Override
@@ -75,7 +106,7 @@ public final class PngImage implements Content {
 
     @Override
     public byte[] asBytes() throws Exception {
-        final Palette palette = this.img.palette();
+        final Palette palette = this.raw.palette();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
@@ -85,20 +116,20 @@ public final class PngImage implements Content {
             ).asString().getBytes()
         );
         baos.write(this.dictionary().asBytes());
-        baos.write("endobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes());
         baos.write(palette.asBytes());
         return baos.toByteArray();
     }
 
     @Override
     public byte[] stream() throws Exception {
-        return this.img.body().stream();
+        return this.raw.body().stream();
     }
 
     @Override
     public Dictionary dictionary() throws Exception {
-        final Header header = this.img.header();
-        final Palette palette = this.img.palette();
+        final Header header = this.raw.header();
+        final Palette palette = this.raw.palette();
         final byte[] stream = this.stream();
         return new Dictionary()
             .add("Type", new Name("XObject"))
@@ -122,9 +153,7 @@ public final class PngImage implements Content {
                     .add("Predictor", new Int(15))
                     .add(
                         "Colors",
-                        new Int(
-                            header.color().space().equals("DeviceRGB") ? 3 : 1
-                        )
+                        new Int(header.color().colors())
                     )
                     .add("BitsPerComponent", new Int(header.depth()))
                     .add("Columns", new Int(header.width()))

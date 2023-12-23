@@ -25,30 +25,43 @@ package com.github.fabriciofx.cactoos.pdf.type;
 
 import com.github.fabriciofx.cactoos.pdf.Type;
 
+/**
+ * Int.
+ *
+ * @since 0.0.1
+ */
 public final class Int implements Type<Integer> {
-    private final int value;
+    /**
+     * Value.
+     */
+    private final int num;
 
-    public Int(final int value) {
-        this.value = value;
+    /**
+     * Ctor.
+     *
+     * @param num Number
+     */
+    public Int(final int num) {
+        this.num = num;
     }
 
     @Override
     public Integer value() throws Exception {
-        return this.value;
+        return this.num;
     }
 
     @Override
     public byte[] asBytes() throws Exception {
         final byte[] bytes = new byte[4];
-        bytes[0] = (byte) (this.value >> 24);
-        bytes[1] = (byte) (this.value >> 16);
-        bytes[2] = (byte) (this.value >> 8);
-        bytes[3] = (byte) this.value;
+        bytes[0] = (byte) (this.num >> 24);
+        bytes[1] = (byte) (this.num >> 16);
+        bytes[2] = (byte) (this.num >> 8);
+        bytes[3] = (byte) this.num;
         return bytes;
     }
 
     @Override
     public String asString() throws Exception {
-        return Integer.toString(this.value);
+        return Integer.toString(this.num);
     }
 }

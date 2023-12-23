@@ -34,6 +34,11 @@ import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
+/**
+ * Test case for {@link Dictionary}.
+ *
+ * @since 0.0.1
+ */
 final class DictionaryTest {
     @Test
     void dictionary() {
@@ -129,7 +134,7 @@ final class DictionaryTest {
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         expected.write("<< /Length 2373 >>\nstream\n".getBytes());
         expected.write(content.asBytes());
-        expected.write("\nendstream\n".getBytes());
+        expected.write("\nendstream".getBytes());
         new Assertion<>(
             "Must represent a dictionary with a stream",
             new Dictionary()
@@ -149,7 +154,9 @@ final class DictionaryTest {
         final ByteArrayInputStream bais = new ByteArrayInputStream(
             image.asBytes()
         );
-        bais.skip(287);
+        if (bais.skip(287) != 287) {
+            throw new IllegalStateException("I can't skip 287 bytes");
+        }
         final byte[] content = bais.readNBytes(2086);
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         expected.write(
@@ -162,7 +169,7 @@ final class DictionaryTest {
             ).asString().getBytes()
         );
         expected.write(content);
-        expected.write("\nendstream\n".getBytes());
+        expected.write("\nendstream".getBytes());
         new Assertion<>(
             "Must represent a dictionary for an image",
             new Dictionary()

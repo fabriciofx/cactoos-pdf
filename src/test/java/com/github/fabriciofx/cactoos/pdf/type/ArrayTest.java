@@ -29,6 +29,11 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsNumber;
 import org.llorllale.cactoos.matchers.IsText;
 
+/**
+ * Test case for {@link Array}.
+ *
+ * @since 0.0.1
+ */
 final class ArrayTest {
     @Test
     void array() {

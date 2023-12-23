@@ -27,6 +27,11 @@ import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 
+/**
+ * ProcSet.
+ *
+ * @since 0.0.1
+ */
 public final class ProcSet implements Resource {
     @Override
     public byte[] asBytes() throws Exception {

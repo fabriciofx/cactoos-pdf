@@ -27,6 +27,11 @@ import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsNumber;
 
+/**
+ * Test case for {@link Int}.
+ *
+ * @since 0.0.1
+ */
 final class IntTest {
     @Test
     void value() throws Exception {

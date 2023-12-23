@@ -38,7 +38,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
 
 /**
@@ -145,7 +144,8 @@ public final class DefaultPages implements Pages {
                 new Array(
                     new Int(0),
                     new Int(0),
-                    new Text(this.size.asString()))
+                    new Text(this.size.asString())
+                )
             );
     }
 }

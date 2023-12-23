@@ -23,24 +23,27 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
+import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
+import java.io.ByteArrayOutputStream;
 import org.cactoos.text.Joined;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsNumber;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Test case for {@link PngImg}.
+ * Test case for {@link PngRaw}.
  *
  * @since 0.0.1
  */
-final class PngImgTest {
+final class PngTest {
     @Test
     void header() throws Exception {
         new Assertion<>(
             "Must represent a PNG header",
-            new PngImg(
+            new PngRaw(
                 new ObjectCount(),
                 "src/test/resources/image/logo.png"
             ).header(),
@@ -64,8 +67,8 @@ final class PngImgTest {
     @Test
     void body() throws Exception {
         new Assertion<>(
-            "Must represent a PNG palette",
-            new PngImg(
+            "Must represent a PNG body",
+            new PngRaw(
                 new ObjectCount(),
                 "src/test/resources/image/logo.png"
             ).body().stream().length,
@@ -77,11 +80,41 @@ final class PngImgTest {
     void palette() throws Exception {
         new Assertion<>(
             "Must represent a PNG palette",
-            new PngImg(
+            new PngRaw(
                 new ObjectCount(),
                 "src/test/resources/image/logo.png"
             ).palette().stream().length,
             new IsNumber(192)
+        ).affirm();
+    }
+
+    @Test
+    void content() throws Exception {
+        final String filename = "src/test/resources/image/logo.png";
+        final Png png = new Png(new ObjectCount(), filename);
+        final Raw raw = new PngRaw(new ObjectCount(), filename);
+        final ByteArrayOutputStream expected = new ByteArrayOutputStream();
+        expected.write(
+            new Joined(
+                " ",
+                "1 0 obj\n<< /Type /XObject /Subtype /Image /Width 104",
+                "/Height 71 /ColorSpace [/Indexed /DeviceRGB 63 3 0 R]",
+                "/BitsPerComponent 8 /Filter /FlateDecode /DecodeParms <<",
+                "/Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104",
+                ">> /Mask [0 0] /Length 2086 >>\nstream\n"
+            ).asString().getBytes()
+        );
+        expected.write(raw.body().stream());
+        expected.write(
+            "\nendstream\nendobj\n3 0 obj\n<< /Length 192 >>\nstream\n"
+                .getBytes()
+        );
+        expected.write(raw.palette().stream());
+        expected.write("\nendstream\nendobj\n".getBytes());
+        new Assertion<>(
+            "Must represent a PNG content",
+            expected.toByteArray(),
+            new IsEqual<>(png.asBytes())
         ).affirm();
     }
 }

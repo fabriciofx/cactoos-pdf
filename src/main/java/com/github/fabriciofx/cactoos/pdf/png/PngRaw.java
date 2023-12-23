@@ -28,33 +28,60 @@ import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.Bytes;
 
-public final class PngImg implements Img {
-    private final Header header;
-    private final Body body;
-    private final Palette palette;
+/**
+ * PngRaw: Raw for a PNG image.
+ *
+ * @since 0.0.1
+ */
+public final class PngRaw implements Raw {
+    /**
+     * Header.
+     */
+    private final Header hdr;
 
-    public PngImg(final Count count, final String filename) {
+    /**
+     * Body.
+     */
+    private final Body bdy;
+
+    /**
+     * Palette.
+     */
+    private final Palette pal;
+
+    /**
+     * Ctor.
+     * @param count Object count
+     * @param filename File name of a PNG image
+     */
+    public PngRaw(final Count count, final String filename) {
         this(count, () -> Files.readAllBytes(new File(filename).toPath()));
     }
 
-    public PngImg(final Count count, final Bytes bytes) {
-        this.header = new PngHeader(bytes);
-        this.body = new PngBody(count, bytes);
-        this.palette = new PngPalette(count, bytes);
+    /**
+     * Ctor.
+     *
+     * @param count Object count
+     * @param bytes Bytes that represents a PNG image
+     */
+    public PngRaw(final Count count, final Bytes bytes) {
+        this.hdr = new PngHeader(bytes);
+        this.bdy = new PngBody(count, bytes);
+        this.pal = new PngPalette(count, bytes);
     }
 
     @Override
     public Header header() throws Exception {
-        return this.header;
+        return this.hdr;
     }
 
     @Override
     public Body body() throws Exception {
-        return this.body;
+        return this.bdy;
     }
 
     @Override
     public Palette palette() throws Exception {
-        return this.palette;
+        return this.pal;
     }
 }

@@ -21,23 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.type;
+package com.github.fabriciofx.cactoos.pdf.png;
 
-import com.github.fabriciofx.cactoos.pdf.Type;
+/**
+ * Image Raw.
+ *
+ * @since 0.0.1
+ */
+public interface Raw {
+    /**
+     * Header.
+     *
+     * @return Image header
+     * @throws Exception if fails
+     */
+    Header header() throws Exception;
 
-public final class Empty implements Type<String> {
-    @Override
-    public byte[] asBytes() throws Exception {
-        return "".getBytes();
-    }
+    /**
+     * Body.
+     *
+     * @return Image body
+     * @throws Exception if fails
+     */
+    Body body() throws Exception;
 
-    @Override
-    public String value() throws Exception {
-        return "";
-    }
-
-    @Override
-    public String asString() throws Exception {
-        return "";
-    }
+    /**
+     * Palette.
+     *
+     * @return Image palette if there is one
+     * @throws Exception if fails
+     */
+    Palette palette() throws Exception;
 }

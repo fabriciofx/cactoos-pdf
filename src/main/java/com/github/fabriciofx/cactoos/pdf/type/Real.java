@@ -26,27 +26,40 @@ package com.github.fabriciofx.cactoos.pdf.type;
 import com.github.fabriciofx.cactoos.pdf.Type;
 import java.nio.ByteBuffer;
 
+/**
+ * Real.
+ *
+ * @since 0.0.1
+ */
 public final class Real implements Type<Double> {
-    private final double value;
+    /**
+     * Value.
+     */
+    private final double num;
 
-    public Real(final double value) {
-        this.value = value;
+    /**
+     * Ctor.
+     *
+     * @param num Number
+     */
+    public Real(final double num) {
+        this.num = num;
     }
 
     @Override
     public Double value() throws Exception {
-        return this.value;
+        return this.num;
     }
 
     @Override
     public byte[] asBytes() throws Exception {
         final ByteBuffer buffer = ByteBuffer.allocate(Double.BYTES);
-        buffer.putDouble(this.value);
+        buffer.putDouble(this.num);
         return buffer.array();
     }
 
     @Override
     public String asString() throws Exception {
-        return Double.toString(this.value);
+        return Double.toString(this.num);
     }
 }

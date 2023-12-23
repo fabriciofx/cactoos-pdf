@@ -25,5 +25,10 @@ package com.github.fabriciofx.cactoos.pdf.png;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
 
+/**
+ * Palette.
+ *
+ * @since 0.0.1
+ */
 public interface Palette extends Content {
 }

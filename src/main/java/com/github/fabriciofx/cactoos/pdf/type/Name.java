@@ -26,11 +26,24 @@ package com.github.fabriciofx.cactoos.pdf.type;
 import com.github.fabriciofx.cactoos.pdf.Type;
 import org.cactoos.text.FormattedText;
 
+/**
+ * Name.
+ *
+ * @since 0.0.1
+ */
 public final class Name implements Type<String> {
-    private final String value;
+    /**
+     * Value.
+     */
+    private final String text;
 
-    public Name(final String value) {
-        this.value = value;
+    /**
+     * Ctor.
+     *
+     * @param text The name
+     */
+    public Name(final String text) {
+        this.text = text;
     }
 
     @Override
@@ -40,22 +53,22 @@ public final class Name implements Type<String> {
 
     @Override
     public String value() throws Exception {
-        return this.value;
+        return this.text;
     }
 
     @Override
     public String asString() throws Exception {
-        return new FormattedText("/%s", this.value).asString();
+        return new FormattedText("/%s", this.text).asString();
     }
 
     @Override
     public boolean equals(final Object name) {
         return name instanceof Name
-            && Name.class.cast(name).value.equals(this.value);
+            && Name.class.cast(name).text.equals(this.text);
     }
 
     @Override
     public int hashCode() {
-        return this.value.hashCode();
+        return this.text.hashCode();
     }
 }

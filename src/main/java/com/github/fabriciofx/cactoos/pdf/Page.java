@@ -39,6 +39,7 @@ public interface Page extends Object {
      *
      * @param parent Pages parent
      * @return The page dictionary
+     * @throws Exception if fails
      */
     Dictionary dictionary(Pages parent) throws Exception;
 

@@ -26,29 +26,53 @@ package com.github.fabriciofx.cactoos.pdf;
 import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
 
+/**
+ * Reference.
+ *
+ * @since 0.0.1
+ */
 public final class Reference implements Text {
-    private final int number;
-    private final int generation;
+    /**
+     * Serial number.
+     */
+    private final int num;
 
+    /**
+     * Generation number.
+     */
+    private final int gen;
+
+    /**
+     * Ctor.
+     *
+     * @param number Serial number
+     * @param generation Generation number
+     */
     public Reference(final int number, final int generation) {
-        this.number = number;
-        this.generation = generation;
+        this.num = number;
+        this.gen = generation;
     }
 
+    /**
+     * Object number.
+     *
+     * @return Object number
+     */
     public int number() {
-        return this.number;
+        return this.num;
     }
 
+    /**
+     * Object generation.
+     *
+     * @return Object generation
+     */
     public int generation() {
-        return this.generation;
+        return this.gen;
     }
 
     @Override
     public String asString() throws Exception {
-        return new FormattedText(
-            "%d %d R",
-            this.number,
-            this.generation
-        ).asString();
+        return new FormattedText("%d %d R", this.num, this.gen).asString();
     }
 }

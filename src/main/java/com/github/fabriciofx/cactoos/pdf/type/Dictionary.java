@@ -31,19 +31,44 @@ import java.util.Map;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 
+/**
+ * Dictionary.
+ *
+ * @since 0.0.1
+ */
 public final class Dictionary implements Type<Dictionary> {
-    private final static Empty EMPTY = new Empty();
+    /**
+     * Entries.
+     */
     private final Map<Name, Type<?>> entries;
+
+    /**
+     * Stream, if there is one.
+     */
     private final List<Stream> stream;
 
+    /**
+     * Ctor.
+     */
     public Dictionary() {
         this(new ListOf<>(), new LinkedHashMap<>());
     }
 
+    /**
+     * Ctor.
+     *
+     * @param entries Entries
+     */
     public Dictionary(final Map<Name, Type<?>> entries) {
         this(new ListOf<>(), entries);
     }
 
+    /**
+     * Ctor.
+     *
+     * @param stream Stream, if there is one
+     * @param entries Entries
+     */
     public Dictionary(
         final List<Stream> stream,
         final Map<Name, Type<?>> entries
@@ -65,10 +90,10 @@ public final class Dictionary implements Type<Dictionary> {
                 values.append(entry.getKey().asString());
             } else {
                 values.append(entry.getKey().asString())
-                    .append(" ")
+                    .append(' ')
                     .append(entry.getValue().asString());
             }
-            values.append(" ");
+            values.append(' ');
         }
         return new FormattedText(
             "<< %s>>",
@@ -83,31 +108,63 @@ public final class Dictionary implements Type<Dictionary> {
         if (!this.stream.isEmpty()) {
             baos.write("\nstream\n".getBytes());
             baos.write(this.stream.get(0).value());
-            baos.write("\nendstream\n".getBytes());
+            baos.write("\nendstream".getBytes());
         }
         return baos.toByteArray();
     }
 
+    /**
+     * Add an entry into dictionary.
+     *
+     * @param name The name of this entry
+     * @param value The valur of this entry
+     * @return A new dictionary with the new entry added
+     */
     public Dictionary add(final String name, final Type<?> value) {
         final Map<Name, Type<?>> tmp = new LinkedHashMap<>(this.entries);
         tmp.put(new Name(name), value);
         return new Dictionary(tmp);
     }
 
-    public Dictionary with(final Stream stream) {
-        return new Dictionary(new ListOf<>(stream), this.entries);
+    /**
+     * Add a data stream into dictionary.
+     *
+     * @param strm A data stream
+     * @return A new dictionary with the stream added
+     */
+    public Dictionary with(final Stream strm) {
+        return new Dictionary(new ListOf<>(strm), this.entries);
     }
 
+    /**
+     * Merge two dictionary.
+     *
+     * @param dictionary A dictionary to be merged
+     * @return A new dictionary merged
+     */
     public Dictionary merge(final Dictionary dictionary) {
         final Map<Name, Type<?>> elements = new LinkedHashMap<>(this.entries);
         elements.putAll(dictionary.entries);
         return new Dictionary(elements);
     }
 
+    /**
+     * Checks if there is an entry with the name.
+     *
+     * @param key The name to be checked
+     * @return True if there is, false if not
+     */
     public boolean contains(final String key) {
         return this.entries.containsKey(new Name(key));
     }
 
+    /**
+     * Get a value which the name is a key.
+     *
+     * @param key The name
+     * @param <T> The type of value returned
+     * @return A value
+     */
     @SuppressWarnings("unchecked")
     public <T> T get(final String key) {
         return (T) this.entries.get(new Name(key));

@@ -25,8 +25,6 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import java.util.Map;
 import org.cactoos.Bytes;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Document Information Dictionary.

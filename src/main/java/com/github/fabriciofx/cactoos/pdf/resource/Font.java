@@ -36,6 +36,7 @@ public final class Font implements Resource {
      * Font family.
      */
     private final FontFamily family;
+
     /**
      * Font name.
      */

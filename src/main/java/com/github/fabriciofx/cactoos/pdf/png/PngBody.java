@@ -34,13 +34,34 @@ import org.cactoos.Bytes;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
+/**
+ * PngBody: Represents a PNG image body.
+ *
+ * @since 0.0.1
+ */
 public final class PngBody implements Body {
+    /**
+     * Object number.
+     */
     private final int number;
+
+    /**
+     * Generation number.
+     */
     private final int generation;
+
+    /**
+     * PNG image body.
+     */
     private final Scalar<byte[]> bytes;
 
+    /**
+     * Ctor.
+     *
+     * @param count Object count.
+     * @param bytes Bytes that represents a PNG image body
+     */
     public PngBody(final Count count, final Bytes bytes) {
         this(
             count.increment(),
@@ -69,6 +90,13 @@ public final class PngBody implements Body {
         );
     }
 
+    /**
+     * Ctor.
+     *
+     * @param number Object number
+     * @param generation Generation number
+     * @param bytes Bytes that represents a PNG image body
+     */
     public PngBody(
         final int number,
         final int generation,

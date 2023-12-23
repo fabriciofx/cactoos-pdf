@@ -27,6 +27,11 @@ import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
+/**
+ * Test case for {@link Bool}.
+ *
+ * @since 0.0.1
+ */
 final class BoolTest {
     @Test
     void value() throws Exception {

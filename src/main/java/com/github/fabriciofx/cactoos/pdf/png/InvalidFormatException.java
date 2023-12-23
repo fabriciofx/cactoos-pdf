@@ -23,8 +23,29 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
-public interface Img {
-    Header header() throws Exception;
-    Body body() throws Exception;
-    Palette palette() throws Exception;
+/**
+ * InvalidFormatException.
+ *
+ * Throws this exception when image format is invalid.
+ *
+ * @since 0.0.1
+ */
+public class InvalidFormatException extends RuntimeException {
+    private static final long serialVersionUID = -4456180910126746406L;
+
+    /**
+     * Ctor.
+     */
+    public InvalidFormatException() {
+        super();
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param msg Exception message
+     */
+    public InvalidFormatException(final String msg) {
+        super(msg);
+    }
 }

@@ -25,33 +25,56 @@ package com.github.fabriciofx.cactoos.pdf.type;
 
 import com.github.fabriciofx.cactoos.pdf.Type;
 
+/**
+ * Text.
+ *
+ * @since 0.0.1
+ */
 public final class Text implements Type<String> {
-    private final String value;
+    /**
+     * Value.
+     */
+    private final String txt;
 
-    public Text(final double value) {
-        this(Double.toString(value));
+    /**
+     * Ctor.
+     *
+     * @param num Double number
+     */
+    public Text(final double num) {
+        this(Double.toString(num));
     }
 
-    public Text(final int value) {
-        this(Integer.toString(value));
+    /**
+     * Ctor.
+     *
+     * @param num Integer number
+     */
+    public Text(final int num) {
+        this(Integer.toString(num));
     }
 
-    public Text(final String value) {
-        this.value = value;
+    /**
+     * Ctor.
+     *
+     * @param txt String text
+     */
+    public Text(final String txt) {
+        this.txt = txt;
     }
 
     @Override
     public byte[] asBytes() throws Exception {
-        return this.value.getBytes();
+        return this.txt.getBytes();
     }
 
     @Override
     public String value() throws Exception {
-        return this.value;
+        return this.txt;
     }
 
     @Override
     public String asString() throws Exception {
-        return this.value;
+        return this.txt;
     }
 }

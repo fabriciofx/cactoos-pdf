@@ -24,6 +24,8 @@
 package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import org.cactoos.text.FormattedText;
 
 /**
  * Flow.
@@ -63,7 +65,7 @@ public final class Flow {
      * @throws Exception if fails
      */
     public String asString(final int length) throws Exception {
-        return new String(this.stream.readNBytes(length));
+        return new String(readNBytes(this.stream, length));
     }
 
     /**
@@ -74,7 +76,7 @@ public final class Flow {
      * @throws Exception if fails
      */
     public byte[] asBytes(final int length) throws Exception {
-        return this.stream.readNBytes(length);
+        return readNBytes(this.stream, length);
     }
 
     /**
@@ -110,5 +112,31 @@ public final class Flow {
      */
     public long skip(final int length) throws Exception {
         return this.stream.skip(length);
+    }
+
+    /**
+     * Read n bytes from a ByteArrayInputStream.
+     *
+     * @param bais A ByteArrayInputStream
+     * @param length Amount of bytes to read
+     * @return Bytes read
+     * @throws Exception if fails
+     */
+    private static byte[] readNBytes(
+        final ByteArrayInputStream bais,
+        final int length
+    ) throws Exception {
+        final byte[] buffer = new byte[length];
+        final int read = bais.read(buffer);
+        if (read != length) {
+            throw new IOException(
+                new FormattedText(
+                    "Amount of bytes read (%d) is different of specified (%d)",
+                    read,
+                    length
+                ).asString()
+            );
+        }
+        return buffer;
     }
 }

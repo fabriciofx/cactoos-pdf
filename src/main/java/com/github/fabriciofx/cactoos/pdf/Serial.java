@@ -26,7 +26,7 @@ package com.github.fabriciofx.cactoos.pdf;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * AtomicCount.
+ * Serial.
  *
  * @since 0.0.1
  */

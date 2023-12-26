@@ -117,7 +117,7 @@ public final class Dictionary implements Type<Dictionary> {
      * Add an entry into dictionary.
      *
      * @param name The name of this entry
-     * @param value The valur of this entry
+     * @param value The value of this entry
      * @return A new dictionary with the new entry added
      */
     public Dictionary add(final String name, final Type<?> value) {

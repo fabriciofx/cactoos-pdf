@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.Bytes;
 import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.InputOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
@@ -157,7 +158,7 @@ final class DictionaryTest {
         if (bais.skip(287) != 287) {
             throw new IllegalStateException("I can't skip 287 bytes");
         }
-        final byte[] content = bais.readNBytes(2086);
+        final byte[] content = new BytesOf(new InputOf(bais)).asBytes();
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         expected.write(
             new Joined(

@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
-import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.Bytes;
@@ -51,23 +51,23 @@ public final class PngRaw implements Raw {
 
     /**
      * Ctor.
-     * @param count Object count
+     * @param id Object id
      * @param filename File name of a PNG image
      */
-    public PngRaw(final Count count, final String filename) {
-        this(count, () -> Files.readAllBytes(new File(filename).toPath()));
+    public PngRaw(final Id id, final String filename) {
+        this(id, () -> Files.readAllBytes(new File(filename).toPath()));
     }
 
     /**
      * Ctor.
      *
-     * @param count Object count
+     * @param id Object id
      * @param bytes Bytes that represents a PNG image
      */
-    public PngRaw(final Count count, final Bytes bytes) {
+    public PngRaw(final Id id, final Bytes bytes) {
         this.hdr = new PngHeader(bytes);
-        this.bdy = new PngBody(count, bytes);
-        this.pal = new PngPalette(count, bytes);
+        this.bdy = new PngBody(id, bytes);
+        this.pal = new PngPalette(id, bytes);
     }
 
     @Override

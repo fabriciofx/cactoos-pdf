@@ -37,9 +37,9 @@ import org.cactoos.text.FormattedText;
  */
 public final class Catalog implements Object, Bytes {
     /**
-     * Object number.
+     * Object id.
      */
-    private final int number;
+    private final int id;
 
     /**
      * Object generation.
@@ -54,29 +54,29 @@ public final class Catalog implements Object, Bytes {
     /**
      * Ctor.
      *
-     * @param count Counter
+     * @param id Object id
      * @param pages Pages
      */
-    public Catalog(final Count count, final Pages pages) {
-        this(count.increment(), 0, pages);
+    public Catalog(final Id id, final Pages pages) {
+        this(id.increment(), 0, pages);
     }
 
     /**
      * Ctor.
      *
-     * @param number Object number
+     * @param id Object id
      * @param generation Object generation
      * @param pages Pages
      */
-    public Catalog(final int number, final int generation, final Pages pages) {
-        this.number = number;
+    public Catalog(final int id, final int generation, final Pages pages) {
+        this.id = id;
         this.generation = generation;
         this.pages = pages;
     }
 
     @Override
     public Reference reference() {
-        return new Reference(this.number, this.generation);
+        return new Reference(this.id, this.generation);
     }
 
     /**
@@ -97,7 +97,7 @@ public final class Catalog implements Object, Bytes {
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.number,
+                this.id,
                 this.generation
             ).asString().getBytes()
         );

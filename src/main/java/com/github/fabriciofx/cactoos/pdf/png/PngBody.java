@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
-import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Flow;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -42,9 +42,9 @@ import org.cactoos.text.FormattedText;
  */
 public final class PngBody implements Body {
     /**
-     * Object number.
+     * Object id.
      */
-    private final int number;
+    private final int id;
 
     /**
      * Generation number.
@@ -59,12 +59,12 @@ public final class PngBody implements Body {
     /**
      * Ctor.
      *
-     * @param count Object count.
+     * @param id Object id.
      * @param bytes Bytes that represents a PNG image body
      */
-    public PngBody(final Count count, final Bytes bytes) {
+    public PngBody(final Id id, final Bytes bytes) {
         this(
-            count.increment(),
+            id.increment(),
             0,
             new Sticky<>(
                 () -> {
@@ -93,23 +93,23 @@ public final class PngBody implements Body {
     /**
      * Ctor.
      *
-     * @param number Object number
+     * @param id Object id
      * @param generation Generation number
      * @param bytes Bytes that represents a PNG image body
      */
     public PngBody(
-        final int number,
+        final int id,
         final int generation,
         final Scalar<byte[]> bytes
     ) {
-        this.number = number;
+        this.id = id;
         this.generation = generation;
         this.bytes = bytes;
     }
 
     @Override
     public Reference reference() {
-        return new Reference(this.number, this.generation);
+        return new Reference(this.id, this.generation);
     }
 
     @Override
@@ -131,7 +131,7 @@ public final class PngBody implements Body {
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.number,
+                this.id,
                 this.generation
             ).asString().getBytes()
         );

@@ -23,10 +23,10 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
-import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
-import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
 import org.cactoos.text.Joined;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -40,20 +40,20 @@ import org.llorllale.cactoos.matchers.IsText;
 final class ResourcesTest {
     @Test
     void dictionary() throws Exception {
-        final Count count = new ObjectCount();
+        final Id id = new Serial();
         final Png png = new Png(
-            count,
+            id,
             "src/test/resources/image/logo.png"
         );
         final Image image = new Image(
-            count,
+            id,
             "I1",
             png
         );
         new Assertion<>(
             "Must represent a resources dictionary",
             new Resources(
-                count,
+                id,
                 new ProcSet(),
                 new Font(
                     new FontFamily("Times-Roman", "Type1"),

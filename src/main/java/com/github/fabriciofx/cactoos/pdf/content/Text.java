@@ -24,8 +24,8 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Escaped;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -56,12 +56,12 @@ public final class Text implements Content {
     private static final String SPLIT_REGEX = "\\s+";
 
     /**
-     * Number.
+     * Object id.
      */
-    private final int number;
+    private final int id;
 
     /**
-     * Generation.
+     * Object generation.
      */
     private final int generation;
 
@@ -98,7 +98,7 @@ public final class Text implements Content {
     /**
      * Ctor.
      *
-     * @param count Count object
+     * @param id Object id
      * @param size Font size
      * @param posx Position X
      * @param posy Position Y
@@ -106,19 +106,19 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
-        final Count count,
+        final Id id,
         final int size,
         final int posx,
         final int posy,
         final org.cactoos.Text content
     ) {
-        this(count.increment(), 0, size, posx, posy, 80, 20, content);
+        this(id.increment(), 0, size, posx, posy, 80, 20, content);
     }
 
     /**
      * Ctor.
      *
-     * @param count Count object
+     * @param id Object id
      * @param size Font size
      * @param posx Position X
      * @param posy Position Y
@@ -128,7 +128,7 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
-        final Count count,
+        final Id id,
         final int size,
         final int posx,
         final int posy,
@@ -136,13 +136,13 @@ public final class Text implements Content {
         final int leading,
         final org.cactoos.Text content
     ) {
-        this(count.increment(), 0, size, posx, posy, max, leading, content);
+        this(id.increment(), 0, size, posx, posy, max, leading, content);
     }
 
     /**
      * Ctor.
      *
-     * @param number Object number
+     * @param id Object id
      * @param generation Object generation
      * @param size Font size
      * @param posx Position X
@@ -153,7 +153,7 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
-        final int number,
+        final int id,
         final int generation,
         final int size,
         final int posx,
@@ -162,7 +162,7 @@ public final class Text implements Content {
         final int leading,
         final org.cactoos.Text content
     ) {
-        this.number = number;
+        this.id = id;
         this.generation = generation;
         this.size = size;
         this.posx = posx;
@@ -174,7 +174,7 @@ public final class Text implements Content {
 
     @Override
     public Reference reference() {
-        return new Reference(this.number, this.generation);
+        return new Reference(this.id, this.generation);
     }
 
     @Override
@@ -231,7 +231,7 @@ public final class Text implements Content {
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.number,
+                this.id,
                 this.generation
             ).asString().getBytes()
         );

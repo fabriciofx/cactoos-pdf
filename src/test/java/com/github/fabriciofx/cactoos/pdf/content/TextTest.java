@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.content;
 
-import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
+import com.github.fabriciofx.cactoos.pdf.Serial;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ final class TextTest {
             "Must don't break a small text",
             new TextOf(
                 new Text(
-                    new ObjectCount(),
+                    new Serial(),
                     18,
                     0,
                     0,
@@ -73,7 +73,7 @@ final class TextTest {
             "Must break a big text into multiline",
             new TextOf(
                 new Text(
-                    new ObjectCount(),
+                    new Serial(),
                     18,
                     0,
                     0,

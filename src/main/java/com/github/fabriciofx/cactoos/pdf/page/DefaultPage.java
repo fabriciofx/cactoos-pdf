@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
-import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.Reference;
@@ -43,9 +43,9 @@ import org.cactoos.text.FormattedText;
 @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 public final class DefaultPage implements Page {
     /**
-     * Object number.
+     * Object id.
      */
-    private final int number;
+    private final int id;
 
     /**
      * Object generation.
@@ -65,34 +65,34 @@ public final class DefaultPage implements Page {
     /**
      * Ctor.
      *
-     * @param count Counter
+     * @param id Object id
      * @param resources List of resources
      * @param contents Page contents
      */
     public DefaultPage(
-        final Count count,
+        final Id id,
         final Resources resources,
         final Contents contents
     ) {
-        this(count.increment(), 0, resources, contents);
+        this(id.increment(), 0, resources, contents);
     }
 
     /**
      * Ctor.
      *
-     * @param number Object number
+     * @param id Object id
      * @param generation Object generation
      * @param resources List of resources
      * @param contents Page contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public DefaultPage(
-        final int number,
+        final int id,
         final int generation,
         final Resources resources,
         final Contents contents
     ) {
-        this.number = number;
+        this.id = id;
         this.generation = generation;
         this.resources = resources;
         this.contents = contents;
@@ -100,7 +100,7 @@ public final class DefaultPage implements Page {
 
     @Override
     public Reference reference() {
-        return new Reference(this.number, this.generation);
+        return new Reference(this.id, this.generation);
     }
 
     @Override
@@ -128,7 +128,7 @@ public final class DefaultPage implements Page {
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.number,
+                this.id,
                 this.generation
             ).asString().getBytes()
         );

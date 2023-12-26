@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.pages;
 
-import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.Reference;
@@ -47,9 +47,9 @@ import org.cactoos.text.UncheckedText;
  */
 public final class DefaultPages implements Pages {
     /**
-     * Object number.
+     * Object id.
      */
-    private final int number;
+    private final int id;
 
     /**
      * Object generation.
@@ -69,34 +69,34 @@ public final class DefaultPages implements Pages {
     /**
      * Ctor.
      *
-     * @param count Counter
+     * @param id Object id
      * @param size Page's size
      * @param kids Pages
      */
     public DefaultPages(
-        final Count count,
+        final Id id,
         final PageFormat size,
         final Page... kids
     ) {
-        this(count.increment(), 0, size, kids);
+        this(id.increment(), 0, size, kids);
     }
 
     /**
      * Ctor.
      *
-     * @param number Object number
+     * @param id Object id
      * @param generation Object generation
      * @param size Page's size
      * @param kids Pages
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public DefaultPages(
-        final int number,
+        final int id,
         final int generation,
         final PageFormat size,
         final Page... kids
     ) {
-        this.number = number;
+        this.id = id;
         this.generation = generation;
         this.size = size;
         this.kids = Arrays.asList(kids);
@@ -104,7 +104,7 @@ public final class DefaultPages implements Pages {
 
     @Override
     public Reference reference() {
-        return new Reference(this.number, this.generation);
+        return new Reference(this.id, this.generation);
     }
 
     @Override
@@ -113,7 +113,7 @@ public final class DefaultPages implements Pages {
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.number,
+                this.id,
                 this.generation
             ).asString().getBytes()
         );

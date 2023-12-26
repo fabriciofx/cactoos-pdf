@@ -24,7 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
+import com.github.fabriciofx.cactoos.pdf.Serial;
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
@@ -42,7 +42,7 @@ final class FlateEncodeTest {
     @Test
     void encode() throws Exception {
         final Content content = new Text(
-            new ObjectCount(),
+            new Serial(),
             18,
             0,
             0,

@@ -24,7 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.png.Header;
 import com.github.fabriciofx.cactoos.pdf.png.Palette;
@@ -50,9 +50,9 @@ import org.cactoos.text.FormattedText;
  */
 public final class Png implements Content {
     /**
-     * Object number.
+     * Object id.
      */
-    private final int number;
+    private final int id;
 
     /**
      * Object generation.
@@ -67,14 +67,14 @@ public final class Png implements Content {
     /**
      * Ctor.
      *
-     * @param count Object count
+     * @param id Object id
      * @param filename Image file name
      */
-    public Png(final Count count, final String filename) {
+    public Png(final Id id, final String filename) {
         this(
-            count.increment(),
+            id.increment(),
             0,
-            count,
+            id,
             () -> Files.readAllBytes(new File(filename).toPath())
         );
     }
@@ -82,26 +82,26 @@ public final class Png implements Content {
     /**
      * Ctor.
      *
-     * @param number Object number
+     * @param id Object id
      * @param generation Object generation
-     * @param count Object count
+     * @param serial Object serial
      * @param bytes Bytes that represents a PNG image
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Png(
-        final int number,
+        final int id,
         final int generation,
-        final Count count,
+        final Id serial,
         final Bytes bytes
     ) {
-        this.number = number;
+        this.id = id;
         this.generation = generation;
-        this.raw = new SafePngRaw(new PngRaw(count, bytes));
+        this.raw = new SafePngRaw(new PngRaw(serial, bytes));
     }
 
     @Override
     public Reference reference() {
-        return new Reference(this.number, this.generation);
+        return new Reference(this.id, this.generation);
     }
 
     @Override
@@ -111,7 +111,7 @@ public final class Png implements Content {
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.number,
+                this.id,
                 this.generation
             ).asString().getBytes()
         );

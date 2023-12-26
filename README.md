@@ -40,13 +40,13 @@ Here an example how to build a Hello World PDF file using our API:
 ```java
 final File file = new File("HelloWorld.pdf");
 final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-final Count count = new ObjectCount();
+final Id id = new Serial();
 Files.write(
     file.toPath(),
     new Document(
-        count,
+        id,
         new Information(
-            count,
+            id,
             new MapOf<>(
                 new MapEntry<>("Title", "Hello World"),
                 new MapEntry<>("Subject", "PDF document"),
@@ -59,15 +59,15 @@ Files.write(
             )
         ),
         new Catalog(
-            count,
+            id,
             new DefaultPages(
-                count,
+                id,
                 PageFormat.A4,
                 new DefaultPage(
-                    count,
+                    id,
                     new Resources(
                         new Font(
-                            count,
+                            id,
                             new FontFamily("Times-Roman", "Type1"),
                             "F1"
                         )
@@ -75,7 +75,7 @@ Files.write(
                     new Contents(
                         new FlateEncode(
                             new Text(
-                                count,
+                                id,
                                 18,
                                 0,
                                 0,

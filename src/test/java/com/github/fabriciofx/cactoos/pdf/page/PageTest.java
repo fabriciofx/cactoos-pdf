@@ -24,13 +24,13 @@
 package com.github.fabriciofx.cactoos.pdf.page;
 
 import com.github.fabriciofx.cactoos.pdf.Catalog;
-import com.github.fabriciofx.cactoos.pdf.Count;
 import com.github.fabriciofx.cactoos.pdf.Date;
 import com.github.fabriciofx.cactoos.pdf.Document;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Information;
+import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
-import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.Font;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
@@ -52,15 +52,15 @@ import org.llorllale.cactoos.matchers.IsText;
 final class PageTest {
     @Test
     void buildDocumentWithRotatePage() throws Exception {
-        final Count count = new ObjectCount();
+        final Id id = new Serial();
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
                 new Document(
-                    count,
+                    id,
                     new Information(
-                        count,
+                        id,
                         new MapOf<>(
                             new MapEntry<>("Title", "Hello World"),
                             new MapEntry<>("Subject", "PDF document"),
@@ -76,15 +76,15 @@ final class PageTest {
                         )
                     ),
                     new Catalog(
-                        count,
+                        id,
                         new DefaultPages(
-                            count,
+                            id,
                             PageFormat.A4,
                             new Rotate(
                                 new DefaultPage(
-                                    count,
+                                    id,
                                     new Resources(
-                                        count,
+                                        id,
                                         new Font(
                                             new FontFamily(
                                                 "Times-Roman",
@@ -95,7 +95,7 @@ final class PageTest {
                                     ),
                                     new Contents(
                                         new Text(
-                                            count,
+                                            id,
                                             18,
                                             0,
                                             0,
@@ -130,15 +130,15 @@ final class PageTest {
 
     @Test
     void buildTwoPagesDocument() throws Exception {
-        final Count count = new ObjectCount();
+        final Id id = new Serial();
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         new Assertion<>(
             "Must represent a two pages PDF document",
             new TextOf(
                 new Document(
-                    count,
+                    id,
                     new Information(
-                        count,
+                        id,
                         new MapOf<>(
                             new MapEntry<>("Title", "Hello World"),
                             new MapEntry<>("Subject", "PDF document"),
@@ -151,14 +151,14 @@ final class PageTest {
                         )
                     ),
                     new Catalog(
-                        count,
+                        id,
                         new DefaultPages(
-                            count,
+                            id,
                             PageFormat.A4,
                             new DefaultPage(
-                                count,
+                                id,
                                 new Resources(
-                                    count,
+                                    id,
                                     new Font(
                                         new FontFamily("Times-Roman", "Type1"),
                                         "F1"
@@ -166,7 +166,7 @@ final class PageTest {
                                 ),
                                 new Contents(
                                     new Text(
-                                        count,
+                                        id,
                                         18,
                                         0,
                                         0,
@@ -175,9 +175,9 @@ final class PageTest {
                                 )
                             ),
                             new DefaultPage(
-                                count,
+                                id,
                                 new Resources(
-                                    count,
+                                    id,
                                     new Font(
                                         new FontFamily("Times-Roman", "Type1"),
                                         "F1"
@@ -185,7 +185,7 @@ final class PageTest {
                                 ),
                                 new Contents(
                                     new Text(
-                                        count,
+                                        id,
                                         18,
                                         0,
                                         0,

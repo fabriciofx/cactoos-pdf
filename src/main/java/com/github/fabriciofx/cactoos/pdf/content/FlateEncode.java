@@ -98,7 +98,7 @@ public final class FlateEncode implements Content {
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.reference().number(),
+                this.reference().id(),
                 this.reference().generation()
             ).asString().getBytes()
         );

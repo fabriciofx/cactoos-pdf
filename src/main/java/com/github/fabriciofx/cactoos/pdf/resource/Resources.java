@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
-import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Object;
 import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.Resource;
@@ -42,9 +42,9 @@ import org.cactoos.text.FormattedText;
 public final class Resources extends ListEnvelope<Resource>
     implements Object, Resource {
     /**
-     * Object number.
+     * Object id.
      */
-    private final int number;
+    private final int id;
 
     /**
      * Object generation.
@@ -54,33 +54,33 @@ public final class Resources extends ListEnvelope<Resource>
     /**
      * Ctor.
      *
-     * @param count Object count
+     * @param id Object id
      * @param objects An array of objects
      */
-    public Resources(final Count count, final Resource... objects) {
-        this(count.increment(), 0, new ListOf<>(objects));
+    public Resources(final Id id, final Resource... objects) {
+        this(id.increment(), 0, new ListOf<>(objects));
     }
 
     /**
      * Ctor.
      *
-     * @param number Object number
+     * @param id Object id
      * @param generation Object generation
      * @param list A list of objects
      */
     public Resources(
-        final int number,
+        final int id,
         final int generation,
         final List<Resource> list
     ) {
         super(list);
-        this.number = number;
+        this.id = id;
         this.generation = generation;
     }
 
     @Override
     public Reference reference() {
-        return new Reference(this.number, this.generation);
+        return new Reference(this.id, this.generation);
     }
 
     @Override
@@ -98,7 +98,7 @@ public final class Resources extends ListEnvelope<Resource>
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.number,
+                this.id,
                 this.generation
             ).asString().getBytes()
         );

@@ -21,45 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.count;
+package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.Count;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
 
 /**
- * AtomicCount.
+ * Id.
  *
  * @since 0.0.1
  */
-public final class ObjectCount implements Count {
+public interface Id extends Scalar<Integer> {
     /**
-     * Seed.
-     */
-    private final AtomicInteger seed;
-
-    /**
-     * Ctor.
-     */
-    public ObjectCount() {
-        this(new AtomicInteger(1));
-    }
-
-    /**
-     * Ctor.
+     * Return the last object id and increment it.
      *
-     * @param seed Seed to start counting
+     * @return The last object id integer
      */
-    public ObjectCount(final AtomicInteger seed) {
-        this.seed = seed;
-    }
-
-    @Override
-    public Integer value() {
-        return this.seed.get();
-    }
-
-    @Override
-    public int increment() {
-        return this.seed.getAndIncrement();
-    }
+    int increment();
 }

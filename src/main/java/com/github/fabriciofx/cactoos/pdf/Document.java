@@ -53,9 +53,9 @@ public final class Document implements Bytes {
     private static final String EOF = "%%EOF";
 
     /**
-     * Count.
+     * Object id.
      */
-    private final Count count;
+    private final Id id;
 
     /**
      * PDF metadata.
@@ -70,16 +70,16 @@ public final class Document implements Bytes {
     /**
      * Ctor.
      *
-     * @param count Count
+     * @param id Object id
      * @param information Metadata
      * @param catalog Catalog
      */
     public Document(
-        final Count count,
+        final Id id,
         final Information information,
         final Catalog catalog
     ) {
-        this.count = count;
+        this.id = id;
         this.information = information;
         this.catalog = catalog;
     }
@@ -100,7 +100,7 @@ public final class Document implements Bytes {
             new FormattedText(
                 "trailer << /Root %s /Size %d /Info %s >>\n",
                 this.catalog.reference().asString(),
-                this.count.value(),
+                this.id.value(),
                 this.information.reference().asString()
             ).asString().getBytes()
         );

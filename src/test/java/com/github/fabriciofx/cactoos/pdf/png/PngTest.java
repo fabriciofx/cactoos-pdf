@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
+import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
-import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
@@ -44,7 +44,7 @@ final class PngTest {
         new Assertion<>(
             "Must represent a PNG header",
             new PngRaw(
-                new ObjectCount(),
+                new Serial(),
                 "src/test/resources/image/logo.png"
             ).header(),
             new IsText(
@@ -69,7 +69,7 @@ final class PngTest {
         new Assertion<>(
             "Must represent a PNG body",
             new PngRaw(
-                new ObjectCount(),
+                new Serial(),
                 "src/test/resources/image/logo.png"
             ).body().stream().length,
             new IsNumber(2086)
@@ -81,7 +81,7 @@ final class PngTest {
         new Assertion<>(
             "Must represent a PNG palette",
             new PngRaw(
-                new ObjectCount(),
+                new Serial(),
                 "src/test/resources/image/logo.png"
             ).palette().stream().length,
             new IsNumber(192)
@@ -91,8 +91,8 @@ final class PngTest {
     @Test
     void content() throws Exception {
         final String filename = "src/test/resources/image/logo.png";
-        final Png png = new Png(new ObjectCount(), filename);
-        final Raw raw = new PngRaw(new ObjectCount(), filename);
+        final Png png = new Png(new Serial(), filename);
+        final Raw raw = new PngRaw(new Serial(), filename);
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         expected.write(
             new Joined(

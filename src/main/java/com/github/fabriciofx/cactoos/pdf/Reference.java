@@ -31,9 +31,10 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.ShortMethodName")
 public final class Reference implements Text {
     /**
-     * Serial number.
+     * Object id.
      */
     private final int num;
 
@@ -45,20 +46,21 @@ public final class Reference implements Text {
     /**
      * Ctor.
      *
-     * @param number Serial number
-     * @param generation Generation number
+     * @param id Object id
+     * @param generation Generation id
      */
-    public Reference(final int number, final int generation) {
-        this.num = number;
+    public Reference(final int id, final int generation) {
+        this.num = id;
         this.gen = generation;
     }
 
     /**
-     * Object number.
+     * Object id.
      *
-     * @return Object number
+     * @return Object id
+     * @checkstyle MethodNameCheck (5 lines)
      */
-    public int number() {
+    public int id() {
         return this.num;
     }
 

@@ -24,7 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.Count;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -40,9 +40,9 @@ import org.cactoos.text.Joined;
  */
 public final class Image implements Content {
     /**
-     * Object number.
+     * Object id.
      */
-    private final int number;
+    private final int id;
 
     /**
      * Object generation.
@@ -62,30 +62,30 @@ public final class Image implements Content {
     /**
      * Ctor.
      *
-     * @param count Object count
+     * @param id Object id
      * @param name Image name
      * @param png Raw PNG
      */
-    public Image(final Count count, final String name, final Png png) {
-        this(count.increment(), 0, name, png);
+    public Image(final Id id, final String name, final Png png) {
+        this(id.increment(), 0, name, png);
     }
 
     /**
      * Ctor.
      *
-     * @param number Object number
+     * @param id Object id
      * @param generation Object generation
      * @param name Image name
      * @param png Raw PNG
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Image(
-        final int number,
+        final int id,
         final int generation,
         final String name,
         final Png png
     ) {
-        this.number = number;
+        this.id = id;
         this.generation = generation;
         this.label = name;
         this.png = png;
@@ -123,7 +123,7 @@ public final class Image implements Content {
 
     @Override
     public Reference reference() {
-        return new Reference(this.number, this.generation);
+        return new Reference(this.id, this.generation);
     }
 
     @Override
@@ -132,7 +132,7 @@ public final class Image implements Content {
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.number,
+                this.id,
                 this.generation
             ).asString().getBytes()
         );

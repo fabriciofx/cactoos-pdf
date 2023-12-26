@@ -33,9 +33,9 @@ import org.cactoos.Bytes;
  */
 public final class Information implements Object, Bytes {
     /**
-     * Object number.
+     * Object id.
      */
-    private final int number;
+    private final int id;
 
     /**
      * Object generation.
@@ -50,41 +50,41 @@ public final class Information implements Object, Bytes {
     /**
      * Ctor.
      *
-     * @param count Counter
+     * @param id Object id
      * @param metadata Metadata
      */
     public Information(
-        final Count count, final Map<String, String> metadata
+        final Id id, final Map<String, String> metadata
     ) {
-        this(count.increment(), 0, metadata);
+        this(id.increment(), 0, metadata);
     }
 
     /**
      * Ctor.
      *
-     * @param number Object number
+     * @param id Object id
      * @param generation Object generation
      * @param metadata Metadata
      */
     public Information(
-        final int number,
+        final int id,
         final int generation,
         final Map<String, String> metadata
     ) {
-        this.number = number;
+        this.id = id;
         this.generation = generation;
         this.metadata = metadata;
     }
 
     @Override
     public Reference reference() {
-        return new Reference(this.number, this.generation);
+        return new Reference(this.id, this.generation);
     }
 
     @Override
     public byte[] asBytes() throws Exception {
         final StringBuilder data = new StringBuilder(128);
-        data.append(this.number)
+        data.append(this.id)
             .append(' ')
             .append(this.generation)
             .append(" obj\n<<");

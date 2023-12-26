@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.count.ObjectCount;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -54,7 +53,7 @@ final class InformationTest {
             "Must contain metadata contents",
             new TextOf(
                 new Information(
-                    new ObjectCount(),
+                    new Serial(),
                     new MapOf<>(
                         new MapEntry<>("Title", "Hello World"),
                         new MapEntry<>("Subject", "PDF document"),

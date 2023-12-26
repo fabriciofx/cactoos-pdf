@@ -87,7 +87,7 @@ public final class Rotate implements Page {
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.origin.reference().number(),
+                this.origin.reference().id(),
                 this.origin.reference().generation()
             ).asString().getBytes()
         );

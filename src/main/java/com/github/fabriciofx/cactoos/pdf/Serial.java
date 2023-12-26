@@ -21,10 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.github.fabriciofx.cactoos.pdf;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Count.
+ * AtomicCount.
  *
  * @since 0.0.1
  */
-package com.github.fabriciofx.cactoos.pdf.count;
+public final class Serial implements Id {
+    /**
+     * Seed.
+     */
+    private final AtomicInteger seed;
+
+    /**
+     * Ctor.
+     */
+    public Serial() {
+        this(new AtomicInteger(1));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param seed Seed to start counting
+     */
+    public Serial(final AtomicInteger seed) {
+        this.seed = seed;
+    }
+
+    @Override
+    public Integer value() {
+        return this.seed.get();
+    }
+
+    @Override
+    public int increment() {
+        return this.seed.getAndIncrement();
+    }
+}

@@ -35,8 +35,6 @@ import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.Font;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import org.cactoos.map.MapEntry;
-import org.cactoos.map.MapOf;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
@@ -61,19 +59,14 @@ final class PageTest {
                     id,
                     new Information(
                         id,
-                        new MapOf<>(
-                            new MapEntry<>("Title", "Hello World"),
-                            new MapEntry<>("Subject", "PDF document"),
-                            new MapEntry<>("Author", "Fabricio Cabral"),
-                            new MapEntry<>("Creator", "cactoos-pdf"),
-                            new MapEntry<>("Producer", "cactoos-pdf"),
-                            new MapEntry<>("CreationDate", date.asString()),
-                            new MapEntry<>("ModDate", date.asString()),
-                            new MapEntry<>(
-                                "Keywords",
-                                "cactoos pdf elegant objects"
-                            )
-                        )
+                        "Title", "Hello World",
+                        "Subject", "PDF document",
+                        "Author", "Fabricio Cabral",
+                        "Creator", "cactoos-pdf",
+                        "Producer", "cactoos-pdf",
+                        "CreationDate", date.asString(),
+                        "ModDate", date.asString(),
+                        "Keywords", "cactoos pdf elegant objects"
                     ),
                     new Catalog(
                         id,
@@ -139,16 +132,14 @@ final class PageTest {
                     id,
                     new Information(
                         id,
-                        new MapOf<>(
-                            new MapEntry<>("Title", "Hello World"),
-                            new MapEntry<>("Subject", "PDF document"),
-                            new MapEntry<>("Author", "Fabricio Cabral"),
-                            new MapEntry<>("Creator", "cactoos-pdf"),
-                            new MapEntry<>("Producer", "cactoos-pdf"),
-                            new MapEntry<>("CreationDate", date.asString()),
-                            new MapEntry<>("ModDate", date.asString()),
-                            new MapEntry<>("Keywords", "cactoos pdf elegant objects")
-                        )
+                        "Title", "Hello World",
+                        "Subject", "PDF document",
+                        "Author", "Fabricio Cabral",
+                        "Creator", "cactoos-pdf",
+                        "Producer", "cactoos-pdf",
+                        "CreationDate", date.asString(),
+                        "ModDate", date.asString(),
+                        "Keywords", "cactoos pdf elegant objects"
                     ),
                     new Catalog(
                         id,

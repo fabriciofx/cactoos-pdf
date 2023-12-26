@@ -23,14 +23,18 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import java.util.Map;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Literal;
+import java.io.ByteArrayOutputStream;
 import org.cactoos.Bytes;
+import org.cactoos.text.FormattedText;
 
 /**
  * Document Information Dictionary.
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.ExcessiveParameterList")
 public final class Information implements Object, Bytes {
     /**
      * Object id.
@@ -45,18 +49,320 @@ public final class Information implements Object, Bytes {
     /**
      * Metadata.
      */
-    private final Map<String, String> metadata;
+    private final Dictionary metadata;
 
     /**
      * Ctor.
      *
      * @param id Object id
-     * @param metadata Metadata
+     * @param name1 Metadata name1
+     * @param value1 Metadata value1
+     * @param name2 Metadata name2
+     * @param value2 Metadata value2
+     * @param name3 Metadata name3
+     * @param value3 Metadata value3
+     * @param name4 Metadata name4
+     * @param value4 Metadata value4
+     * @param name5 Metadata name5
+     * @param value5 Metadata value5
+     * @param name6 Metadata name6
+     * @param value6 Metadata value6
+     * @param name7 Metadata name7
+     * @param value7 Metadata value7
+     * @param name8 Metadata name8
+     * @param value8 Metadata value8
+     * @checkstyle ParameterNumberCheck (30 lines)
+     * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
-        final Id id, final Map<String, String> metadata
+        final Id id,
+        final String name1,
+        final String value1,
+        final String name2,
+        final String value2,
+        final String name3,
+        final String value3,
+        final String name4,
+        final String value4,
+        final String name5,
+        final String value5,
+        final String name6,
+        final String value6,
+        final String name7,
+        final String value7,
+        final String name8,
+        final String value8
     ) {
-        this(id.increment(), 0, metadata);
+        this(
+            id.increment(),
+            0,
+            new Dictionary()
+                .add(name1, new Literal(value1))
+                .add(name2, new Literal(value2))
+                .add(name3, new Literal(value3))
+                .add(name4, new Literal(value4))
+                .add(name5, new Literal(value5))
+                .add(name6, new Literal(value6))
+                .add(name7, new Literal(value7))
+                .add(name8, new Literal(value8))
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param name1 Metadata name1
+     * @param value1 Metadata value1
+     * @param name2 Metadata name2
+     * @param value2 Metadata value2
+     * @param name3 Metadata name3
+     * @param value3 Metadata value3
+     * @param name4 Metadata name4
+     * @param value4 Metadata value4
+     * @param name5 Metadata name5
+     * @param value5 Metadata value5
+     * @param name6 Metadata name6
+     * @param value6 Metadata value6
+     * @param name7 Metadata name7
+     * @param value7 Metadata value7
+     * @checkstyle ParameterNumberCheck (30 lines)
+     * @checkstyle ParameterNameCheck (30 lines)
+     */
+    public Information(
+        final Id id,
+        final String name1,
+        final String value1,
+        final String name2,
+        final String value2,
+        final String name3,
+        final String value3,
+        final String name4,
+        final String value4,
+        final String name5,
+        final String value5,
+        final String name6,
+        final String value6,
+        final String name7,
+        final String value7
+    ) {
+        this(
+            id.increment(),
+            0,
+            new Dictionary()
+                .add(name1, new Literal(value1))
+                .add(name2, new Literal(value2))
+                .add(name3, new Literal(value3))
+                .add(name4, new Literal(value4))
+                .add(name5, new Literal(value5))
+                .add(name6, new Literal(value6))
+                .add(name7, new Literal(value7))
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param name1 Metadata name1
+     * @param value1 Metadata value1
+     * @param name2 Metadata name2
+     * @param value2 Metadata value2
+     * @param name3 Metadata name3
+     * @param value3 Metadata value3
+     * @param name4 Metadata name4
+     * @param value4 Metadata value4
+     * @param name5 Metadata name5
+     * @param value5 Metadata value5
+     * @param name6 Metadata name6
+     * @param value6 Metadata value6
+     * @checkstyle ParameterNumberCheck (30 lines)
+     * @checkstyle ParameterNameCheck (30 lines)
+     */
+    public Information(
+        final Id id,
+        final String name1,
+        final String value1,
+        final String name2,
+        final String value2,
+        final String name3,
+        final String value3,
+        final String name4,
+        final String value4,
+        final String name5,
+        final String value5,
+        final String name6,
+        final String value6
+    ) {
+        this(
+            id.increment(),
+            0,
+            new Dictionary()
+                .add(name1, new Literal(value1))
+                .add(name2, new Literal(value2))
+                .add(name3, new Literal(value3))
+                .add(name4, new Literal(value4))
+                .add(name5, new Literal(value5))
+                .add(name6, new Literal(value6))
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param name1 Metadata name1
+     * @param value1 Metadata value1
+     * @param name2 Metadata name2
+     * @param value2 Metadata value2
+     * @param name3 Metadata name3
+     * @param value3 Metadata value3
+     * @param name4 Metadata name4
+     * @param value4 Metadata value4
+     * @param name5 Metadata name5
+     * @param value5 Metadata value5
+     * @checkstyle ParameterNumberCheck (30 lines)
+     * @checkstyle ParameterNameCheck (30 lines)
+     */
+    public Information(
+        final Id id,
+        final String name1,
+        final String value1,
+        final String name2,
+        final String value2,
+        final String name3,
+        final String value3,
+        final String name4,
+        final String value4,
+        final String name5,
+        final String value5
+    ) {
+        this(
+            id.increment(),
+            0,
+            new Dictionary()
+                .add(name1, new Literal(value1))
+                .add(name2, new Literal(value2))
+                .add(name3, new Literal(value3))
+                .add(name4, new Literal(value4))
+                .add(name5, new Literal(value5))
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param name1 Metadata name1
+     * @param value1 Metadata value1
+     * @param name2 Metadata name2
+     * @param value2 Metadata value2
+     * @param name3 Metadata name3
+     * @param value3 Metadata value3
+     * @param name4 Metadata name4
+     * @param value4 Metadata value4
+     * @checkstyle ParameterNumberCheck (30 lines)
+     * @checkstyle ParameterNameCheck (30 lines)
+     */
+    public Information(
+        final Id id,
+        final String name1,
+        final String value1,
+        final String name2,
+        final String value2,
+        final String name3,
+        final String value3,
+        final String name4,
+        final String value4
+    ) {
+        this(
+            id.increment(),
+            0,
+            new Dictionary()
+                .add(name1, new Literal(value1))
+                .add(name2, new Literal(value2))
+                .add(name3, new Literal(value3))
+                .add(name4, new Literal(value4))
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param name1 Metadata name1
+     * @param value1 Metadata value1
+     * @param name2 Metadata name2
+     * @param value2 Metadata value2
+     * @param name3 Metadata name3
+     * @param value3 Metadata value3
+     * @checkstyle ParameterNumberCheck (30 lines)
+     * @checkstyle ParameterNameCheck (30 lines)
+     */
+    public Information(
+        final Id id,
+        final String name1,
+        final String value1,
+        final String name2,
+        final String value2,
+        final String name3,
+        final String value3
+    ) {
+        this(
+            id.increment(),
+            0,
+            new Dictionary()
+                .add(name1, new Literal(value1))
+                .add(name2, new Literal(value2))
+                .add(name3, new Literal(value3))
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param name1 Metadata name1
+     * @param value1 Metadata value1
+     * @param name2 Metadata name2
+     * @param value2 Metadata value2
+     * @checkstyle ParameterNumberCheck (30 lines)
+     * @checkstyle ParameterNameCheck (30 lines)
+     */
+    public Information(
+        final Id id,
+        final String name1,
+        final String value1,
+        final String name2,
+        final String value2
+    ) {
+        this(
+            id.increment(),
+            0,
+            new Dictionary()
+                .add(name1, new Literal(value1))
+                .add(name2, new Literal(value2))
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param name Metadata name
+     * @param value Metadata value
+     */
+    public Information(
+        final Id id,
+        final String name,
+        final String value
+    ) {
+        this(
+            id.increment(),
+            0,
+            new Dictionary()
+                .add(name, new Literal(value))
+        );
     }
 
     /**
@@ -69,7 +375,7 @@ public final class Information implements Object, Bytes {
     public Information(
         final int id,
         final int generation,
-        final Map<String, String> metadata
+        final Dictionary metadata
     ) {
         this.id = id;
         this.generation = generation;
@@ -83,41 +389,16 @@ public final class Information implements Object, Bytes {
 
     @Override
     public byte[] asBytes() throws Exception {
-        final StringBuilder data = new StringBuilder(128);
-        data.append(this.id)
-            .append(' ')
-            .append(this.generation)
-            .append(" obj\n<<");
-        addIfContains(data, this.metadata, "Title");
-        addIfContains(data, this.metadata, "Subject");
-        addIfContains(data, this.metadata, "Author");
-        addIfContains(data, this.metadata, "Creator");
-        addIfContains(data, this.metadata, "Producer");
-        addIfContains(data, this.metadata, "CreationDate");
-        addIfContains(data, this.metadata, "ModDate");
-        addIfContains(data, this.metadata, "Keywords");
-        data.append(" >>\nendobj\n");
-        return data.toString().getBytes();
-    }
-
-    /**
-     * Add a metadata to data if metadata contains name.
-     *
-     * @param data A data builder
-     * @param metadata The metadata
-     * @param name The metadata name
-     */
-    private static void addIfContains(
-        final StringBuilder data,
-        final Map<String, String> metadata,
-        final String name
-    ) {
-        if (metadata.containsKey(name)) {
-            data.append(" /")
-                .append(name)
-                .append(" (")
-                .append(metadata.get(name))
-                .append(')');
-        }
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write(
+            new FormattedText(
+                "%d %d obj\n",
+                this.id,
+                this.generation
+            ).asString().getBytes()
+        );
+        baos.write(this.metadata.asBytes());
+        baos.write("\nendobj\n".getBytes());
+        return baos.toByteArray();
     }
 }

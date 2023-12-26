@@ -39,8 +39,6 @@ import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.XObject;
 import java.io.File;
 import java.nio.file.Files;
-import org.cactoos.map.MapEntry;
-import org.cactoos.map.MapOf;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Disabled;
@@ -77,16 +75,14 @@ final class DocumentTest {
             id,
             new Information(
                 id,
-                new MapOf<>(
-                    new MapEntry<>("Title", "Hello World"),
-                    new MapEntry<>("Subject", "PDF document"),
-                    new MapEntry<>("Author", "Fabricio Cabral"),
-                    new MapEntry<>("Creator", "cactoos-pdf"),
-                    new MapEntry<>("Producer", "cactoos-pdf"),
-                    new MapEntry<>("CreationDate", date.asString()),
-                    new MapEntry<>("ModDate", date.asString()),
-                    new MapEntry<>("Keywords", "cactoos pdf elegant objects")
-                )
+                "Title", "Hello World",
+                "Subject", "PDF document",
+                "Author", "Fabricio Cabral",
+                "Creator", "cactoos-pdf",
+                "Producer", "cactoos-pdf",
+                "CreationDate", date.asString(),
+                "ModDate", date.asString(),
+                "Keywords", "cactoos pdf elegant objects"
             ),
             new Catalog(
                 id,
@@ -170,9 +166,7 @@ final class DocumentTest {
             id,
             new Information(
                 id,
-                new MapOf<>(
-                    new MapEntry<>("Title", "Hello World")
-                )
+                "Title", "Hello World"
             ),
             new Catalog(
                 id,
@@ -207,10 +201,6 @@ final class DocumentTest {
     @Disabled
     @Test
     void buildFileWithPngImage() throws Exception {
-        final String filename = "src/test/resources/document/image-png.pdf";
-        final byte[] expected = Files.readAllBytes(
-            new File(filename).toPath()
-        );
         final Id id = new Serial();
         final Image image = new Image(
             id,
@@ -227,9 +217,7 @@ final class DocumentTest {
                 id,
                 new Information(
                     id,
-                    new MapOf<>(
-                        new MapEntry<>("Title", "Hello World")
-                    )
+                    "Title", "Hello World"
                 ),
                 new Catalog(
                     id,
@@ -280,19 +268,14 @@ final class DocumentTest {
                 id,
                 new Information(
                     id,
-                    new MapOf<>(
-                        new MapEntry<>("Title", "Hello World"),
-                        new MapEntry<>("Subject", "PDF document"),
-                        new MapEntry<>("Author", "Fabricio Cabral"),
-                        new MapEntry<>("Creator", "cactoos-pdf"),
-                        new MapEntry<>("Producer", "cactoos-pdf"),
-                        new MapEntry<>("CreationDate", date.asString()),
-                        new MapEntry<>("ModDate", date.asString()),
-                        new MapEntry<>(
-                            "Keywords",
-                            "cactoos pdf elegant objects"
-                        )
-                    )
+                    "Title", "Hello World",
+                    "Subject", "PDF document",
+                    "Author", "Fabricio Cabral",
+                    "Creator", "cactoos-pdf",
+                    "Producer", "cactoos-pdf",
+                    "CreationDate", date.asString(),
+                    "ModDate", date.asString(),
+                    "Keywords", "cactoos pdf elegant objects"
                 ),
                 new Catalog(
                     id,

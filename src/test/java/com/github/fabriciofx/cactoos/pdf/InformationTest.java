@@ -26,8 +26,6 @@ package com.github.fabriciofx.cactoos.pdf;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import org.cactoos.map.MapEntry;
-import org.cactoos.map.MapOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
@@ -54,16 +52,14 @@ final class InformationTest {
             new TextOf(
                 new Information(
                     new Serial(),
-                    new MapOf<>(
-                        new MapEntry<>("Title", "Hello World"),
-                        new MapEntry<>("Subject", "PDF document"),
-                        new MapEntry<>("Author", "Fabricio Cabral"),
-                        new MapEntry<>("Creator", "cactoos-pdf"),
-                        new MapEntry<>("Producer", "cactoos-pdf"),
-                        new MapEntry<>("CreationDate", date.asString()),
-                        new MapEntry<>("ModDate", date.asString()),
-                        new MapEntry<>("Keywords", "cactoos pdf elegant objects")
-                    )
+                    "Title", "Hello World",
+                    "Subject", "PDF document",
+                    "Author", "Fabricio Cabral",
+                    "Creator", "cactoos-pdf",
+                    "Producer", "cactoos-pdf",
+                    "CreationDate", date.asString(),
+                    "ModDate", date.asString(),
+                    "Keywords", "cactoos pdf elegant objects"
                 )
             ),
             new IsText(

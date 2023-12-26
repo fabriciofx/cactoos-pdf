@@ -28,6 +28,7 @@ import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.text.Escaped;
 import com.github.fabriciofx.cactoos.pdf.text.Indirect;
+import com.github.fabriciofx.cactoos.pdf.text.Multiline;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
@@ -35,27 +36,12 @@ import java.io.ByteArrayOutputStream;
 import org.cactoos.text.FormattedText;
 
 /**
- * MultiText.
+ * Text.
  *
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.UseStringBufferForStringAppends")
 public final class Text implements Content {
-    /**
-     * New line character.
-     */
-    private static final char NEW_LINE = '\n';
-
-    /**
-     * Space separator.
-     */
-    private static final String SPACE_SEPARATOR = " ";
-
-    /**
-     * Split regular expression.
-     */
-    private static final String SPLIT_REGEX = "\\s+";
-
     /**
      * Font size.
      */
@@ -134,41 +120,17 @@ public final class Text implements Content {
     @Override
     public byte[] stream() throws Exception {
         final StringBuilder out = new StringBuilder();
-        final String[] lines = breakLines(this.content.asString(), this.max);
-        for (int idx = 0; idx < lines.length - 1; ++idx) {
-            out.append(
-                new FormattedText(
-                    "(%s) Tj T*\n",
-                    lines[idx]
-                ).asString()
-            );
+        for (final org.cactoos.Text line : new Multiline(this.content, this.max)) {
+            out.append(new FormattedText("(%s) Tj T*\n", line).asString());
         }
-        out.append(
-            new FormattedText(
-                "(%s) Tj",
-                lines[lines.length - 1]
-            ).asString()
-        );
-        final String stream;
-        if (lines.length > 1) {
-            stream = new FormattedText(
-                "BT /F1 %d Tf %d %d Td %d TL\n%s\nET",
-                this.size,
-                this.posx,
-                this.posy,
-                this.leading,
-                out.toString()
-            ).asString();
-        } else {
-            stream = new FormattedText(
-                "BT /F1 %d Tf %d %d Td\n%s\nET",
-                this.size,
-                this.posx,
-                this.posy,
-                out.toString()
-            ).asString();
-        }
-        return stream.getBytes();
+        return new FormattedText(
+            "BT /F1 %d Tf %d %d Td %d TL\n%sET",
+            this.size,
+            this.posx,
+            this.posy,
+            this.leading,
+            out.toString()
+        ).asString().getBytes();
     }
 
     @Override
@@ -183,37 +145,5 @@ public final class Text implements Content {
         baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
         return new Definition(num, 0, dictionary, baos.toByteArray());
-    }
-
-    /**
-     * Break a big text into lines.
-     *
-     * @param input String to be split
-     * @param max Max line length
-     * @return The lines
-     */
-    private static String[] breakLines(final String input, final int max) {
-        final String[] words = input.split(Text.SPLIT_REGEX);
-        final StringBuilder output = new StringBuilder();
-        int length = 0;
-        for (int idx = 0; idx < words.length; ++idx) {
-            String word = words[idx];
-            if (
-                length + (Text.SPACE_SEPARATOR + word).length() > max
-            ) {
-                if (idx > 0) {
-                    output.append(Text.NEW_LINE);
-                }
-                length = 0;
-            }
-            if (idx < words.length - 1
-                && length + (word + Text.SPACE_SEPARATOR).length()
-                + words[idx + 1].length() <= max) {
-                word = word + Text.SPACE_SEPARATOR;
-            }
-            output.append(word);
-            length = length + word.length();
-        }
-        return output.toString().split("\n");
     }
 }

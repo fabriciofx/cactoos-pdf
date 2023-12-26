@@ -99,6 +99,24 @@ public enum PageFormat implements Text {
         this.height = height;
     }
 
+    /**
+     * Page width.
+     *
+     * @return The width of page
+     */
+    public double width() {
+        return this.width;
+    }
+
+    /**
+     * Page height.
+     *
+     * @return The height of page
+     */
+    public double height() {
+        return this.height;
+    }
+
     @Override
     public String asString() throws Exception {
         return new UncheckedText(

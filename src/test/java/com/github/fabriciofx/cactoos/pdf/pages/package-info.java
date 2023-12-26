@@ -21,28 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
-
-import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 
 /**
- * Pages.
+ * Tests for Pages.
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.ExtendsObject")
-public interface Pages extends Object {
-    /**
-     * Add a {@link Page}.
-     *
-     * @param page An PDF page
-     */
-    void add(Page page);
-
-    /**
-     * Page format.
-     *
-     * @return Page format.
-     */
-    PageFormat format();
-}
+package com.github.fabriciofx.cactoos.pdf.pages;

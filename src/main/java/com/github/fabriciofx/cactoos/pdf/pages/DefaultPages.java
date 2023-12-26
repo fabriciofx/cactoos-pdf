@@ -35,7 +35,6 @@ import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.cactoos.list.ListOf;
@@ -50,7 +49,7 @@ public final class DefaultPages implements Pages {
     /**
      * Pages size.
      */
-    private final PageFormat size;
+    private final PageFormat fmt;
 
     /**
      * Pages.
@@ -60,13 +59,13 @@ public final class DefaultPages implements Pages {
     /**
      * Ctor.
      *
-     * @param size Page's size
-     * @param kids Pages
+     * @param format Page's size
+     * @param kids Some Page
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public DefaultPages(final PageFormat size, final Page... kids) {
-        this.size = size;
-        this.kids = Arrays.asList(kids);
+    public DefaultPages(final PageFormat format, final Page... kids) {
+        this.fmt = format;
+        this.kids = new ListOf<>(kids);
     }
 
     @Override
@@ -88,7 +87,7 @@ public final class DefaultPages implements Pages {
                 new Array(
                     new Int(0),
                     new Int(0),
-                    new Text(this.size.asString())
+                    new Text(this.fmt.asString())
                 )
             );
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -104,5 +103,10 @@ public final class DefaultPages implements Pages {
     @Override
     public void add(final Page page) {
         this.kids.add(page);
+    }
+
+    @Override
+    public PageFormat format() {
+        return this.fmt;
     }
 }

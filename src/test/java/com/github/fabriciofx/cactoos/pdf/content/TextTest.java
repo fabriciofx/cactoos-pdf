@@ -54,10 +54,10 @@ final class TextTest {
                 new Joined(
                     "\n",
                     "1 0 obj",
-                    "<< /Length 39 >>",
+                    "<< /Length 48 >>",
                     "stream",
-                    "BT /F1 18 Tf 0 0 Td",
-                    "(Hello World) Tj",
+                    "BT /F1 18 Tf 0 0 Td 20 TL",
+                    "(Hello World) Tj T*",
                     "ET",
                     "endstream",
                     "endobj\n"
@@ -102,7 +102,7 @@ final class TextTest {
                 new Joined(
                     "\n",
                     "1 0 obj",
-                    "<< /Length 567 >>",
+                    "<< /Length 570 >>",
                     "stream",
                     "BT /F1 18 Tf 0 0 Td 20 TL",
                     "(Lorem ea et aliquip culpa aute amet elit nostrud) Tj T*",
@@ -114,7 +114,7 @@ final class TextTest {
                     "(sit ex. Eiusmod nulla eu incididunt excepteur) Tj T*",
                     "(minim officia dolore veniam labore enim quis) Tj T*",
                     "(reprehenderit. Magna in laboris irure enim non) Tj T*",
-                    "(deserunt laborum mollit labore id amet.) Tj",
+                    "(deserunt laborum mollit labore id amet.) Tj T*",
                     "ET",
                     "endstream",
                     "endobj\n"

@@ -26,7 +26,6 @@ package com.github.fabriciofx.cactoos.pdf;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Literal;
 import java.io.ByteArrayOutputStream;
-import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -35,7 +34,7 @@ import org.cactoos.text.FormattedText;
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExcessiveParameterList")
-public final class Information implements Object, Bytes {
+public final class Information implements Object, Definition {
     /**
      * Object id.
      */
@@ -388,7 +387,7 @@ public final class Information implements Object, Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] definition() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(

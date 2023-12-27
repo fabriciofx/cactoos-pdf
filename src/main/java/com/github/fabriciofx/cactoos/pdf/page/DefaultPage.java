@@ -123,7 +123,7 @@ public final class DefaultPage implements Page {
     }
 
     @Override
-    public byte[] with(final Pages parent) throws Exception {
+    public byte[] definition(final Pages parent) throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
@@ -134,8 +134,8 @@ public final class DefaultPage implements Page {
         );
         baos.write(this.dictionary(parent).asBytes());
         baos.write("\nendobj\n".getBytes());
-        baos.write(this.resources.asBytes());
-        baos.write(this.contents.asBytes());
+        baos.write(this.resources.definition());
+        baos.write(this.contents.definition());
         return baos.toByteArray();
     }
 }

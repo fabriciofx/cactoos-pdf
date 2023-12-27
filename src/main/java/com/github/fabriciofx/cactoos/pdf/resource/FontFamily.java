@@ -55,7 +55,7 @@ public final class FontFamily implements Resource {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] definition() throws Exception {
         return this.dictionary().asBytes();
     }
 

@@ -43,7 +43,7 @@ final class FontTest {
                 new Font(
                     new FontFamily("Times-Roman", "Type1"),
                     "F0"
-                )
+                ).definition()
             ),
             new IsText(
                 new Joined(

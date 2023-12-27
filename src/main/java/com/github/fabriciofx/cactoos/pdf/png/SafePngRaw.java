@@ -94,7 +94,7 @@ public final class SafePngRaw implements Raw {
     public Palette palette() throws Exception {
         final Header header = this.header();
         if (header.color().space().equals("Indexed")
-            && this.origin.palette().asBytes().length == 0) {
+            && this.origin.palette().definition().length == 0) {
             throw new InvalidFormatException("Missing palette in PNG file");
         }
         return this.origin.palette();

@@ -114,7 +114,7 @@ final class PngTest {
         new Assertion<>(
             "Must represent a PNG content",
             expected.toByteArray(),
-            new IsEqual<>(png.asBytes())
+            new IsEqual<>(png.definition())
         ).affirm();
     }
 }

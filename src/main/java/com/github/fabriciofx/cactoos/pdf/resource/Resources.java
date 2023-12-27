@@ -93,7 +93,7 @@ public final class Resources extends ListEnvelope<Resource>
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] definition() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(

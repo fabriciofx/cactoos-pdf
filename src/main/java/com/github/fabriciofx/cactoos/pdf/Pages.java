@@ -24,7 +24,6 @@
 package com.github.fabriciofx.cactoos.pdf;
 
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import org.cactoos.Bytes;
 
 /**
  * Pages.
@@ -32,7 +31,7 @@ import org.cactoos.Bytes;
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExtendsObject")
-public interface Pages extends Object, Bytes {
+public interface Pages extends Object, Definition {
     /**
      * Add a {@link Page}.
      *

@@ -24,7 +24,6 @@
 package com.github.fabriciofx.cactoos.pdf;
 
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import org.cactoos.Bytes;
 
 /**
  * Resource.
@@ -32,7 +31,7 @@ import org.cactoos.Bytes;
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExtendsObject")
-public interface Resource extends Bytes {
+public interface Resource extends Definition {
     /**
      * Build a {@link Dictionary}.
      *

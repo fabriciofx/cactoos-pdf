@@ -60,7 +60,7 @@ final class InformationTest {
                     "CreationDate", date.asString(),
                     "ModDate", date.asString(),
                     "Keywords", "cactoos pdf elegant objects"
-                )
+                ).definition()
             ),
             new IsText(
                 new FormattedText(

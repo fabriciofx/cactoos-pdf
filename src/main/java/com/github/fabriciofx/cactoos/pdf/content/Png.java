@@ -105,7 +105,7 @@ public final class Png implements Content {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] definition() throws Exception {
         final Palette palette = this.raw.palette();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
@@ -117,7 +117,7 @@ public final class Png implements Content {
         );
         baos.write(this.dictionary().asBytes());
         baos.write("\nendobj\n".getBytes());
-        baos.write(palette.asBytes());
+        baos.write(palette.definition());
         return baos.toByteArray();
     }
 

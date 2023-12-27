@@ -58,9 +58,9 @@ public interface Page extends Object {
     /**
      * Build a PDF page.
      *
-     * @param parent Pages parent
+     * @param parent Page's parent
      * @return An array of bytes that represents a PDF page
      * @throws Exception if fails
      */
-    byte[] with(Pages parent) throws Exception;
+    byte[] definition(Pages parent) throws Exception;
 }

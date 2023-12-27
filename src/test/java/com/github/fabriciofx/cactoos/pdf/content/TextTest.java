@@ -49,7 +49,7 @@ final class TextTest {
                     50,
                     20,
                     new TextOf("Hello World")
-                )
+                ).definition()
             ),
             new IsText(
                 new Joined(
@@ -98,7 +98,7 @@ final class TextTest {
                         "deserunt laborum mollit labore",
                         "id amet."
                     )
-                )
+                ).definition()
             ),
             new IsText(
                 new Joined(

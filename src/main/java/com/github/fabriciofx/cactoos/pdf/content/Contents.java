@@ -24,11 +24,11 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
+import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Object;
 import com.github.fabriciofx.cactoos.pdf.Reference;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import org.cactoos.Bytes;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
 
@@ -38,7 +38,7 @@ import org.cactoos.list.ListOf;
  * @since 0.0.1
  */
 public final class Contents extends ListEnvelope<Content>
-    implements Object, Bytes {
+    implements Object, Definition {
     /**
      * Ctor.
      *
@@ -68,10 +68,10 @@ public final class Contents extends ListEnvelope<Content>
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] definition() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (final Bytes obj : this) {
-            baos.write(obj.asBytes());
+        for (final Definition def : this) {
+            baos.write(def.definition());
         }
         return baos.toByteArray();
     }

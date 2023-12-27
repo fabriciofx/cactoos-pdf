@@ -27,7 +27,6 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
-import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -35,7 +34,7 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
-public final class Catalog implements Object, Bytes {
+public final class Catalog implements Object, Definition {
     /**
      * Object id.
      */
@@ -92,7 +91,7 @@ public final class Catalog implements Object, Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] definition() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
@@ -103,7 +102,7 @@ public final class Catalog implements Object, Bytes {
         );
         baos.write(this.dictionary().asBytes());
         baos.write("\nendobj\n".getBytes());
-        baos.write(this.pages.asBytes());
+        baos.write(this.pages.definition());
         return baos.toByteArray();
     }
 }

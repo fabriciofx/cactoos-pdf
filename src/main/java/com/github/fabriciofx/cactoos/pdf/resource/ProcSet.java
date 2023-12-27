@@ -34,7 +34,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
  */
 public final class ProcSet implements Resource {
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] definition() throws Exception {
         return this.dictionary().asBytes();
     }
 

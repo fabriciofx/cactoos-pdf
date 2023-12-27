@@ -127,7 +127,7 @@ public final class Image implements Content {
     }
 
     @Override
-    public byte[] asBytes() throws Exception {
+    public byte[] definition() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
@@ -138,7 +138,7 @@ public final class Image implements Content {
         );
         baos.write(this.dictionary().asBytes());
         baos.write("endobj\n".getBytes());
-        baos.write(this.png.asBytes());
+        baos.write(this.png.definition());
         return baos.toByteArray();
     }
 

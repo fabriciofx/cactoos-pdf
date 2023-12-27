@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.text;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

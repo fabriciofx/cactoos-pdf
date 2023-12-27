@@ -21,25 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.text;
 
-import com.github.fabriciofx.cactoos.pdf.text.Escaped;
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsText;
+import org.cactoos.Text;
+import org.cactoos.text.TextEnvelope;
 
 /**
- * Test case for {@link Escaped}.
+ * Escape a text with special characters: '(', ')', '\' and '\r'.
  *
  * @since 0.0.1
  */
-final class EscapedTest {
-    @Test
-    void escaped() throws Exception {
-        new Assertion<>(
-            "Must escape special characters",
-            new Escaped("\\, (, ), \r"),
-            new IsText("\\\\, \\(, \\), \\r")
-        ).affirm();
+public final class Escaped extends TextEnvelope implements Text {
+    /**
+     * Ctor.
+     *
+     * @param text Text to be escaped.
+     */
+    public Escaped(final String text) {
+        this(() -> text);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param text Text to be escaped.
+     */
+    public Escaped(final Text text) {
+        super(
+            () -> text.asString()
+                .replaceAll("\\\\", "\\\\\\\\")
+                .replaceAll("\r", "\\\\r")
+                .replaceAll("\\(", "\\\\(")
+                .replaceAll("\\)", "\\\\)")
+        );
     }
 }

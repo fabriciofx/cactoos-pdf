@@ -37,6 +37,7 @@ import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.XObject;
+import com.github.fabriciofx.cactoos.pdf.text.Date;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.text.Joined;

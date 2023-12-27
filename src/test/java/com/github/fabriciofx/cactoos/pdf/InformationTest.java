@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.text.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

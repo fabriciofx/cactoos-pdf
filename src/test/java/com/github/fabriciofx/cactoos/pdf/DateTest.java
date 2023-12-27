@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.text.Date;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;

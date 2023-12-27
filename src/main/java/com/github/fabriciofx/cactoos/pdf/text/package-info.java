@@ -21,38 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
-
-import org.cactoos.Text;
-import org.cactoos.text.TextEnvelope;
 
 /**
- * Escape a text with special characters: '(', ')', '\' and '\r'.
+ * Text.
  *
  * @since 0.0.1
  */
-public final class Escaped extends TextEnvelope implements Text {
-    /**
-     * Ctor.
-     *
-     * @param text Text to be escaped.
-     */
-    public Escaped(final String text) {
-        this(() -> text);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param text Text to be escaped.
-     */
-    public Escaped(final Text text) {
-        super(
-            () -> text.asString()
-                .replaceAll("\\\\", "\\\\\\\\")
-                .replaceAll("\r", "\\\\r")
-                .replaceAll("\\(", "\\\\(")
-                .replaceAll("\\)", "\\\\)")
-        );
-    }
-}
+package com.github.fabriciofx.cactoos.pdf.text;

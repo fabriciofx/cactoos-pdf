@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.util.Arrays;
 import org.cactoos.Bytes;

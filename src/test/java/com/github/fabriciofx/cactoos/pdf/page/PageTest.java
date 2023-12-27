@@ -24,7 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.page;
 
 import com.github.fabriciofx.cactoos.pdf.Catalog;
-import com.github.fabriciofx.cactoos.pdf.Date;
+import com.github.fabriciofx.cactoos.pdf.text.Date;
 import com.github.fabriciofx.cactoos.pdf.Document;
 import com.github.fabriciofx.cactoos.pdf.Information;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;

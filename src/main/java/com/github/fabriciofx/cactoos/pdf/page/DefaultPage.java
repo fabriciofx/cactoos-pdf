@@ -26,7 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.page;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Page;
-import com.github.fabriciofx.cactoos.pdf.Reference;
+import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;

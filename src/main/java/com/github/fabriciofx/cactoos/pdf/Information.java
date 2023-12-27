@@ -23,10 +23,10 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Literal;
 import java.io.ByteArrayOutputStream;
-import org.cactoos.text.FormattedText;
 
 /**
  * Document Information Dictionary.
@@ -332,13 +332,7 @@ public final class Information implements Object {
     public Definition definition(final Id id) throws Exception {
         final int num = id.increment();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                num,
-                0
-            ).asString().getBytes()
-        );
+        baos.write(new Indirect(num, 0).asBytes());
         baos.write(this.metadata.asBytes());
         baos.write("\nendobj\n".getBytes());
         return new Definition(num, 0, this.metadata, baos.toByteArray());

@@ -26,12 +26,12 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Resource;
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
-import org.cactoos.text.FormattedText;
 
 /**
  * Resources.
@@ -62,13 +62,7 @@ public final class Resources extends ListEnvelope<Resource>
     public Definition definition(final Id id) throws Exception {
         final int num = id.increment();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                num,
-                0
-            ).asString().getBytes()
-        );
+        baos.write(new Indirect(num, 0).asBytes());
         Dictionary dictionary = this.get(0).definition(id).dictionary();
         for (int idx = 1; idx < this.size(); ++idx) {
             dictionary = dictionary.merge(

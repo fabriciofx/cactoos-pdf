@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
@@ -36,7 +37,6 @@ import java.util.zip.DeflaterOutputStream;
 import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.LengthOf;
-import org.cactoos.text.FormattedText;
 
 /**
  * FlateEncode.
@@ -89,11 +89,10 @@ public final class FlateEncode implements Content {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final Definition definition = this.origin.definition(id);
         baos.write(
-            new FormattedText(
-                "%d %d obj\n",
+            new Indirect(
                 definition.reference().id(),
                 definition.reference().generation()
-            ).asString().getBytes()
+            ).asBytes()
         );
         baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());

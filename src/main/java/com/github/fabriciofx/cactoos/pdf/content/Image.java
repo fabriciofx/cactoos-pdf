@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
@@ -91,13 +92,7 @@ public final class Image implements Content {
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                num,
-                0
-            ).asString().getBytes()
-        );
+        baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
         baos.write(this.png.definition(id).asBytes());

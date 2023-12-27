@@ -31,6 +31,7 @@ import com.github.fabriciofx.cactoos.pdf.png.Palette;
 import com.github.fabriciofx.cactoos.pdf.png.PngRaw;
 import com.github.fabriciofx.cactoos.pdf.png.Raw;
 import com.github.fabriciofx.cactoos.pdf.png.SafePngRaw;
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -41,7 +42,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.Bytes;
-import org.cactoos.text.FormattedText;
 
 /**
  * PNG.
@@ -113,13 +113,7 @@ public final class Png implements Content {
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                num,
-                0
-            ).asString().getBytes()
-        );
+        baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
         baos.write(pal.asBytes());

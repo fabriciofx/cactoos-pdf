@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.png;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Flow;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
@@ -33,7 +34,6 @@ import java.io.ByteArrayOutputStream;
 import org.cactoos.Bytes;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
-import org.cactoos.text.FormattedText;
 
 /**
  * PngBody: Represents a PNG image body.
@@ -102,13 +102,7 @@ public final class PngBody implements Body {
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                num,
-                0
-            ).asString().getBytes()
-        );
+        baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
         return new Definition(num, 0, dictionary, baos.toByteArray());

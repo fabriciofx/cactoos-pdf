@@ -29,10 +29,10 @@ import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import java.io.ByteArrayOutputStream;
-import org.cactoos.text.FormattedText;
 
 /**
  * Rotate a Page in a angle.
@@ -81,11 +81,10 @@ public final class Rotate implements Page {
             new Int(this.angle)
         );
         baos.write(
-            new FormattedText(
-                "%d %d obj\n",
+            new Indirect(
                 definition.reference().id(),
                 definition.reference().generation()
-            ).asString().getBytes()
+            ).asBytes()
         );
         baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());

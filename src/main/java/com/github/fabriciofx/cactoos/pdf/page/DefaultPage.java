@@ -28,12 +28,12 @@ import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
-import org.cactoos.text.FormattedText;
 
 /**
  * PageDefault.
@@ -84,13 +84,7 @@ public final class DefaultPage implements Page {
             .add("Contents", new Text(conts.reference().asString()))
             .add("Parent", new Text(new Reference(parent, 0).asString()));
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                num,
-                0
-            ).asString().getBytes()
-        );
+        baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
         baos.write(resrcs.asBytes());

@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.text.Escaped;
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
@@ -178,13 +179,7 @@ public final class Text implements Content {
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                num,
-                0
-            ).asString().getBytes()
-        );
+        baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
         return new Definition(num, 0, dictionary, baos.toByteArray());

@@ -21,46 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.text;
 
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import com.github.fabriciofx.cactoos.pdf.type.Name;
-import com.github.fabriciofx.cactoos.pdf.type.Text;
-import java.io.ByteArrayOutputStream;
+import org.cactoos.Bytes;
+import org.cactoos.Text;
+import org.cactoos.text.FormattedText;
 
 /**
- * Catalog.
+ * Indirect.
  *
  * @since 0.0.1
  */
-public final class Catalog implements Object {
+public final class Indirect implements Text, Bytes {
     /**
-     * Pages.
+     * Object id.
      */
-    private final Pages pages;
+    private final int id;
+
+    /**
+     * Object generation.
+     */
+    private final int generation;
 
     /**
      * Ctor.
      *
-     * @param pages Pages
+     * @param id Object id
+     * @param generation Object generation
      */
-    public Catalog(final Pages pages) {
-        this.pages = pages;
+    public Indirect(final int id, final int generation) {
+        this.id = id;
+        this.generation = generation;
     }
 
     @Override
-    public Definition definition(final Id id) throws Exception {
-        final int num = id.increment();
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final Definition definition = this.pages.definition(id);
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("Catalog"))
-            .add("Pages", new Text(definition.reference().asString()));
-        baos.write(new Indirect(num, 0).asBytes());
-        baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes());
-        baos.write(definition.asBytes());
-        return new Definition(num, 0, dictionary, baos.toByteArray());
+    public byte[] asBytes() throws Exception {
+        return this.asString().getBytes();
+    }
+
+    @Override
+    public String asString() throws Exception {
+        return new FormattedText(
+            "%d %d obj\n",
+            this.id,
+            this.generation
+        ).asString();
     }
 }

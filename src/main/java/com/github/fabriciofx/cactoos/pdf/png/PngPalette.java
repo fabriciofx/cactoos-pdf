@@ -23,9 +23,9 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
+import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Flow;
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
@@ -42,16 +42,6 @@ import org.cactoos.text.FormattedText;
  */
 public final class PngPalette implements Palette {
     /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Generation number.
-     */
-    private final int generation;
-
-    /**
      * Bytes that represents a palette.
      */
     private final Scalar<byte[]> bytes;
@@ -59,13 +49,10 @@ public final class PngPalette implements Palette {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param bytes Bytes that represents a palette
      */
-    public PngPalette(final Id id, final Bytes bytes) {
+    public PngPalette(final Bytes bytes) {
         this(
-            id.increment(),
-            0,
             new Sticky<>(
                 () -> {
                     final Flow flow = new Flow(bytes.asBytes());
@@ -93,23 +80,10 @@ public final class PngPalette implements Palette {
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Generation number
      * @param bytes Bytes that represents a palette.
      */
-    public PngPalette(
-        final int id,
-        final int generation,
-        final Scalar<byte[]> bytes
-    ) {
-        this.id = id;
-        this.generation = generation;
+    public PngPalette(final Scalar<byte[]> bytes) {
         this.bytes = bytes;
-    }
-
-    @Override
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
     }
 
     @Override
@@ -118,25 +92,22 @@ public final class PngPalette implements Palette {
     }
 
     @Override
-    public Dictionary dictionary() throws Exception {
+    public Definition definition(final Id id) throws Exception {
+        final int num = id.increment();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final byte[] stream = this.stream();
-        return new Dictionary()
+        final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.id,
-                this.generation
+                num,
+                0
             ).asString().getBytes()
         );
-        baos.write(this.dictionary().asBytes());
+        baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
-        return baos.toByteArray();
+        return new Definition(num, 0, dictionary, baos.toByteArray());
     }
 }

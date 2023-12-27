@@ -23,9 +23,9 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
+import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Page;
-import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
@@ -43,16 +43,6 @@ import org.cactoos.text.FormattedText;
 @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 public final class DefaultPage implements Page {
     /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
-    /**
      * Resources.
      */
     private final Resources resources;
@@ -65,51 +55,12 @@ public final class DefaultPage implements Page {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param resources List of resources
      * @param contents Page contents
      */
-    public DefaultPage(
-        final Id id,
-        final Resources resources,
-        final Contents contents
-    ) {
-        this(id.increment(), 0, resources, contents);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Object id
-     * @param generation Object generation
-     * @param resources List of resources
-     * @param contents Page contents
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public DefaultPage(
-        final int id,
-        final int generation,
-        final Resources resources,
-        final Contents contents
-    ) {
-        this.id = id;
-        this.generation = generation;
+    public DefaultPage(final Resources resources, final Contents contents) {
         this.resources = resources;
         this.contents = contents;
-    }
-
-    @Override
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
-    }
-
-    @Override
-    public Dictionary dictionary(final Pages parent) throws Exception {
-        return new Dictionary()
-            .add("Type", new Name("Page"))
-            .add("Resources", new Text(this.resources.reference().asString()))
-            .add("Contents", new Text(this.contents.reference().asString()))
-            .add("Parent", new Text(parent.reference().asString()));
     }
 
     @Override
@@ -123,19 +74,27 @@ public final class DefaultPage implements Page {
     }
 
     @Override
-    public byte[] definition(final Pages parent) throws Exception {
+    public Definition definition(final Id id, final int parent) throws Exception {
+        final int num = id.increment();
+        final Definition resrcs = this.resources.definition(id);
+        final Definition conts = this.contents.definition(id);
+        final Dictionary dictionary = new Dictionary()
+            .add("Type", new Name("Page"))
+            .add("Resources", new Text(resrcs.reference().asString()))
+            .add("Contents", new Text(conts.reference().asString()))
+            .add("Parent", new Text(new Reference(parent, 0).asString()));
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.id,
-                this.generation
+                num,
+                0
             ).asString().getBytes()
         );
-        baos.write(this.dictionary(parent).asBytes());
+        baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
-        baos.write(this.resources.definition());
-        baos.write(this.contents.definition());
-        return baos.toByteArray();
+        baos.write(resrcs.asBytes());
+        baos.write(conts.asBytes());
+        return new Definition(num, 0, dictionary, baos.toByteArray());
     }
 }

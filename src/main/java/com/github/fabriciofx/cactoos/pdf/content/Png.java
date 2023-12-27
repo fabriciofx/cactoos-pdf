@@ -24,8 +24,8 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
+import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.png.Header;
 import com.github.fabriciofx.cactoos.pdf.png.Palette;
 import com.github.fabriciofx.cactoos.pdf.png.PngRaw;
@@ -50,16 +50,6 @@ import org.cactoos.text.FormattedText;
  */
 public final class Png implements Content {
     /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
-    /**
      * Raw image.
      */
     private final Raw raw;
@@ -67,14 +57,10 @@ public final class Png implements Content {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param filename Image file name
      */
-    public Png(final Id id, final String filename) {
+    public Png(final String filename) {
         this(
-            id.increment(),
-            0,
-            id,
             () -> Files.readAllBytes(new File(filename).toPath())
         );
     }
@@ -82,56 +68,21 @@ public final class Png implements Content {
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Object generation
-     * @param serial Object serial
      * @param bytes Bytes that represents a PNG image
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Png(
-        final int id,
-        final int generation,
-        final Id serial,
-        final Bytes bytes
-    ) {
-        this.id = id;
-        this.generation = generation;
-        this.raw = new SafePngRaw(new PngRaw(serial, bytes));
+    public Png(final Bytes bytes) {
+        this.raw = new SafePngRaw(new PngRaw(bytes));
     }
 
     @Override
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
-        final Palette palette = this.raw.palette();
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                this.id,
-                this.generation
-            ).asString().getBytes()
-        );
-        baos.write(this.dictionary().asBytes());
-        baos.write("\nendobj\n".getBytes());
-        baos.write(palette.definition());
-        return baos.toByteArray();
-    }
-
-    @Override
-    public byte[] stream() throws Exception {
-        return this.raw.body().stream();
-    }
-
-    @Override
-    public Dictionary dictionary() throws Exception {
+    public Definition definition(final Id id) throws Exception {
+        final int num = id.increment();
         final Header header = this.raw.header();
-        final Palette palette = this.raw.palette();
+        final Palette palette = this.raw.palette(id);
+        final Definition pal = palette.definition(id);
         final byte[] stream = this.stream();
-        return new Dictionary()
+        final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("XObject"))
             .add("Subtype", new Name("Image"))
             .add("Width", new Int(header.width()))
@@ -142,7 +93,7 @@ public final class Png implements Content {
                     new Name(header.color().space()),
                     new Name("DeviceRGB"),
                     new Int(palette.stream().length / 3 - 1),
-                    new Text(palette.reference().asString())
+                    new Text(pal.reference().asString())
                 )
             )
             .add("BitsPerComponent", new Int(header.depth()))
@@ -161,5 +112,22 @@ public final class Png implements Content {
             .add("Mask", new Array(new Int(0), new Int(0)))
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write(
+            new FormattedText(
+                "%d %d obj\n",
+                num,
+                0
+            ).asString().getBytes()
+        );
+        baos.write(dictionary.asBytes());
+        baos.write("\nendobj\n".getBytes());
+        baos.write(pal.asBytes());
+        return new Definition(num, 0, dictionary, baos.toByteArray());
+    }
+
+    @Override
+    public byte[] stream() throws Exception {
+        return this.raw.body().stream();
     }
 }

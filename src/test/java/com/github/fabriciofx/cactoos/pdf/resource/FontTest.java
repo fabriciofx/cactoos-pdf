@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Serial;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
@@ -43,7 +44,7 @@ final class FontTest {
                 new Font(
                     new FontFamily("Times-Roman", "Type1"),
                     "F0"
-                ).definition()
+                ).definition(new Serial())
             ),
             new IsText(
                 new Joined(

@@ -35,53 +35,39 @@ import org.cactoos.Bytes;
  */
 public final class PngRaw implements Raw {
     /**
-     * Header.
+     * Bytes.
      */
-    private final Header hdr;
-
-    /**
-     * Body.
-     */
-    private final Body bdy;
-
-    /**
-     * Palette.
-     */
-    private final Palette pal;
+    private final Bytes bytes;
 
     /**
      * Ctor.
-     * @param id Object id
      * @param filename File name of a PNG image
      */
-    public PngRaw(final Id id, final String filename) {
-        this(id, () -> Files.readAllBytes(new File(filename).toPath()));
+    public PngRaw(final String filename) {
+        this(() -> Files.readAllBytes(new File(filename).toPath()));
     }
 
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param bytes Bytes that represents a PNG image
      */
-    public PngRaw(final Id id, final Bytes bytes) {
-        this.hdr = new PngHeader(bytes);
-        this.bdy = new PngBody(id, bytes);
-        this.pal = new PngPalette(id, bytes);
+    public PngRaw(final Bytes bytes) {
+        this.bytes = bytes;
     }
 
     @Override
     public Header header() throws Exception {
-        return this.hdr;
+        return new PngHeader(this.bytes);
     }
 
     @Override
     public Body body() throws Exception {
-        return this.bdy;
+        return new PngBody(this.bytes);
     }
 
     @Override
-    public Palette palette() throws Exception {
-        return this.pal;
+    public Palette palette(final Id id) throws Exception {
+        return new PngPalette(this.bytes);
     }
 }

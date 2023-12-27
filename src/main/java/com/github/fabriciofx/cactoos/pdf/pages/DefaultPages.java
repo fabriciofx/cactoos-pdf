@@ -23,10 +23,10 @@
  */
 package com.github.fabriciofx.cactoos.pdf.pages;
 
+import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
-import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
@@ -37,6 +37,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -46,16 +47,6 @@ import org.cactoos.text.UncheckedText;
  * @since 0.0.1
  */
 public final class DefaultPages implements Pages {
-    /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
     /**
      * Pages size.
      */
@@ -69,73 +60,26 @@ public final class DefaultPages implements Pages {
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param size Page's size
-     * @param kids Pages
-     */
-    public DefaultPages(
-        final Id id,
-        final PageFormat size,
-        final Page... kids
-    ) {
-        this(id.increment(), 0, size, kids);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Object id
-     * @param generation Object generation
      * @param size Page's size
      * @param kids Pages
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public DefaultPages(
-        final int id,
-        final int generation,
-        final PageFormat size,
-        final Page... kids
-    ) {
-        this.id = id;
-        this.generation = generation;
+    public DefaultPages(final PageFormat size, final Page... kids) {
         this.size = size;
         this.kids = Arrays.asList(kids);
     }
 
     @Override
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                this.id,
-                this.generation
-            ).asString().getBytes()
-        );
-        baos.write(this.dictionary().asBytes());
-        baos.write("\nendobj\n".getBytes());
+    public Definition definition(final Id id) throws Exception {
+        final int num = id.increment();
+        final List<Definition> definitions = new ListOf<>();
         for (final Page page : this.kids) {
-            baos.write(page.definition(this));
+            definitions.add(page.definition(id, num));
         }
-        return baos.toByteArray();
-    }
-
-    @Override
-    public void add(final Page page) {
-        this.kids.add(page);
-    }
-
-    @Override
-    public Dictionary dictionary() throws Exception {
-        final String kds = this.kids.stream()
-            .map(page -> new UncheckedText(page.reference()).asString())
+        final String kds = definitions.stream()
+            .map(def -> new UncheckedText(def.reference()).asString())
             .collect(Collectors.joining(" "));
-        return new Dictionary()
+        final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Pages"))
             .add("Kids", new Array(new Text(kds)))
             .add("Count", new Int(this.kids.size()))
@@ -147,5 +91,24 @@ public final class DefaultPages implements Pages {
                     new Text(this.size.asString())
                 )
             );
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write(
+            new FormattedText(
+                "%d %d obj\n",
+                num,
+                0
+            ).asString().getBytes()
+        );
+        baos.write(dictionary.asBytes());
+        baos.write("\nendobj\n".getBytes());
+        for (final Definition definition : definitions) {
+            baos.write(definition.asBytes());
+        }
+        return new Definition(num, 0, dictionary, baos.toByteArray());
+    }
+
+    @Override
+    public void add(final Page page) {
+        this.kids.add(page);
     }
 }

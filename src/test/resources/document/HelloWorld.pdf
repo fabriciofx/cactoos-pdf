@@ -3,27 +3,14 @@
 1 0 obj
 << /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>
 endobj
-12 0 obj
-<< /Type /Catalog /Pages 11 0 R >>
+2 0 obj
+<< /Type /Catalog /Pages 3 0 R >>
 endobj
-11 0 obj
+3 0 obj
 << /Type /Pages /Kids [4 0 R 7 0 R 10 0 R] /Count 3 /MediaBox [0 0 595.28 841.89] >>
 endobj
 4 0 obj
-<< /Type /Page /Resources 2 0 R /Contents 3 0 R /Parent 11 0 R >>
-endobj
-2 0 obj
-<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>
-endobj
-3 0 obj
-<< /Length 285 /Filter /FlateDecode >>
-stream
-xœmQ¹N1íó¯Ë	‰)TIÅBoìIäcc¯ŸÏ8¶³-ç~™ğğºÃîÓ	#Æ“Á£œ‡Íö"9-P–/™gèlg•‚r2'Ë|HKÌ¦=şgå`‚<(ƒct‡éÓıfË^³a“ı2àã
-§kVZ+ÒJH“9ÉÜŸá‚-{•xÀ‘=;$aÀµ@ª¼UŸ¢;à½Ä¥ÏÖªŠ¨Ï5Ï)»:“»ç¸±&Q5”(d·ÙŞntœÀ¦3ıØsN.˜¦MùŸdOÓ¼Pp×L]¢u×šlÄT6äÒê/Òé‹¼¡ÈRçQ½dò««Ò|úà×(=p+¶	¬Íõs‡2Øì§?W/¼“
-endstream
-endobj
-7 0 obj
-<< /Type /Page /Resources 5 0 R /Contents 6 0 R /Parent 11 0 R /Rotate 90 >>
+<< /Type /Page /Resources 5 0 R /Contents 6 0 R /Parent 3 0 R >>
 endobj
 5 0 obj
 << /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>
@@ -35,8 +22,8 @@ xœmQ¹N1íó¯Ë	‰)TIÅBoìIäcc¯ŸÏ8¶³-ç~™ğğºÃîÓ	#Æ“Á£œ‡Íö"9-P–/™gèlg
 §kVZ+ÒJH“9ÉÜŸá‚-{•xÀ‘=;$aÀµ@ª¼UŸ¢;à½Ä¥ÏÖªŠ¨Ï5Ï)»:“»ç¸±&Q5”(d·ÙŞntœÀ¦3ıØsN.˜¦MùŸdOÓ¼Pp×L]¢u×šlÄT6äÒê/Òé‹¼¡ÈRçQ½dò««Ò|úà×(=p+¶	¬Íõs‡2Øì§?W/¼“
 endstream
 endobj
-10 0 obj
-<< /Type /Page /Resources 8 0 R /Contents 9 0 R /Parent 11 0 R >>
+7 0 obj
+<< /Type /Page /Resources 8 0 R /Contents 9 0 R /Parent 3 0 R /Rotate 90 >>
 endobj
 8 0 obj
 << /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>
@@ -48,5 +35,18 @@ xœmQ¹N1íó¯Ë	‰)TIÅBoìIäcc¯ŸÏ8¶³-ç~™ğğºÃîÓ	#Æ“Á£œ‡Íö"9-P–/™gèlg
 §kVZ+ÒJH“9ÉÜŸá‚-{•xÀ‘=;$aÀµ@ª¼UŸ¢;à½Ä¥ÏÖªŠ¨Ï5Ï)»:“»ç¸±&Q5”(d·ÙŞntœÀ¦3ıØsN.˜¦MùŸdOÓ¼Pp×L]¢u×šlÄT6äÒê/Òé‹¼¡ÈRçQ½dò««Ò|úà×(=p+¶	¬Íõs‡2Øì§?W/¼“
 endstream
 endobj
-trailer << /Root 12 0 R /Size 13 /Info 1 0 R >>
+10 0 obj
+<< /Type /Page /Resources 11 0 R /Contents 12 0 R /Parent 3 0 R >>
+endobj
+11 0 obj
+<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>
+endobj
+12 0 obj
+<< /Length 285 /Filter /FlateDecode >>
+stream
+xœmQ¹N1íó¯Ë	‰)TIÅBoìIäcc¯ŸÏ8¶³-ç~™ğğºÃîÓ	#Æ“Á£œ‡Íö"9-P–/™gèlg•‚r2'Ë|HKÌ¦=şgå`‚<(ƒct‡éÓıfË^³a“ı2àã
+§kVZ+ÒJH“9ÉÜŸá‚-{•xÀ‘=;$aÀµ@ª¼UŸ¢;à½Ä¥ÏÖªŠ¨Ï5Ï)»:“»ç¸±&Q5”(d·ÙŞntœÀ¦3ıØsN.˜¦MùŸdOÓ¼Pp×L]¢u×šlÄT6äÒê/Òé‹¼¡ÈRçQ½dò««Ò|úà×(=p+¶	¬Íõs‡2Øì§?W/¼“
+endstream
+endobj
+trailer << /Root 2 0 R /Size 13 /Info 1 0 R >>
 %%EOF

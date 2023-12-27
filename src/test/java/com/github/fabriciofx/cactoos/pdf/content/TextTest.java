@@ -42,14 +42,13 @@ final class TextTest {
             "Must don't break a small text",
             new TextOf(
                 new Text(
-                    new Serial(),
                     18,
                     0,
                     0,
                     50,
                     20,
                     new TextOf("Hello World")
-                ).definition()
+                ).definition(new Serial(1))
             ),
             new IsText(
                 new Joined(
@@ -73,7 +72,6 @@ final class TextTest {
             "Must break a big text into multiline",
             new TextOf(
                 new Text(
-                    new Serial(),
                     18,
                     0,
                     0,
@@ -98,7 +96,7 @@ final class TextTest {
                         "deserunt laborum mollit labore",
                         "id amet."
                     )
-                ).definition()
+                ).definition(new Serial(1))
             ),
             new IsText(
                 new Joined(

@@ -23,9 +23,10 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
+import com.github.fabriciofx.cactoos.pdf.Definition;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Page;
-import com.github.fabriciofx.cactoos.pdf.Pages;
-import com.github.fabriciofx.cactoos.pdf.Reference;
+import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
@@ -61,17 +62,6 @@ public final class Rotate implements Page {
     }
 
     @Override
-    public Reference reference() {
-        return this.origin.reference();
-    }
-
-    @Override
-    public Dictionary dictionary(final Pages parent) throws Exception {
-        return this.origin.dictionary(parent)
-            .add("Rotate", new Int(this.angle));
-    }
-
-    @Override
     public Resources resources() {
         return this.origin.resources();
     }
@@ -82,19 +72,31 @@ public final class Rotate implements Page {
     }
 
     @Override
-    public byte[] definition(final Pages parent) throws Exception {
+    public Definition definition(final Id id, final int parent)
+        throws Exception {
+        final Definition definition = this.origin.definition(id, parent);
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final Dictionary dictionary = definition.dictionary().add(
+            "Rotate",
+            new Int(this.angle)
+        );
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.origin.reference().id(),
-                this.origin.reference().generation()
+                definition.reference().id(),
+                definition.reference().generation()
             ).asString().getBytes()
         );
-        baos.write(this.dictionary(parent).asBytes());
+        baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
-        baos.write(this.resources().definition());
-        baos.write(this.contents().definition());
-        return baos.toByteArray();
+        final Id reset = new Serial(id.value() - 2);
+        baos.write(this.resources().definition(reset).asBytes());
+        baos.write(this.contents().definition(reset).asBytes());
+        return new Definition(
+            definition.reference().id(),
+            definition.reference().generation(),
+            dictionary,
+            baos.toByteArray()
+        );
     }
 }

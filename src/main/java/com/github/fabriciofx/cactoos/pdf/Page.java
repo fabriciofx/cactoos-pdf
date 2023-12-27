@@ -25,7 +25,6 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 
 /**
  * PageDefault.
@@ -33,16 +32,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExtendsObject")
-public interface Page extends Object {
-    /**
-     * Build the Page dictionary.
-     *
-     * @param parent Pages parent
-     * @return The page dictionary
-     * @throws Exception if fails
-     */
-    Dictionary dictionary(Pages parent) throws Exception;
-
+public interface Page {
     /**
      * Page Resources.
      * @return Resources
@@ -58,9 +48,10 @@ public interface Page extends Object {
     /**
      * Build a PDF page.
      *
+     * @param id Object id
      * @param parent Page's parent
      * @return An array of bytes that represents a PDF page
      * @throws Exception if fails
      */
-    byte[] definition(Pages parent) throws Exception;
+    Definition definition(Id id, int parent) throws Exception;
 }

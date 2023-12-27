@@ -24,9 +24,9 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
+import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Escaped;
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
@@ -54,16 +54,6 @@ public final class Text implements Content {
      * Split regular expression.
      */
     private static final String SPLIT_REGEX = "\\s+";
-
-    /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
 
     /**
      * Font size.
@@ -98,7 +88,6 @@ public final class Text implements Content {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param size Font size
      * @param posx Position X
      * @param posy Position Y
@@ -106,19 +95,17 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
-        final Id id,
         final int size,
         final int posx,
         final int posy,
         final org.cactoos.Text content
     ) {
-        this(id.increment(), 0, size, posx, posy, 80, 20, content);
+        this(size, posx, posy, 80, 20, content);
     }
 
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param size Font size
      * @param posx Position X
      * @param posy Position Y
@@ -128,7 +115,6 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
-        final Id id,
         final int size,
         final int posx,
         final int posy,
@@ -136,45 +122,12 @@ public final class Text implements Content {
         final int leading,
         final org.cactoos.Text content
     ) {
-        this(id.increment(), 0, size, posx, posy, max, leading, content);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Object id
-     * @param generation Object generation
-     * @param size Font size
-     * @param posx Position X
-     * @param posy Position Y
-     * @param max Max line length
-     * @param leading Space between lines
-     * @param content Text content
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public Text(
-        final int id,
-        final int generation,
-        final int size,
-        final int posx,
-        final int posy,
-        final int max,
-        final int leading,
-        final org.cactoos.Text content
-    ) {
-        this.id = id;
-        this.generation = generation;
         this.size = size;
         this.posx = posx;
         this.posy = posy;
         this.max = max;
         this.leading = leading;
         this.content = new Escaped(content);
-    }
-
-    @Override
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
     }
 
     @Override
@@ -218,26 +171,23 @@ public final class Text implements Content {
     }
 
     @Override
-    public Dictionary dictionary() throws Exception {
+    public Definition definition(final Id id) throws Exception {
+        final int num = id.value();
         final byte[] stream = this.stream();
-        return new Dictionary()
+        final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.id,
-                this.generation
+                num,
+                0
             ).asString().getBytes()
         );
-        baos.write(this.dictionary().asBytes());
+        baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
-        return baos.toByteArray();
+        return new Definition(num, 0, dictionary, baos.toByteArray());
     }
 
     /**

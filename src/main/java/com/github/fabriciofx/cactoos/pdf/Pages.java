@@ -23,27 +23,17 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-
 /**
  * Pages.
  *
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExtendsObject")
-public interface Pages extends Object, Definition {
+public interface Pages extends Object {
     /**
      * Add a {@link Page}.
      *
      * @param page An PDF page
      */
     void add(Page page);
-
-    /**
-     * Build a {@link Dictionary}.
-     *
-     * @return A Dictionary
-     * @throws Exception if fails
-     */
-    Dictionary dictionary() throws Exception;
 }

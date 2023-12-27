@@ -30,8 +30,11 @@ package com.github.fabriciofx.cactoos.pdf;
  */
 public interface Object {
     /**
-     * Object reference.
-     * @return The object reference.
+     * Object definition.
+     *
+     * @param id Object id
+     * @return An object definition
+     * @throws Exception if fails
      */
-    Reference reference();
+    Definition definition(Id id) throws Exception;
 }

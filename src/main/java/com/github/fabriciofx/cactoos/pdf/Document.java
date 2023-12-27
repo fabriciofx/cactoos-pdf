@@ -53,11 +53,6 @@ public final class Document implements Bytes {
     private static final String EOF = "%%EOF";
 
     /**
-     * Object id.
-     */
-    private final Id id;
-
-    /**
      * PDF metadata.
      */
     private final Information information;
@@ -70,16 +65,10 @@ public final class Document implements Bytes {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param information Metadata
      * @param catalog Catalog
      */
-    public Document(
-        final Id id,
-        final Information information,
-        final Catalog catalog
-    ) {
-        this.id = id;
+    public Document(final Information information, final Catalog catalog) {
         this.information = information;
         this.catalog = catalog;
     }
@@ -94,14 +83,17 @@ public final class Document implements Bytes {
             ).asString().getBytes()
         );
         baos.write(Document.SIGNATURE);
-        baos.write(this.information.definition());
-        baos.write(this.catalog.definition());
+        final Id id = new Serial();
+        final Definition info = this.information.definition(id);
+        baos.write(info.asBytes());
+        final Definition cata = this.catalog.definition(id);
+        baos.write(cata.asBytes());
         baos.write(
             new FormattedText(
                 "trailer << /Root %s /Size %d /Info %s >>\n",
-                this.catalog.reference().asString(),
-                this.id.value(),
-                this.information.reference().asString()
+                cata.reference().asString(),
+                id.increment(),
+                info.reference().asString()
             ).asString().getBytes()
         );
         baos.write(Document.EOF.getBytes());

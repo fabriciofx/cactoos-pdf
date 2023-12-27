@@ -34,17 +34,7 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
-public final class Catalog implements Object, Definition {
-    /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
+public final class Catalog implements Object {
     /**
      * Pages.
      */
@@ -53,56 +43,30 @@ public final class Catalog implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param pages Pages
      */
-    public Catalog(final Id id, final Pages pages) {
-        this(id.increment(), 0, pages);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Object id
-     * @param generation Object generation
-     * @param pages Pages
-     */
-    public Catalog(final int id, final int generation, final Pages pages) {
-        this.id = id;
-        this.generation = generation;
+    public Catalog(final Pages pages) {
         this.pages = pages;
     }
 
     @Override
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
-    }
-
-    /**
-     * Build a dictionary.
-     *
-     * @return A dictionary
-     * @throws Exception if fails
-     */
-    public Dictionary dictionary() throws Exception {
-        return new Dictionary()
-            .add("Type", new Name("Catalog"))
-            .add("Pages", new Text(this.pages.reference().asString()));
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
+    public Definition definition(final Id id) throws Exception {
+        final int num = id.increment();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final Definition definition = this.pages.definition(id);
+        final Dictionary dictionary = new Dictionary()
+            .add("Type", new Name("Catalog"))
+            .add("Pages", new Text(definition.reference().asString()));
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.id,
-                this.generation
+                num,
+                0
             ).asString().getBytes()
         );
-        baos.write(this.dictionary().asBytes());
+        baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
-        baos.write(this.pages.definition());
-        return baos.toByteArray();
+        baos.write(definition.asBytes());
+        return new Definition(num, 0, dictionary, baos.toByteArray());
     }
 }

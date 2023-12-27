@@ -24,7 +24,8 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.Reference;
+import com.github.fabriciofx.cactoos.pdf.Definition;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
@@ -79,31 +80,28 @@ public final class FlateEncode implements Content {
     }
 
     @Override
-    public Dictionary dictionary() throws Exception {
+    public Definition definition(final Id id) throws Exception {
         final byte[] stream = this.stream();
-        return new Dictionary()
+        final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .add("Filter", new Name("FlateDecode"))
             .with(new Stream(stream));
-    }
-
-    @Override
-    public Reference reference() {
-        return this.origin.reference();
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final Definition definition = this.origin.definition(id);
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.reference().id(),
-                this.reference().generation()
+                definition.reference().id(),
+                definition.reference().generation()
             ).asString().getBytes()
         );
-        baos.write(this.dictionary().asBytes());
+        baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
-        return baos.toByteArray();
+        return new Definition(
+            definition.reference().id(),
+            definition.reference().generation(),
+            dictionary,
+            baos.toByteArray()
+        );
     }
 }

@@ -23,11 +23,11 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
-import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
 import org.cactoos.text.Joined;
+import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
@@ -39,34 +39,32 @@ import org.llorllale.cactoos.matchers.IsText;
  */
 final class ResourcesTest {
     @Test
-    void dictionary() throws Exception {
-        final Id id = new Serial();
+    void definition() throws Exception {
         final Png png = new Png(
-            id,
             "src/test/resources/image/logo.png"
         );
         final Image image = new Image(
-            id,
             "I1",
             png
         );
         new Assertion<>(
-            "Must represent a resources dictionary",
-            new Resources(
-                id,
-                new ProcSet(),
-                new Font(
-                    new FontFamily("Times-Roman", "Type1"),
-                    "F1"
-                ),
-                new XObject(image.name(), png)
-            ).dictionary(),
+            "Must represent a resources definition",
+            new TextOf(
+                new Resources(
+                    new ProcSet(),
+                    new Font(
+                        new FontFamily("Times-Roman", "Type1"),
+                        "F1"
+                    ),
+                    new XObject(image.name(), png)
+                ).definition(new Serial())
+            ),
             new IsText(
                 new Joined(
                     " ",
-                    "<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
+                    "1 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
                     "/Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype",
-                    "/Type1 >> >> /XObject << /I1 1 0 R >> >>"
+                    "/Type1 >> >> /XObject << /I1 3 0 R >> >>\nendobj\n"
                 )
             )
         ).affirm();

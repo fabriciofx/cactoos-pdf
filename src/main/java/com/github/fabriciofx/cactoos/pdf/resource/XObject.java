@@ -23,7 +23,10 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Definition;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Resource;
+import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
@@ -56,19 +59,17 @@ public final class XObject implements Resource {
     }
 
     @Override
-    public byte[] definition() throws Exception {
-        return this.dictionary().asBytes();
-    }
-
-    @Override
-    public Dictionary dictionary() throws Exception {
-        return new Dictionary()
+    public Definition definition(final Id id) throws Exception {
+        final Id reset = new Serial(id.value() + 1);
+        final Definition definition = this.png.definition(reset);
+        final Dictionary dictionary = new Dictionary()
             .add(
                 "XObject",
                 new Dictionary().add(
                     this.name,
-                    new Text(this.png.reference().asString())
+                    new Text(definition.reference().asString())
                 )
             );
+        return new Definition(dictionary, dictionary.asBytes());
     }
 }

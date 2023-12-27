@@ -23,6 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Definition;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
@@ -34,16 +36,12 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
  */
 public final class ProcSet implements Resource {
     @Override
-    public byte[] definition() throws Exception {
-        return this.dictionary().asBytes();
-    }
-
-    @Override
-    public Dictionary dictionary() throws Exception {
-        return new Dictionary()
+    public Definition definition(final Id id) throws Exception {
+        final Dictionary dictionary = new Dictionary()
             .add(
                 "ProcSet",
                 new Array("PDF", "Text", "ImageB", "ImageC", "ImageI")
             );
+        return new Definition(dictionary, dictionary.asBytes());
     }
 }

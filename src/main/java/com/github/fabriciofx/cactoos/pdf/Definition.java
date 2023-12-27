@@ -23,17 +23,105 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import java.util.Arrays;
+import org.cactoos.Bytes;
+
 /**
  * Definition.
  *
  * @since 0.0.1
  */
-public interface Definition {
+public final class Definition implements Bytes {
     /**
-     * Object definition.
-     *
-     * @return An object definition
-     * @throws Exception if fails
+     * Object id.
      */
-    byte[] definition() throws Exception;
+    private final int id;
+
+    /**
+     * Object generation.
+     */
+    private final int generation;
+
+    /**
+     * Dictionary.
+     */
+    private final Dictionary dict;
+
+    /**
+     * Content.
+     */
+    private final byte[] content;
+
+    /**
+     * Ctor.
+     *
+     * @param dictionary Dictionary
+     * @param content Content
+     */
+    public Definition(
+        final Dictionary dictionary,
+        final byte[] content
+    ) {
+        this(-1, 0, dictionary, content);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param dictionary Dictionary
+     * @param content Content
+     */
+    public Definition(
+        final int id,
+        final Dictionary dictionary,
+        final byte[] content
+    ) {
+        this(id, 0, dictionary, content);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param generation Object generation
+     * @param dictionary Dictionary
+     * @param content Content
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Definition(
+        final int id,
+        final int generation,
+        final Dictionary dictionary,
+        final byte[] content
+    ) {
+        this.id = id;
+        this.generation = generation;
+        this.dict = dictionary;
+        this.content = Arrays.copyOf(content, content.length);
+    }
+
+    /**
+     * Create an object reference.
+     *
+     * @return A reference
+     */
+    public Reference reference() {
+        return new Reference(this.id, this.generation);
+    }
+
+    /**
+     * Create a dictionary.
+     *
+     * @return A dictionary
+     */
+    public Dictionary dictionary() {
+        return this.dict;
+    }
+
+    @Override
+    public byte[] asBytes() throws Exception {
+        return Arrays.copyOf(this.content, this.content.length);
+    }
 }

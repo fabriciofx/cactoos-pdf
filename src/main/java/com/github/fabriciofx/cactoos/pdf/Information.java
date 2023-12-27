@@ -34,17 +34,7 @@ import org.cactoos.text.FormattedText;
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExcessiveParameterList")
-public final class Information implements Object, Definition {
-    /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
+public final class Information implements Object {
     /**
      * Metadata.
      */
@@ -53,7 +43,6 @@ public final class Information implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -74,7 +63,6 @@ public final class Information implements Object, Definition {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
-        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -93,8 +81,6 @@ public final class Information implements Object, Definition {
         final String value8
     ) {
         this(
-            id.increment(),
-            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -110,7 +96,6 @@ public final class Information implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -129,7 +114,6 @@ public final class Information implements Object, Definition {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
-        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -146,8 +130,6 @@ public final class Information implements Object, Definition {
         final String value7
     ) {
         this(
-            id.increment(),
-            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -162,7 +144,6 @@ public final class Information implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -179,7 +160,6 @@ public final class Information implements Object, Definition {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
-        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -194,8 +174,6 @@ public final class Information implements Object, Definition {
         final String value6
     ) {
         this(
-            id.increment(),
-            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -209,7 +187,6 @@ public final class Information implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -224,7 +201,6 @@ public final class Information implements Object, Definition {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
-        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -237,8 +213,6 @@ public final class Information implements Object, Definition {
         final String value5
     ) {
         this(
-            id.increment(),
-            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -251,7 +225,6 @@ public final class Information implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -264,7 +237,6 @@ public final class Information implements Object, Definition {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
-        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -275,8 +247,6 @@ public final class Information implements Object, Definition {
         final String value4
     ) {
         this(
-            id.increment(),
-            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -288,7 +258,6 @@ public final class Information implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -299,7 +268,6 @@ public final class Information implements Object, Definition {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
-        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -308,8 +276,6 @@ public final class Information implements Object, Definition {
         final String value3
     ) {
         this(
-            id.increment(),
-            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -320,7 +286,6 @@ public final class Information implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -329,15 +294,12 @@ public final class Information implements Object, Definition {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
-        final Id id,
         final String name1,
         final String value1,
         final String name2,
         final String value2
     ) {
         this(
-            id.increment(),
-            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -347,18 +309,11 @@ public final class Information implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param name Metadata name
      * @param value Metadata value
      */
-    public Information(
-        final Id id,
-        final String name,
-        final String value
-    ) {
+    public Information(final String name, final String value) {
         this(
-            id.increment(),
-            0,
             new Dictionary()
                 .add(name, new Literal(value))
         );
@@ -367,37 +322,25 @@ public final class Information implements Object, Definition {
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Object generation
      * @param metadata Metadata
      */
-    public Information(
-        final int id,
-        final int generation,
-        final Dictionary metadata
-    ) {
-        this.id = id;
-        this.generation = generation;
+    public Information(final Dictionary metadata) {
         this.metadata = metadata;
     }
 
     @Override
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
+    public Definition definition(final Id id) throws Exception {
+        final int num = id.increment();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.id,
-                this.generation
+                num,
+                0
             ).asString().getBytes()
         );
         baos.write(this.metadata.asBytes());
         baos.write("\nendobj\n".getBytes());
-        return baos.toByteArray();
+        return new Definition(num, 0, this.metadata, baos.toByteArray());
     }
 }

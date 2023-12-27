@@ -25,8 +25,9 @@ package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Definition;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Object;
-import com.github.fabriciofx.cactoos.pdf.Reference;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import org.cactoos.list.ListEnvelope;
@@ -37,8 +38,7 @@ import org.cactoos.list.ListOf;
  *
  * @since 0.0.1
  */
-public final class Contents extends ListEnvelope<Content>
-    implements Object, Definition {
+public final class Contents extends ListEnvelope<Content> implements Object {
     /**
      * Ctor.
      *
@@ -58,21 +58,12 @@ public final class Contents extends ListEnvelope<Content>
     }
 
     @Override
-    public Reference reference() {
-        if (this.isEmpty()) {
-            throw new IllegalStateException(
-                "Contents is empty; there is not any reference"
-            );
-        }
-        return this.get(0).reference();
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
+    public Definition definition(final Id id) throws Exception {
+        final int num = id.increment();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (final Definition def : this) {
-            baos.write(def.definition());
+        for (final Object obj : this) {
+            baos.write(obj.definition(id).asBytes());
         }
-        return baos.toByteArray();
+        return new Definition(num, 0, new Dictionary(), baos.toByteArray());
     }
 }

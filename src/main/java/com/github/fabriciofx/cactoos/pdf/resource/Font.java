@@ -23,6 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Definition;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 
@@ -49,25 +51,19 @@ public final class Font implements Resource {
      * @param name Font name
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Font(
-        final FontFamily family,
-        final String name
-    ) {
+    public Font(final FontFamily family, final String name) {
         this.family = family;
         this.name = name;
     }
 
     @Override
-    public byte[] definition() throws Exception {
-        return this.dictionary().asBytes();
-    }
-
-    @Override
-    public Dictionary dictionary() throws Exception {
-        return new Dictionary()
+    public Definition definition(final Id id) throws Exception {
+        final Definition definition = this.family.definition(id);
+        final Dictionary dictionary = new Dictionary()
             .add(
                 "Font",
-                new Dictionary().add(this.name, this.family.dictionary())
+                new Dictionary().add(this.name, definition.dictionary())
             );
+        return new Definition(dictionary, dictionary.asBytes());
     }
 }

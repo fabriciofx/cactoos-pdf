@@ -65,16 +65,13 @@ final class DocumentTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
-        final Id id = new Serial();
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final String filename = "src/test/resources/document/HelloWorld.pdf";
         final byte[] expected = Files.readAllBytes(
             new File(filename).toPath()
         );
         final byte[] actual = new Document(
-            id,
             new Information(
-                id,
                 "Title", "Hello World",
                 "Subject", "PDF document",
                 "Author", "Fabricio Cabral",
@@ -85,14 +82,10 @@ final class DocumentTest {
                 "Keywords", "cactoos pdf elegant objects"
             ),
             new Catalog(
-                id,
                 new DefaultPages(
-                    id,
                     PageFormat.A4,
                     new DefaultPage(
-                        id,
                         new Resources(
-                            id,
                             new Font(
                                 new FontFamily("Times-Roman", "Type1"),
                                 "F1"
@@ -100,15 +93,13 @@ final class DocumentTest {
                         ),
                         new Contents(
                             new FlateEncode(
-                                new Text(id, 18, 0, 500, 80, 20, content)
+                                new Text(18, 0, 500, 80, 20, content)
                             )
                         )
                     ),
                     new Rotate(
                         new DefaultPage(
-                            id,
                             new Resources(
-                                id,
                                 new Font(
                                     new FontFamily("Times-Roman", "Type1"),
                                     "F1"
@@ -116,16 +107,14 @@ final class DocumentTest {
                             ),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(id, 18, 0, 500, 80, 20, content)
+                                    new Text(18, 0, 500, 80, 20, content)
                                 )
                             )
                         ),
                         90
                     ),
                     new DefaultPage(
-                        id,
                         new Resources(
-                            id,
                             new Font(
                                 new FontFamily("Times-Roman", "Type1"),
                                 "F1"
@@ -133,7 +122,7 @@ final class DocumentTest {
                         ),
                         new Contents(
                             new FlateEncode(
-                                new Text(id, 18, 0, 500, 80, 20, content)
+                                new Text(18, 0, 500, 80, 20, content)
                             )
                         )
                     )
@@ -153,30 +142,21 @@ final class DocumentTest {
         final byte[] expected = Files.readAllBytes(
             new File(filename).toPath()
         );
-        final Id id = new Serial();
         final Image image = new Image(
-            id,
             "I1",
             new Png(
-                id,
                 "src/test/resources/image/logo.png"
             )
         );
         final byte[] actual = new Document(
-            id,
             new Information(
-                id,
                 "Title", "Hello World"
             ),
             new Catalog(
-                id,
                 new DefaultPages(
-                    id,
                     PageFormat.A4,
                     new DefaultPage(
-                        id,
                         new Resources(
-                            id,
                             new ProcSet(),
                             new Font(
                                 new FontFamily("Times-Roman", "Type1"),
@@ -201,12 +181,9 @@ final class DocumentTest {
     @Disabled
     @Test
     void buildFileWithPngImage() throws Exception {
-        final Id id = new Serial();
         final Image image = new Image(
-            id,
             "I1",
             new Png(
-                id,
                 "src/test/resources/image/logo.png"
             )
         );
@@ -214,20 +191,14 @@ final class DocumentTest {
         Files.write(
             file.toPath(),
             new Document(
-                id,
                 new Information(
-                    id,
                     "Title", "Hello World"
                 ),
                 new Catalog(
-                    id,
                     new DefaultPages(
-                        id,
                         PageFormat.A4,
                         new DefaultPage(
-                            id,
                             new Resources(
-                                id,
                                 new ProcSet(),
                                 new Font(
                                     new FontFamily("Times-Roman", "Type1"),
@@ -259,15 +230,12 @@ final class DocumentTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
-        final File file = new File("HelloWorld.pdf");
-        final Id id = new Serial();
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
+        final File file = new File("HelloWorld.pdf");
         Files.write(
             file.toPath(),
             new Document(
-                id,
                 new Information(
-                    id,
                     "Title", "Hello World",
                     "Subject", "PDF document",
                     "Author", "Fabricio Cabral",
@@ -278,14 +246,10 @@ final class DocumentTest {
                     "Keywords", "cactoos pdf elegant objects"
                 ),
                 new Catalog(
-                    id,
                     new DefaultPages(
-                        id,
                         PageFormat.A4,
                         new DefaultPage(
-                            id,
                             new Resources(
-                                id,
                                 new Font(
                                     new FontFamily("Times-Roman", "Type1"),
                                     "F1"
@@ -293,15 +257,13 @@ final class DocumentTest {
                             ),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(id, 18, 0, 500, 80, 20, content)
+                                    new Text(18, 0, 500, 80, 20, content)
                                 )
                             )
                         ),
                         new Rotate(
                             new DefaultPage(
-                                id,
                                 new Resources(
-                                    id,
                                     new Font(
                                         new FontFamily("Times-Roman", "Type1"),
                                         "F1"
@@ -309,24 +271,14 @@ final class DocumentTest {
                                 ),
                                 new Contents(
                                     new FlateEncode(
-                                        new Text(
-                                            id,
-                                            18,
-                                            0,
-                                            500,
-                                            80,
-                                            20,
-                                            content
-                                        )
+                                        new Text(18, 0, 500, 80, 20, content)
                                     )
                                 )
                             ),
-                            90
+                        90
                         ),
                         new DefaultPage(
-                            id,
                             new Resources(
-                                id,
                                 new Font(
                                     new FontFamily("Times-Roman", "Type1"),
                                     "F1"
@@ -334,7 +286,7 @@ final class DocumentTest {
                             ),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(id, 18, 0, 500, 80, 20, content)
+                                    new Text(18, 0, 500, 80, 20, content)
                                 )
                             )
                         )

@@ -23,15 +23,13 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-
 /**
  * Content.
  *
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExtendsObject")
-public interface Content extends Object, Definition {
+public interface Content extends Object {
     /**
      * Stream of a content.
      *
@@ -39,12 +37,4 @@ public interface Content extends Object, Definition {
      * @throws Exception if fails
      */
     byte[] stream() throws Exception;
-
-    /**
-     * Build an object {@link Dictionary}.
-     *
-     * @return A dictionary
-     * @throws Exception if fails
-     */
-    Dictionary dictionary() throws Exception;
 }

@@ -23,9 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.Object;
-import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
@@ -40,70 +39,44 @@ import org.cactoos.text.FormattedText;
  * @since 0.0.1
  */
 public final class Resources extends ListEnvelope<Resource>
-    implements Object, Resource {
-    /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
+    implements Resource {
     /**
      * Ctor.
      *
-     * @param id Object id
      * @param objects An array of objects
      */
-    public Resources(final Id id, final Resource... objects) {
-        this(id.increment(), 0, new ListOf<>(objects));
+    public Resources(final Resource... objects) {
+        this(new ListOf<>(objects));
     }
 
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Object generation
      * @param list A list of objects
      */
-    public Resources(
-        final int id,
-        final int generation,
-        final List<Resource> list
-    ) {
+    public Resources(final List<Resource> list) {
         super(list);
-        this.id = id;
-        this.generation = generation;
     }
 
     @Override
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
-    }
-
-    @Override
-    public Dictionary dictionary() throws Exception {
-        Dictionary main = this.get(0).dictionary();
-        for (int idx = 1; idx < this.size(); ++idx) {
-            main = main.merge(this.get(idx).dictionary());
-        }
-        return main;
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
+    public Definition definition(final Id id) throws Exception {
+        final int num = id.increment();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.id,
-                this.generation
+                num,
+                0
             ).asString().getBytes()
         );
-        baos.write(this.dictionary().asBytes());
+        Dictionary dictionary = this.get(0).definition(id).dictionary();
+        for (int idx = 1; idx < this.size(); ++idx) {
+            dictionary = dictionary.merge(
+                this.get(idx).definition(id).dictionary()
+            );
+        }
+        baos.write(dictionary.asBytes());
         baos.write("\nendobj\n".getBytes());
-        return baos.toByteArray();
+        return new Definition(num, 0, dictionary, baos.toByteArray());
     }
 }

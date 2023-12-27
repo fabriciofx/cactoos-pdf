@@ -23,20 +23,11 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-
 /**
  * Resource.
  *
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExtendsObject")
-public interface Resource extends Definition {
-    /**
-     * Build a {@link Dictionary}.
-     *
-     * @return A Dictionary
-     * @throws Exception if fails
-     */
-    Dictionary dictionary() throws Exception;
+public interface Resource extends Object {
 }

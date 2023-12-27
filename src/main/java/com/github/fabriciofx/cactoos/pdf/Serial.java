@@ -40,7 +40,16 @@ public final class Serial implements Id {
      * Ctor.
      */
     public Serial() {
-        this(new AtomicInteger(1));
+        this(0);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param seed Seed to start counting
+     */
+    public Serial(final int seed) {
+        this(new AtomicInteger(seed));
     }
 
     /**
@@ -59,6 +68,6 @@ public final class Serial implements Id {
 
     @Override
     public int increment() {
-        return this.seed.getAndIncrement();
+        return this.seed.incrementAndGet();
     }
 }

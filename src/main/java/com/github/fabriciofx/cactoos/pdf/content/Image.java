@@ -24,8 +24,8 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
+import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
@@ -40,16 +40,6 @@ import org.cactoos.text.Joined;
  */
 public final class Image implements Content {
     /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
-    /**
      * Image name.
      */
     private final String label;
@@ -62,31 +52,11 @@ public final class Image implements Content {
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param name Image name
-     * @param png Raw PNG
-     */
-    public Image(final Id id, final String name, final Png png) {
-        this(id.increment(), 0, name, png);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Object id
-     * @param generation Object generation
      * @param name Image name
      * @param png Raw PNG
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Image(
-        final int id,
-        final int generation,
-        final String name,
-        final Png png
-    ) {
-        this.id = id;
-        this.generation = generation;
+    public Image(final String name, final Png png) {
         this.label = name;
         this.png = png;
     }
@@ -114,32 +84,24 @@ public final class Image implements Content {
     }
 
     @Override
-    public Dictionary dictionary() throws Exception {
+    public Definition definition(final Id id) throws Exception {
+        final int num = id.value();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final byte[] stream = this.stream();
-        return new Dictionary()
+        final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-    }
-
-    @Override
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
-    }
-
-    @Override
-    public byte[] definition() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(
             new FormattedText(
                 "%d %d obj\n",
-                this.id,
-                this.generation
+                num,
+                0
             ).asString().getBytes()
         );
-        baos.write(this.dictionary().asBytes());
-        baos.write("endobj\n".getBytes());
-        baos.write(this.png.definition());
-        return baos.toByteArray();
+        baos.write(dictionary.asBytes());
+        baos.write("\nendobj\n".getBytes());
+        baos.write(this.png.definition(id).asBytes());
+        return new Definition(num, 0, dictionary, baos.toByteArray());
     }
 
     /**

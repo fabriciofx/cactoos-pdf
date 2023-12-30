@@ -32,6 +32,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import org.cactoos.io.OutputTo;
@@ -95,7 +96,7 @@ public final class FlateEncode implements Content {
             ).asBytes()
         );
         baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         return new Definition(
             definition.reference().id(),
             definition.reference().generation(),

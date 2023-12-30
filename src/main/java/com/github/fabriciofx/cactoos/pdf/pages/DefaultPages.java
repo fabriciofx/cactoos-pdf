@@ -35,6 +35,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.cactoos.list.ListOf;
@@ -93,7 +94,7 @@ public final class DefaultPages implements Pages {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         for (final Definition definition : definitions) {
             baos.write(definition.asBytes());
         }

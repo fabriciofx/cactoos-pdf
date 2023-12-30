@@ -24,6 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
 
@@ -80,7 +81,7 @@ public final class Document implements Bytes {
             new FormattedText(
                 "%%PDF-%s\n",
                 Document.VERSION
-            ).asString().getBytes()
+            ).asString().getBytes(StandardCharsets.UTF_8)
         );
         baos.write(Document.SIGNATURE);
         final Id id = new Serial();
@@ -94,9 +95,9 @@ public final class Document implements Bytes {
                 cata.reference().asString(),
                 id.increment(),
                 info.reference().asString()
-            ).asString().getBytes()
+            ).asString().getBytes(StandardCharsets.UTF_8)
         );
-        baos.write(Document.EOF.getBytes());
+        baos.write(Document.EOF.getBytes(StandardCharsets.UTF_8));
         return baos.toByteArray();
     }
 }

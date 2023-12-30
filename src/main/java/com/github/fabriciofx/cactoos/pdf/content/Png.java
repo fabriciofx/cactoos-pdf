@@ -40,6 +40,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import org.cactoos.Bytes;
 
@@ -135,7 +136,7 @@ public final class Png implements Content {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         baos.write(pal.asBytes());
         return new Definition(num, 0, dictionary, baos.toByteArray());
     }

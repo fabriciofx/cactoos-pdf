@@ -33,6 +33,7 @@ import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Rotate a Page in a angle.
@@ -87,7 +88,7 @@ public final class Rotate implements Page {
             ).asBytes()
         );
         baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         final Id reset = new Serial(id.value() - 2);
         baos.write(this.resources().definition(reset).asBytes());
         baos.write(this.contents().definition(reset).asBytes());

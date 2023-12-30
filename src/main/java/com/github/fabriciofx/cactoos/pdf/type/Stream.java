@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf.type;
 
 import com.github.fabriciofx.cactoos.pdf.Type;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.FormattedText;
@@ -66,9 +67,9 @@ public final class Stream implements Type<byte[]> {
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write("stream\n".getBytes());
+        baos.write("stream\n".getBytes(StandardCharsets.UTF_8));
         baos.write(this.bytes.asBytes());
-        baos.write("\nendstream".getBytes());
+        baos.write("\nendstream".getBytes(StandardCharsets.UTF_8));
         return baos.toByteArray();
     }
 

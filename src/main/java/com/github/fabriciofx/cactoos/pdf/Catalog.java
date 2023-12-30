@@ -28,6 +28,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Catalog.
@@ -59,7 +60,7 @@ public final class Catalog implements Object {
             .add("Pages", new Text(definition.reference().asString()));
         baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         baos.write(definition.asBytes());
         return new Definition(num, 0, dictionary, baos.toByteArray());
     }

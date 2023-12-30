@@ -24,6 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.type;
 
 import com.github.fabriciofx.cactoos.pdf.Type;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Text.
@@ -65,7 +66,7 @@ public final class Text implements Type<String> {
 
     @Override
     public byte[] asBytes() throws Exception {
-        return this.txt.getBytes();
+        return this.txt.getBytes(StandardCharsets.UTF_8);
     }
 
     @Override

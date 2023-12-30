@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.text;
 
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
@@ -56,7 +57,7 @@ public final class Indirect implements Text, Bytes {
 
     @Override
     public byte[] asBytes() throws Exception {
-        return this.asString().getBytes();
+        return this.asString().getBytes(StandardCharsets.UTF_8);
     }
 
     @Override

@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Literal;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Document Information Dictionary.
@@ -334,7 +335,7 @@ public final class Information implements Object {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(new Indirect(num, 0).asBytes());
         baos.write(this.metadata.asBytes());
-        baos.write("\nendobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         return new Definition(num, 0, this.metadata, baos.toByteArray());
     }
 }

@@ -34,6 +34,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * PageDefault.
@@ -86,7 +87,7 @@ public final class DefaultPage implements Page {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         baos.write(resrcs.asBytes());
         baos.write(conts.asBytes());
         return new Definition(num, 0, dictionary, baos.toByteArray());

@@ -24,6 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.type;
 
 import com.github.fabriciofx.cactoos.pdf.Type;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -53,7 +54,7 @@ public final class Literal implements Type<String> {
 
     @Override
     public byte[] asBytes() throws Exception {
-        return this.asString().getBytes();
+        return this.asString().getBytes(StandardCharsets.UTF_8);
     }
 
     @Override

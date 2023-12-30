@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf.type;
 
 import com.github.fabriciofx.cactoos.pdf.Type;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,11 +105,11 @@ public final class Dictionary implements Type<Dictionary> {
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(this.asString().getBytes());
+        baos.write(this.asString().getBytes(StandardCharsets.UTF_8));
         if (!this.stream.isEmpty()) {
-            baos.write("\nstream\n".getBytes());
+            baos.write("\nstream\n".getBytes(StandardCharsets.UTF_8));
             baos.write(this.stream.get(0).value());
-            baos.write("\nendstream".getBytes());
+            baos.write("\nendstream".getBytes(StandardCharsets.UTF_8));
         }
         return baos.toByteArray();
     }

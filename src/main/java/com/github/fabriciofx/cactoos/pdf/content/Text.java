@@ -34,6 +34,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -163,7 +164,7 @@ public final class Text implements Content {
             this.posy,
             this.leading,
             out.toString()
-        ).asString().getBytes();
+        ).asString().getBytes(StandardCharsets.UTF_8);
     }
 
     @Override
@@ -176,7 +177,7 @@ public final class Text implements Content {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(new Indirect(num, 0).asBytes());
         baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes());
+        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         return new Definition(num, 0, dictionary, baos.toByteArray());
     }
 }

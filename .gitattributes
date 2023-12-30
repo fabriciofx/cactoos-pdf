@@ -2,7 +2,6 @@
 # Don't change this file. If you have any ideas about it, please
 # submit a separate issue about it and we'll discuss.
 
-src/test/resources/text/20k_c1.txt export-ignore
 * text=auto eol=lf
 *.java ident
 *.xml ident

@@ -326,7 +326,7 @@ final class DocumentTest {
             )
         ).asBytes();
         new Assertion<>(
-            "Must match with PDF document with a PNG image",
+            "Must match with PDF document with a text file",
             expected,
             new IsEqual<>(actual)
         ).affirm();

@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.resource.Font;
 import com.github.fabriciofx.cactoos.pdf.text.Escaped;
 import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.text.Multiline;
@@ -41,6 +42,11 @@ import org.cactoos.text.FormattedText;
  * @since 0.0.1
  */
 public final class Text implements Content {
+    /**
+     * Font.
+     */
+    private final Font font;
+
     /**
      * Font size.
      */
@@ -74,6 +80,7 @@ public final class Text implements Content {
     /**
      * Ctor.
      *
+     * @param font Font
      * @param size Font size
      * @param posx Position X
      * @param posy Position Y
@@ -81,17 +88,19 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
+        final Font font,
         final int size,
         final double posx,
         final double posy,
         final org.cactoos.Text content
     ) {
-        this(size, posx, posy, 80, size * 1.20, content);
+        this(font, size, posx, posy, 80, size * 1.20, content);
     }
 
     /**
      * Ctor.
      *
+     * @param font Font
      * @param size Font size
      * @param posx Position X
      * @param posy Position Y
@@ -101,6 +110,7 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
+        final Font font,
         final int size,
         final double posx,
         final double posy,
@@ -108,6 +118,7 @@ public final class Text implements Content {
         final double leading,
         final org.cactoos.Text content
     ) {
+        this.font = font;
         this.size = size;
         this.posx = posx;
         this.posy = posy;
@@ -123,7 +134,8 @@ public final class Text implements Content {
             out.append(new FormattedText("(%s) Tj T*\n", line).asString());
         }
         return new FormattedText(
-            "BT /F1 %d Tf %.2f %.2f Td %.2f TL\n%sET",
+            "BT /%s %d Tf %.2f %.2f Td %.2f TL\n%sET",
+            this.font.name(),
             this.size,
             this.posx,
             this.posy,

@@ -42,7 +42,7 @@ public final class Font implements Resource {
     /**
      * Font name.
      */
-    private final String name;
+    private final String label;
 
     /**
      * Ctor.
@@ -53,7 +53,16 @@ public final class Font implements Resource {
      */
     public Font(final FontFamily family, final String name) {
         this.family = family;
-        this.name = name;
+        this.label = name;
+    }
+
+    /**
+     * The font name.
+     *
+     * @return The font name
+     */
+    public String name() {
+        return this.label;
     }
 
     @Override
@@ -62,7 +71,7 @@ public final class Font implements Resource {
         final Dictionary dictionary = new Dictionary()
             .add(
                 "Font",
-                new Dictionary().add(this.name, definition.dictionary())
+                new Dictionary().add(this.label, definition.dictionary())
             );
         return new Definition(dictionary, dictionary.asBytes());
     }

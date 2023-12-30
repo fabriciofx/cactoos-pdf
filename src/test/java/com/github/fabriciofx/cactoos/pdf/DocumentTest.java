@@ -67,9 +67,9 @@ final class DocumentTest {
             "deserunt laborum mollit labore id amet."
         );
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final String filename = "src/test/resources/document/HelloWorld.pdf";
-        final byte[] expected = Files.readAllBytes(
-            new File(filename).toPath()
+        final Font font = new Font(
+            new FontFamily("Times-Roman", "Type1"),
+            "F1"
         );
         final byte[] actual = new Document(
             new Information(
@@ -86,50 +86,39 @@ final class DocumentTest {
                 new DefaultPages(
                     PageFormat.A4,
                     new DefaultPage(
-                        new Resources(
-                            new Font(
-                                new FontFamily("Times-Roman", "Type1"),
-                                "F1"
-                            )
-                        ),
+                        new Resources(font),
                         new Contents(
                             new FlateEncode(
-                                new Text(18, 0, 500, 80, 20, content)
+                                new Text(font, 18, 0, 500, 80, 20, content)
                             )
                         )
                     ),
                     new Rotate(
                         new DefaultPage(
-                            new Resources(
-                                new Font(
-                                    new FontFamily("Times-Roman", "Type1"),
-                                    "F1"
-                                )
-                            ),
+                            new Resources(font),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(18, 0, 500, 80, 20, content)
+                                    new Text(font, 18, 0, 500, 80, 20, content)
                                 )
                             )
                         ),
                         90
                     ),
                     new DefaultPage(
-                        new Resources(
-                            new Font(
-                                new FontFamily("Times-Roman", "Type1"),
-                                "F1"
-                            )
-                        ),
+                        new Resources(font),
                         new Contents(
                             new FlateEncode(
-                                new Text(18, 0, 500, 80, 20, content)
+                                new Text(font, 18, 0, 500, 80, 20, content)
                             )
                         )
                     )
                 )
             )
         ).asBytes();
+        final String filename = "src/test/resources/document/HelloWorld.pdf";
+        final byte[] expected = Files.readAllBytes(
+            new File(filename).toPath()
+        );
         new Assertion<>(
             "Must match with HelloWorld PDF document",
             expected,
@@ -232,6 +221,10 @@ final class DocumentTest {
             "deserunt laborum mollit labore id amet."
         );
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
+        final Font font = new Font(
+            new FontFamily("Times-Roman", "Type1"),
+            "F1"
+        );
         final File file = new File("HelloWorld.pdf");
         Files.write(
             file.toPath(),
@@ -250,44 +243,29 @@ final class DocumentTest {
                     new DefaultPages(
                         PageFormat.A4,
                         new DefaultPage(
-                            new Resources(
-                                new Font(
-                                    new FontFamily("Times-Roman", "Type1"),
-                                    "F1"
-                                )
-                            ),
+                            new Resources(font),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(18, 0, 500, 80, 20, content)
+                                    new Text(font, 18, 0, 500, 80, 20, content)
                                 )
                             )
                         ),
                         new Rotate(
                             new DefaultPage(
-                                new Resources(
-                                    new Font(
-                                        new FontFamily("Times-Roman", "Type1"),
-                                        "F1"
-                                    )
-                                ),
+                                new Resources(font),
                                 new Contents(
                                     new FlateEncode(
-                                        new Text(18, 0, 500, 80, 20, content)
+                                        new Text(font, 18, 0, 500, 80, 20, content)
                                     )
                                 )
                             ),
                         90
                         ),
                         new DefaultPage(
-                            new Resources(
-                                new Font(
-                                    new FontFamily("Times-Roman", "Type1"),
-                                    "F1"
-                                )
-                            ),
+                            new Resources(font),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(18, 0, 500, 80, 20, content)
+                                    new Text(font, 18, 0, 500, 80, 20, content)
                                 )
                             )
                         )

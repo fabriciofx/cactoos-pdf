@@ -60,9 +60,9 @@ final class MarginsTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
-        final String filename = "src/test/resources/document/margins.pdf";
-        final byte[] expected = Files.readAllBytes(
-            new File(filename).toPath()
+        final Font font = new Font(
+            new FontFamily("Times-Roman", "Type1"),
+            "F1"
         );
         final byte[] actual = new Document(
             new Information(
@@ -77,27 +77,19 @@ final class MarginsTest {
                     new DefaultPages(
                         PageFormat.A4,
                         new DefaultPage(
-                            new Resources(
-                                new Font(
-                                    new FontFamily("Times-Roman", "Type1"),
-                                    "F1"
-                                )
-                            ),
+                            new Resources(font),
                             new Contents(
-                                new Text(
-                                    12,
-                                    0,
-                                    500,
-                                    60,
-                                    14,
-                                    content
-                                )
+                                new Text(font, 12, 0, 500, 60, 14, content)
                             )
                         )
                     )
                 )
             )
         ).asBytes();
+        final String filename = "src/test/resources/document/margins.pdf";
+        final byte[] expected = Files.readAllBytes(
+            new File(filename).toPath()
+        );
         new Assertion<>(
             "Must match with margins PDF document",
             expected,
@@ -119,6 +111,10 @@ final class MarginsTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
+        final Font font = new Font(
+            new FontFamily("Times-Roman", "Type1"),
+            "F1"
+        );
         final File file = new File("margins.pdf");
         Files.write(
             file.toPath(),
@@ -135,21 +131,9 @@ final class MarginsTest {
                         new DefaultPages(
                             PageFormat.A4,
                             new DefaultPage(
-                                new Resources(
-                                    new Font(
-                                        new FontFamily("Times-Roman", "Type1"),
-                                        "F1"
-                                    )
-                                ),
+                                new Resources(font),
                                 new Contents(
-                                    new Text(
-                                        12,
-                                        0,
-                                        500,
-                                        60,
-                                        14,
-                                        content
-                                    )
+                                    new Text(font, 12, 0, 500, 60, 14, content)
                                 )
                             )
                         )

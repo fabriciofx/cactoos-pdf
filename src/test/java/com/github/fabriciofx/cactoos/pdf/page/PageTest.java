@@ -49,6 +49,10 @@ final class PageTest {
     @Test
     void buildDocumentWithRotatePage() throws Exception {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
+        final Font font = new Font(
+            new FontFamily("Times-Roman", "Type1"),
+            "F1"
+        );
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
@@ -68,23 +72,14 @@ final class PageTest {
                             PageFormat.A4,
                             new Rotate(
                                 new DefaultPage(
-                                    new Resources(
-                                        new Font(
-                                            new FontFamily(
-                                                "Times-Roman",
-                                                "Type1"
-                                            ),
-                                            "F1"
-                                        )
-                                    ),
+                                    new Resources(font),
                                     new Contents(
                                         new Text(
+                                            font,
                                             18,
                                             0,
                                             0,
-                                            new TextOf(
-                                                "Hello World!"
-                                            )
+                                            new TextOf("Hello World!")
                                         )
                                     )
                                 ),
@@ -114,6 +109,10 @@ final class PageTest {
     @Test
     void buildTwoPagesDocument() throws Exception {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
+        final Font font = new Font(
+            new FontFamily("Times-Roman", "Type1"),
+            "F1"
+        );
         new Assertion<>(
             "Must represent a two pages PDF document",
             new TextOf(
@@ -132,14 +131,10 @@ final class PageTest {
                         new DefaultPages(
                             PageFormat.A4,
                             new DefaultPage(
-                                new Resources(
-                                    new Font(
-                                        new FontFamily("Times-Roman", "Type1"),
-                                        "F1"
-                                    )
-                                ),
+                                new Resources(font),
                                 new Contents(
                                     new Text(
+                                        font,
                                         18,
                                         0,
                                         0,
@@ -148,14 +143,10 @@ final class PageTest {
                                 )
                             ),
                             new DefaultPage(
-                                new Resources(
-                                    new Font(
-                                        new FontFamily("Times-Roman", "Type1"),
-                                        "F1"
-                                    )
-                                ),
+                                new Resources(font),
                                 new Contents(
                                     new Text(
+                                        font,
                                         18,
                                         0,
                                         0,

@@ -41,6 +41,7 @@ import com.github.fabriciofx.cactoos.pdf.text.Date;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.text.Joined;
+import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -270,6 +271,106 @@ final class DocumentTest {
                             new Contents(
                                 new FlateEncode(
                                     new Text(font, 18, 0, 500, 80, 20, content)
+                                )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
+    }
+
+    @Test
+    void buildDocumentWithFileContent() throws Exception {
+        final String filename = "src/test/resources/document/text-20k.pdf";
+        final byte[] expected = Files.readAllBytes(
+            new File(filename).toPath()
+        );
+        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
+        final Font font = new Font(
+            new FontFamily("Times-Roman", "Type1"),
+            "F1"
+        );
+        final byte[] actual = new Document(
+            new Information(
+                "Title", "Hello World",
+                "Subject", "PDF document",
+                "Author", "Fabricio Cabral",
+                "Creator", "cactoos-pdf",
+                "Producer", "cactoos-pdf",
+                "CreationDate", date.asString(),
+                "ModDate", date.asString(),
+                "Keywords", "cactoos pdf elegant objects"
+            ),
+            new Catalog(
+                new DefaultPages(
+                    PageFormat.A4,
+                    new DefaultPage(
+                        new Resources(font),
+                        new Contents(
+                            new Text(
+                                font,
+                                12,
+                                20,
+                                800,
+                                100,
+                                new TextOf(
+                                    new File(
+                                        "src/test/resources/text/20k_c1.txt"
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        ).asBytes();
+        new Assertion<>(
+            "Must match with PDF document with a PNG image",
+            expected,
+            new IsEqual<>(actual)
+        ).affirm();
+    }
+
+    @Disabled
+    @Test
+    void buildFileWithFileContent() throws Exception {
+        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
+        final Font font = new Font(
+            new FontFamily("Times-Roman", "Type1"),
+            "F1"
+        );
+        final File file = new File("text-20k.pdf");
+        Files.write(
+            file.toPath(),
+            new Document(
+                new Information(
+                    "Title", "Hello World",
+                    "Subject", "PDF document",
+                    "Author", "Fabricio Cabral",
+                    "Creator", "cactoos-pdf",
+                    "Producer", "cactoos-pdf",
+                    "CreationDate", date.asString(),
+                    "ModDate", date.asString(),
+                    "Keywords", "cactoos pdf elegant objects"
+                ),
+                new Catalog(
+                    new DefaultPages(
+                        PageFormat.A4,
+                        new DefaultPage(
+                            new Resources(font),
+                            new Contents(
+                                new Text(
+                                    font,
+                                    12,
+                                    20,
+                                    800,
+                                    100,
+                                    new TextOf(
+                                        new File(
+                                            "src/test/resources/text/20k_c1.txt"
+                                        )
+                                    )
                                 )
                             )
                         )

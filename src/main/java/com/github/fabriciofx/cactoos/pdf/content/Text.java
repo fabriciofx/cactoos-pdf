@@ -105,6 +105,28 @@ public final class Text implements Content {
      * @param posx Position X
      * @param posy Position Y
      * @param max Max line length
+     * @param content Text content
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Text(
+        final Font font,
+        final int size,
+        final double posx,
+        final double posy,
+        final int max,
+        final org.cactoos.Text content
+    ) {
+        this(font, size, posx, posy, max, size * 1.20, content);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param font Font
+     * @param size Font size
+     * @param posx Position X
+     * @param posy Position Y
+     * @param max Max line length
      * @param leading Space between lines
      * @param content Text content
      * @checkstyle ParameterNumberCheck (10 lines)

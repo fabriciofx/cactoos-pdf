@@ -75,6 +75,26 @@ public final class Png implements Content {
         this.raw = new SafePngRaw(new PngRaw(bytes));
     }
 
+    /**
+     * Image width.
+     *
+     * @return Image width in pixels
+     * @throws Exception if fails
+     */
+    public int width() throws Exception {
+        return this.raw.header().width();
+    }
+
+    /**
+     * Image height.
+     *
+     * @return Image height in pixels
+     * @throws Exception if fails
+     */
+    public int height() throws Exception {
+        return this.raw.header().height();
+    }
+
     @Override
     public Definition definition(final Id id) throws Exception {
         final int num = id.increment();

@@ -45,7 +45,9 @@ final class ResourcesTest {
         );
         final Image image = new Image(
             "I1",
-            png
+            png,
+            28,
+            766
         );
         new Assertion<>(
             "Must represent a resources definition",

@@ -136,7 +136,9 @@ final class DocumentTest {
             "I1",
             new Png(
                 "src/test/resources/image/logo.png"
-            )
+            ),
+            28,
+            766
         );
         final byte[] actual = new Document(
             new Information(
@@ -175,7 +177,9 @@ final class DocumentTest {
             "I1",
             new Png(
                 "src/test/resources/image/logo.png"
-            )
+            ),
+            28,
+            766
         );
         final File file = new File("image-png.pdf");
         Files.write(

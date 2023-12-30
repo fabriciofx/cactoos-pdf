@@ -31,6 +31,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
+import org.cactoos.Scalar;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -50,15 +51,97 @@ public final class Image implements Content {
     private final Png png;
 
     /**
+     * Position X.
+     */
+    private final double posx;
+
+    /**
+     * Position Y.
+     */
+    private final double posy;
+
+    /**
+     * Width.
+     */
+    private final Scalar<Double> width;
+
+    /**
+     * Height.
+     */
+    private final Scalar<Double> height;
+
+    /**
      * Ctor.
      *
      * @param name Image name
      * @param png Raw PNG
+     * @param posx Position X
+     * @param posy Position Y
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Image(final String name, final Png png) {
+    public Image(
+        final String name,
+        final Png png,
+        final double posx,
+        final double posy
+    ) {
+        this(
+            name,
+            png,
+            posx,
+            posy,
+            () -> (double) png.width(),
+            () -> (double) png.height()
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param name Image name
+     * @param png Raw PNG
+     * @param posx Position X
+     * @param posy Position Y
+     * @param width Image width
+     * @param height Image height
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Image(
+        final String name,
+        final Png png,
+        final double posx,
+        final double posy,
+        final double width,
+        final double height
+    ) {
+        this(name, png, posx, posy, () -> width, () -> height);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param name Image name
+     * @param png Raw PNG
+     * @param posx Position X
+     * @param posy Position Y
+     * @param width Image width
+     * @param height Image height
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Image(
+        final String name,
+        final Png png,
+        final double posx,
+        final double posy,
+        final Scalar<Double> width,
+        final Scalar<Double> height
+    ) {
         this.label = name;
         this.png = png;
+        this.posx = posx;
+        this.posy = posy;
+        this.width = width;
+        this.height = height;
     }
 
     /**
@@ -73,7 +156,11 @@ public final class Image implements Content {
     @Override
     public byte[] asStream() throws Exception {
         return new FormattedText(
-            "q 85.04 0 0 58.06 28.35 766.83 cm /%s Do Q",
+            "q %.2f 0 0 %.2f %.2f %.2f cm /%s Do Q",
+            this.width.value(),
+            this.height.value(),
+            this.posx,
+            this.posy,
             this.label
         ).asString().getBytes();
     }

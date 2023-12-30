@@ -32,7 +32,6 @@ import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.Joined;
 
 /**
  * Image.

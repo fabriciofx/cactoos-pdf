@@ -74,12 +74,7 @@ public final class Image implements Content {
     @Override
     public byte[] asStream() throws Exception {
         return new FormattedText(
-            new Joined(
-                "\n",
-                "2 J",
-                "0.57 w",
-                "q 85.04 0 0 58.06 28.35 766.83 cm /%s Do Q"
-            ),
+            "q 85.04 0 0 58.06 28.35 766.83 cm /%s Do Q",
             this.label
         ).asString().getBytes();
     }

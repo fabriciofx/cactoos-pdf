@@ -59,7 +59,7 @@ public final class FlateEncode implements Content {
     }
 
     @Override
-    public byte[] stream() throws Exception {
+    public byte[] asStream() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final Deflater deflater = new Deflater();
         try (
@@ -70,7 +70,7 @@ public final class FlateEncode implements Content {
         ) {
             new LengthOf(
                 new TeeInput(
-                    this.origin.stream(),
+                    this.origin.asStream(),
                     new OutputTo(out)
                 )
             ).value();
@@ -81,7 +81,7 @@ public final class FlateEncode implements Content {
 
     @Override
     public Definition definition(final Id id) throws Exception {
-        final byte[] stream = this.stream();
+        final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .add("Filter", new Name("FlateDecode"))

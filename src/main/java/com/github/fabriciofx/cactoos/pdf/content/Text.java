@@ -118,7 +118,7 @@ public final class Text implements Content {
     }
 
     @Override
-    public byte[] stream() throws Exception {
+    public byte[] asStream() throws Exception {
         final StringBuilder out = new StringBuilder();
         for (final org.cactoos.Text line : new Multiline(this.content, this.max)) {
             out.append(new FormattedText("(%s) Tj T*\n", line).asString());
@@ -136,7 +136,7 @@ public final class Text implements Content {
     @Override
     public Definition definition(final Id id) throws Exception {
         final int num = id.value();
-        final byte[] stream = this.stream();
+        final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));

@@ -36,5 +36,5 @@ public interface Content extends Object {
      * @return The stream content
      * @throws Exception if fails
      */
-    byte[] stream() throws Exception;
+    byte[] asStream() throws Exception;
 }

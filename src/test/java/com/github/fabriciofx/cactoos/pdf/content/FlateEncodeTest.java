@@ -54,10 +54,10 @@ final class FlateEncodeTest {
                 deflater
             )
         ) {
-            out.write(content.stream());
+            out.write(content.asStream());
         }
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(new FlateEncode(content).stream());
+        baos.write(new FlateEncode(content).asStream());
         deflater.end();
         new Assertion<>(
             "Must encode a content using Flate algorithm",

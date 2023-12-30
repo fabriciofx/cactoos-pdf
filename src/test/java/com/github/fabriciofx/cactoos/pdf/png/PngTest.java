@@ -70,7 +70,7 @@ final class PngTest {
             "Must represent a PNG body",
             new PngRaw(
                 "src/test/resources/image/logo.png"
-            ).body().stream().length,
+            ).body().asStream().length,
             new IsNumber(2086)
         ).affirm();
     }
@@ -81,7 +81,7 @@ final class PngTest {
             "Must represent a PNG palette",
             new PngRaw(
                 "src/test/resources/image/logo.png"
-            ).palette(new Serial()).stream().length,
+            ).palette(new Serial()).asStream().length,
             new IsNumber(192)
         ).affirm();
     }
@@ -103,12 +103,12 @@ final class PngTest {
                 ">> /Mask [0 0] /Length 2086 >>\nstream\n"
             ).asString().getBytes()
         );
-        expected.write(raw.body().stream());
+        expected.write(raw.body().asStream());
         expected.write(
             "\nendstream\nendobj\n1 0 obj\n<< /Length 192 >>\nstream\n"
                 .getBytes()
         );
-        expected.write(raw.palette(new Serial(1)).stream());
+        expected.write(raw.palette(new Serial(1)).asStream());
         expected.write("\nendstream\nendobj\n".getBytes());
         new Assertion<>(
             "Must represent a PNG content",

@@ -87,7 +87,7 @@ public final class PngPalette implements Palette {
     }
 
     @Override
-    public byte[] stream() throws Exception {
+    public byte[] asStream() throws Exception {
         return this.bytes.value();
     }
 
@@ -95,7 +95,7 @@ public final class PngPalette implements Palette {
     public Definition definition(final Id id) throws Exception {
         final int num = id.increment();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final byte[] stream = this.stream();
+        final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));

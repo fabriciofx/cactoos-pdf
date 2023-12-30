@@ -81,7 +81,7 @@ public final class Png implements Content {
         final Header header = this.raw.header();
         final Palette palette = this.raw.palette(id);
         final Definition pal = palette.definition(id);
-        final byte[] stream = this.stream();
+        final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("XObject"))
             .add("Subtype", new Name("Image"))
@@ -92,7 +92,7 @@ public final class Png implements Content {
                 new Array(
                     new Name(header.color().space()),
                     new Name("DeviceRGB"),
-                    new Int(palette.stream().length / 3 - 1),
+                    new Int(palette.asStream().length / 3 - 1),
                     new Text(pal.reference().asString())
                 )
             )
@@ -121,7 +121,7 @@ public final class Png implements Content {
     }
 
     @Override
-    public byte[] stream() throws Exception {
-        return this.raw.body().stream();
+    public byte[] asStream() throws Exception {
+        return this.raw.body().asStream();
     }
 }

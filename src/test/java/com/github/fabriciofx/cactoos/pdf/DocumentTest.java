@@ -154,7 +154,7 @@ final class DocumentTest {
                                 new FontFamily("Times-Roman", "Type1"),
                                 "F1"
                             ),
-                            new XObject(image.name(), image.content())
+                            new XObject(image)
                         ),
                         new Contents(
                             image
@@ -198,7 +198,7 @@ final class DocumentTest {
                                     new FontFamily("Times-Roman", "Type1"),
                                     "F1"
                                 ),
-                                new XObject(image.name(), image.content())
+                                new XObject(image)
                             ),
                             new Contents(
                                 image

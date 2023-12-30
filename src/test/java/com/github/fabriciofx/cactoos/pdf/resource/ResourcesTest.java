@@ -58,7 +58,7 @@ final class ResourcesTest {
                         new FontFamily("Times-Roman", "Type1"),
                         "F1"
                     ),
-                    new XObject(image.name(), png)
+                    new XObject(image)
                 ).definition(new Serial())
             ),
             new IsText(

@@ -27,7 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.Serial;
-import com.github.fabriciofx.cactoos.pdf.content.Png;
+import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 
@@ -38,35 +38,28 @@ import com.github.fabriciofx.cactoos.pdf.type.Text;
  */
 public final class XObject implements Resource {
     /**
-     * XObject name.
+     * Image.
      */
-    private final String name;
-
-    /**
-     * The Png content.
-     */
-    private final Png png;
+    private final Image image;
 
     /**
      * Ctor.
      *
-     * @param name The name
-     * @param png The PNG content
+     * @param image Image
      */
-    public XObject(final String name, final Png png) {
-        this.name = name;
-        this.png = png;
+    public XObject(final Image image) {
+        this.image = image;
     }
 
     @Override
     public Definition definition(final Id id) throws Exception {
         final Id reset = new Serial(id.value() + 1);
-        final Definition definition = this.png.definition(reset);
+        final Definition definition = this.image.content().definition(reset);
         final Dictionary dictionary = new Dictionary()
             .add(
                 "XObject",
                 new Dictionary().add(
-                    this.name,
+                    this.image.name(),
                     new Text(definition.reference().asString())
                 )
             );

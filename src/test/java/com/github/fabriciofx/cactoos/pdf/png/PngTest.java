@@ -28,7 +28,6 @@ import com.github.fabriciofx.cactoos.pdf.content.Png;
 import java.io.ByteArrayOutputStream;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsNumber;
@@ -86,7 +85,6 @@ final class PngTest {
         ).affirm();
     }
 
-    @Disabled
     @Test
     void content() throws Exception {
         final String filename = "src/test/resources/image/logo.png";
@@ -105,15 +103,15 @@ final class PngTest {
         );
         expected.write(raw.body().asStream());
         expected.write(
-            "\nendstream\nendobj\n1 0 obj\n<< /Length 192 >>\nstream\n"
+            "\nendstream\nendobj\n3 0 obj\n<< /Length 192 >>\nstream\n"
                 .getBytes()
         );
-        expected.write(raw.palette(new Serial(1)).asStream());
+        expected.write(raw.palette(new Serial()).asStream());
         expected.write("\nendstream\nendobj\n".getBytes());
         new Assertion<>(
             "Must represent a PNG content",
             expected.toByteArray(),
-            new IsEqual<>(png.definition(new Serial(1)).asBytes())
+            new IsEqual<>(png.definition(new Serial()).asBytes())
         ).affirm();
     }
 }

@@ -54,9 +54,9 @@ final class TextTest {
                 new Joined(
                     "\n",
                     "1 0 obj",
-                    "<< /Length 48 >>",
+                    "<< /Length 57 >>",
                     "stream",
-                    "BT /F1 18 Tf 0 0 Td 20 TL",
+                    "BT /F1 18 Tf 0.00 0.00 Td 20.00 TL",
                     "(Hello World) Tj T*",
                     "ET",
                     "endstream",
@@ -102,9 +102,9 @@ final class TextTest {
                 new Joined(
                     "\n",
                     "1 0 obj",
-                    "<< /Length 570 >>",
+                    "<< /Length 579 >>",
                     "stream",
-                    "BT /F1 18 Tf 0 0 Td 20 TL",
+                    "BT /F1 18 Tf 0.00 0.00 Td 20.00 TL",
                     "(Lorem ea et aliquip culpa aute amet elit nostrud) Tj T*",
                     "(culpa veniam dolore eu irure incididunt. Velit) Tj T*",
                     "(officia occaecat est adipisicing mollit veniam.) Tj T*",

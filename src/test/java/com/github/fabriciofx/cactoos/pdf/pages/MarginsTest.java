@@ -37,6 +37,7 @@ import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -102,5 +103,59 @@ final class MarginsTest {
             expected,
             new IsEqual<>(actual)
         ).affirm();
+    }
+
+    @Disabled
+    @Test
+    void buildFileWithMargins() throws Exception {
+        final org.cactoos.Text content = new Joined(
+            " ",
+            "Lorem ea et aliquip culpa aute amet elit nostrud culpa veniam",
+            "dolore eu irure incididunt. Velit officia occaecat est",
+            "adipisicing mollit veniam. Minim sunt est culpa labore.",
+            "Ut culpa et nulla sunt labore aliqua ipsum laborum nostrud sit",
+            "deserunt officia labore. Sunt laboris id labore sit ex. Eiusmod",
+            "nulla eu incididunt excepteur minim officia dolore veniam",
+            "labore enim quis reprehenderit. Magna in laboris irure enim non",
+            "deserunt laborum mollit labore id amet."
+        );
+        final File file = new File("margins.pdf");
+        Files.write(
+            file.toPath(),
+            new Document(
+                new Information(
+                    "Title", "Hello World"
+                ),
+                new Catalog(
+                    new Margins(
+                        2.5,
+                        2.5,
+                        2.5,
+                        2.5,
+                        new DefaultPages(
+                            PageFormat.A4,
+                            new DefaultPage(
+                                new Resources(
+                                    new Font(
+                                        new FontFamily("Times-Roman", "Type1"),
+                                        "F1"
+                                    )
+                                ),
+                                new Contents(
+                                    new Text(
+                                        12,
+                                        0,
+                                        500,
+                                        60,
+                                        14,
+                                        content
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
     }
 }

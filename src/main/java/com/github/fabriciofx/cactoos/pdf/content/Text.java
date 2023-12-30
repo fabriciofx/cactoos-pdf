@@ -40,7 +40,6 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.UseStringBufferForStringAppends")
 public final class Text implements Content {
     /**
      * Font size.
@@ -50,12 +49,12 @@ public final class Text implements Content {
     /**
      * Position X.
      */
-    private final int posx;
+    private final double posx;
 
     /**
      * Position Y.
      */
-    private final int posy;
+    private final double posy;
 
     /**
      * Max line length.
@@ -65,7 +64,7 @@ public final class Text implements Content {
     /**
      * Space between lines.
      */
-    private final int leading;
+    private final double leading;
 
     /**
      * Text content.
@@ -83,11 +82,11 @@ public final class Text implements Content {
      */
     public Text(
         final int size,
-        final int posx,
-        final int posy,
+        final double posx,
+        final double posy,
         final org.cactoos.Text content
     ) {
-        this(size, posx, posy, 80, 20, content);
+        this(size, posx, posy, 80, size * 1.20, content);
     }
 
     /**
@@ -103,10 +102,10 @@ public final class Text implements Content {
      */
     public Text(
         final int size,
-        final int posx,
-        final int posy,
+        final double posx,
+        final double posy,
         final int max,
-        final int leading,
+        final double leading,
         final org.cactoos.Text content
     ) {
         this.size = size;
@@ -124,7 +123,7 @@ public final class Text implements Content {
             out.append(new FormattedText("(%s) Tj T*\n", line).asString());
         }
         return new FormattedText(
-            "BT /F1 %d Tf %d %d Td %d TL\n%sET",
+            "BT /F1 %d Tf %.2f %.2f Td %.2f TL\n%sET",
             this.size,
             this.posx,
             this.posy,

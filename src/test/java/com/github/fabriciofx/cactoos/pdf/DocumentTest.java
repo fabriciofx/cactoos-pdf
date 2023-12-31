@@ -379,4 +379,41 @@ final class DocumentTest {
             ).asBytes()
         );
     }
+
+    @Disabled
+    @Test
+    void buildFileWithoutInformation() throws Exception {
+        final Font font = new Font(
+            new FontFamily("Times-Roman", "Type1"),
+            "F1"
+        );
+        final File file = new File("text-20k-without-info.pdf");
+        Files.write(
+            file.toPath(),
+            new Document(
+                new Catalog(
+                    new DefaultPages(
+                        PageFormat.A4,
+                        new DefaultPage(
+                            new Resources(font),
+                            new Contents(
+                                new Text(
+                                    font,
+                                    12,
+                                    20,
+                                    800,
+                                    100,
+                                    new TextOf(
+                                        new File(
+                                            "src/test/resources/text/20k_c1.txt"
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
+    }
 }

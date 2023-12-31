@@ -322,6 +322,13 @@ public final class Information implements Object {
 
     /**
      * Ctor.
+     */
+    public Information() {
+        this(new Dictionary());
+    }
+
+    /**
+     * Ctor.
      *
      * @param metadata Metadata
      */

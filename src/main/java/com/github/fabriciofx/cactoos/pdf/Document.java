@@ -66,6 +66,15 @@ public final class Document implements Bytes {
     /**
      * Ctor.
      *
+     * @param catalog Catalog
+     */
+    public Document(final Catalog catalog) {
+        this(new Information(), catalog);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param information Metadata
      * @param catalog Catalog
      */
@@ -87,12 +96,12 @@ public final class Document implements Bytes {
         final Id id = new Serial();
         final Definition info = this.information.definition(id);
         baos.write(info.asBytes());
-        final Definition cata = this.catalog.definition(id);
-        baos.write(cata.asBytes());
+        final Definition clog = this.catalog.definition(id);
+        baos.write(clog.asBytes());
         baos.write(
             new FormattedText(
                 "trailer << /Root %s /Size %d /Info %s >>\n",
-                cata.reference().asString(),
+                clog.reference().asString(),
                 id.increment(),
                 info.reference().asString()
             ).asString().getBytes(StandardCharsets.UTF_8)

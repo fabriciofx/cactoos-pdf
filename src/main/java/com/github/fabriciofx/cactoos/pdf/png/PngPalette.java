@@ -26,12 +26,10 @@ package com.github.fabriciofx.cactoos.pdf.png;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Flow;
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
@@ -95,14 +93,10 @@ public final class PngPalette implements Palette {
     @Override
     public Definition definition(final Id id) throws Exception {
         final int num = id.increment();
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        baos.write(new Indirect(num, 0).asBytes());
-        baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
-        return new Definition(num, 0, dictionary, baos.toByteArray());
+        return new Definition(num, 0, dictionary);
     }
 }

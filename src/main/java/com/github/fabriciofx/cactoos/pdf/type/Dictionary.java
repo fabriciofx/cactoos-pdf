@@ -105,7 +105,9 @@ public final class Dictionary implements Type<Dictionary> {
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(this.asString().getBytes(StandardCharsets.UTF_8));
+        if (!this.entries.isEmpty()) {
+            baos.write(this.asString().getBytes(StandardCharsets.UTF_8));
+        }
         if (!this.stream.isEmpty()) {
             baos.write("\nstream\n".getBytes(StandardCharsets.UTF_8));
             baos.write(this.stream.get(0).value());
@@ -169,5 +171,14 @@ public final class Dictionary implements Type<Dictionary> {
     @SuppressWarnings("unchecked")
     public <T> T get(final String key) {
         return (T) this.entries.get(new Name(key));
+    }
+
+    /**
+     * Check if a dictionary is empty.
+     *
+     * @return True if a dictionary is empty, false otherwise.
+     */
+    public boolean isEmpty() {
+        return this.entries.isEmpty();
     }
 }

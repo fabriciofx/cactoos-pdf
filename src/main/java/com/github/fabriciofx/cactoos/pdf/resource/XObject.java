@@ -63,6 +63,6 @@ public final class XObject implements Resource {
                     new Text(definition.reference().asString())
                 )
             );
-        return new Definition(dictionary, dictionary.asBytes());
+        return new Definition(dictionary);
     }
 }

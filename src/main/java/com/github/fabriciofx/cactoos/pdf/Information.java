@@ -23,11 +23,9 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Literal;
-import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
+import com.github.fabriciofx.cactoos.pdf.type.Text;
 
 /**
  * Document Information Dictionary.
@@ -324,7 +322,10 @@ public final class Information implements Object {
      * Ctor.
      */
     public Information() {
-        this(new Dictionary());
+        this(
+            new Dictionary()
+                .add("Producer", new Text("cactoos-pdf"))
+        );
     }
 
     /**
@@ -338,11 +339,6 @@ public final class Information implements Object {
 
     @Override
     public Definition definition(final Id id) throws Exception {
-        final int num = id.increment();
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(new Indirect(num, 0).asBytes());
-        baos.write(this.metadata.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
-        return new Definition(num, 0, this.metadata, baos.toByteArray());
+        return new Definition(id.increment(), 0, this.metadata);
     }
 }

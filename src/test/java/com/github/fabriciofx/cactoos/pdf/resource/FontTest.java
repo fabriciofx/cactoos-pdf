@@ -43,7 +43,8 @@ final class FontTest {
             new TextOf(
                 new Font(
                     new FontFamily("Times-Roman", "Type1"),
-                    "F0"
+                    "F0",
+                    12
                 ).definition(new Serial())
             ),
             new IsText(

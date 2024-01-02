@@ -23,10 +23,14 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import java.util.Arrays;
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import org.cactoos.Bytes;
+import org.cactoos.list.ListOf;
 
 /**
  * Definition.
@@ -52,7 +56,7 @@ public final class Definition implements Bytes {
     /**
      * Content.
      */
-    private final byte[] content;
+    private final List<Bytes> content;
 
     /**
      * Ctor.
@@ -62,7 +66,7 @@ public final class Definition implements Bytes {
      */
     public Definition(
         final Dictionary dictionary,
-        final byte[] content
+        final Bytes... content
     ) {
         this(-1, 0, dictionary, content);
     }
@@ -77,7 +81,7 @@ public final class Definition implements Bytes {
     public Definition(
         final int id,
         final Dictionary dictionary,
-        final byte[] content
+        final Bytes... content
     ) {
         this(id, 0, dictionary, content);
     }
@@ -95,12 +99,30 @@ public final class Definition implements Bytes {
         final int id,
         final int generation,
         final Dictionary dictionary,
-        final byte[] content
+        final Bytes... content
+    ) {
+        this(id, generation, dictionary, new ListOf<>(content));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Object id
+     * @param generation Object generation
+     * @param dictionary Dictionary
+     * @param content Content
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Definition(
+        final int id,
+        final int generation,
+        final Dictionary dictionary,
+        final List<Bytes> content
     ) {
         this.id = id;
         this.generation = generation;
         this.dict = dictionary;
-        this.content = Arrays.copyOf(content, content.length);
+        this.content = content;
     }
 
     /**
@@ -123,6 +145,19 @@ public final class Definition implements Bytes {
 
     @Override
     public byte[] asBytes() throws Exception {
-        return Arrays.copyOf(this.content, this.content.length);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        if (!this.dict.isEmpty()) {
+            if (this.id > 0) {
+                baos.write(new Indirect(this.id, 0).asBytes());
+                baos.write(this.dict.asBytes());
+                baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
+            } else {
+                baos.write(this.dict.asBytes());
+            }
+        }
+        for (final Bytes bytes : this.content) {
+            baos.write(bytes.asBytes());
+        }
+        return baos.toByteArray();
     }
 }

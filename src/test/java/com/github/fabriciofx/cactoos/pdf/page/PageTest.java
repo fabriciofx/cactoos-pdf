@@ -51,7 +51,8 @@ final class PageTest {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Font font = new Font(
             new FontFamily("Times-Roman", "Type1"),
-            "F1"
+            "F1",
+            18
         );
         new Assertion<>(
             "Must represent a PDF document",
@@ -76,7 +77,6 @@ final class PageTest {
                                     new Contents(
                                         new Text(
                                             font,
-                                            18,
                                             0,
                                             0,
                                             new TextOf("Hello World!")
@@ -111,7 +111,8 @@ final class PageTest {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Font font = new Font(
             new FontFamily("Times-Roman", "Type1"),
-            "F1"
+            "F1",
+            18
         );
         new Assertion<>(
             "Must represent a two pages PDF document",
@@ -135,7 +136,6 @@ final class PageTest {
                                 new Contents(
                                     new Text(
                                         font,
-                                        18,
                                         0,
                                         0,
                                         new TextOf("Hello")
@@ -147,7 +147,6 @@ final class PageTest {
                                 new Contents(
                                     new Text(
                                         font,
-                                        18,
                                         0,
                                         0,
                                         new TextOf("World")

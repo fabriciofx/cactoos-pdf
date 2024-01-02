@@ -70,7 +70,8 @@ final class DocumentTest {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Font font = new Font(
             new FontFamily("Times-Roman", "Type1"),
-            "F1"
+            "F1",
+            18
         );
         final byte[] actual = new Document(
             new Information(
@@ -90,7 +91,7 @@ final class DocumentTest {
                         new Resources(font),
                         new Contents(
                             new FlateEncode(
-                                new Text(font, 18, 0, 500, 80, 20, content)
+                                new Text(font, 0, 500, 80, 20, content)
                             )
                         )
                     ),
@@ -99,7 +100,7 @@ final class DocumentTest {
                             new Resources(font),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(font, 18, 0, 500, 80, 20, content)
+                                    new Text(font, 0, 500, 80, 20, content)
                                 )
                             )
                         ),
@@ -109,7 +110,7 @@ final class DocumentTest {
                         new Resources(font),
                         new Contents(
                             new FlateEncode(
-                                new Text(font, 18, 0, 500, 80, 20, content)
+                                new Text(font, 0, 500, 80, 20, content)
                             )
                         )
                     )
@@ -153,7 +154,8 @@ final class DocumentTest {
                             new ProcSet(),
                             new Font(
                                 new FontFamily("Times-Roman", "Type1"),
-                                "F1"
+                                "F1",
+                                12
                             ),
                             new XObject(image)
                         ),
@@ -197,7 +199,8 @@ final class DocumentTest {
                                 new ProcSet(),
                                 new Font(
                                     new FontFamily("Times-Roman", "Type1"),
-                                    "F1"
+                                    "F1",
+                                    12
                                 ),
                                 new XObject(image)
                             ),
@@ -228,7 +231,8 @@ final class DocumentTest {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Font font = new Font(
             new FontFamily("Times-Roman", "Type1"),
-            "F1"
+            "F1",
+            18
         );
         final File file = new File("HelloWorld.pdf");
         Files.write(
@@ -251,7 +255,7 @@ final class DocumentTest {
                             new Resources(font),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(font, 18, 0, 500, 80, 20, content)
+                                    new Text(font, 0, 500, 80, 20, content)
                                 )
                             )
                         ),
@@ -260,7 +264,7 @@ final class DocumentTest {
                                 new Resources(font),
                                 new Contents(
                                     new FlateEncode(
-                                        new Text(font, 18, 0, 500, 80, 20, content)
+                                        new Text(font, 0, 500, 80, 20, content)
                                     )
                                 )
                             ),
@@ -270,7 +274,7 @@ final class DocumentTest {
                             new Resources(font),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(font, 18, 0, 500, 80, 20, content)
+                                    new Text(font, 0, 500, 80, 20, content)
                                 )
                             )
                         )
@@ -289,7 +293,8 @@ final class DocumentTest {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Font font = new Font(
             new FontFamily("Times-Roman", "Type1"),
-            "F1"
+            "F1",
+            12
         );
         final byte[] actual = new Document(
             new Information(
@@ -310,7 +315,6 @@ final class DocumentTest {
                         new Contents(
                             new Text(
                                 font,
-                                12,
                                 20,
                                 800,
                                 100,
@@ -338,7 +342,8 @@ final class DocumentTest {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Font font = new Font(
             new FontFamily("Times-Roman", "Type1"),
-            "F1"
+            "F1",
+            12
         );
         final File file = new File("text-20k.pdf");
         Files.write(
@@ -362,7 +367,6 @@ final class DocumentTest {
                             new Contents(
                                 new Text(
                                     font,
-                                    12,
                                     20,
                                     800,
                                     100,
@@ -385,7 +389,8 @@ final class DocumentTest {
     void buildFileWithoutInformation() throws Exception {
         final Font font = new Font(
             new FontFamily("Times-Roman", "Type1"),
-            "F1"
+            "F1",
+            12
         );
         final File file = new File("text-20k-without-info.pdf");
         Files.write(
@@ -399,7 +404,6 @@ final class DocumentTest {
                             new Contents(
                                 new Text(
                                     font,
-                                    12,
                                     20,
                                     800,
                                     100,

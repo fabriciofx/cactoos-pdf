@@ -64,6 +64,6 @@ public final class Contents extends ListEnvelope<Content> implements Object {
         for (final Object obj : this) {
             baos.write(obj.definition(id).asBytes());
         }
-        return new Definition(num, 0, new Dictionary(), baos.toByteArray());
+        return new Definition(num, 0, new Dictionary(), baos::toByteArray);
     }
 }

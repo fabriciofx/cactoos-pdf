@@ -46,9 +46,9 @@ final class TextTest {
                 new Text(
                     new Font(
                         new FontFamily("Times-Roman", "Type1"),
-                        "F1"
+                        "F1",
+                        18
                     ),
-                    18,
                     0,
                     0,
                     50,
@@ -80,9 +80,9 @@ final class TextTest {
                 new Text(
                     new Font(
                         new FontFamily("Times-Roman", "Type1"),
-                        "F1"
+                        "F1",
+                        18
                     ),
-                    18,
                     0,
                     0,
                     50,

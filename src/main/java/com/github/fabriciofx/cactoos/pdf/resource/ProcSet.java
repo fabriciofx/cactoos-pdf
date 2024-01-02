@@ -42,6 +42,6 @@ public final class ProcSet implements Resource {
                 "ProcSet",
                 new Array("PDF", "Text", "ImageB", "ImageC", "ImageI")
             );
-        return new Definition(dictionary, dictionary.asBytes());
+        return new Definition(dictionary);
     }
 }

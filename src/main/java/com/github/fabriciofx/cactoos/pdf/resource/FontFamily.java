@@ -62,6 +62,6 @@ public final class FontFamily implements Resource {
             .add("Type", new Name("Font"))
             .add("BaseFont", new Name(this.base))
             .add("Subtype", new Name(this.subtype));
-        return new Definition(dictionary, dictionary.asBytes());
+        return new Definition(dictionary);
     }
 }

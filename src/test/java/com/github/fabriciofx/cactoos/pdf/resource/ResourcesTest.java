@@ -56,7 +56,8 @@ final class ResourcesTest {
                     new ProcSet(),
                     new Font(
                         new FontFamily("Times-Roman", "Type1"),
-                        "F1"
+                        "F1",
+                        12
                     ),
                     new XObject(image)
                 ).definition(new Serial())

@@ -62,7 +62,8 @@ final class MarginsTest {
         );
         final Font font = new Font(
             new FontFamily("Times-Roman", "Type1"),
-            "F1"
+            "F1",
+            12
         );
         final byte[] actual = new Document(
             new Information(
@@ -79,7 +80,7 @@ final class MarginsTest {
                         new DefaultPage(
                             new Resources(font),
                             new Contents(
-                                new Text(font, 12, 0, 500, 60, 14, content)
+                                new Text(font, 0, 500, 60, 14, content)
                             )
                         )
                     )
@@ -113,7 +114,8 @@ final class MarginsTest {
         );
         final Font font = new Font(
             new FontFamily("Times-Roman", "Type1"),
-            "F1"
+            "F1",
+            12
         );
         final File file = new File("margins.pdf");
         Files.write(
@@ -133,7 +135,7 @@ final class MarginsTest {
                             new DefaultPage(
                                 new Resources(font),
                                 new Contents(
-                                    new Text(font, 12, 0, 500, 60, 14, content)
+                                    new Text(font, 0, 500, 60, 14, content)
                                 )
                             )
                         )

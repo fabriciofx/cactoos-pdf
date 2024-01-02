@@ -29,11 +29,8 @@ import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
-import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Rotate a Page in a angle.
@@ -76,27 +73,17 @@ public final class Rotate implements Page {
     public Definition definition(final Id id, final int parent)
         throws Exception {
         final Definition definition = this.origin.definition(id, parent);
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final Dictionary dictionary = definition.dictionary().add(
             "Rotate",
             new Int(this.angle)
         );
-        baos.write(
-            new Indirect(
-                definition.reference().id(),
-                definition.reference().generation()
-            ).asBytes()
-        );
-        baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         final Id reset = new Serial(id.value() - 2);
-        baos.write(this.resources().definition(reset).asBytes());
-        baos.write(this.contents().definition(reset).asBytes());
         return new Definition(
             definition.reference().id(),
             definition.reference().generation(),
             dictionary,
-            baos.toByteArray()
+            this.resources().definition(reset),
+            this.contents().definition(reset)
         );
     }
 }

@@ -28,9 +28,10 @@ import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
-import java.nio.charset.StandardCharsets;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -140,8 +141,8 @@ public final class Margins implements Pages {
         return new Definition(
             definition.reference().id(),
             definition.reference().generation(),
-            definition.dictionary(),
-            stream.toString().getBytes(StandardCharsets.UTF_8)
+            new Dictionary(),
+            new BytesOf(stream)
         );
     }
 

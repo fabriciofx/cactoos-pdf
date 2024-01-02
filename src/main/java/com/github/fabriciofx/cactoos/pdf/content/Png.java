@@ -31,16 +31,13 @@ import com.github.fabriciofx.cactoos.pdf.png.Palette;
 import com.github.fabriciofx.cactoos.pdf.png.PngRaw;
 import com.github.fabriciofx.cactoos.pdf.png.Raw;
 import com.github.fabriciofx.cactoos.pdf.png.SafePngRaw;
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import org.cactoos.Bytes;
 
@@ -133,12 +130,7 @@ public final class Png implements Content {
             .add("Mask", new Array(new Int(0), new Int(0)))
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(new Indirect(num, 0).asBytes());
-        baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
-        baos.write(pal.asBytes());
-        return new Definition(num, 0, dictionary, baos.toByteArray());
+        return new Definition(num, 0, dictionary, pal);
     }
 
     @Override

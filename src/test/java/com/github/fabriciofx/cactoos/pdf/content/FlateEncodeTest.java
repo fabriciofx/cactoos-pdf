@@ -45,9 +45,9 @@ final class FlateEncodeTest {
         final Content content = new Text(
             new Font(
                 new FontFamily("Times-Roman", "Type1"),
-                "F1"
+                "F1",
+                18
             ),
-            18,
             0,
             0,
             new TextOf("Hello World!")

@@ -26,13 +26,11 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import org.cactoos.io.OutputTo;
@@ -87,21 +85,11 @@ public final class FlateEncode implements Content {
             .add("Length", new Int(stream.length))
             .add("Filter", new Name("FlateDecode"))
             .with(new Stream(stream));
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final Definition definition = this.origin.definition(id);
-        baos.write(
-            new Indirect(
-                definition.reference().id(),
-                definition.reference().generation()
-            ).asBytes()
-        );
-        baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         return new Definition(
             definition.reference().id(),
             definition.reference().generation(),
-            dictionary,
-            baos.toByteArray()
+            dictionary
         );
     }
 }

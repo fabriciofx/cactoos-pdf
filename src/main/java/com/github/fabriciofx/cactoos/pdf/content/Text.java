@@ -28,12 +28,10 @@ import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.resource.Font;
 import com.github.fabriciofx.cactoos.pdf.text.Escaped;
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.text.Multiline;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
-import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.text.FormattedText;
 
@@ -46,12 +44,7 @@ public final class Text implements Content {
     /**
      * Font.
      */
-    private final Font font;
-
-    /**
-     * Font size.
-     */
-    private final int size;
+    private final Font typeface;
 
     /**
      * Position X.
@@ -82,7 +75,6 @@ public final class Text implements Content {
      * Ctor.
      *
      * @param font Font
-     * @param size Font size
      * @param posx Position X
      * @param posy Position Y
      * @param content Text content
@@ -90,19 +82,17 @@ public final class Text implements Content {
      */
     public Text(
         final Font font,
-        final int size,
         final double posx,
         final double posy,
         final org.cactoos.Text content
     ) {
-        this(font, size, posx, posy, 80, size * 1.20, content);
+        this(font, posx, posy, 80, font.size() * 1.20, content);
     }
 
     /**
      * Ctor.
      *
      * @param font Font
-     * @param size Font size
      * @param posx Position X
      * @param posy Position Y
      * @param max Max line length
@@ -111,20 +101,18 @@ public final class Text implements Content {
      */
     public Text(
         final Font font,
-        final int size,
         final double posx,
         final double posy,
         final int max,
         final org.cactoos.Text content
     ) {
-        this(font, size, posx, posy, max, size * 1.20, content);
+        this(font, posx, posy, max, font.size() * 1.20, content);
     }
 
     /**
      * Ctor.
      *
      * @param font Font
-     * @param size Font size
      * @param posx Position X
      * @param posy Position Y
      * @param max Max line length
@@ -134,20 +122,27 @@ public final class Text implements Content {
      */
     public Text(
         final Font font,
-        final int size,
         final double posx,
         final double posy,
         final int max,
         final double leading,
         final org.cactoos.Text content
     ) {
-        this.font = font;
-        this.size = size;
+        this.typeface = font;
         this.posx = posx;
         this.posy = posy;
         this.max = max;
         this.leading = leading;
         this.content = new Escaped(content);
+    }
+
+    /**
+     * Font.
+     *
+     * @return The font of text
+     */
+    public Font font() {
+        return this.typeface;
     }
 
     @Override
@@ -158,8 +153,8 @@ public final class Text implements Content {
         }
         return new FormattedText(
             "BT /%s %d Tf %.2f %.2f Td %.2f TL\n%sET",
-            this.font.name(),
-            this.size,
+            this.typeface.name(),
+            this.typeface.size(),
             this.posx,
             this.posy,
             this.leading,
@@ -174,10 +169,6 @@ public final class Text implements Content {
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(new Indirect(num, 0).asBytes());
-        baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
-        return new Definition(num, 0, dictionary, baos.toByteArray());
+        return new Definition(num, 0, dictionary);
     }
 }

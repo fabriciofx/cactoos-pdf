@@ -23,12 +23,9 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
-import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Catalog.
@@ -53,15 +50,10 @@ public final class Catalog implements Object {
     @Override
     public Definition definition(final Id id) throws Exception {
         final int num = id.increment();
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final Definition definition = this.pages.definition(id);
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Catalog"))
             .add("Pages", new Text(definition.reference().asString()));
-        baos.write(new Indirect(num, 0).asBytes());
-        baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
-        baos.write(definition.asBytes());
-        return new Definition(num, 0, dictionary, baos.toByteArray());
+        return new Definition(num, 0, dictionary, definition);
     }
 }

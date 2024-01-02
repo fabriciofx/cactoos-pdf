@@ -26,10 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Resource;
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
@@ -62,16 +59,12 @@ public final class Resources extends ListEnvelope<Resource>
     @Override
     public Definition definition(final Id id) throws Exception {
         final int num = id.increment();
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(new Indirect(num, 0).asBytes());
         Dictionary dictionary = this.get(0).definition(id).dictionary();
         for (int idx = 1; idx < this.size(); ++idx) {
             dictionary = dictionary.merge(
                 this.get(idx).definition(id).dictionary()
             );
         }
-        baos.write(dictionary.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
-        return new Definition(num, 0, dictionary, baos.toByteArray());
+        return new Definition(num, 0, dictionary);
     }
 }

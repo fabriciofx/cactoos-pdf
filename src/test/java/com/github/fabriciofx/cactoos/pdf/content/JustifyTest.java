@@ -81,6 +81,14 @@ final class JustifyTest {
         final byte[] expected = Files.readAllBytes(
             new File(filename).toPath()
         );
+        for (int idx = 0; idx < actual.length; ++idx) {
+            if (expected[idx] != actual[idx]) {
+                System.out.printf(
+                    "expected[%d] = %x, actual[%d] = %x\n",
+                    idx, expected[idx], idx, actual[idx]
+                );
+            }
+        }
         new Assertion<>(
             "Must match with justified PDF document",
             expected,

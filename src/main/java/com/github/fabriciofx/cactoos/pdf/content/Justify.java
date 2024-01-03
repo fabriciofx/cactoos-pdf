@@ -105,7 +105,7 @@ public final class Justify implements Content {
                     ).asString()
                 )
                     .append('(')
-                    .append(line.substring(start, idx - 1))
+                    .append(line, start, idx - 1)
                     .append(") Tj T*\n");
                 length = 0;
                 linespace = 0;
@@ -114,7 +114,7 @@ public final class Justify implements Content {
             }
             ++idx;
         }
-        stream.append("ET\n");
+        stream.append("ET");
         return stream.toString().getBytes(StandardCharsets.UTF_8);
     }
 

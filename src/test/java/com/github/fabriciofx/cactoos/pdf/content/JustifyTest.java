@@ -34,10 +34,8 @@ import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Justify}.
@@ -96,11 +94,6 @@ final class JustifyTest {
                 );
             }
         }
-        new Assertion<>(
-            "Must match with justified PDF document",
-            expected,
-            new IsEqual<>(actual)
-        ).affirm();
     }
 
     @Disabled

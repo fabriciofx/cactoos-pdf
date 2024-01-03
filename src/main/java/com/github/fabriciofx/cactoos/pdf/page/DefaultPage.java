@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
-import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
@@ -72,15 +72,15 @@ public final class DefaultPage implements Page {
     }
 
     @Override
-    public Definition definition(final Id id, final int parent) throws Exception {
+    public Indirect indirect(final Id id, final int parent) throws Exception {
         final int num = id.increment();
-        final Definition resrcs = this.resources.definition(id);
-        final Definition conts = this.contents.definition(id);
+        final Indirect resrcs = this.resources.indirect(id);
+        final Indirect conts = this.contents.indirect(id);
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Page"))
             .add("Resources", new Text(resrcs.reference().asString()))
             .add("Contents", new Text(conts.reference().asString()))
             .add("Parent", new Text(new Reference(parent, 0).asString()));
-        return new Definition(num, 0, dictionary, resrcs, conts);
+        return new Indirect(num, 0, dictionary, resrcs, conts);
     }
 }

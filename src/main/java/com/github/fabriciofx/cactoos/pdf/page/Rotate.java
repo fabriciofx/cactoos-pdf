@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
-import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
@@ -70,20 +70,20 @@ public final class Rotate implements Page {
     }
 
     @Override
-    public Definition definition(final Id id, final int parent)
+    public Indirect indirect(final Id id, final int parent)
         throws Exception {
-        final Definition definition = this.origin.definition(id, parent);
-        final Dictionary dictionary = definition.dictionary().add(
+        final Indirect indirect = this.origin.indirect(id, parent);
+        final Dictionary dictionary = indirect.dictionary().add(
             "Rotate",
             new Int(this.angle)
         );
         final Id reset = new Serial(id.value() - 2);
-        return new Definition(
-            definition.reference().id(),
-            definition.reference().generation(),
+        return new Indirect(
+            indirect.reference().id(),
+            indirect.reference().generation(),
             dictionary,
-            this.resources().definition(reset),
-            this.contents().definition(reset)
+            this.resources().indirect(reset),
+            this.contents().indirect(reset)
         );
     }
 }

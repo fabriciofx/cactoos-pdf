@@ -35,23 +35,25 @@ import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 public interface Page {
     /**
      * Page Resources.
+     *
      * @return Resources
      */
     Resources resources();
 
     /**
      * Page Contents.
+     *
      * @return Contents
      */
     Contents contents();
 
     /**
-     * Build a PDF page.
+     * Build an Indirect.
      *
      * @param id Object id
      * @param parent Page's parent
-     * @return An array of bytes that represents a PDF page
+     * @return An indirect
      * @throws Exception if fails
      */
-    Definition definition(Id id, int parent) throws Exception;
+    Indirect indirect(Id id, int parent) throws Exception;
 }

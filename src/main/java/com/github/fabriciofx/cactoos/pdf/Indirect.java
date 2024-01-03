@@ -23,21 +23,22 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.text.Indirect;
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.list.ListOf;
+import org.cactoos.text.FormattedText;
 
 /**
- * Definition.
+ * Indirect.
  *
  * @since 0.0.1
  */
-public final class Definition implements Bytes {
+public final class Indirect implements Bytes {
     /**
      * Object id.
      */
@@ -64,7 +65,7 @@ public final class Definition implements Bytes {
      * @param dictionary Dictionary
      * @param content Content
      */
-    public Definition(
+    public Indirect(
         final Dictionary dictionary,
         final Bytes... content
     ) {
@@ -78,7 +79,7 @@ public final class Definition implements Bytes {
      * @param dictionary Dictionary
      * @param content Content
      */
-    public Definition(
+    public Indirect(
         final int id,
         final Dictionary dictionary,
         final Bytes... content
@@ -95,7 +96,7 @@ public final class Definition implements Bytes {
      * @param content Content
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Definition(
+    public Indirect(
         final int id,
         final int generation,
         final Dictionary dictionary,
@@ -113,7 +114,7 @@ public final class Definition implements Bytes {
      * @param content Content
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Definition(
+    public Indirect(
         final int id,
         final int generation,
         final Dictionary dictionary,
@@ -148,7 +149,14 @@ public final class Definition implements Bytes {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         if (!this.dict.isEmpty()) {
             if (this.id > 0) {
-                baos.write(new Indirect(this.id, 0).asBytes());
+                baos.write(
+                    new FormattedText(
+                        "%d %d obj\n",
+                        Locale.ENGLISH,
+                        this.id,
+                        this.generation
+                    ).asString().getBytes(StandardCharsets.UTF_8)
+                );
                 baos.write(this.dict.asBytes());
                 baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
             } else {

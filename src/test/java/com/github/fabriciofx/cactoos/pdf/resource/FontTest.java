@@ -45,7 +45,7 @@ final class FontTest {
                     new FontFamily("Times-Roman", "Type1"),
                     "F0",
                     12
-                ).definition(new Serial())
+                ).indirect(new Serial())
             ),
             new IsText(
                 new Joined(

@@ -24,8 +24,8 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.resource.Font;
 import com.github.fabriciofx.cactoos.pdf.text.Escaped;
 import com.github.fabriciofx.cactoos.pdf.text.Multiline;
@@ -171,12 +171,12 @@ public final class Text implements Content {
     }
 
     @Override
-    public Definition definition(final Id id) throws Exception {
+    public Indirect indirect(final Id id) throws Exception {
         final int num = id.value();
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new Definition(num, 0, dictionary);
+        return new Indirect(num, 0, dictionary);
     }
 }

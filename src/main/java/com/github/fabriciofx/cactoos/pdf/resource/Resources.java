@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
-import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.util.List;
@@ -57,14 +57,14 @@ public final class Resources extends ListEnvelope<Resource>
     }
 
     @Override
-    public Definition definition(final Id id) throws Exception {
+    public Indirect indirect(final Id id) throws Exception {
         final int num = id.increment();
-        Dictionary dictionary = this.get(0).definition(id).dictionary();
+        Dictionary dictionary = this.get(0).indirect(id).dictionary();
         for (int idx = 1; idx < this.size(); ++idx) {
             dictionary = dictionary.merge(
-                this.get(idx).definition(id).dictionary()
+                this.get(idx).indirect(id).dictionary()
             );
         }
-        return new Definition(num, 0, dictionary);
+        return new Indirect(num, 0, dictionary);
     }
 }

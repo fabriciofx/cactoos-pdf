@@ -96,9 +96,9 @@ public final class Document implements Bytes {
         );
         baos.write(Document.SIGNATURE);
         final Id id = new Serial();
-        final Definition info = this.information.definition(id);
+        final Indirect info = this.information.indirect(id);
         baos.write(info.asBytes());
-        final Definition clog = this.catalog.definition(id);
+        final Indirect clog = this.catalog.indirect(id);
         baos.write(clog.asBytes());
         baos.write(
             new FormattedText(

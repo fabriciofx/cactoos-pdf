@@ -48,12 +48,12 @@ public final class Catalog implements Object {
     }
 
     @Override
-    public Definition definition(final Id id) throws Exception {
+    public Indirect indirect(final Id id) throws Exception {
         final int num = id.increment();
-        final Definition definition = this.pages.definition(id);
+        final Indirect indirect = this.pages.indirect(id);
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Catalog"))
-            .add("Pages", new Text(definition.reference().asString()));
-        return new Definition(num, 0, dictionary, definition);
+            .add("Pages", new Text(indirect.reference().asString()));
+        return new Indirect(num, 0, dictionary, indirect);
     }
 }

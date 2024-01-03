@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
-import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 
@@ -125,13 +125,13 @@ public final class Font implements Resource {
     }
 
     @Override
-    public Definition definition(final Id id) throws Exception {
-        final Definition definition = this.family.definition(id);
+    public Indirect indirect(final Id id) throws Exception {
+        final Indirect indirect = this.family.indirect(id);
         final Dictionary dictionary = new Dictionary()
             .add(
                 "Font",
-                new Dictionary().add(this.label, definition.dictionary())
+                new Dictionary().add(this.label, indirect.dictionary())
             );
-        return new Definition(dictionary);
+        return new Indirect(dictionary);
     }
 }

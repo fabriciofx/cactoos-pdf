@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.pages;
 
-import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
@@ -114,11 +114,11 @@ public final class Margins implements Pages {
     }
 
     @Override
-    public Definition definition(final Id id) throws Exception {
-        final Definition definition = this.origin.definition(id);
+    public Indirect indirect(final Id id) throws Exception {
+        final Indirect indirect = this.origin.indirect(id);
         final Pattern pattern = Pattern.compile("BT.*TL");
         final Matcher matcher = pattern.matcher(
-            new String(definition.asBytes())
+            new String(indirect.asBytes())
         );
         final StringBuffer stream = new StringBuffer();
         while (matcher.find()) {
@@ -140,9 +140,9 @@ public final class Margins implements Pages {
             );
         }
         matcher.appendTail(stream);
-        return new Definition(
-            definition.reference().id(),
-            definition.reference().generation(),
+        return new Indirect(
+            indirect.reference().id(),
+            indirect.reference().generation(),
             new Dictionary(),
             new BytesOf(stream)
         );

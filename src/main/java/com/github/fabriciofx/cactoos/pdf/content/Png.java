@@ -24,8 +24,8 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.png.Header;
 import com.github.fabriciofx.cactoos.pdf.png.Palette;
 import com.github.fabriciofx.cactoos.pdf.png.PngRaw;
@@ -94,11 +94,11 @@ public final class Png implements Content {
     }
 
     @Override
-    public Definition definition(final Id id) throws Exception {
+    public Indirect indirect(final Id id) throws Exception {
         final int num = id.increment();
         final Header header = this.raw.header();
         final Palette palette = this.raw.palette(id);
-        final Definition pal = palette.definition(id);
+        final Indirect pal = palette.indirect(id);
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("XObject"))
@@ -130,7 +130,7 @@ public final class Png implements Content {
             .add("Mask", new Array(new Int(0), new Int(0)))
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new Definition(num, 0, dictionary, pal);
+        return new Indirect(num, 0, dictionary, pal);
     }
 
     @Override

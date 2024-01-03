@@ -111,7 +111,7 @@ final class PngTest {
         new Assertion<>(
             "Must represent a PNG content",
             expected.toByteArray(),
-            new IsEqual<>(png.definition(new Serial()).asBytes())
+            new IsEqual<>(png.indirect(new Serial()).asBytes())
         ).affirm();
     }
 }

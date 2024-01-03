@@ -30,11 +30,11 @@ package com.github.fabriciofx.cactoos.pdf;
  */
 public interface Object {
     /**
-     * Object definition.
+     * Object indirect.
      *
      * @param id Object id
-     * @return An object definition
+     * @return An object indirect
      * @throws Exception if fails
      */
-    Definition definition(Id id) throws Exception;
+    Indirect indirect(Id id) throws Exception;
 }

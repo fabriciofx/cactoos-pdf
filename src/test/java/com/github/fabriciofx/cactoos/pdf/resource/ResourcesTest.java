@@ -39,7 +39,7 @@ import org.llorllale.cactoos.matchers.IsText;
  */
 final class ResourcesTest {
     @Test
-    void definition() throws Exception {
+    void indirect() throws Exception {
         final Png png = new Png(
             "src/test/resources/image/logo.png"
         );
@@ -50,7 +50,7 @@ final class ResourcesTest {
             766
         );
         new Assertion<>(
-            "Must represent a resources definition",
+            "Must represent a resources indirect",
             new TextOf(
                 new Resources(
                     new ProcSet(),
@@ -60,7 +60,7 @@ final class ResourcesTest {
                         12
                     ),
                     new XObject(image)
-                ).definition(new Serial())
+                ).indirect(new Serial())
             ),
             new IsText(
                 new Joined(

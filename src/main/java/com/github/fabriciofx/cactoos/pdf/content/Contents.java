@@ -24,8 +24,8 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Object;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
@@ -58,12 +58,12 @@ public final class Contents extends ListEnvelope<Content> implements Object {
     }
 
     @Override
-    public Definition definition(final Id id) throws Exception {
+    public Indirect indirect(final Id id) throws Exception {
         final int num = id.increment();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (final Object obj : this) {
-            baos.write(obj.definition(id).asBytes());
+            baos.write(obj.indirect(id).asBytes());
         }
-        return new Definition(num, 0, new Dictionary(), baos::toByteArray);
+        return new Indirect(num, 0, new Dictionary(), baos::toByteArray);
     }
 }

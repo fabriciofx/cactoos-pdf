@@ -54,7 +54,7 @@ final class TextTest {
                     50,
                     20,
                     new TextOf("Hello World")
-                ).definition(new Serial(1))
+                ).indirect(new Serial(1))
             ),
             new IsText(
                 new Joined(
@@ -106,7 +106,7 @@ final class TextTest {
                         "deserunt laborum mollit labore",
                         "id amet."
                     )
-                ).definition(new Serial(1))
+                ).indirect(new Serial(1))
             ),
             new IsText(
                 new Joined(

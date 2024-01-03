@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf.pages;
 
-import com.github.fabriciofx.cactoos.pdf.Definition;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
@@ -68,13 +68,13 @@ public final class DefaultPages implements Pages {
     }
 
     @Override
-    public Definition definition(final Id id) throws Exception {
+    public Indirect indirect(final Id id) throws Exception {
         final int num = id.increment();
-        final List<Definition> definitions = new ListOf<>();
+        final List<Indirect> indirects = new ListOf<>();
         for (final Page page : this.kids) {
-            definitions.add(page.definition(id, num));
+            indirects.add(page.indirect(id, num));
         }
-        final String kds = definitions.stream()
+        final String kds = indirects.stream()
             .map(def -> new UncheckedText(def.reference()).asString())
             .collect(Collectors.joining(" "));
         final Dictionary dictionary = new Dictionary()
@@ -90,10 +90,10 @@ public final class DefaultPages implements Pages {
                 )
             );
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (final Definition definition : definitions) {
-            baos.write(definition.asBytes());
+        for (final Indirect indirect : indirects) {
+            baos.write(indirect.asBytes());
         }
-        return new Definition(num, 0, dictionary, baos::toByteArray);
+        return new Indirect(num, 0, dictionary, baos::toByteArray);
     }
 
     @Override

@@ -107,7 +107,7 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>3.2.3</version>
           <configuration>
-            <redirectTestOutputToFile>false</redirectTestOutputToFile>
+            <redirectTestOutputToFile>true</redirectTestOutputToFile>
             <systemPropertyVariables>
               <java.util.logging.config.file>
                 src/test/resources/logging.properties

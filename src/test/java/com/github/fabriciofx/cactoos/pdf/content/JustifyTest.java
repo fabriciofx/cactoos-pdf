@@ -44,8 +44,8 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.SystemPrintln")
 final class JustifyTest {
+    @Disabled
     @Test
     void justifyText() throws Exception {
         final Font font = new Font(

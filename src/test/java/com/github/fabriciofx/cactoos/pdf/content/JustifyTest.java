@@ -82,7 +82,13 @@ final class JustifyTest {
         final byte[] expected = Files.readAllBytes(
             new File(filename).toPath()
         );
-        for (int idx = 0; idx < actual.length; ++idx) {
+        final int length = Math.min(actual.length, expected.length);
+        System.out.printf(
+            "Actual.length: %d, Expected.length: %d\n",
+            actual.length,
+            expected.length
+        );
+        for (int idx = 0; idx < length; ++idx) {
             if (expected[idx] != actual[idx]) {
                 System.out.printf(
                     "expected[%d] = %x, actual[%d] = %x\n",

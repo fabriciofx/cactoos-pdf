@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
 
@@ -93,6 +94,7 @@ public final class Date implements Text {
         final String minutes = offset[1];
         return new FormattedText(
             "D:%s%s'%s'",
+            Locale.ENGLISH,
             this.datetime.format(
                 DateTimeFormatter.ofPattern(
                     "uuuuMMddHHmmss"

@@ -24,6 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.png;
 
 import java.util.Arrays;
+import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
@@ -135,6 +136,7 @@ public final class PngHeader implements Header {
                 "Filter: %d",
                 "Interlacing: %d"
             ),
+            Locale.ENGLISH,
             this.length(),
             this.width(),
             this.height(),

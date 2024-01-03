@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.type;
 import com.github.fabriciofx.cactoos.pdf.Type;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.FormattedText;
@@ -77,6 +78,7 @@ public final class Stream implements Type<byte[]> {
     public String asString() throws Exception {
         return new FormattedText(
             "\nstream\n%s\nendstream",
+            Locale.ENGLISH,
             new String(this.bytes.asBytes())
         ).asString();
     }

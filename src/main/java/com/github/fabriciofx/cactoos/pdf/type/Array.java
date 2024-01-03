@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Type;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
@@ -88,6 +89,7 @@ public final class Array implements Type<Type<?>> {
     public String asString() throws Exception {
         return new FormattedText(
             "[%s]",
+            Locale.ENGLISH,
             this.values.stream().map(
                 type -> new UncheckedText(type).asString()
             ).collect(Collectors.joining(" "))

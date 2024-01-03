@@ -28,6 +28,7 @@ import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
@@ -98,6 +99,7 @@ public final class Dictionary implements Type<Dictionary> {
         }
         return new FormattedText(
             "<< %s>>",
+            Locale.ENGLISH,
             values.toString()
         ).asString();
     }

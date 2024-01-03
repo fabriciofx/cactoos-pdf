@@ -33,6 +33,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -149,10 +150,17 @@ public final class Text implements Content {
     public byte[] asStream() throws Exception {
         final StringBuilder out = new StringBuilder();
         for (final org.cactoos.Text line : new Multiline(this.content, this.max)) {
-            out.append(new FormattedText("(%s) Tj T*\n", line).asString());
+            out.append(
+                new FormattedText(
+                    "(%s) Tj T*\n",
+                    Locale.ENGLISH,
+                    line
+                ).asString()
+            );
         }
         return new FormattedText(
             "BT /%s %d Tf %.2f %.2f Td %.2f TL\n%sET",
+            Locale.ENGLISH,
             this.typeface.name(),
             this.typeface.size(),
             this.posx,

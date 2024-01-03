@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Locale;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -132,6 +133,7 @@ public final class Flow {
             throw new IOException(
                 new FormattedText(
                     "Amount of bytes read (%d) is different of specified (%d)",
+                    Locale.ENGLISH,
                     read,
                     length
                 ).asString()

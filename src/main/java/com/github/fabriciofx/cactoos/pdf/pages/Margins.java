@@ -29,6 +29,7 @@ import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.cactoos.bytes.BytesOf;
@@ -129,6 +130,7 @@ public final class Margins implements Pages {
                 stream,
                 new FormattedText(
                     "BT %s %s Tf %.2f %.2f Td %s TL",
+                    Locale.ENGLISH,
                     fontname,
                     fontsize,
                     this.left * Margins.ONE_CM,

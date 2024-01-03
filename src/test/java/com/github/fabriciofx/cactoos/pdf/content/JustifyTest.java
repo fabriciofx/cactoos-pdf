@@ -34,8 +34,10 @@ import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.text.TextOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Justify}.
@@ -80,20 +82,11 @@ final class JustifyTest {
         final byte[] expected = Files.readAllBytes(
             new File(filename).toPath()
         );
-        final int length = Math.min(actual.length, expected.length);
-        System.out.printf(
-            "Actual.length: %d, Expected.length: %d\n",
-            actual.length,
-            expected.length
-        );
-        for (int idx = 0; idx < length; ++idx) {
-            if (expected[idx] != actual[idx]) {
-                System.out.printf(
-                    "expected[%d] = %x, actual[%d] = %x\n",
-                    idx, expected[idx], idx, actual[idx]
-                );
-            }
-        }
+        new Assertion<>(
+            "Must match with justified PDF document",
+            expected,
+            new IsEqual<>(actual)
+        ).affirm();
     }
 
     @Disabled

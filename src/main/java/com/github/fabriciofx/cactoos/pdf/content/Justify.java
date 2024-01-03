@@ -30,6 +30,7 @@ import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.cactoos.text.FormattedText;
@@ -101,7 +102,9 @@ public final class Justify implements Content {
                 }
                 stream.append(
                     new FormattedText(
-                        "%.3f Tw\n", wordspace * scale
+                        "%.3f Tw\n",
+                        Locale.ENGLISH,
+                        wordspace * scale
                     ).asString()
                 )
                     .append('(')

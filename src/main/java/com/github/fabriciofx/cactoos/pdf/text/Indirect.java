@@ -24,6 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.text;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
@@ -64,6 +65,7 @@ public final class Indirect implements Text, Bytes {
     public String asString() throws Exception {
         return new FormattedText(
             "%d %d obj\n",
+            Locale.ENGLISH,
             this.id,
             this.generation
         ).asString();

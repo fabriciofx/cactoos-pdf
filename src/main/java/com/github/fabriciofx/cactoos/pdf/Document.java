@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
 
@@ -89,6 +90,7 @@ public final class Document implements Bytes {
         baos.write(
             new FormattedText(
                 "%%PDF-%s\n",
+                Locale.ENGLISH,
                 Document.VERSION
             ).asString().getBytes(StandardCharsets.UTF_8)
         );
@@ -101,6 +103,7 @@ public final class Document implements Bytes {
         baos.write(
             new FormattedText(
                 "trailer << /Root %s /Size %d /Info %s >>\n",
+                Locale.ENGLISH,
                 clog.reference().asString(),
                 id.increment(),
                 info.reference().asString()

@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf.type;
 
 import com.github.fabriciofx.cactoos.pdf.Type;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -59,6 +60,6 @@ public final class Literal implements Type<String> {
 
     @Override
     public String asString() throws Exception {
-        return new FormattedText("(%s)", this.text).asString();
+        return new FormattedText("(%s)", Locale.ENGLISH, this.text).asString();
     }
 }

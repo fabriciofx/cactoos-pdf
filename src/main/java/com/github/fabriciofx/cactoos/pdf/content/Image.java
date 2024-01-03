@@ -30,6 +30,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import org.cactoos.Scalar;
 import org.cactoos.text.FormattedText;
 
@@ -156,6 +157,7 @@ public final class Image implements Content {
     public byte[] asStream() throws Exception {
         return new FormattedText(
             "q %.2f 0 0 %.2f %.2f %.2f cm /%s Do Q",
+            Locale.ENGLISH,
             this.width.value(),
             this.height.value(),
             this.posx,

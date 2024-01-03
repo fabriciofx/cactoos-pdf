@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.text;
 
+import java.util.Locale;
 import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
 
@@ -75,6 +76,11 @@ public final class Reference implements Text {
 
     @Override
     public String asString() throws Exception {
-        return new FormattedText("%d %d R", this.num, this.gen).asString();
+        return new FormattedText(
+            "%d %d R",
+            Locale.ENGLISH,
+            this.num,
+            this.gen
+        ).asString();
     }
 }

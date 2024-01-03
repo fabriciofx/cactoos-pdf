@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
+import java.util.Locale;
 import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
@@ -122,6 +123,7 @@ public enum PageFormat implements Text {
         return new UncheckedText(
             new FormattedText(
                 "%.2f %.2f",
+                Locale.ENGLISH,
                 this.width,
                 this.height
             )

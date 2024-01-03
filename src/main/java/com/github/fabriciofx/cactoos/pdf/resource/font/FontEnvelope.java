@@ -30,9 +30,10 @@ import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 
 /**
- * Font.
+ * FontEnvelope.
  *
  * @since 0.0.1
+ * @checkstyle DesignForExtensionCheck (500 lines)
  */
 public abstract class FontEnvelope implements Font {
     /**

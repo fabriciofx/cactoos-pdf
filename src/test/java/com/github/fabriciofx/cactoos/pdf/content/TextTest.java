@@ -24,8 +24,6 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Serial;
-import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
-import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;

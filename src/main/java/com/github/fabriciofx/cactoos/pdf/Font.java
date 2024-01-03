@@ -23,6 +23,11 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+/**
+ * Font.
+ *
+ * @since 0.0.1
+ */
 public interface Font extends Resource {
     /**
      * Font name.
@@ -44,5 +49,5 @@ public interface Font extends Resource {
      * @param chr The character
      * @return The size of the char in a font
      */
-    int width(final char chr);
+    int width(char chr);
 }

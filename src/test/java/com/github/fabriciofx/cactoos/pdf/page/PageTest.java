@@ -71,7 +71,7 @@ final class PageTest {
                     new Catalog(
                         new DefaultPages(
                             PageFormat.A4,
-                            new Rotate(
+                            new Rotate90(
                                 new DefaultPage(
                                     new Resources(font),
                                     new Contents(
@@ -82,8 +82,7 @@ final class PageTest {
                                             new TextOf("Hello World!")
                                         )
                                     )
-                                ),
-                                90
+                                )
                             )
                         )
                     )

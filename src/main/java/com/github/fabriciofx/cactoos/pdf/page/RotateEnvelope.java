@@ -33,11 +33,12 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 
 /**
- * Rotate a Page in a angle.
+ * Rotate envelope.
  *
  * @since 0.0.1
+ * @checkstyle DesignForExtensionCheck (500 lines)
  */
-public final class Rotate implements Page {
+public abstract class RotateEnvelope implements Page {
     /**
      * The Page.
      */
@@ -54,7 +55,7 @@ public final class Rotate implements Page {
      * @param page The Page
      * @param angle The angle
      */
-    public Rotate(final Page page, final int angle) {
+    public RotateEnvelope(final Page page, final int angle) {
         this.origin = page;
         this.angle = angle;
     }

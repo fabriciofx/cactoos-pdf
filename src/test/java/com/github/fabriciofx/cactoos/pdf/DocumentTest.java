@@ -30,7 +30,7 @@ import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
-import com.github.fabriciofx.cactoos.pdf.page.Rotate;
+import com.github.fabriciofx.cactoos.pdf.page.Rotate90;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.Font;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
@@ -95,7 +95,7 @@ final class DocumentTest {
                             )
                         )
                     ),
-                    new Rotate(
+                    new Rotate90(
                         new DefaultPage(
                             new Resources(font),
                             new Contents(
@@ -103,8 +103,7 @@ final class DocumentTest {
                                     new Text(font, 0, 500, 80, 20, content)
                                 )
                             )
-                        ),
-                        90
+                        )
                     ),
                     new DefaultPage(
                         new Resources(font),
@@ -259,7 +258,7 @@ final class DocumentTest {
                                 )
                             )
                         ),
-                        new Rotate(
+                        new Rotate90(
                             new DefaultPage(
                                 new Resources(font),
                                 new Contents(
@@ -267,8 +266,7 @@ final class DocumentTest {
                                         new Text(font, 0, 500, 80, 20, content)
                                     )
                                 )
-                            ),
-                        90
+                            )
                         ),
                         new DefaultPage(
                             new Resources(font),

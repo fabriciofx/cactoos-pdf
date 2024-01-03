@@ -24,8 +24,7 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.resource.Font;
-import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
+import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
@@ -43,11 +42,7 @@ final class FlateEncodeTest {
     @Test
     void encode() throws Exception {
         final Content content = new Text(
-            new Font(
-                new FontFamily("Times-Roman", "Type1"),
-                "F1",
-                18
-            ),
+            new TimesRoman(18),
             0,
             0,
             new TextOf("Hello World!")

@@ -32,11 +32,11 @@ import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 import com.github.fabriciofx.cactoos.pdf.page.Rotate90;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
-import com.github.fabriciofx.cactoos.pdf.resource.Font;
-import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.XObject;
+import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
+import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import com.github.fabriciofx.cactoos.pdf.text.Date;
 import java.io.File;
 import java.nio.file.Files;
@@ -68,11 +68,7 @@ final class DocumentTest {
             "deserunt laborum mollit labore id amet."
         );
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final Font font = new Font(
-            new FontFamily("Times-Roman", "Type1"),
-            "F1",
-            18
-        );
+        final FontEnvelope font = new TimesRoman(18);
         final byte[] actual = new Document(
             new Information(
                 "Title", "Hello World",
@@ -151,11 +147,7 @@ final class DocumentTest {
                     new DefaultPage(
                         new Resources(
                             new ProcSet(),
-                            new Font(
-                                new FontFamily("Times-Roman", "Type1"),
-                                "F1",
-                                12
-                            ),
+                            new TimesRoman(12),
                             new XObject(image)
                         ),
                         new Contents(
@@ -196,11 +188,7 @@ final class DocumentTest {
                         new DefaultPage(
                             new Resources(
                                 new ProcSet(),
-                                new Font(
-                                    new FontFamily("Times-Roman", "Type1"),
-                                    "F1",
-                                    12
-                                ),
+                                new TimesRoman(12),
                                 new XObject(image)
                             ),
                             new Contents(
@@ -228,11 +216,7 @@ final class DocumentTest {
             "deserunt laborum mollit labore id amet."
         );
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final Font font = new Font(
-            new FontFamily("Times-Roman", "Type1"),
-            "F1",
-            18
-        );
+        final FontEnvelope font = new TimesRoman(18);
         final File file = new File("HelloWorld.pdf");
         Files.write(
             file.toPath(),
@@ -289,11 +273,7 @@ final class DocumentTest {
             new File(filename).toPath()
         );
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final Font font = new Font(
-            new FontFamily("Times-Roman", "Type1"),
-            "F1",
-            12
-        );
+        final FontEnvelope font = new TimesRoman(12);
         final byte[] actual = new Document(
             new Information(
                 "Title", "Hello World",
@@ -338,11 +318,7 @@ final class DocumentTest {
     @Test
     void buildFileWithFileContent() throws Exception {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final Font font = new Font(
-            new FontFamily("Times-Roman", "Type1"),
-            "F1",
-            12
-        );
+        final FontEnvelope font = new TimesRoman(12);
         final File file = new File("text-20k.pdf");
         Files.write(
             file.toPath(),
@@ -385,11 +361,7 @@ final class DocumentTest {
     @Disabled
     @Test
     void buildFileWithoutInformation() throws Exception {
-        final Font font = new Font(
-            new FontFamily("Times-Roman", "Type1"),
-            "F1",
-            12
-        );
+        final FontEnvelope font = new TimesRoman(12);
         final File file = new File("text-20k-without-info.pdf");
         Files.write(
             file.toPath(),

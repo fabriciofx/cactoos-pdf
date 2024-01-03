@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
+import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
@@ -54,11 +55,7 @@ final class ResourcesTest {
             new TextOf(
                 new Resources(
                     new ProcSet(),
-                    new Font(
-                        new FontFamily("Times-Roman", "Type1"),
-                        "F1",
-                        12
-                    ),
+                    new TimesRoman(12),
                     new XObject(image)
                 ).indirect(new Serial())
             ),

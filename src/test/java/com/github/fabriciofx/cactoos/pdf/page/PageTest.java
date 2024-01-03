@@ -25,13 +25,14 @@ package com.github.fabriciofx.cactoos.pdf.page;
 
 import com.github.fabriciofx.cactoos.pdf.Catalog;
 import com.github.fabriciofx.cactoos.pdf.Document;
+import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Information;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
-import com.github.fabriciofx.cactoos.pdf.resource.Font;
-import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
+import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import com.github.fabriciofx.cactoos.pdf.text.Date;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
@@ -49,11 +50,7 @@ final class PageTest {
     @Test
     void buildDocumentWithRotatePage() throws Exception {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final Font font = new Font(
-            new FontFamily("Times-Roman", "Type1"),
-            "F1",
-            18
-        );
+        final Font font = new TimesRoman(18);
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
@@ -108,11 +105,7 @@ final class PageTest {
     @Test
     void buildTwoPagesDocument() throws Exception {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final Font font = new Font(
-            new FontFamily("Times-Roman", "Type1"),
-            "F1",
-            18
-        );
+        final FontEnvelope font = new TimesRoman(18);
         new Assertion<>(
             "Must represent a two pages PDF document",
             new TextOf(

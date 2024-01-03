@@ -30,9 +30,10 @@ import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
-import com.github.fabriciofx.cactoos.pdf.resource.Font;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
+import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.text.Joined;
@@ -60,11 +61,7 @@ final class MarginsTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
-        final Font font = new Font(
-            new FontFamily("Times-Roman", "Type1"),
-            "F1",
-            12
-        );
+        final FontEnvelope font = new TimesRoman(12);
         final byte[] actual = new Document(
             new Information(
                 "Title", "Hello World"
@@ -112,11 +109,7 @@ final class MarginsTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
-        final Font font = new Font(
-            new FontFamily("Times-Roman", "Type1"),
-            "F1",
-            12
-        );
+        final FontEnvelope font = new TimesRoman(12);
         final File file = new File("margins.pdf");
         Files.write(
             file.toPath(),

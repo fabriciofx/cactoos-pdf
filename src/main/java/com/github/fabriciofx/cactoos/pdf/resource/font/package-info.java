@@ -21,37 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.resource;
-
-import com.github.fabriciofx.cactoos.pdf.Serial;
-import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
-import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
-import org.cactoos.text.Joined;
-import org.cactoos.text.TextOf;
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Test case for {@link FontEnvelope}.
+ * Fonts.
  *
  * @since 0.0.1
  */
-final class FontTest {
-    @Test
-    void build() throws Exception {
-        new Assertion<>(
-            "Must build a PDF Times-Roman font",
-            new TextOf(
-                new TimesRoman(12).indirect(new Serial())
-            ),
-            new IsText(
-                new Joined(
-                    " ",
-                    "<< /Font << /F1 << /Type /Font /BaseFont",
-                    "/Times-Roman /Subtype /Type1 >> >> >>"
-                )
-            )
-        ).affirm();
-    }
-}
+package com.github.fabriciofx.cactoos.pdf.resource.font;

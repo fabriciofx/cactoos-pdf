@@ -24,9 +24,9 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
+import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
-import com.github.fabriciofx.cactoos.pdf.resource.Font;
 import com.github.fabriciofx.cactoos.pdf.text.Escaped;
 import com.github.fabriciofx.cactoos.pdf.text.Multiline;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;

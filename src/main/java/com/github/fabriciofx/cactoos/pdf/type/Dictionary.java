@@ -146,11 +146,24 @@ public final class Dictionary implements Type<Dictionary> {
      *
      * @param dictionary A dictionary to be merged
      * @return A new dictionary merged
+     * @throws Exception if fails
      */
-    public Dictionary merge(final Dictionary dictionary) {
+    public Dictionary merge(final Dictionary dictionary) throws Exception {
         final Map<Name, Type<?>> elements = new LinkedHashMap<>(this.entries);
-        elements.putAll(dictionary.entries);
-        return new Dictionary(elements);
+        for (final Name name : dictionary.entries.keySet()) {
+            if (elements.containsKey(name)) {
+                final Dictionary dicta = dictionary.get(name.value());
+                final Dictionary dictb = (Dictionary) elements.get(name);
+                dictb.entries.putAll(dicta.entries);
+            } else {
+                elements.putAll(dictionary.entries);
+            }
+        }
+        Dictionary dictio = new Dictionary(elements);
+        if (!dictionary.stream.isEmpty()) {
+            dictio = dictio.with(dictionary.stream.get(0));
+        }
+        return dictio;
     }
 
     /**

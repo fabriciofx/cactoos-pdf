@@ -204,7 +204,7 @@ final class DictionaryTest {
     }
 
     @Test
-    void merge() {
+    void merge() throws Exception {
         final Dictionary procset = new Dictionary()
             .add(
                 "ProcSet",

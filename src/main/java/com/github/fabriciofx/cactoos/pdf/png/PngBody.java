@@ -95,7 +95,7 @@ public final class PngBody implements Body {
 
     @Override
     public Indirect indirect(final Id id) throws Exception {
-        final int num = id.value();
+        final int num = id.increment();
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))

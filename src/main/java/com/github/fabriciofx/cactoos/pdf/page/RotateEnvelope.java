@@ -26,8 +26,8 @@ package com.github.fabriciofx.cactoos.pdf.page;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
-import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
+import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -78,13 +78,13 @@ public abstract class RotateEnvelope implements Page {
             "Rotate",
             new Int(this.angle)
         );
-        final Id reset = new Serial(id.value() - 2);
+        final Id copy = new Serial(id.value() - 3);
         return new Indirect(
             indirect.reference().id(),
             indirect.reference().generation(),
             dictionary,
-            this.resources().indirect(reset),
-            this.contents().indirect(reset)
+            this.resources().indirect(copy),
+            this.contents().indirect(copy)
         );
     }
 }

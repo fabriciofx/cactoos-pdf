@@ -23,15 +23,19 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
-import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
+import com.github.fabriciofx.cactoos.pdf.id.Serial;
+import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
-import org.cactoos.text.Joined;
+import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
+import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.IsText;
+import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link Resources}.
@@ -40,31 +44,77 @@ import org.llorllale.cactoos.matchers.IsText;
  */
 final class ResourcesTest {
     @Test
-    void indirect() throws Exception {
-        final Png png = new Png(
-            "src/test/resources/image/logo.png"
-        );
-        final Image image = new Image(
-            "I1",
-            png,
-            28,
-            766
-        );
+    void resourcesDictionary() throws Exception {
         new Assertion<>(
-            "Must represent a resources indirect",
+            "Must represent a resources dictionary",
+            new Resources(
+                new ProcSet(),
+                new TimesRoman(12),
+                new XObject(
+                    new Image(
+                        "I1",
+                        new Png("src/test/resources/image/logo.png"),
+                        28,
+                        766
+                    )
+                )
+            ).indirect(new Serial()).dictionary(),
+            new IsText(
+                new Concatenated(
+                    "<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
+                    " /Font << /F1 3 0 R >> /XObject << /I1 5 0 R >> >>"
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void resourcesAsBytes() throws Exception {
+        new Assertion<>(
+            "Must represent a resources as bytes",
             new TextOf(
                 new Resources(
                     new ProcSet(),
                     new TimesRoman(12),
-                    new XObject(image)
-                ).indirect(new Serial())
+                    new XObject(
+                        new Image(
+                            "I1",
+                            new Png("src/test/resources/image/logo.png"),
+                            28,
+                            766
+                        )
+                    )
+                ).indirect(new Serial()).asBytes()
             ),
+            new AllOf<>(
+                new StartsWith(
+                    new Concatenated(
+                        "2 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 3 0 R >> /XObject << /I1 5 0 R >> >>\nendobj\n",
+                        "3 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj\n",
+                        "4 0 obj\n<< /XObject << /I1 5 0 R >> >>\nendobj\n",
+                        "5 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 7 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
+                    )
+                ),
+                new EndsWith(
+                    "\nendstream\nendobj\n"
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void resourcesDictionaryWithTwoFonts() throws Exception {
+        new Assertion<>(
+            "Must represent a resources dictionary",
+            new Resources(
+                new ProcSet(),
+                new TimesRoman(12),
+                new Helvetica(12)
+            ).indirect(new Serial()).dictionary(),
             new IsText(
-                new Joined(
-                    " ",
-                    "1 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
-                    "/Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype",
-                    "/Type1 >> >> /XObject << /I1 3 0 R >> >>\nendobj\n"
+                new Concatenated(
+                    "<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
+                    " /Font << /F1 3 0 R /F2 4 0 R >> >>"
                 )
             )
         ).affirm();

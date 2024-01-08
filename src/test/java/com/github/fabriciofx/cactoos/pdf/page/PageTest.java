@@ -92,10 +92,11 @@ final class PageTest {
                     "1 0 obj\n<< /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>\nendobj",
                     "2 0 obj\n<< /Type /Catalog /Pages 3 0 R >>\nendobj",
                     "3 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
-                    "4 0 obj\n<< /Type /Page /Resources 5 0 R /Contents 6 0 R /Parent 3 0 R /Rotate 90 >>\nendobj",
-                    "5 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                    "6 0 obj\n<< /Length 58 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello World!) Tj T*\nET\nendstream\nendobj",
-                    "trailer << /Root 2 0 R /Size 7 /Info 1 0 R >>",
+                    "4 0 obj\n<< /Type /Page /Resources 5 0 R /Contents 7 0 R /Parent 3 0 R /Rotate 90 >>\nendobj",
+                    "5 0 obj\n<< /Font << /F1 6 0 R >> >>\nendobj",
+                    "6 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
+                    "7 0 obj\n<< /Length 58 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello World!) Tj T*\nET\nendstream\nendobj",
+                    "trailer << /Root 2 0 R /Size 8 /Info 1 0 R >>",
                     "%%EOF"
                 )
             )
@@ -155,14 +156,16 @@ final class PageTest {
                     "%PDF-1.3\n%���������",
                     "1 0 obj\n<< /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>\nendobj",
                     "2 0 obj\n<< /Type /Catalog /Pages 3 0 R >>\nendobj",
-                    "3 0 obj\n<< /Type /Pages /Kids [4 0 R 7 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
-                    "4 0 obj\n<< /Type /Page /Resources 5 0 R /Contents 6 0 R /Parent 3 0 R >>\nendobj",
-                    "5 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                    "6 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello) Tj T*\nET\nendstream\nendobj",
-                    "7 0 obj\n<< /Type /Page /Resources 8 0 R /Contents 9 0 R /Parent 3 0 R >>\nendobj",
-                    "8 0 obj\n<< /Font << /F1 << /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >> >> >>\nendobj",
-                    "9 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(World) Tj T*\nET\nendstream\nendobj",
-                    "trailer << /Root 2 0 R /Size 10 /Info 1 0 R >>",
+                    "3 0 obj\n<< /Type /Pages /Kids [4 0 R 8 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
+                    "4 0 obj\n<< /Type /Page /Resources 5 0 R /Contents 7 0 R /Parent 3 0 R >>\nendobj",
+                    "5 0 obj\n<< /Font << /F1 6 0 R >> >>\nendobj",
+                    "6 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
+                    "7 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello) Tj T*\nET\nendstream\nendobj",
+                    "8 0 obj\n<< /Type /Page /Resources 9 0 R /Contents 11 0 R /Parent 3 0 R >>\nendobj",
+                    "9 0 obj\n<< /Font << /F1 10 0 R >> >>\nendobj",
+                    "10 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
+                    "11 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(World) Tj T*\nET\nendstream\nendobj",
+                    "trailer << /Root 2 0 R /Size 12 /Info 1 0 R >>",
                     "%%EOF"
                 )
             )

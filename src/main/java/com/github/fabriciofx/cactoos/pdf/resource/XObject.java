@@ -26,10 +26,10 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
-import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
+import org.cactoos.bytes.BytesOf;
 
 /**
  * XObject.
@@ -53,8 +53,8 @@ public final class XObject implements Resource {
 
     @Override
     public Indirect indirect(final Id id) throws Exception {
-        final Id reset = new Serial(id.value() + 1);
-        final Indirect indirect = this.image.content().indirect(reset);
+        final int num = id.increment();
+        final Indirect indirect = this.image.content().indirect(id);
         final Dictionary dictionary = new Dictionary()
             .add(
                 "XObject",
@@ -63,6 +63,11 @@ public final class XObject implements Resource {
                     new Text(indirect.reference().asString())
                 )
             );
-        return new Indirect(dictionary);
+        return new Indirect(
+            num,
+            0,
+            dictionary,
+            new BytesOf(indirect.asBytes())
+        );
     }
 }

@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.content;
 
-import com.github.fabriciofx.cactoos.pdf.Serial;
+import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
@@ -49,7 +49,7 @@ final class TextTest {
                     50,
                     20,
                     new TextOf("Hello World")
-                ).indirect(new Serial(1))
+                ).indirect(new Serial()).asBytes()
             ),
             new IsText(
                 new Joined(
@@ -97,7 +97,7 @@ final class TextTest {
                         "deserunt laborum mollit labore",
                         "id amet."
                     )
-                ).indirect(new Serial(1))
+                ).indirect(new Serial()).asBytes()
             ),
             new IsText(
                 new Joined(

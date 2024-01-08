@@ -21,48 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.resource;
+package com.github.fabriciofx.cactoos.pdf.id;
 
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.Indirect;
-import com.github.fabriciofx.cactoos.pdf.Resource;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import com.github.fabriciofx.cactoos.pdf.type.Name;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Font Family.
+ * Serial.
  *
  * @since 0.0.1
  */
-public final class FontFamily implements Resource {
+public final class Serial implements Id {
     /**
-     * Font base.
+     * Seed.
      */
-    private final String base;
+    private final AtomicInteger seed;
 
     /**
-     * Font subtype.
+     * Ctor.
      */
-    private final String subtype;
+    public Serial() {
+        this(1);
+    }
 
     /**
      * Ctor.
      *
-     * @param base Font base
-     * @param subtype Font subtype
+     * @param seed Seed to start counting
      */
-    public FontFamily(final String base, final String subtype) {
-        this.base = base;
-        this.subtype = subtype;
+    public Serial(final int seed) {
+        this(new AtomicInteger(seed));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param seed Seed to start counting
+     */
+    public Serial(final AtomicInteger seed) {
+        this.seed = seed;
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("Font"))
-            .add("BaseFont", new Name(this.base))
-            .add("Subtype", new Name(this.subtype));
-        return new Indirect(num, 0, dictionary);
+    public Integer value() {
+        return this.seed.get();
+    }
+
+    @Override
+    public int increment() {
+        return this.seed.incrementAndGet();
     }
 }

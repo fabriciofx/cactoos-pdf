@@ -21,48 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.resource;
+package com.github.fabriciofx.cactoos.pdf.id;
 
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.Indirect;
-import com.github.fabriciofx.cactoos.pdf.Resource;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import com.github.fabriciofx.cactoos.pdf.type.Name;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsNumber;
 
 /**
- * Font Family.
+ * Test case for {@link Serial}.
  *
  * @since 0.0.1
  */
-public final class FontFamily implements Resource {
-    /**
-     * Font base.
-     */
-    private final String base;
-
-    /**
-     * Font subtype.
-     */
-    private final String subtype;
-
-    /**
-     * Ctor.
-     *
-     * @param base Font base
-     * @param subtype Font subtype
-     */
-    public FontFamily(final String base, final String subtype) {
-        this.base = base;
-        this.subtype = subtype;
+final class SerialTest {
+    @Test
+    void startInOne() {
+        new Assertion<>(
+            "Must start in one",
+            new Serial().value(),
+            new IsNumber(1)
+        ).affirm();
     }
 
-    @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("Font"))
-            .add("BaseFont", new Name(this.base))
-            .add("Subtype", new Name(this.subtype));
-        return new Indirect(num, 0, dictionary);
+    @Test
+    void increment() {
+        new Assertion<>(
+            "Must increment return old value",
+            new Serial().increment(),
+            new IsNumber(2)
+        ).affirm();
+    }
+
+    @Test
+    void incrementAfterValueReturnNewValue() throws Exception {
+        final Id id = new Serial();
+        id.increment();
+        new Assertion<>(
+            "Must start in one",
+            id.value(),
+            new IsNumber(2)
+        ).affirm();
     }
 }

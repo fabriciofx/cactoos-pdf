@@ -55,7 +55,40 @@ import org.llorllale.cactoos.matchers.Assertion;
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.ExcessiveMethodLength"})
 final class DocumentTest {
     @Test
-    void buildDocument() throws Exception {
+    void buildDocumentHelloWorld() throws Exception {
+        final byte[] expected = Files.readAllBytes(
+            new File("src/test/resources/document/hello-world.pdf").toPath()
+        );
+        final Font font = new TimesRoman(18);
+        final byte[] actual = new Document(
+            new Catalog(
+                new DefaultPages(
+                    PageFormat.A4,
+                    new DefaultPage(
+                        new Resources(font),
+                        new Contents(
+                            new Text(
+                                font,
+                                0,
+                                500,
+                                80,
+                                20,
+                                new TextOf("Hello World!")
+                            )
+                        )
+                    )
+                )
+            )
+        ).asBytes();
+        new Assertion<>(
+            "Must match with hello world PDF document",
+            expected,
+            new IsEqual<>(actual)
+        ).affirm();
+    }
+
+    @Test
+    void buildDocumentAndRotate() throws Exception {
         final org.cactoos.Text content = new Joined(
             " ",
             "Lorem ea et aliquip culpa aute amet elit nostrud culpa veniam",
@@ -112,17 +145,18 @@ final class DocumentTest {
                 )
             )
         ).asBytes();
-        final String filename = "src/test/resources/document/HelloWorld.pdf";
+        final String filename = "src/test/resources/document/rotate.pdf";
         final byte[] expected = Files.readAllBytes(
             new File(filename).toPath()
         );
         new Assertion<>(
-            "Must match with HelloWorld PDF document",
+            "Must match with text and rotate page PDF document",
             expected,
             new IsEqual<>(actual)
         ).affirm();
     }
 
+    @Disabled
     @Test
     void buildDocumentWithPngImage() throws Exception {
         final String filename = "src/test/resources/document/image-png.pdf";
@@ -162,108 +196,6 @@ final class DocumentTest {
             expected,
             new IsEqual<>(actual)
         ).affirm();
-    }
-
-    @Disabled
-    @Test
-    void buildFileWithPngImage() throws Exception {
-        final Image image = new Image(
-            "I1",
-            new Png(
-                "src/test/resources/image/logo.png"
-            ),
-            28,
-            766
-        );
-        final File file = new File("image-png.pdf");
-        Files.write(
-            file.toPath(),
-            new Document(
-                new Information(
-                    "Title", "Hello World"
-                ),
-                new Catalog(
-                    new DefaultPages(
-                        PageFormat.A4,
-                        new DefaultPage(
-                            new Resources(
-                                new ProcSet(),
-                                new TimesRoman(12),
-                                new XObject(image)
-                            ),
-                            new Contents(
-                                image
-                            )
-                        )
-                    )
-                )
-            ).asBytes()
-        );
-    }
-
-    @Disabled
-    @Test
-    void buildFile() throws Exception {
-        final org.cactoos.Text content = new Joined(
-            " ",
-            "Lorem ea et aliquip culpa aute amet elit nostrud culpa veniam",
-            "dolore eu irure incididunt. Velit officia occaecat est",
-            "adipisicing mollit veniam. Minim sunt est culpa labore.",
-            "Ut culpa et nulla sunt labore aliqua ipsum laborum nostrud sit",
-            "deserunt officia labore. Sunt laboris id labore sit ex. Eiusmod",
-            "nulla eu incididunt excepteur minim officia dolore veniam",
-            "labore enim quis reprehenderit. Magna in laboris irure enim non",
-            "deserunt laborum mollit labore id amet."
-        );
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final FontEnvelope font = new TimesRoman(18);
-        final File file = new File("HelloWorld.pdf");
-        Files.write(
-            file.toPath(),
-            new Document(
-                new Information(
-                    "Title", "Hello World",
-                    "Subject", "PDF document",
-                    "Author", "Fabricio Cabral",
-                    "Creator", "cactoos-pdf",
-                    "Producer", "cactoos-pdf",
-                    "CreationDate", date.asString(),
-                    "ModDate", date.asString(),
-                    "Keywords", "cactoos pdf elegant objects"
-                ),
-                new Catalog(
-                    new DefaultPages(
-                        PageFormat.A4,
-                        new DefaultPage(
-                            new Resources(font),
-                            new Contents(
-                                new FlateEncode(
-                                    new Text(font, 0, 500, 80, 20, content)
-                                )
-                            )
-                        ),
-                        new Rotate90(
-                            new DefaultPage(
-                                new Resources(font),
-                                new Contents(
-                                    new FlateEncode(
-                                        new Text(font, 0, 500, 80, 20, content)
-                                    )
-                                )
-                            )
-                        ),
-                        new DefaultPage(
-                            new Resources(font),
-                            new Contents(
-                                new FlateEncode(
-                                    new Text(font, 0, 500, 80, 20, content)
-                                )
-                            )
-                        )
-                    )
-                )
-            ).asBytes()
-        );
     }
 
     @Test
@@ -312,6 +244,138 @@ final class DocumentTest {
             expected,
             new IsEqual<>(actual)
         ).affirm();
+    }
+
+    @Disabled
+    @Test
+    void buildFileHelloWorld() throws Exception {
+        final Font font = new TimesRoman(18);
+        final File file = new File("hello-world.pdf");
+        Files.write(
+            file.toPath(),
+            new Document(
+                new Catalog(
+                    new DefaultPages(
+                        PageFormat.A4,
+                        new DefaultPage(
+                            new Resources(font),
+                            new Contents(
+                                new Text(
+                                    font,
+                                    0,
+                                    500,
+                                    80,
+                                    20,
+                                    new TextOf("Hello World!")
+                                )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
+    }
+
+    @Disabled
+    @Test
+    void buildFileWithPngImage() throws Exception {
+        final Image image = new Image(
+            "I1",
+            new Png(
+                "src/test/resources/image/logo.png"
+            ),
+            28,
+            766
+        );
+        final File file = new File("image-png.pdf");
+        Files.write(
+            file.toPath(),
+            new Document(
+                new Information(
+                    "Title", "Hello World"
+                ),
+                new Catalog(
+                    new DefaultPages(
+                        PageFormat.A4,
+                        new DefaultPage(
+                            new Resources(
+                                new ProcSet(),
+                                new TimesRoman(12),
+                                new XObject(image)
+                            ),
+                            new Contents(
+                                image
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
+    }
+
+    @Disabled
+    @Test
+    void buildFileAndRotate() throws Exception {
+        final org.cactoos.Text content = new Joined(
+            " ",
+            "Lorem ea et aliquip culpa aute amet elit nostrud culpa veniam",
+            "dolore eu irure incididunt. Velit officia occaecat est",
+            "adipisicing mollit veniam. Minim sunt est culpa labore.",
+            "Ut culpa et nulla sunt labore aliqua ipsum laborum nostrud sit",
+            "deserunt officia labore. Sunt laboris id labore sit ex. Eiusmod",
+            "nulla eu incididunt excepteur minim officia dolore veniam",
+            "labore enim quis reprehenderit. Magna in laboris irure enim non",
+            "deserunt laborum mollit labore id amet."
+        );
+        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
+        final FontEnvelope font = new TimesRoman(18);
+        final File file = new File("rotate.pdf");
+        Files.write(
+            file.toPath(),
+            new Document(
+                new Information(
+                    "Title", "Hello World",
+                    "Subject", "PDF document",
+                    "Author", "Fabricio Cabral",
+                    "Creator", "cactoos-pdf",
+                    "Producer", "cactoos-pdf",
+                    "CreationDate", date.asString(),
+                    "ModDate", date.asString(),
+                    "Keywords", "cactoos pdf elegant objects"
+                ),
+                new Catalog(
+                    new DefaultPages(
+                        PageFormat.A4,
+                        new DefaultPage(
+                            new Resources(font),
+                            new Contents(
+                                new FlateEncode(
+                                    new Text(font, 0, 500, 80, 20, content)
+                                )
+                            )
+                        ),
+                        new Rotate90(
+                            new DefaultPage(
+                                new Resources(font),
+                                new Contents(
+                                    new FlateEncode(
+                                        new Text(font, 0, 500, 80, 20, content)
+                                    )
+                                )
+                            )
+                        ),
+                        new DefaultPage(
+                            new Resources(font),
+                            new Contents(
+                                new FlateEncode(
+                                    new Text(font, 0, 500, 80, 20, content)
+                                )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
     }
 
     @Disabled

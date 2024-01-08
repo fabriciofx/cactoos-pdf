@@ -23,43 +23,63 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.content.Image;
+import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
-import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
-import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
+import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.IsText;
+import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
- * Test case for {@link FontEnvelope}.
+ * Test case for {@link XObject}.
  *
  * @since 0.0.1
  */
-final class FontTest {
+final class XObjectTest {
     @Test
-    void fontDictionary() throws Exception {
+    void xobjectDictionary() throws Exception {
         new Assertion<>(
-            "Must must print a Times-Roman font dictionary",
-            new TextOf(
-                new TimesRoman(12).indirect(new Serial()).dictionary()
-            ),
-            new IsText("<< /Font << /F1 2 0 R >> >>")
+            "Must print XObject dictionary",
+            new XObject(
+                new Image(
+                    "I1",
+                    new Png("src/test/resources/image/logo.png"),
+                    28,
+                    766
+                )
+            ).indirect(new Serial()).dictionary(),
+            new IsText("<< /XObject << /I1 3 0 R >> >>")
         ).affirm();
     }
 
     @Test
-    void fontAsBytes() throws Exception {
+    void xobjectAsBytes() throws Exception {
         new Assertion<>(
-            "Must must build Times-Roman font as bytes",
+            "Must print XObject as bytes",
             new TextOf(
-                new TimesRoman(12).indirect(new Serial()).asBytes()
+                new XObject(
+                    new Image(
+                        "I1",
+                        new Png("src/test/resources/image/logo.png"),
+                        28,
+                        766
+                    )
+                ).indirect(new Serial()).asBytes()
             ),
-            new IsText(
-                new Concatenated(
-                    "2 0 obj\n<< /Type /Font /BaseFont /Times-Roman ",
-                    "/Subtype /Type1 >>\nendobj\n"
+            new AllOf<>(
+                new StartsWith(
+                    new Concatenated(
+                        "2 0 obj\n<< /XObject << /I1 3 0 R >> >>\nendobj\n",
+                        "3 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 5 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
+                    )
+                ),
+                new EndsWith(
+                    "\nendstream\nendobj\n"
                 )
             )
         ).affirm();

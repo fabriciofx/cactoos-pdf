@@ -21,48 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.resource;
+package com.github.fabriciofx.cactoos.pdf.id;
 
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.Indirect;
-import com.github.fabriciofx.cactoos.pdf.Resource;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import com.github.fabriciofx.cactoos.pdf.type.Name;
+import org.cactoos.scalar.Unchecked;
 
 /**
- * Font Family.
+ * Immutable.
  *
  * @since 0.0.1
  */
-public final class FontFamily implements Resource {
+public final class Immutable implements Id {
     /**
-     * Font base.
+     * The Id.
      */
-    private final String base;
-
-    /**
-     * Font subtype.
-     */
-    private final String subtype;
+    private final Id origin;
 
     /**
      * Ctor.
      *
-     * @param base Font base
-     * @param subtype Font subtype
+     * @param id The id
      */
-    public FontFamily(final String base, final String subtype) {
-        this.base = base;
-        this.subtype = subtype;
+    public Immutable(final Id id) {
+        this.origin = id;
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("Font"))
-            .add("BaseFont", new Name(this.base))
-            .add("Subtype", new Name(this.subtype));
-        return new Indirect(num, 0, dictionary);
+    public int increment() {
+        return new Unchecked<>(this.origin).value();
+    }
+
+    @Override
+    public Integer value() throws Exception {
+        return this.origin.value();
     }
 }

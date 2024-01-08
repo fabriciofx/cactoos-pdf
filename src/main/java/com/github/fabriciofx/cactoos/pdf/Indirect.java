@@ -147,21 +147,17 @@ public final class Indirect implements Bytes {
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        if (!this.dict.isEmpty()) {
-            if (this.id > 0) {
-                baos.write(
-                    new FormattedText(
-                        "%d %d obj\n",
-                        Locale.ENGLISH,
-                        this.id,
-                        this.generation
-                    ).asString().getBytes(StandardCharsets.UTF_8)
-                );
-                baos.write(this.dict.asBytes());
-                baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
-            } else {
-                baos.write(this.dict.asBytes());
-            }
+        if (!this.dict.isEmpty() && this.id > 0) {
+            baos.write(
+                new FormattedText(
+                    "%d %d obj\n",
+                    Locale.ENGLISH,
+                    this.id,
+                    this.generation
+                ).asString().getBytes(StandardCharsets.UTF_8)
+            );
+            baos.write(this.dict.asBytes());
+            baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         }
         for (final Bytes bytes : this.content) {
             baos.write(bytes.asBytes());

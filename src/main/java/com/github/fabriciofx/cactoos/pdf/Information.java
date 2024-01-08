@@ -339,6 +339,6 @@ public final class Information implements Object {
 
     @Override
     public Indirect indirect(final Id id) throws Exception {
-        return new Indirect(id.increment(), 0, this.metadata);
+        return new Indirect(id.value(), 0, this.metadata);
     }
 }

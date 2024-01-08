@@ -23,9 +23,11 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
-import com.github.fabriciofx.cactoos.pdf.Serial;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
+import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
+import org.cactoos.text.Concatenated;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -92,22 +94,23 @@ final class PngTest {
         final Raw raw = new PngRaw(filename);
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         expected.write(
-            new Joined(
-                " ",
-                "1 0 obj\n<< /Type /XObject /Subtype /Image /Width 104",
-                "/Height 71 /ColorSpace [/Indexed /DeviceRGB 63 3 0 R]",
-                "/BitsPerComponent 8 /Filter /FlateDecode /DecodeParms <<",
-                "/Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104",
+            new Concatenated(
+                "2 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 ",
+                "/Height 71 /ColorSpace [/Indexed /DeviceRGB 63 4 0 R] ",
+                "/BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << ",
+                "/Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 ",
                 ">> /Mask [0 0] /Length 2086 >>\nstream\n"
-            ).asString().getBytes()
+            ).asString().getBytes(StandardCharsets.UTF_8)
         );
         expected.write(raw.body().asStream());
         expected.write(
-            "\nendstream\nendobj\n3 0 obj\n<< /Length 192 >>\nstream\n"
-                .getBytes()
+            "\nendstream\nendobj\n4 0 obj\n<< /Length 192 >>\nstream\n"
+                .getBytes(StandardCharsets.UTF_8)
         );
         expected.write(raw.palette(new Serial()).asStream());
-        expected.write("\nendstream\nendobj\n".getBytes());
+        expected.write(
+            "\nendstream\nendobj\n".getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Must represent a PNG content",
             expected.toByteArray(),

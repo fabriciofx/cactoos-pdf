@@ -174,7 +174,7 @@ public final class Image implements Content {
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new DefaultIndirect(num, 0, dictionary, this.png.indirect(id));
+        return new DefaultIndirect(num, 0, dictionary);
     }
 
     /**

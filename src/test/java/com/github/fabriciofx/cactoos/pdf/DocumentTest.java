@@ -156,7 +156,6 @@ final class DocumentTest {
         ).affirm();
     }
 
-    @Disabled
     @Test
     void buildDocumentWithPngImage() throws Exception {
         final String filename = "src/test/resources/document/image-png.pdf";

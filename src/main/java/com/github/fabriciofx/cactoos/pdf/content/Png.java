@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.png.Header;
 import com.github.fabriciofx.cactoos.pdf.png.Palette;
 import com.github.fabriciofx.cactoos.pdf.png.PngRaw;
@@ -130,7 +131,7 @@ public final class Png implements Content {
             .add("Mask", new Array(new Int(0), new Int(0)))
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new Indirect(num, 0, dictionary, pal);
+        return new DefaultIndirect(num, 0, dictionary, pal);
     }
 
     @Override

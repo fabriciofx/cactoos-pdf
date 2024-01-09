@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
@@ -86,7 +87,7 @@ public final class FlateEncode implements Content {
             .add("Filter", new Name("FlateDecode"))
             .with(new Stream(stream));
         final Indirect indirect = this.origin.indirect(id);
-        return new Indirect(
+        return new DefaultIndirect(
             indirect.reference().id(),
             indirect.reference().generation(),
             dictionary

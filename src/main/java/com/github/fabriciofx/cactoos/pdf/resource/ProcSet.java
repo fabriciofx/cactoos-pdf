@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 
@@ -42,6 +43,6 @@ public final class ProcSet implements Resource {
                 "ProcSet",
                 new Array("PDF", "Text", "ImageB", "ImageC", "ImageI")
             );
-        return new Indirect(dictionary);
+        return new DefaultIndirect(dictionary);
     }
 }

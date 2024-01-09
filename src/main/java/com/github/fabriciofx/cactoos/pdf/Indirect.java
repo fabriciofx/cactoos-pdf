@@ -25,143 +25,25 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Locale;
 import org.cactoos.Bytes;
-import org.cactoos.list.ListOf;
-import org.cactoos.text.FormattedText;
 
 /**
  * Indirect.
  *
  * @since 0.0.1
  */
-public final class Indirect implements Bytes {
-    /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
-    /**
-     * Dictionary.
-     */
-    private final Dictionary dict;
-
-    /**
-     * Content.
-     */
-    private final List<Bytes> content;
-
-    /**
-     * Ctor.
-     *
-     * @param dictionary Dictionary
-     * @param content Content
-     */
-    public Indirect(
-        final Dictionary dictionary,
-        final Bytes... content
-    ) {
-        this(-1, 0, dictionary, content);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Object id
-     * @param dictionary Dictionary
-     * @param content Content
-     */
-    public Indirect(
-        final int id,
-        final Dictionary dictionary,
-        final Bytes... content
-    ) {
-        this(id, 0, dictionary, content);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Object id
-     * @param generation Object generation
-     * @param dictionary Dictionary
-     * @param content Content
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public Indirect(
-        final int id,
-        final int generation,
-        final Dictionary dictionary,
-        final Bytes... content
-    ) {
-        this(id, generation, dictionary, new ListOf<>(content));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Object id
-     * @param generation Object generation
-     * @param dictionary Dictionary
-     * @param content Content
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public Indirect(
-        final int id,
-        final int generation,
-        final Dictionary dictionary,
-        final List<Bytes> content
-    ) {
-        this.id = id;
-        this.generation = generation;
-        this.dict = dictionary;
-        this.content = content;
-    }
-
+public interface Indirect extends Bytes {
     /**
      * Create an object reference.
      *
      * @return A reference
      */
-    public Reference reference() {
-        return new Reference(this.id, this.generation);
-    }
+    Reference reference();
 
     /**
      * Create a dictionary.
      *
      * @return A dictionary
      */
-    public Dictionary dictionary() {
-        return this.dict;
-    }
-
-    @Override
-    public byte[] asBytes() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        if (!this.dict.isEmpty() && this.id > 0) {
-            baos.write(
-                new FormattedText(
-                    "%d %d obj\n",
-                    Locale.ENGLISH,
-                    this.id,
-                    this.generation
-                ).asString().getBytes(StandardCharsets.UTF_8)
-            );
-            baos.write(this.dict.asBytes());
-            baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
-        }
-        for (final Bytes bytes : this.content) {
-            baos.write(bytes.asBytes());
-        }
-        return baos.toByteArray();
-    }
+    Dictionary dictionary();
 }

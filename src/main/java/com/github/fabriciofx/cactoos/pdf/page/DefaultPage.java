@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
@@ -81,6 +82,6 @@ public final class DefaultPage implements Page {
             .add("Resources", new Text(resrcs.reference().asString()))
             .add("Contents", new Text(conts.reference().asString()))
             .add("Parent", new Text(new Reference(parent, 0).asString()));
-        return new Indirect(num, 0, dictionary, resrcs, conts);
+        return new DefaultIndirect(num, 0, dictionary, resrcs, conts);
     }
 }

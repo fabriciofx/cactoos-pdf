@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.text.Escaped;
 import com.github.fabriciofx.cactoos.pdf.text.Multiline;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
@@ -177,6 +178,6 @@ public final class Text implements Content {
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new Indirect(num, 0, dictionary);
+        return new DefaultIndirect(num, 0, dictionary);
     }
 }

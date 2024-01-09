@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import org.cactoos.bytes.BytesOf;
@@ -63,7 +64,7 @@ public final class XObject implements Resource {
                     new Text(indirect.reference().asString())
                 )
             );
-        return new Indirect(
+        return new DefaultIndirect(
             num,
             0,
             dictionary,

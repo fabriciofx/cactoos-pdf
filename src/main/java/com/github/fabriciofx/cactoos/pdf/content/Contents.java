@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Object;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -64,6 +65,6 @@ public final class Contents extends ListEnvelope<Content> implements Object {
         for (final Object obj : this) {
             baos.write(obj.indirect(id).asBytes());
         }
-        return new Indirect(num, 0, new Dictionary(), baos::toByteArray);
+        return new DefaultIndirect(num, 0, new Dictionary(), baos::toByteArray);
     }
 }

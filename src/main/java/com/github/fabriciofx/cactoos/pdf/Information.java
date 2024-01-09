@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Literal;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
@@ -339,6 +340,6 @@ public final class Information implements Object {
 
     @Override
     public Indirect indirect(final Id id) throws Exception {
-        return new Indirect(id.value(), 0, this.metadata);
+        return new DefaultIndirect(id.value(), 0, this.metadata);
     }
 }

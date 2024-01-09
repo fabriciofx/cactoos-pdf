@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
@@ -93,7 +94,7 @@ public final class DefaultPages implements Pages {
         for (final Indirect indirect : indirects) {
             baos.write(indirect.asBytes());
         }
-        return new Indirect(num, 0, dictionary, baos::toByteArray);
+        return new DefaultIndirect(num, 0, dictionary, baos::toByteArray);
     }
 
     @Override

@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 
@@ -63,6 +64,6 @@ public final class FontFamily implements Resource {
             .add("Type", new Name("Font"))
             .add("BaseFont", new Name(this.base))
             .add("Subtype", new Name(this.subtype));
-        return new Indirect(num, 0, dictionary);
+        return new DefaultIndirect(num, 0, dictionary);
     }
 }

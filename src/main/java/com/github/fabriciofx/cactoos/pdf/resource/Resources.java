@@ -26,6 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -72,6 +73,6 @@ public final class Resources extends ListEnvelope<Resource>
         for (final Indirect indirect : indirects) {
             baos.write(indirect.asBytes());
         }
-        return new Indirect(num, 0, dictionary, baos::toByteArray);
+        return new DefaultIndirect(num, 0, dictionary, baos::toByteArray);
     }
 }

@@ -21,40 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
-
-import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import com.github.fabriciofx.cactoos.pdf.type.Name;
-import com.github.fabriciofx.cactoos.pdf.type.Text;
 
 /**
- * Catalog.
+ * Indirect.
  *
  * @since 0.0.1
  */
-public final class Catalog implements Object {
-    /**
-     * Pages.
-     */
-    private final Pages pages;
-
-    /**
-     * Ctor.
-     *
-     * @param pages Pages
-     */
-    public Catalog(final Pages pages) {
-        this.pages = pages;
-    }
-
-    @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
-        final Indirect indirect = this.pages.indirect(id);
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("Catalog"))
-            .add("Pages", new Text(indirect.reference().asString()));
-        return new DefaultIndirect(num, 0, dictionary, indirect);
-    }
-}
+package com.github.fabriciofx.cactoos.pdf.indirect;

@@ -57,7 +57,6 @@ final class ResourcesTest {
                     id,
                     new Image(
                         id,
-                        "I1",
                         new Png(id, "src/test/resources/image/logo.png"),
                         28,
                         766
@@ -67,7 +66,7 @@ final class ResourcesTest {
             new IsText(
                 new Concatenated(
                     "<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
-                    " /Font << /F1 1 0 R >> /XObject << /I1 8 0 R >> >>"
+                    " /Font << /F1 1 0 R >> /XObject << /I2 8 0 R >> >>"
                 )
             )
         ).affirm();
@@ -87,7 +86,6 @@ final class ResourcesTest {
                         id,
                         new Image(
                             id,
-                            "I1",
                             new Png(id, "src/test/resources/image/logo.png"),
                             28,
                             766
@@ -98,9 +96,9 @@ final class ResourcesTest {
             new AllOf<>(
                 new StartsWith(
                     new Concatenated(
-                        "4 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> /XObject << /I1 8 0 R >> >>\nendobj\n",
+                        "4 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> /XObject << /I2 8 0 R >> >>\nendobj\n",
                         "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj\n",
-                        "3 0 obj\n<< /XObject << /I1 8 0 R >> >>\nendobj\n",
+                        "3 0 obj\n<< /XObject << /I2 8 0 R >> >>\nendobj\n",
                         "8 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 6 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
                     )
                 ),

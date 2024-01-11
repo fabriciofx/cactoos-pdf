@@ -51,7 +51,6 @@ final class XObjectTest {
                 id,
                 new Image(
                     id,
-                    "I1",
                     new Png(id, "src/test/resources/image/logo.png"),
                     28,
                     766
@@ -71,7 +70,6 @@ final class XObjectTest {
                     id,
                     new Image(
                         id,
-                        "I1",
                         new Png(id, "src/test/resources/image/logo.png"),
                         28,
                         766

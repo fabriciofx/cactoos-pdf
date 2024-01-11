@@ -178,7 +178,6 @@ final class DocumentTest {
         final Id id = new Serial();
         final Image image = new Image(
             id,
-            "I1",
             new Png(
                 id,
                 "src/test/resources/image/logo.png"
@@ -315,7 +314,6 @@ final class DocumentTest {
         final Id id = new Serial();
         final Image image = new Image(
             id,
-            "I1",
             new Png(
                 id,
                 "src/test/resources/image/logo.png"

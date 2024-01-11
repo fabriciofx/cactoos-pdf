@@ -34,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import org.cactoos.Scalar;
 import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Image.
@@ -50,11 +51,6 @@ public final class Image implements Content {
      * Generation.
      */
     private final int generation;
-
-    /**
-     * Image name.
-     */
-    private final String label;
 
     /**
      * Image PNG.
@@ -85,7 +81,6 @@ public final class Image implements Content {
      * Ctor.
      *
      * @param id Id number
-     * @param name Image name
      * @param png Raw PNG
      * @param posx Position X
      * @param posy Position Y
@@ -93,7 +88,6 @@ public final class Image implements Content {
      */
     public Image(
         final Id id,
-        final String name,
         final Png png,
         final double posx,
         final double posy
@@ -101,7 +95,6 @@ public final class Image implements Content {
         this(
             id.increment(),
             0,
-            name,
             png,
             posx,
             posy,
@@ -114,7 +107,6 @@ public final class Image implements Content {
      * Ctor.
      *
      * @param id Id number
-     * @param name Image name
      * @param png Raw PNG
      * @param posx Position X
      * @param posy Position Y
@@ -124,7 +116,6 @@ public final class Image implements Content {
      */
     public Image(
         final Id id,
-        final String name,
         final Png png,
         final double posx,
         final double posy,
@@ -134,7 +125,6 @@ public final class Image implements Content {
         this(
             id.increment(),
             0,
-            name,
             png,
             posx,
             posy,
@@ -148,7 +138,6 @@ public final class Image implements Content {
      *
      * @param id Id number
      * @param generation Generation number
-     * @param name Image name
      * @param png Raw PNG
      * @param posx Position X
      * @param posy Position Y
@@ -159,7 +148,6 @@ public final class Image implements Content {
     public Image(
         final int id,
         final int generation,
-        final String name,
         final Png png,
         final double posx,
         final double posy,
@@ -168,7 +156,6 @@ public final class Image implements Content {
     ) {
         this.id = id;
         this.generation = generation;
-        this.label = name;
         this.png = png;
         this.posx = posx;
         this.posy = posy;
@@ -182,7 +169,7 @@ public final class Image implements Content {
      * @return The image name
      */
     public String name() {
-        return this.label;
+        return new UncheckedText(new FormattedText("I%d", this.id)).asString();
     }
 
     @Override
@@ -194,7 +181,7 @@ public final class Image implements Content {
             this.height.value(),
             this.posx,
             this.posy,
-            this.label
+            this.name()
         ).asString().getBytes(StandardCharsets.UTF_8);
     }
 

@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource.font;
 
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 
 /**
@@ -66,11 +67,23 @@ public final class Helvetica extends FontEnvelope {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param size Font size in points
      */
-    public Helvetica(final int size) {
+    public Helvetica(final Id id, final int size) {
+        this(id.increment(), 0, size);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param generation Generation number
+     * @param size Font size in points
+     */
+    public Helvetica(final int id, final int generation, final int size) {
         super(
-            new FontFamily("Helvetica", "Type1"),
+            new FontFamily(id, generation, "Helvetica", "Type1"),
             "F2",
             size
         );

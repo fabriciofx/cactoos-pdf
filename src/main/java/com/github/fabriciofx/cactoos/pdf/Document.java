@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
@@ -56,6 +55,11 @@ public final class Document implements Bytes {
     private static final String EOF = "%%EOF";
 
     /**
+     * Id.
+     */
+    private final Id id;
+
+    /**
      * PDF metadata.
      */
     private final Information information;
@@ -68,19 +72,26 @@ public final class Document implements Bytes {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param catalog Catalog
      */
-    public Document(final Catalog catalog) {
-        this(new Information(), catalog);
+    public Document(final Id id, final Catalog catalog) {
+        this(id, new Information(id), catalog);
     }
 
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param information Metadata
      * @param catalog Catalog
      */
-    public Document(final Information information, final Catalog catalog) {
+    public Document(
+        final Id id,
+        final Information information,
+        final Catalog catalog
+    ) {
+        this.id = id;
         this.information = information;
         this.catalog = catalog;
     }
@@ -96,17 +107,16 @@ public final class Document implements Bytes {
             ).asString().getBytes(StandardCharsets.UTF_8)
         );
         baos.write(Document.SIGNATURE);
-        final Id id = new Serial();
-        final Indirect info = this.information.indirect(id);
+        final Indirect info = this.information.indirect();
         baos.write(info.asBytes());
-        final Indirect clog = this.catalog.indirect(id);
+        final Indirect clog = this.catalog.indirect();
         baos.write(clog.asBytes());
         baos.write(
             new FormattedText(
                 "trailer << /Root %s /Size %d /Info %s >>\n",
                 Locale.ENGLISH,
                 clog.reference().asString(),
-                id.increment(),
+                this.id.value(),
                 info.reference().asString()
             ).asString().getBytes(StandardCharsets.UTF_8)
         );

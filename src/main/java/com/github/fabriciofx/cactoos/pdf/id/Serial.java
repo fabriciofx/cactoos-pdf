@@ -69,6 +69,6 @@ public final class Serial implements Id {
 
     @Override
     public int increment() {
-        return this.seed.incrementAndGet();
+        return this.seed.getAndIncrement();
     }
 }

@@ -24,7 +24,6 @@
 package com.github.fabriciofx.cactoos.pdf.png;
 
 import com.github.fabriciofx.cactoos.pdf.Flow;
-import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import java.util.Arrays;
 
@@ -93,13 +92,13 @@ public final class SafePngRaw implements Raw {
     }
 
     @Override
-    public Palette palette(final Id id) throws Exception {
+    public Palette palette() throws Exception {
         final Header header = this.header();
-        final Indirect indirect = this.origin.palette(id).indirect(id);
+        final Indirect indirect = this.origin.palette().indirect();
         if (header.color().space().equals("Indexed")
             && indirect.asBytes().length == 0) {
             throw new InvalidFormatException("Missing palette in PNG file");
         }
-        return this.origin.palette(id);
+        return this.origin.palette();
     }
 }

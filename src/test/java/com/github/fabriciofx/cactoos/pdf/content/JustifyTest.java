@@ -25,11 +25,13 @@ package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Catalog;
 import com.github.fabriciofx.cactoos.pdf.Document;
+import com.github.fabriciofx.cactoos.pdf.Font;
+import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
@@ -48,16 +50,22 @@ final class JustifyTest {
     @Disabled
     @Test
     void justifyText() throws Exception {
-        final FontEnvelope font = new TimesRoman(12);
+        final Id id = new Serial();
+        final Font font = new TimesRoman(id, 12);
         final byte[] actual = new Document(
+            id,
             new Catalog(
+                id,
                 new DefaultPages(
+                    id,
                     PageFormat.A4,
                     new DefaultPage(
-                        new Resources(font),
+                        id,
+                        new Resources(id, font),
                         new Contents(
                             new Justify(
                                 new Text(
+                                    id,
                                     font,
                                     20,
                                     800,
@@ -88,19 +96,25 @@ final class JustifyTest {
     @Disabled
     @Test
     void buildFileJustifyText() throws Exception {
-        final FontEnvelope font = new TimesRoman(12);
+        final Id id = new Serial();
+        final Font font = new TimesRoman(id, 12);
         final File file = new File("justify.pdf");
         Files.write(
             file.toPath(),
             new Document(
+                id,
                 new Catalog(
+                    id,
                     new DefaultPages(
+                        id,
                         PageFormat.A4,
                         new DefaultPage(
-                            new Resources(font),
+                            id,
+                            new Resources(id, font),
                             new Contents(
                                 new Justify(
                                     new Text(
+                                        id,
                                         font,
                                         20,
                                         800,

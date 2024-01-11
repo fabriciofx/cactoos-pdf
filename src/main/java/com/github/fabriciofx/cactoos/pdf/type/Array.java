@@ -46,6 +46,13 @@ public final class Array implements Type<Type<?>> {
 
     /**
      * Ctor.
+     */
+    public Array() {
+        this(new ListOf<>());
+    }
+
+    /**
+     * Ctor.
      *
      * @param names Shortcut for Names
      */

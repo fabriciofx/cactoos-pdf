@@ -33,7 +33,7 @@ import org.cactoos.scalar.Unchecked;
  */
 public final class Immutable implements Id {
     /**
-     * The Id.
+     * Id.
      */
     private final Id origin;
 

@@ -36,6 +36,16 @@ import com.github.fabriciofx.cactoos.pdf.type.Text;
 @SuppressWarnings("PMD.ExcessiveParameterList")
 public final class Information implements Object {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Metadata.
      */
     private final Dictionary metadata;
@@ -43,6 +53,7 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -63,6 +74,7 @@ public final class Information implements Object {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
+        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -81,6 +93,8 @@ public final class Information implements Object {
         final String value8
     ) {
         this(
+            id.increment(),
+            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -96,6 +110,7 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -114,6 +129,7 @@ public final class Information implements Object {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
+        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -130,6 +146,8 @@ public final class Information implements Object {
         final String value7
     ) {
         this(
+            id.increment(),
+            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -144,6 +162,7 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -160,6 +179,7 @@ public final class Information implements Object {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
+        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -174,6 +194,8 @@ public final class Information implements Object {
         final String value6
     ) {
         this(
+            id.increment(),
+            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -187,6 +209,7 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -201,6 +224,7 @@ public final class Information implements Object {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
+        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -213,6 +237,8 @@ public final class Information implements Object {
         final String value5
     ) {
         this(
+            id.increment(),
+            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -225,6 +251,7 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -237,6 +264,7 @@ public final class Information implements Object {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
+        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -247,6 +275,8 @@ public final class Information implements Object {
         final String value4
     ) {
         this(
+            id.increment(),
+            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -258,6 +288,7 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -268,6 +299,7 @@ public final class Information implements Object {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
+        final Id id,
         final String name1,
         final String value1,
         final String name2,
@@ -276,6 +308,8 @@ public final class Information implements Object {
         final String value3
     ) {
         this(
+            id.increment(),
+            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -286,6 +320,7 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name1 Metadata name1
      * @param value1 Metadata value1
      * @param name2 Metadata name2
@@ -294,12 +329,15 @@ public final class Information implements Object {
      * @checkstyle ParameterNameCheck (30 lines)
      */
     public Information(
+        final Id id,
         final String name1,
         final String value1,
         final String name2,
         final String value2
     ) {
         this(
+            id.increment(),
+            0,
             new Dictionary()
                 .add(name1, new Literal(value1))
                 .add(name2, new Literal(value2))
@@ -309,11 +347,14 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name Metadata name
      * @param value Metadata value
      */
-    public Information(final String name, final String value) {
+    public Information(final Id id, final String name, final String value) {
         this(
+            id.increment(),
+            0,
             new Dictionary()
                 .add(name, new Literal(value))
         );
@@ -321,9 +362,13 @@ public final class Information implements Object {
 
     /**
      * Ctor.
+     *
+     * @param id Id number
      */
-    public Information() {
+    public Information(final Id id) {
         this(
+            id.increment(),
+            0,
             new Dictionary()
                 .add("Producer", new Text("cactoos-pdf"))
         );
@@ -332,14 +377,22 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
+     * @param generation Generation number
      * @param metadata Metadata
      */
-    public Information(final Dictionary metadata) {
+    public Information(
+        final int id,
+        final int generation,
+        final Dictionary metadata
+    ) {
+        this.id = id;
+        this.generation = generation;
         this.metadata = metadata;
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        return new DefaultIndirect(id.value(), 0, this.metadata);
+    public Indirect indirect() throws Exception {
+        return new DefaultIndirect(this.id, this.generation, this.metadata);
     }
 }

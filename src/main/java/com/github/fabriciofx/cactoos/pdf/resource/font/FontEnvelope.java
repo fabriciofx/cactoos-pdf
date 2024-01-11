@@ -24,7 +24,6 @@
 package com.github.fabriciofx.cactoos.pdf.resource.font;
 
 import com.github.fabriciofx.cactoos.pdf.Font;
-import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
@@ -87,8 +86,8 @@ public abstract class FontEnvelope implements Font {
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final Indirect indirect = this.family.indirect(id);
+    public Indirect indirect() throws Exception {
+        final Indirect indirect = this.family.indirect();
         final Dictionary dictionary = new Dictionary()
             .add(
                 "Font",

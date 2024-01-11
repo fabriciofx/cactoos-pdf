@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
@@ -43,39 +44,45 @@ import org.llorllale.cactoos.matchers.StartsWith;
 final class XObjectTest {
     @Test
     void xobjectDictionary() throws Exception {
+        final Id id = new Serial();
         new Assertion<>(
             "Must print XObject dictionary",
             new XObject(
+                id,
                 new Image(
+                    id,
                     "I1",
-                    new Png("src/test/resources/image/logo.png"),
+                    new Png(id, "src/test/resources/image/logo.png"),
                     28,
                     766
                 )
-            ).indirect(new Serial()).dictionary(),
-            new IsText("<< /XObject << /I1 3 0 R >> >>")
+            ).indirect().dictionary(),
+            new IsText("<< /XObject << /I1 6 0 R >> >>")
         ).affirm();
     }
 
     @Test
     void xobjectAsBytes() throws Exception {
+        final Id id = new Serial();
         new Assertion<>(
             "Must print XObject as bytes",
             new TextOf(
                 new XObject(
+                    id,
                     new Image(
+                        id,
                         "I1",
-                        new Png("src/test/resources/image/logo.png"),
+                        new Png(id, "src/test/resources/image/logo.png"),
                         28,
                         766
                     )
-                ).indirect(new Serial()).asBytes()
+                ).indirect().asBytes()
             ),
             new AllOf<>(
                 new StartsWith(
                     new Concatenated(
-                        "2 0 obj\n<< /XObject << /I1 3 0 R >> >>\nendobj\n",
-                        "3 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 5 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
+                        "2 0 obj\n<< /XObject << /I1 6 0 R >> >>\nendobj\n",
+                        "6 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 4 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
                     )
                 ),
                 new EndsWith(

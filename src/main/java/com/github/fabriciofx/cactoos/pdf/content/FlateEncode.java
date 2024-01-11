@@ -24,7 +24,6 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
@@ -80,13 +79,13 @@ public final class FlateEncode implements Content {
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
+    public Indirect indirect() throws Exception {
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .add("Filter", new Name("FlateDecode"))
             .with(new Stream(stream));
-        final Indirect indirect = this.origin.indirect(id);
+        final Indirect indirect = this.origin.indirect();
         return new DefaultIndirect(
             indirect.reference().id(),
             indirect.reference().generation(),

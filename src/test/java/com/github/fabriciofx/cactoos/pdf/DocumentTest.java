@@ -28,6 +28,7 @@ import com.github.fabriciofx.cactoos.pdf.content.FlateEncode;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
+import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 import com.github.fabriciofx.cactoos.pdf.page.Rotate90;
@@ -35,7 +36,6 @@ import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.XObject;
-import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import com.github.fabriciofx.cactoos.pdf.text.Date;
 import java.io.File;
@@ -59,20 +59,25 @@ final class DocumentTest {
         final byte[] expected = Files.readAllBytes(
             new File("src/test/resources/document/hello-world.pdf").toPath()
         );
-        final Font font = new TimesRoman(18);
+        final Id id = new Serial();
+        final Font font = new TimesRoman(id, 18);
         final byte[] actual = new Document(
+            id,
             new Catalog(
+                id,
                 new DefaultPages(
+                    id,
                     PageFormat.A4,
                     new DefaultPage(
-                        new Resources(font),
+                        id,
+                        new Resources(id, font),
                         new Contents(
                             new Text(
+                                id,
                                 font,
                                 0,
                                 500,
                                 80,
-                                20,
                                 new TextOf("Hello World!")
                             )
                         )
@@ -100,10 +105,13 @@ final class DocumentTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
+        final Id id = new Serial();
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final FontEnvelope font = new TimesRoman(18);
+        final Font font = new TimesRoman(id, 18);
         final byte[] actual = new Document(
+            id,
             new Information(
+                id,
                 "Title", "Hello World",
                 "Subject", "PDF document",
                 "Author", "Fabricio Cabral",
@@ -114,31 +122,36 @@ final class DocumentTest {
                 "Keywords", "cactoos pdf elegant objects"
             ),
             new Catalog(
+                id,
                 new DefaultPages(
+                    id,
                     PageFormat.A4,
                     new DefaultPage(
-                        new Resources(font),
+                        id,
+                        new Resources(id, font),
                         new Contents(
                             new FlateEncode(
-                                new Text(font, 0, 500, 80, 20, content)
+                                new Text(id, font, 0, 500, 80, 20, content)
                             )
                         )
                     ),
                     new Rotate90(
                         new DefaultPage(
-                            new Resources(font),
+                            id,
+                            new Resources(id, font),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(font, 0, 500, 80, 20, content)
+                                    new Text(id, font, 0, 500, 80, 20, content)
                                 )
                             )
                         )
                     ),
                     new DefaultPage(
-                        new Resources(font),
+                        id,
+                        new Resources(id, font),
                         new Contents(
                             new FlateEncode(
-                                new Text(font, 0, 500, 80, 20, content)
+                                new Text(id, font, 0, 500, 80, 20, content)
                             )
                         )
                     )
@@ -162,26 +175,35 @@ final class DocumentTest {
         final byte[] expected = Files.readAllBytes(
             new File(filename).toPath()
         );
+        final Id id = new Serial();
         final Image image = new Image(
+            id,
             "I1",
             new Png(
+                id,
                 "src/test/resources/image/logo.png"
             ),
             28,
             766
         );
         final byte[] actual = new Document(
+            id,
             new Information(
+                id,
                 "Title", "Hello World"
             ),
             new Catalog(
+                id,
                 new DefaultPages(
+                    id,
                     PageFormat.A4,
                     new DefaultPage(
+                        id,
                         new Resources(
+                            id,
                             new ProcSet(),
-                            new TimesRoman(12),
-                            new XObject(image)
+                            new TimesRoman(id, 12),
+                            new XObject(id, image)
                         ),
                         new Contents(
                             image
@@ -204,9 +226,12 @@ final class DocumentTest {
             new File(filename).toPath()
         );
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final FontEnvelope font = new TimesRoman(12);
+        final Id id = new Serial();
+        final Font font = new TimesRoman(id, 12);
         final byte[] actual = new Document(
+            id,
             new Information(
+                id,
                 "Title", "Hello World",
                 "Subject", "PDF document",
                 "Author", "Fabricio Cabral",
@@ -217,12 +242,16 @@ final class DocumentTest {
                 "Keywords", "cactoos pdf elegant objects"
             ),
             new Catalog(
+                id,
                 new DefaultPages(
+                    id,
                     PageFormat.A4,
                     new DefaultPage(
-                        new Resources(font),
+                        id,
+                        new Resources(id, font),
                         new Contents(
                             new Text(
+                                id,
                                 font,
                                 20,
                                 800,
@@ -248,23 +277,28 @@ final class DocumentTest {
     @Disabled
     @Test
     void buildFileHelloWorld() throws Exception {
-        final Font font = new TimesRoman(18);
+        final Id id = new Serial();
+        final Font font = new TimesRoman(id, 18);
         final File file = new File("hello-world.pdf");
         Files.write(
             file.toPath(),
             new Document(
+                id,
                 new Catalog(
+                    id,
                     new DefaultPages(
+                        id,
                         PageFormat.A4,
                         new DefaultPage(
-                            new Resources(font),
+                            id,
+                            new Resources(id, font),
                             new Contents(
                                 new Text(
+                                    id,
                                     font,
                                     0,
                                     500,
                                     80,
-                                    20,
                                     new TextOf("Hello World!")
                                 )
                             )
@@ -278,9 +312,12 @@ final class DocumentTest {
     @Disabled
     @Test
     void buildFileWithPngImage() throws Exception {
+        final Id id = new Serial();
         final Image image = new Image(
+            id,
             "I1",
             new Png(
+                id,
                 "src/test/resources/image/logo.png"
             ),
             28,
@@ -290,17 +327,23 @@ final class DocumentTest {
         Files.write(
             file.toPath(),
             new Document(
+                id,
                 new Information(
+                    id,
                     "Title", "Hello World"
                 ),
                 new Catalog(
+                    id,
                     new DefaultPages(
+                        id,
                         PageFormat.A4,
                         new DefaultPage(
+                            id,
                             new Resources(
+                                id,
                                 new ProcSet(),
-                                new TimesRoman(12),
-                                new XObject(image)
+                                new TimesRoman(id, 12),
+                                new XObject(id, image)
                             ),
                             new Contents(
                                 image
@@ -327,12 +370,15 @@ final class DocumentTest {
             "deserunt laborum mollit labore id amet."
         );
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final FontEnvelope font = new TimesRoman(18);
+        final Id id = new Serial();
+        final Font font = new TimesRoman(id, 18);
         final File file = new File("rotate.pdf");
         Files.write(
             file.toPath(),
             new Document(
+                id,
                 new Information(
+                    id,
                     "Title", "Hello World",
                     "Subject", "PDF document",
                     "Author", "Fabricio Cabral",
@@ -343,31 +389,36 @@ final class DocumentTest {
                     "Keywords", "cactoos pdf elegant objects"
                 ),
                 new Catalog(
+                    id,
                     new DefaultPages(
+                        id,
                         PageFormat.A4,
                         new DefaultPage(
-                            new Resources(font),
+                            id,
+                            new Resources(id, font),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(font, 0, 500, 80, 20, content)
+                                    new Text(id, font, 0, 500, 80, 20, content)
                                 )
                             )
                         ),
                         new Rotate90(
                             new DefaultPage(
-                                new Resources(font),
+                                id,
+                                new Resources(id, font),
                                 new Contents(
                                     new FlateEncode(
-                                        new Text(font, 0, 500, 80, 20, content)
+                                        new Text(id, font, 0, 500, 80, 20, content)
                                     )
                                 )
                             )
                         ),
                         new DefaultPage(
-                            new Resources(font),
+                            id,
+                            new Resources(id, font),
                             new Contents(
                                 new FlateEncode(
-                                    new Text(font, 0, 500, 80, 20, content)
+                                    new Text(id, font, 0, 500, 80, 20, content)
                                 )
                             )
                         )
@@ -381,12 +432,15 @@ final class DocumentTest {
     @Test
     void buildFileWithFileContent() throws Exception {
         final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final FontEnvelope font = new TimesRoman(12);
+        final Id id = new Serial();
+        final Font font = new TimesRoman(id, 12);
         final File file = new File("text-20k.pdf");
         Files.write(
             file.toPath(),
             new Document(
+                id,
                 new Information(
+                    id,
                     "Title", "Hello World",
                     "Subject", "PDF document",
                     "Author", "Fabricio Cabral",
@@ -397,12 +451,16 @@ final class DocumentTest {
                     "Keywords", "cactoos pdf elegant objects"
                 ),
                 new Catalog(
+                    id,
                     new DefaultPages(
+                        id,
                         PageFormat.A4,
                         new DefaultPage(
-                            new Resources(font),
+                            id,
+                            new Resources(id, font),
                             new Contents(
                                 new Text(
+                                    id,
                                     font,
                                     20,
                                     800,
@@ -424,18 +482,24 @@ final class DocumentTest {
     @Disabled
     @Test
     void buildFileWithoutInformation() throws Exception {
-        final FontEnvelope font = new TimesRoman(12);
         final File file = new File("text-20k-without-info.pdf");
+        final Id id = new Serial();
+        final Font font = new TimesRoman(id, 12);
         Files.write(
             file.toPath(),
             new Document(
+                id,
                 new Catalog(
+                    id,
                     new DefaultPages(
+                        id,
                         PageFormat.A4,
                         new DefaultPage(
-                            new Resources(font),
+                            id,
+                            new Resources(id, font),
                             new Contents(
                                 new Text(
+                                    id,
                                     font,
                                     20,
                                     800,

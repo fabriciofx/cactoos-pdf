@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import java.io.ByteArrayOutputStream;
@@ -46,6 +47,7 @@ final class PngTest {
         new Assertion<>(
             "Must represent a PNG header",
             new PngRaw(
+                new Serial(),
                 "src/test/resources/image/logo.png"
             ).header(),
             new IsText(
@@ -70,6 +72,7 @@ final class PngTest {
         new Assertion<>(
             "Must represent a PNG body",
             new PngRaw(
+                new Serial(),
                 "src/test/resources/image/logo.png"
             ).body().asStream().length,
             new IsNumber(2086)
@@ -81,8 +84,9 @@ final class PngTest {
         new Assertion<>(
             "Must represent a PNG palette",
             new PngRaw(
+                new Serial(),
                 "src/test/resources/image/logo.png"
-            ).palette(new Serial()).asStream().length,
+            ).palette().asStream().length,
             new IsNumber(192)
         ).affirm();
     }
@@ -90,12 +94,13 @@ final class PngTest {
     @Test
     void content() throws Exception {
         final String filename = "src/test/resources/image/logo.png";
-        final Png png = new Png(filename);
-        final Raw raw = new PngRaw(filename);
+        final Id id = new Serial();
+        final Png png = new Png(id, filename);
+        final Raw raw = new PngRaw(id, filename);
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         expected.write(
             new Concatenated(
-                "2 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 ",
+                "6 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 ",
                 "/Height 71 /ColorSpace [/Indexed /DeviceRGB 63 4 0 R] ",
                 "/BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << ",
                 "/Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 ",
@@ -107,14 +112,14 @@ final class PngTest {
             "\nendstream\nendobj\n4 0 obj\n<< /Length 192 >>\nstream\n"
                 .getBytes(StandardCharsets.UTF_8)
         );
-        expected.write(raw.palette(new Serial()).asStream());
+        expected.write(raw.palette().asStream());
         expected.write(
             "\nendstream\nendobj\n".getBytes(StandardCharsets.UTF_8)
         );
         new Assertion<>(
             "Must represent a PNG content",
             expected.toByteArray(),
-            new IsEqual<>(png.indirect(new Serial()).asBytes())
+            new IsEqual<>(png.indirect().asBytes())
         ).affirm();
     }
 }

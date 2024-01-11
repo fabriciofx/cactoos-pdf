@@ -44,6 +44,16 @@ import org.cactoos.text.FormattedText;
  */
 public final class Text implements Content {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Font.
      */
     private final Font typeface;
@@ -76,6 +86,7 @@ public final class Text implements Content {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param font Font
      * @param posx Position X
      * @param posy Position Y
@@ -83,17 +94,28 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
+        final Id id,
         final Font font,
         final double posx,
         final double posy,
         final org.cactoos.Text content
     ) {
-        this(font, posx, posy, 80, font.size() * 1.20, content);
+        this(
+            id.increment(),
+            0,
+            font,
+            posx,
+            posy,
+            80,
+            font.size() * 1.20,
+            content
+        );
     }
 
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param font Font
      * @param posx Position X
      * @param posy Position Y
@@ -102,18 +124,29 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
+        final Id id,
         final Font font,
         final double posx,
         final double posy,
         final int max,
         final org.cactoos.Text content
     ) {
-        this(font, posx, posy, max, font.size() * 1.20, content);
+        this(
+            id.increment(),
+            0,
+            font,
+            posx,
+            posy,
+            max,
+            font.size() * 1.20,
+            content
+        );
     }
 
     /**
      * Ctor.
      *
+     * @param id Id
      * @param font Font
      * @param posx Position X
      * @param posy Position Y
@@ -123,6 +156,7 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
+        final Id id,
         final Font font,
         final double posx,
         final double posy,
@@ -130,6 +164,34 @@ public final class Text implements Content {
         final double leading,
         final org.cactoos.Text content
     ) {
+        this(id.increment(), 0, font, posx, posy, max, leading, content);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param generation Generation number
+     * @param font Font
+     * @param posx Position X
+     * @param posy Position Y
+     * @param max Max line length
+     * @param leading Space between lines
+     * @param content Text content
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Text(
+        final int id,
+        final int generation,
+        final Font font,
+        final double posx,
+        final double posy,
+        final int max,
+        final double leading,
+        final org.cactoos.Text content
+    ) {
+        this.id = id;
+        this.generation = generation;
         this.typeface = font;
         this.posx = posx;
         this.posy = posy;
@@ -172,12 +234,11 @@ public final class Text implements Content {
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.value();
+    public Indirect indirect() throws Exception {
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new DefaultIndirect(num, 0, dictionary);
+        return new DefaultIndirect(this.id, this.generation, dictionary);
     }
 }

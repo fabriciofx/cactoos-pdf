@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
+import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
@@ -30,6 +31,7 @@ import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
+import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
@@ -42,6 +44,16 @@ import com.github.fabriciofx.cactoos.pdf.type.Text;
 @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 public final class DefaultPage implements Page {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Resources.
      */
     private final Resources resources;
@@ -53,11 +65,35 @@ public final class DefaultPage implements Page {
 
     /**
      * Ctor.
-     *
+     * @param id Id number
      * @param resources List of resources
      * @param contents Page contents
      */
-    public DefaultPage(final Resources resources, final Contents contents) {
+    public DefaultPage(
+        final Id id,
+        final Resources resources,
+        final Contents contents
+    ) {
+        this(id.increment(), 0, resources, contents);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param generation Generation number
+     * @param resources List of resources
+     * @param contents Page contents
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public DefaultPage(
+        final int id,
+        final int generation,
+        final Resources resources,
+        final Contents contents
+    ) {
+        this.id = id;
+        this.generation = generation;
         this.resources = resources;
         this.contents = contents;
     }
@@ -73,15 +109,24 @@ public final class DefaultPage implements Page {
     }
 
     @Override
-    public Indirect indirect(final Id id, final int parent) throws Exception {
-        final int num = id.increment();
-        final Indirect resrcs = this.resources.indirect(id);
-        final Indirect conts = this.contents.indirect(id);
+    public Indirect indirect(final int parent) throws Exception {
+        final Indirect resrcs = this.resources.indirect();
+        final Indirect conts = this.contents.indirect();
+        Array refs = new Array();
+        for (final Content content : this.contents) {
+            refs = refs.add(new Text(content.indirect().reference().asString()));
+        }
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Page"))
             .add("Resources", new Text(resrcs.reference().asString()))
-            .add("Contents", new Text(conts.reference().asString()))
+            .add("Contents", refs)
             .add("Parent", new Text(new Reference(parent, 0).asString()));
-        return new DefaultIndirect(num, 0, dictionary, resrcs, conts);
+        return new DefaultIndirect(
+            this.id,
+            this.generation,
+            dictionary,
+            resrcs,
+            conts
+        );
     }
 }

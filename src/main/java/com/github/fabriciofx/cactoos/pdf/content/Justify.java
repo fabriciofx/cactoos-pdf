@@ -24,7 +24,6 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
-import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
@@ -123,8 +122,8 @@ public final class Justify implements Content {
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final Indirect indirect = this.origin.indirect(id);
+    public Indirect indirect() throws Exception {
+        final Indirect indirect = this.origin.indirect();
         final byte[] stream = this.asStream();
         return new DefaultIndirect(
             indirect.reference().id(),

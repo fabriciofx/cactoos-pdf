@@ -39,6 +39,16 @@ import org.cactoos.bytes.BytesOf;
  */
 public final class XObject implements Resource {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Image.
      */
     private final Image image;
@@ -46,16 +56,29 @@ public final class XObject implements Resource {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param image Image
      */
-    public XObject(final Image image) {
+    public XObject(final Id id, final Image image) {
+        this(id.increment(), 0, image);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param generation Generation number
+     * @param image Image
+     */
+    public XObject(final int id, final int generation, final Image image) {
+        this.id = id;
+        this.generation = generation;
         this.image = image;
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
-        final Indirect indirect = this.image.content().indirect(id);
+    public Indirect indirect() throws Exception {
+        final Indirect indirect = this.image.content().indirect();
         final Dictionary dictionary = new Dictionary()
             .add(
                 "XObject",
@@ -65,8 +88,8 @@ public final class XObject implements Resource {
                 )
             );
         return new DefaultIndirect(
-            num,
-            0,
+            this.id,
+            this.generation,
             dictionary,
             new BytesOf(indirect.asBytes())
         );

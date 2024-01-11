@@ -24,6 +24,8 @@
 package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
+import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
@@ -41,8 +43,10 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class FlateEncodeTest {
     @Test
     void encode() throws Exception {
+        final Id id = new Serial();
         final Content content = new Text(
-            new TimesRoman(18),
+            id,
+            new TimesRoman(id, 18),
             0,
             0,
             new TextOf("Hello World!")

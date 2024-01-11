@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource.font;
 
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 
 /**
@@ -66,11 +67,23 @@ public final class TimesRoman extends FontEnvelope {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param size Font size in points
      */
-    public TimesRoman(final int size) {
+    public TimesRoman(final Id id, final int size) {
+        this(id.increment(), 0, size);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param generation Generation number
+     * @param size Font size in points
+     */
+    public TimesRoman(final int id, final int generation, final int size) {
         super(
-            new FontFamily("Times-Roman", "Type1"),
+            new FontFamily(id, generation, "Times-Roman", "Type1"),
             "F1",
             size
         );

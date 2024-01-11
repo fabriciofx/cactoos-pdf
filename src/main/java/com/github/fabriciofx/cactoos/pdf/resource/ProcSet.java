@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
-import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
@@ -37,7 +36,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
  */
 public final class ProcSet implements Resource {
     @Override
-    public Indirect indirect(final Id id) throws Exception {
+    public Indirect indirect() throws Exception {
         final Dictionary dictionary = new Dictionary()
             .add(
                 "ProcSet",

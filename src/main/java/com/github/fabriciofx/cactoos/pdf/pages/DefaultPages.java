@@ -47,6 +47,16 @@ import org.cactoos.text.UncheckedText;
  */
 public final class DefaultPages implements Pages {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Pages size.
      */
     private final PageFormat fmt;
@@ -59,21 +69,44 @@ public final class DefaultPages implements Pages {
     /**
      * Ctor.
      *
+     * @param id Id number
+     * @param format Page's size
+     * @param kids Some Page
+     */
+    public DefaultPages(
+        final Id id,
+        final PageFormat format,
+        final Page... kids
+    ) {
+        this(id.increment(), 0, format, kids);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param generation Generation number
      * @param format Page's size
      * @param kids Some Page
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public DefaultPages(final PageFormat format, final Page... kids) {
+    public DefaultPages(
+        final int id,
+        final int generation,
+        final PageFormat format,
+        final Page... kids
+    ) {
+        this.id = id;
+        this.generation = generation;
         this.fmt = format;
         this.kids = new ListOf<>(kids);
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
+    public Indirect indirect() throws Exception {
         final List<Indirect> indirects = new ListOf<>();
         for (final Page page : this.kids) {
-            indirects.add(page.indirect(id, num));
+            indirects.add(page.indirect(this.id));
         }
         final String kds = indirects.stream()
             .map(def -> new UncheckedText(def.reference()).asString())
@@ -94,7 +127,12 @@ public final class DefaultPages implements Pages {
         for (final Indirect indirect : indirects) {
             baos.write(indirect.asBytes());
         }
-        return new DefaultIndirect(num, 0, dictionary, baos::toByteArray);
+        return new DefaultIndirect(
+            this.id,
+            this.generation,
+            dictionary,
+            baos::toByteArray
+        );
     }
 
     @Override

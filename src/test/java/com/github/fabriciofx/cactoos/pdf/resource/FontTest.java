@@ -43,9 +43,9 @@ final class FontTest {
         new Assertion<>(
             "Must must print a Times-Roman font dictionary",
             new TextOf(
-                new TimesRoman(12).indirect(new Serial()).dictionary()
+                new TimesRoman(new Serial(), 12).indirect().dictionary()
             ),
-            new IsText("<< /Font << /F1 2 0 R >> >>")
+            new IsText("<< /Font << /F1 1 0 R >> >>")
         ).affirm();
     }
 
@@ -54,11 +54,11 @@ final class FontTest {
         new Assertion<>(
             "Must must build Times-Roman font as bytes",
             new TextOf(
-                new TimesRoman(12).indirect(new Serial()).asBytes()
+                new TimesRoman(new Serial(), 12).indirect().asBytes()
             ),
             new IsText(
                 new Concatenated(
-                    "2 0 obj\n<< /Type /Font /BaseFont /Times-Roman ",
+                    "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman ",
                     "/Subtype /Type1 >>\nendobj\n"
                 )
             )

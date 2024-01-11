@@ -32,9 +32,8 @@ public interface Object {
     /**
      * Object indirect.
      *
-     * @param id Object id
      * @return An object indirect
      * @throws Exception if fails
      */
-    Indirect indirect(Id id) throws Exception;
+    Indirect indirect() throws Exception;
 }

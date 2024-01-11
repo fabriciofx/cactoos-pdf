@@ -23,8 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf.png;
 
-import com.github.fabriciofx.cactoos.pdf.Id;
-
 /**
  * Image Raw.
  *
@@ -50,9 +48,8 @@ public interface Raw {
     /**
      * Palette.
      *
-     * @param id Object id
      * @return Image palette if there is one
      * @throws Exception if fails
      */
-    Palette palette(Id id) throws Exception;
+    Palette palette() throws Exception;
 }

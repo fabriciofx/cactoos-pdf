@@ -42,6 +42,16 @@ import org.cactoos.scalar.Sticky;
  */
 public final class PngPalette implements Palette {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Bytes that represents a palette.
      */
     private final Scalar<byte[]> bytes;
@@ -49,10 +59,13 @@ public final class PngPalette implements Palette {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param bytes Bytes that represents a palette
      */
-    public PngPalette(final Bytes bytes) {
+    public PngPalette(final Id id, final Bytes bytes) {
         this(
+            id.increment(),
+            0,
             new Sticky<>(
                 () -> {
                     final Flow flow = new Flow(bytes.asBytes());
@@ -80,9 +93,17 @@ public final class PngPalette implements Palette {
     /**
      * Ctor.
      *
+     * @param id Id number
+     * @param generation Generation number
      * @param bytes Bytes that represents a palette.
      */
-    public PngPalette(final Scalar<byte[]> bytes) {
+    public PngPalette(
+        final int id,
+        final int generation,
+        final Scalar<byte[]> bytes
+    ) {
+        this.id = id;
+        this.generation = generation;
         this.bytes = bytes;
     }
 
@@ -92,12 +113,15 @@ public final class PngPalette implements Palette {
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
+    public Indirect indirect() throws Exception {
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new DefaultIndirect(num, 0, dictionary);
+        return new DefaultIndirect(
+            this.id,
+            this.generation,
+            dictionary
+        );
     }
 }

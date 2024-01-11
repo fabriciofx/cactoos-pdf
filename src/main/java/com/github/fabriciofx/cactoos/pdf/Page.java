@@ -50,10 +50,9 @@ public interface Page {
     /**
      * Build an Indirect.
      *
-     * @param id Object id
      * @param parent Page's parent
      * @return An indirect
      * @throws Exception if fails
      */
-    Indirect indirect(Id id, int parent) throws Exception;
+    Indirect indirect(int parent) throws Exception;
 }

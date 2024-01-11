@@ -25,13 +25,15 @@ package com.github.fabriciofx.cactoos.pdf.pages;
 
 import com.github.fabriciofx.cactoos.pdf.Catalog;
 import com.github.fabriciofx.cactoos.pdf.Document;
+import com.github.fabriciofx.cactoos.pdf.Font;
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Information;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
+import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
@@ -49,6 +51,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class MarginsTest {
     @Test
     void margins() throws Exception {
+        final Id id = new Serial();
         final org.cactoos.Text content = new Joined(
             " ",
             "Lorem ea et aliquip culpa aute amet elit nostrud culpa veniam",
@@ -60,23 +63,28 @@ final class MarginsTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
-        final FontEnvelope font = new TimesRoman(12);
+        final Font font = new TimesRoman(id, 12);
         final byte[] actual = new Document(
+            id,
             new Information(
+                id,
                 "Title", "Hello World"
             ),
             new Catalog(
+                id,
                 new Margins(
                     2.5,
                     2.5,
                     2.5,
                     2.5,
                     new DefaultPages(
+                        id,
                         PageFormat.A4,
                         new DefaultPage(
-                            new Resources(font),
+                            id,
+                            new Resources(id, font),
                             new Contents(
-                                new Text(font, 0, 500, 60, 14, content)
+                                new Text(id, font, 0, 500, 60, 14, content)
                             )
                         )
                     )
@@ -97,6 +105,7 @@ final class MarginsTest {
     @Disabled
     @Test
     void buildFileWithMargins() throws Exception {
+        final Id id = new Serial();
         final org.cactoos.Text content = new Joined(
             " ",
             "Lorem ea et aliquip culpa aute amet elit nostrud culpa veniam",
@@ -108,26 +117,31 @@ final class MarginsTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
-        final FontEnvelope font = new TimesRoman(12);
+        final Font font = new TimesRoman(id, 12);
         final File file = new File("margins.pdf");
         Files.write(
             file.toPath(),
             new Document(
+                id,
                 new Information(
+                    id,
                     "Title", "Hello World"
                 ),
                 new Catalog(
+                    id,
                     new Margins(
                         2.5,
                         2.5,
                         2.5,
                         2.5,
                         new DefaultPages(
+                            id,
                             PageFormat.A4,
                             new DefaultPage(
-                                new Resources(font),
+                                id,
+                                new Resources(id, font),
                                 new Contents(
-                                    new Text(font, 0, 500, 60, 14, content)
+                                    new Text(id, font, 0, 500, 60, 14, content)
                                 )
                             )
                         )

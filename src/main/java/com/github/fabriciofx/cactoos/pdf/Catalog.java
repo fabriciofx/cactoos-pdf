@@ -35,6 +35,16 @@ import com.github.fabriciofx.cactoos.pdf.type.Text;
  */
 public final class Catalog implements Object {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Pages.
      */
     private final Pages pages;
@@ -42,19 +52,37 @@ public final class Catalog implements Object {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param pages Pages
      */
-    public Catalog(final Pages pages) {
+    public Catalog(final Id id, final Pages pages) {
+        this(id.increment(), 0, pages);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param generation Generation number
+     * @param pages Pages
+     */
+    public Catalog(final int id, final int generation, final Pages pages) {
+        this.id = id;
+        this.generation = generation;
         this.pages = pages;
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
-        final Indirect indirect = this.pages.indirect(id);
+    public Indirect indirect() throws Exception {
+        final Indirect indirect = this.pages.indirect();
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Catalog"))
             .add("Pages", new Text(indirect.reference().asString()));
-        return new DefaultIndirect(num, 0, dictionary, indirect);
+        return new DefaultIndirect(
+            this.id,
+            this.generation,
+            dictionary,
+            indirect
+        );
     }
 }

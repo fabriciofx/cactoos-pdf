@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.content;
 
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import org.cactoos.text.Joined;
@@ -39,25 +40,26 @@ import org.llorllale.cactoos.matchers.IsText;
 final class TextTest {
     @Test
     void oneline() throws Exception {
+        final Id id = new Serial();
         new Assertion<>(
             "Must don't break a small text",
             new TextOf(
                 new Text(
-                    new TimesRoman(18),
+                    id,
+                    new TimesRoman(id, 18),
                     0,
                     0,
                     50,
-                    20,
                     new TextOf("Hello World")
-                ).indirect(new Serial()).asBytes()
+                ).indirect().asBytes()
             ),
             new IsText(
                 new Joined(
                     "\n",
-                    "1 0 obj",
+                    "2 0 obj",
                     "<< /Length 57 >>",
                     "stream",
-                    "BT /F1 18 Tf 0.00 0.00 Td 20.00 TL",
+                    "BT /F1 18 Tf 0.00 0.00 Td 21.60 TL",
                     "(Hello World) Tj T*",
                     "ET",
                     "endstream",
@@ -69,15 +71,16 @@ final class TextTest {
 
     @Test
     void multiLines() throws Exception {
+        final Id id = new Serial();
         new Assertion<>(
             "Must break a big text into multiline",
             new TextOf(
                 new Text(
-                    new TimesRoman(18),
+                    id,
+                    new TimesRoman(id, 18),
                     0,
                     0,
                     50,
-                    20,
                     new Joined(
                         " ",
                         "Lorem ea et aliquip culpa aute",
@@ -97,15 +100,15 @@ final class TextTest {
                         "deserunt laborum mollit labore",
                         "id amet."
                     )
-                ).indirect(new Serial()).asBytes()
+                ).indirect().asBytes()
             ),
             new IsText(
                 new Joined(
                     "\n",
-                    "1 0 obj",
+                    "2 0 obj",
                     "<< /Length 579 >>",
                     "stream",
-                    "BT /F1 18 Tf 0.00 0.00 Td 20.00 TL",
+                    "BT /F1 18 Tf 0.00 0.00 Td 21.60 TL",
                     "(Lorem ea et aliquip culpa aute amet elit nostrud) Tj T*",
                     "(culpa veniam dolore eu irure incididunt. Velit) Tj T*",
                     "(officia occaecat est adipisicing mollit veniam.) Tj T*",

@@ -42,6 +42,16 @@ import org.cactoos.text.FormattedText;
  */
 public final class Image implements Content {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Image name.
      */
     private final String label;
@@ -74,6 +84,7 @@ public final class Image implements Content {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name Image name
      * @param png Raw PNG
      * @param posx Position X
@@ -81,12 +92,15 @@ public final class Image implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Image(
+        final Id id,
         final String name,
         final Png png,
         final double posx,
         final double posy
     ) {
         this(
+            id.increment(),
+            0,
             name,
             png,
             posx,
@@ -99,6 +113,7 @@ public final class Image implements Content {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param name Image name
      * @param png Raw PNG
      * @param posx Position X
@@ -108,6 +123,7 @@ public final class Image implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Image(
+        final Id id,
         final String name,
         final Png png,
         final double posx,
@@ -115,12 +131,23 @@ public final class Image implements Content {
         final double width,
         final double height
     ) {
-        this(name, png, posx, posy, () -> width, () -> height);
+        this(
+            id.increment(),
+            0,
+            name,
+            png,
+            posx,
+            posy,
+            () -> width,
+            () -> height
+        );
     }
 
     /**
      * Ctor.
      *
+     * @param id Id number
+     * @param generation Generation number
      * @param name Image name
      * @param png Raw PNG
      * @param posx Position X
@@ -130,6 +157,8 @@ public final class Image implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Image(
+        final int id,
+        final int generation,
         final String name,
         final Png png,
         final double posx,
@@ -137,6 +166,8 @@ public final class Image implements Content {
         final Scalar<Double> width,
         final Scalar<Double> height
     ) {
+        this.id = id;
+        this.generation = generation;
         this.label = name;
         this.png = png;
         this.posx = posx;
@@ -168,13 +199,12 @@ public final class Image implements Content {
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.value();
+    public Indirect indirect() throws Exception {
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new DefaultIndirect(num, 0, dictionary);
+        return new DefaultIndirect(this.id, this.generation, dictionary);
     }
 
     /**

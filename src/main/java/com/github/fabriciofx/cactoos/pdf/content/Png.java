@@ -49,6 +49,11 @@ import org.cactoos.Bytes;
  */
 public final class Png implements Content {
     /**
+     * Id.
+     */
+    private final Id id;
+
+    /**
      * Raw image.
      */
     private final Raw raw;
@@ -56,22 +61,22 @@ public final class Png implements Content {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param filename Image file name
      */
-    public Png(final String filename) {
-        this(
-            () -> Files.readAllBytes(new File(filename).toPath())
-        );
+    public Png(final Id id, final String filename) {
+        this(id, () -> Files.readAllBytes(new File(filename).toPath()));
     }
 
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param bytes Bytes that represents a PNG image
-     * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public Png(final Bytes bytes) {
-        this.raw = new SafePngRaw(new PngRaw(bytes));
+    public Png(final Id id, final Bytes bytes) {
+        this.id = id;
+        this.raw = new SafePngRaw(new PngRaw(this.id, bytes));
     }
 
     /**
@@ -95,11 +100,10 @@ public final class Png implements Content {
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
+    public Indirect indirect() throws Exception {
         final Header header = this.raw.header();
-        final Palette palette = this.raw.palette(id);
-        final Indirect pal = palette.indirect(id);
+        final Palette palette = this.raw.palette();
+        final Indirect pal = palette.indirect();
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("XObject"))
@@ -131,7 +135,12 @@ public final class Png implements Content {
             .add("Mask", new Array(new Int(0), new Int(0)))
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new DefaultIndirect(num, 0, dictionary, pal);
+        return new DefaultIndirect(
+            this.id.increment(),
+            0,
+            dictionary,
+            pal
+        );
     }
 
     @Override

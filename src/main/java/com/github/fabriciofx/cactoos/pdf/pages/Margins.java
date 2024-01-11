@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf.pages;
 
-import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
@@ -115,8 +114,8 @@ public final class Margins implements Pages {
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final Indirect indirect = this.origin.indirect(id);
+    public Indirect indirect() throws Exception {
+        final Indirect indirect = this.origin.indirect();
         final Pattern pattern = Pattern.compile("BT.*TL");
         final Matcher matcher = pattern.matcher(
             new String(indirect.asBytes())

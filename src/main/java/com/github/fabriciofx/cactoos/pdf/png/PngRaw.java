@@ -35,24 +35,33 @@ import org.cactoos.Bytes;
  */
 public final class PngRaw implements Raw {
     /**
+     * Id.
+     */
+    private final Id id;
+
+    /**
      * Bytes.
      */
     private final Bytes bytes;
 
     /**
      * Ctor.
+     *
+     * @param id Id number
      * @param filename File name of a PNG image
      */
-    public PngRaw(final String filename) {
-        this(() -> Files.readAllBytes(new File(filename).toPath()));
+    public PngRaw(final Id id, final String filename) {
+        this(id, () -> Files.readAllBytes(new File(filename).toPath()));
     }
 
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param bytes Bytes that represents a PNG image
      */
-    public PngRaw(final Bytes bytes) {
+    public PngRaw(final Id id, final Bytes bytes) {
+        this.id = id;
         this.bytes = bytes;
     }
 
@@ -63,11 +72,11 @@ public final class PngRaw implements Raw {
 
     @Override
     public Body body() throws Exception {
-        return new PngBody(this.bytes);
+        return new PngBody(this.id, this.bytes);
     }
 
     @Override
-    public Palette palette(final Id id) throws Exception {
-        return new PngPalette(this.bytes);
+    public Palette palette() throws Exception {
+        return new PngPalette(this.id, this.bytes);
     }
 }

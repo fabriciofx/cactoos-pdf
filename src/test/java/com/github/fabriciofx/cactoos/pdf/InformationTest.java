@@ -53,6 +53,7 @@ final class InformationTest {
             "Must contain metadata contents",
             new TextOf(
                 new Information(
+                    new Serial(),
                     "Title", "Hello World",
                     "Subject", "PDF document",
                     "Author", "Fabricio Cabral",
@@ -61,7 +62,7 @@ final class InformationTest {
                     "CreationDate", date.asString(),
                     "ModDate", date.asString(),
                     "Keywords", "cactoos pdf elegant objects"
-                ).indirect(new Serial())
+                ).indirect()
             ),
             new IsText(
                 new FormattedText(

@@ -41,29 +41,65 @@ import org.cactoos.list.ListOf;
 public final class Resources extends ListEnvelope<Resource>
     implements Resource {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Ctor.
      *
-     * @param objects An array of objects
+     * @param id Id number
+     * @param elements An array de elements (Resource)
      */
-    public Resources(final Resource... objects) {
-        this(new ListOf<>(objects));
+    public Resources(
+        final Id id,
+        final Resource... elements
+    ) {
+        this(id.increment(), 0, elements);
     }
 
     /**
      * Ctor.
      *
-     * @param list A list of objects
+     * @param id Id number
+     * @param generation Generation number
+     * @param elements An array of elements (Resource)
      */
-    public Resources(final List<Resource> list) {
+    public Resources(
+        final int id,
+        final int generation,
+        final Resource... elements
+    ) {
+        this(id, generation, new ListOf<>(elements));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param generation Generation number
+     * @param list A list of elements (Resource)
+     */
+    public Resources(
+        final int id,
+        final int generation,
+        final List<Resource> list
+    ) {
         super(list);
+        this.id = id;
+        this.generation = generation;
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
+    public Indirect indirect() throws Exception {
         final List<Indirect> indirects = new ListOf<>();
         for (final Resource resource : this) {
-            indirects.add(resource.indirect(id));
+            indirects.add(resource.indirect());
         }
         Dictionary dictionary = indirects.get(0).dictionary();
         for (int idx = 1; idx < indirects.size(); ++idx) {
@@ -73,6 +109,11 @@ public final class Resources extends ListEnvelope<Resource>
         for (final Indirect indirect : indirects) {
             baos.write(indirect.asBytes());
         }
-        return new DefaultIndirect(num, 0, dictionary, baos::toByteArray);
+        return new DefaultIndirect(
+            this.id,
+            this.generation,
+            dictionary,
+            baos::toByteArray
+        );
     }
 }

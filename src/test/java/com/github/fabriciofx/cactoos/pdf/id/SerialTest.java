@@ -44,11 +44,11 @@ final class SerialTest {
     }
 
     @Test
-    void increment() {
+    void incrementLastValue() {
         new Assertion<>(
-            "Must increment return old value",
+            "Must increment return last value",
             new Serial().increment(),
-            new IsNumber(2)
+            new IsNumber(1)
         ).affirm();
     }
 

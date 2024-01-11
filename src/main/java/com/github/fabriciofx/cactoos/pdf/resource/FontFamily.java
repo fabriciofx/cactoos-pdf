@@ -37,6 +37,16 @@ import com.github.fabriciofx.cactoos.pdf.type.Name;
  */
 public final class FontFamily implements Resource {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
+     * Generation.
+     */
+    private final int generation;
+
+    /**
      * Font base.
      */
     private final String base;
@@ -49,21 +59,45 @@ public final class FontFamily implements Resource {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param base Font base
      * @param subtype Font subtype
      */
-    public FontFamily(final String base, final String subtype) {
+    public FontFamily(
+        final Id id,
+        final String base,
+        final String subtype
+    ) {
+        this(id.increment(), 0, base, subtype);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param generation Generation number
+     * @param base Font base
+     * @param subtype Font subtype
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public FontFamily(
+        final int id,
+        final int generation,
+        final String base,
+        final String subtype
+    ) {
+        this.id = id;
+        this.generation = generation;
         this.base = base;
         this.subtype = subtype;
     }
 
     @Override
-    public Indirect indirect(final Id id) throws Exception {
-        final int num = id.increment();
+    public Indirect indirect() throws Exception {
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Font"))
             .add("BaseFont", new Name(this.base))
             .add("Subtype", new Name(this.subtype));
-        return new DefaultIndirect(num, 0, dictionary);
+        return new DefaultIndirect(this.id, this.generation, dictionary);
     }
 }

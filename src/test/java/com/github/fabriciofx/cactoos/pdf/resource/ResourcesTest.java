@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
@@ -45,24 +46,28 @@ import org.llorllale.cactoos.matchers.StartsWith;
 final class ResourcesTest {
     @Test
     void resourcesDictionary() throws Exception {
+        final Id id = new Serial();
         new Assertion<>(
             "Must represent a resources dictionary",
             new Resources(
+                id,
                 new ProcSet(),
-                new TimesRoman(12),
+                new TimesRoman(id, 12),
                 new XObject(
+                    id,
                     new Image(
+                        id,
                         "I1",
-                        new Png("src/test/resources/image/logo.png"),
+                        new Png(id, "src/test/resources/image/logo.png"),
                         28,
                         766
                     )
                 )
-            ).indirect(new Serial()).dictionary(),
+            ).indirect().dictionary(),
             new IsText(
                 new Concatenated(
                     "<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
-                    " /Font << /F1 3 0 R >> /XObject << /I1 5 0 R >> >>"
+                    " /Font << /F1 1 0 R >> /XObject << /I1 8 0 R >> >>"
                 )
             )
         ).affirm();
@@ -70,29 +75,33 @@ final class ResourcesTest {
 
     @Test
     void resourcesAsBytes() throws Exception {
+        final Id id = new Serial();
         new Assertion<>(
             "Must represent a resources as bytes",
             new TextOf(
                 new Resources(
+                    id,
                     new ProcSet(),
-                    new TimesRoman(12),
+                    new TimesRoman(id, 12),
                     new XObject(
+                        id,
                         new Image(
+                            id,
                             "I1",
-                            new Png("src/test/resources/image/logo.png"),
+                            new Png(id, "src/test/resources/image/logo.png"),
                             28,
                             766
                         )
                     )
-                ).indirect(new Serial()).asBytes()
+                ).indirect().asBytes()
             ),
             new AllOf<>(
                 new StartsWith(
                     new Concatenated(
-                        "2 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 3 0 R >> /XObject << /I1 5 0 R >> >>\nendobj\n",
-                        "3 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj\n",
-                        "4 0 obj\n<< /XObject << /I1 5 0 R >> >>\nendobj\n",
-                        "5 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 7 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
+                        "4 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> /XObject << /I1 8 0 R >> >>\nendobj\n",
+                        "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj\n",
+                        "3 0 obj\n<< /XObject << /I1 8 0 R >> >>\nendobj\n",
+                        "8 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 6 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
                     )
                 ),
                 new EndsWith(
@@ -104,17 +113,19 @@ final class ResourcesTest {
 
     @Test
     void resourcesDictionaryWithTwoFonts() throws Exception {
+        final Id id = new Serial();
         new Assertion<>(
             "Must represent a resources dictionary",
             new Resources(
+                id,
                 new ProcSet(),
-                new TimesRoman(12),
-                new Helvetica(12)
-            ).indirect(new Serial()).dictionary(),
+                new TimesRoman(id, 12),
+                new Helvetica(id, 12)
+            ).indirect().dictionary(),
             new IsText(
                 new Concatenated(
                     "<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
-                    " /Font << /F1 3 0 R /F2 4 0 R >> >>"
+                    " /Font << /F1 1 0 R /F2 2 0 R >> >>"
                 )
             )
         ).affirm();

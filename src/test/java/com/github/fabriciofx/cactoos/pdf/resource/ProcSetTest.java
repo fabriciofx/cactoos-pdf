@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
-import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -39,7 +38,7 @@ final class ProcSetTest {
     void procSetDictionary() throws Exception {
         new Assertion<>(
             "Must print ProcSet dictionary",
-            new ProcSet().indirect(new Serial()).dictionary(),
+            new ProcSet().indirect().dictionary(),
             new IsText("<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] >>")
         ).affirm();
     }
@@ -48,7 +47,7 @@ final class ProcSetTest {
     void procSetAsBytes() throws Exception {
         new Assertion<>(
             "Must no print ProcSet bytes",
-            new ProcSet().indirect(new Serial()).asBytes(),
+            new ProcSet().indirect().asBytes(),
             new IsEqual<>(new byte[0])
         ).affirm();
     }

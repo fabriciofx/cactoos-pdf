@@ -29,6 +29,8 @@ import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * FontEnvelope.
@@ -38,14 +40,14 @@ import com.github.fabriciofx.cactoos.pdf.type.Text;
  */
 public abstract class FontEnvelope implements Font {
     /**
+     * Id.
+     */
+    private final int id;
+
+    /**
      * Family.
      */
     private final FontFamily family;
-
-    /**
-     * Name.
-     */
-    private final String label;
 
     /**
      * Size.
@@ -55,24 +57,24 @@ public abstract class FontEnvelope implements Font {
     /**
      * Ctor.
      *
+     * @param id Id number
      * @param family Font family
-     * @param name Font name
      * @param size Font size
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public FontEnvelope(
+        final int id,
         final FontFamily family,
-        final String name,
         final int size
     ) {
+        this.id = id;
         this.family = family;
-        this.label = name;
         this.points = size;
     }
 
     @Override
     public String name() {
-        return this.label;
+        return new UncheckedText(new FormattedText("F%d", this.id)).asString();
     }
 
     @Override
@@ -92,7 +94,7 @@ public abstract class FontEnvelope implements Font {
             .add(
                 "Font",
                 new Dictionary().add(
-                    this.label,
+                    this.name(),
                     new Text(indirect.reference().asString())
                 )
             );

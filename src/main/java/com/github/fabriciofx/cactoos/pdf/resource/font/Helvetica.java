@@ -83,8 +83,8 @@ public final class Helvetica extends FontEnvelope {
      */
     public Helvetica(final int id, final int generation, final int size) {
         super(
+            id,
             new FontFamily(id, generation, "Helvetica", "Type1"),
-            "F2",
             size
         );
     }

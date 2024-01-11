@@ -83,8 +83,8 @@ public final class TimesRoman extends FontEnvelope {
      */
     public TimesRoman(final int id, final int generation, final int size) {
         super(
+            id,
             new FontFamily(id, generation, "Times-Roman", "Type1"),
-            "F1",
             size
         );
     }

@@ -37,7 +37,6 @@ import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.XObject;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
-import com.github.fabriciofx.cactoos.pdf.text.Date;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.text.Joined;
@@ -106,21 +105,9 @@ final class DocumentTest {
             "deserunt laborum mollit labore id amet."
         );
         final Id id = new Serial();
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Font font = new TimesRoman(id, 18);
         final byte[] actual = new Document(
             id,
-            new Information(
-                id,
-                "Title", "Hello World",
-                "Subject", "PDF document",
-                "Author", "Fabricio Cabral",
-                "Creator", "cactoos-pdf",
-                "Producer", "cactoos-pdf",
-                "CreationDate", date.asString(),
-                "ModDate", date.asString(),
-                "Keywords", "cactoos pdf elegant objects"
-            ),
             new Catalog(
                 id,
                 new DefaultPages(
@@ -187,10 +174,6 @@ final class DocumentTest {
         );
         final byte[] actual = new Document(
             id,
-            new Information(
-                id,
-                "Title", "Hello World"
-            ),
             new Catalog(
                 id,
                 new DefaultPages(
@@ -224,22 +207,10 @@ final class DocumentTest {
         final byte[] expected = Files.readAllBytes(
             new File(filename).toPath()
         );
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Id id = new Serial();
         final Font font = new TimesRoman(id, 12);
         final byte[] actual = new Document(
             id,
-            new Information(
-                id,
-                "Title", "Hello World",
-                "Subject", "PDF document",
-                "Author", "Fabricio Cabral",
-                "Creator", "cactoos-pdf",
-                "Producer", "cactoos-pdf",
-                "CreationDate", date.asString(),
-                "ModDate", date.asString(),
-                "Keywords", "cactoos pdf elegant objects"
-            ),
             new Catalog(
                 id,
                 new DefaultPages(
@@ -326,10 +297,6 @@ final class DocumentTest {
             file.toPath(),
             new Document(
                 id,
-                new Information(
-                    id,
-                    "Title", "Hello World"
-                ),
                 new Catalog(
                     id,
                     new DefaultPages(
@@ -367,7 +334,6 @@ final class DocumentTest {
             "labore enim quis reprehenderit. Magna in laboris irure enim non",
             "deserunt laborum mollit labore id amet."
         );
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Id id = new Serial();
         final Font font = new TimesRoman(id, 18);
         final File file = new File("rotate.pdf");
@@ -375,17 +341,6 @@ final class DocumentTest {
             file.toPath(),
             new Document(
                 id,
-                new Information(
-                    id,
-                    "Title", "Hello World",
-                    "Subject", "PDF document",
-                    "Author", "Fabricio Cabral",
-                    "Creator", "cactoos-pdf",
-                    "Producer", "cactoos-pdf",
-                    "CreationDate", date.asString(),
-                    "ModDate", date.asString(),
-                    "Keywords", "cactoos pdf elegant objects"
-                ),
                 new Catalog(
                     id,
                     new DefaultPages(
@@ -429,60 +384,9 @@ final class DocumentTest {
     @Disabled
     @Test
     void buildFileWithFileContent() throws Exception {
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Id id = new Serial();
         final Font font = new TimesRoman(id, 12);
         final File file = new File("text-20k.pdf");
-        Files.write(
-            file.toPath(),
-            new Document(
-                id,
-                new Information(
-                    id,
-                    "Title", "Hello World",
-                    "Subject", "PDF document",
-                    "Author", "Fabricio Cabral",
-                    "Creator", "cactoos-pdf",
-                    "Producer", "cactoos-pdf",
-                    "CreationDate", date.asString(),
-                    "ModDate", date.asString(),
-                    "Keywords", "cactoos pdf elegant objects"
-                ),
-                new Catalog(
-                    id,
-                    new DefaultPages(
-                        id,
-                        PageFormat.A4,
-                        new DefaultPage(
-                            id,
-                            new Resources(id, font),
-                            new Contents(
-                                new Text(
-                                    id,
-                                    font,
-                                    20,
-                                    800,
-                                    100,
-                                    new TextOf(
-                                        new File(
-                                            "src/test/resources/text/20k_c1.txt"
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            ).asBytes()
-        );
-    }
-
-    @Disabled
-    @Test
-    void buildFileWithoutInformation() throws Exception {
-        final File file = new File("text-20k-without-info.pdf");
-        final Id id = new Serial();
-        final Font font = new TimesRoman(id, 12);
         Files.write(
             file.toPath(),
             new Document(

@@ -27,15 +27,12 @@ import com.github.fabriciofx.cactoos.pdf.Catalog;
 import com.github.fabriciofx.cactoos.pdf.Document;
 import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.Information;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
-import com.github.fabriciofx.cactoos.pdf.text.Date;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
@@ -50,26 +47,14 @@ import org.llorllale.cactoos.matchers.IsText;
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.ExcessiveMethodLength"})
 final class PageTest {
     @Test
-    void buildDocumentWithRotatePage() throws Exception {
+    void buildDocumentWithRotatePage() {
         final Id id = new Serial();
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
         final Font font = new TimesRoman(id, 18);
         new Assertion<>(
             "Must represent a PDF document",
             new TextOf(
                 new Document(
                     id,
-                    new Information(
-                        id,
-                        "Title", "Hello World",
-                        "Subject", "PDF document",
-                        "Author", "Fabricio Cabral",
-                        "Creator", "cactoos-pdf",
-                        "Producer", "cactoos-pdf",
-                        "CreationDate", date.asString(),
-                        "ModDate", date.asString(),
-                        "Keywords", "cactoos pdf elegant objects"
-                    ),
                     new Catalog(
                         id,
                         new DefaultPages(
@@ -98,14 +83,14 @@ final class PageTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "2 0 obj\n<< /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>\nendobj",
-                    "7 0 obj\n<< /Type /Catalog /Pages 6 0 R >>\nendobj",
-                    "6 0 obj\n<< /Type /Pages /Kids [5 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
-                    "5 0 obj\n<< /Type /Page /Resources 3 0 R /Contents [4 0 R] /Parent 6 0 R /Rotate 90 >>\nendobj",
-                    "3 0 obj\n<< /Font << /F1 1 0 R >> >>\nendobj",
+                    "7 0 obj\n<< /Producer cactoos-pdf >>\nendobj",
+                    "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
+                    "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
+                    "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents [3 0 R] /Parent 5 0 R /Rotate 90 >>\nendobj",
+                    "2 0 obj\n<< /Font << /F1 1 0 R >> >>\nendobj",
                     "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
-                    "4 0 obj\n<< /Length 58 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello World!) Tj T*\nET\nendstream\nendobj",
-                    "trailer << /Root 7 0 R /Size 8 /Info 2 0 R >>",
+                    "3 0 obj\n<< /Length 58 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello World!) Tj T*\nET\nendstream\nendobj",
+                    "trailer << /Root 6 0 R /Size 8 /Info 7 0 R >>",
                     "%%EOF"
                 )
             )
@@ -113,26 +98,14 @@ final class PageTest {
     }
 
     @Test
-    void buildTwoPagesDocument() throws Exception {
+    void buildTwoPagesDocument() {
         final Id id = new Serial();
-        final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
-        final FontEnvelope font = new TimesRoman(id, 18);
+        final Font font = new TimesRoman(id, 18);
         new Assertion<>(
             "Must represent a two pages PDF document",
             new TextOf(
                 new Document(
                     id,
-                    new Information(
-                        id,
-                        "Title", "Hello World",
-                        "Subject", "PDF document",
-                        "Author", "Fabricio Cabral",
-                        "Creator", "cactoos-pdf",
-                        "Producer", "cactoos-pdf",
-                        "CreationDate", date.asString(),
-                        "ModDate", date.asString(),
-                        "Keywords", "cactoos pdf elegant objects"
-                    ),
                     new Catalog(
                         id,
                         new DefaultPages(
@@ -172,18 +145,18 @@ final class PageTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "2 0 obj\n<< /Title (Hello World) /Subject (PDF document) /Author (Fabricio Cabral) /Creator (cactoos-pdf) /Producer (cactoos-pdf) /CreationDate (D:20231211201132+03'00') /ModDate (D:20231211201132+03'00') /Keywords (cactoos pdf elegant objects) >>\nendobj",
-                    "10 0 obj\n<< /Type /Catalog /Pages 9 0 R >>\nendobj",
-                    "9 0 obj\n<< /Type /Pages /Kids [5 0 R 8 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
-                    "5 0 obj\n<< /Type /Page /Resources 3 0 R /Contents [4 0 R] /Parent 9 0 R >>\nendobj",
-                    "3 0 obj\n<< /Font << /F1 1 0 R >> >>\nendobj",
+                    "10 0 obj\n<< /Producer cactoos-pdf >>\nendobj",
+                    "9 0 obj\n<< /Type /Catalog /Pages 8 0 R >>\nendobj",
+                    "8 0 obj\n<< /Type /Pages /Kids [4 0 R 7 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
+                    "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents [3 0 R] /Parent 8 0 R >>\nendobj",
+                    "2 0 obj\n<< /Font << /F1 1 0 R >> >>\nendobj",
                     "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
-                    "4 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello) Tj T*\nET\nendstream\nendobj",
-                    "8 0 obj\n<< /Type /Page /Resources 6 0 R /Contents [7 0 R] /Parent 9 0 R >>\nendobj",
-                    "6 0 obj\n<< /Font << /F1 1 0 R >> >>\nendobj",
+                    "3 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello) Tj T*\nET\nendstream\nendobj",
+                    "7 0 obj\n<< /Type /Page /Resources 5 0 R /Contents [6 0 R] /Parent 8 0 R >>\nendobj",
+                    "5 0 obj\n<< /Font << /F1 1 0 R >> >>\nendobj",
                     "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
-                    "7 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(World) Tj T*\nET\nendstream\nendobj",
-                    "trailer << /Root 10 0 R /Size 11 /Info 2 0 R >>",
+                    "6 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(World) Tj T*\nET\nendstream\nendobj",
+                    "trailer << /Root 9 0 R /Size 11 /Info 10 0 R >>",
                     "%%EOF"
                 )
             )

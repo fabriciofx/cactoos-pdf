@@ -109,7 +109,8 @@ final class FontTest {
                             times,
                             helvetica,
                             courier,
-                            symbol
+                            symbol,
+                            zapf
                         ),
                         new Contents(
                             new Text(
@@ -193,7 +194,8 @@ final class FontTest {
                                 times,
                                 helvetica,
                                 courier,
-                                symbol
+                                symbol,
+                                zapf
                             ),
                             new Contents(
                                 new Text(

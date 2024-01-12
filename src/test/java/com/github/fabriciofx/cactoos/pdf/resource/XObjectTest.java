@@ -27,6 +27,8 @@ import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
@@ -51,7 +53,10 @@ final class XObjectTest {
                 id,
                 new Image(
                     id,
-                    new Png(id, "src/test/resources/image/logo.png"),
+                    new Png(
+                        id,
+                        new BytesOf(new ResourceOf("image/logo.png"))
+                    ),
                     28,
                     766
                 )
@@ -70,7 +75,10 @@ final class XObjectTest {
                     id,
                     new Image(
                         id,
-                        new Png(id, "src/test/resources/image/logo.png"),
+                        new Png(
+                            id,
+                            new BytesOf(new ResourceOf("image/logo.png"))
+                        ),
                         28,
                         766
                     )

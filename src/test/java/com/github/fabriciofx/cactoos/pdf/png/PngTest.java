@@ -28,6 +28,8 @@ import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
@@ -48,7 +50,7 @@ final class PngTest {
             "Must represent a PNG header",
             new PngRaw(
                 new Serial(),
-                "src/test/resources/image/logo.png"
+                new BytesOf(new ResourceOf("image/logo.png"))
             ).header(),
             new IsText(
                 new Joined(
@@ -73,7 +75,7 @@ final class PngTest {
             "Must represent a PNG body",
             new PngRaw(
                 new Serial(),
-                "src/test/resources/image/logo.png"
+                new BytesOf(new ResourceOf("image/logo.png"))
             ).body().asStream().length,
             new IsNumber(2086)
         ).affirm();
@@ -85,7 +87,7 @@ final class PngTest {
             "Must represent a PNG palette",
             new PngRaw(
                 new Serial(),
-                "src/test/resources/image/logo.png"
+                new BytesOf(new ResourceOf("image/logo.png"))
             ).palette().asStream().length,
             new IsNumber(192)
         ).affirm();
@@ -93,10 +95,10 @@ final class PngTest {
 
     @Test
     void content() throws Exception {
-        final String filename = "src/test/resources/image/logo.png";
+        final String filename = "image/logo.png";
         final Id id = new Serial();
-        final Png png = new Png(id, filename);
-        final Raw raw = new PngRaw(id, filename);
+        final Png png = new Png(id, new BytesOf(new ResourceOf(filename)));
+        final Raw raw = new PngRaw(id, new BytesOf(new ResourceOf(filename)));
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         expected.write(
             new Concatenated(

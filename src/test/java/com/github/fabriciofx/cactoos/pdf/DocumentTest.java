@@ -39,6 +39,8 @@ import com.github.fabriciofx.cactoos.pdf.resource.XObject;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
@@ -55,9 +57,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class DocumentTest {
     @Test
     void buildDocumentHelloWorld() throws Exception {
-        final byte[] expected = Files.readAllBytes(
-            new File("src/test/resources/document/hello-world.pdf").toPath()
-        );
         final Id id = new Serial();
         final Font font = new TimesRoman(id, 18);
         final byte[] actual = new Document(
@@ -86,7 +85,7 @@ final class DocumentTest {
         ).asBytes();
         new Assertion<>(
             "Must match with hello world PDF document",
-            expected,
+            new BytesOf(new ResourceOf("document/hello-world.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
     }
@@ -145,29 +144,21 @@ final class DocumentTest {
                 )
             )
         ).asBytes();
-        final String filename = "src/test/resources/document/rotate.pdf";
-        final byte[] expected = Files.readAllBytes(
-            new File(filename).toPath()
-        );
         new Assertion<>(
             "Must match with text and rotate page PDF document",
-            expected,
+            new BytesOf(new ResourceOf("document/rotate.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
     }
 
     @Test
     void buildDocumentWithPngImage() throws Exception {
-        final String filename = "src/test/resources/document/image-png.pdf";
-        final byte[] expected = Files.readAllBytes(
-            new File(filename).toPath()
-        );
         final Id id = new Serial();
         final Image image = new Image(
             id,
             new Png(
                 id,
-                "src/test/resources/image/logo.png"
+                new BytesOf(new ResourceOf("image/logo.png"))
             ),
             28,
             766
@@ -196,17 +187,13 @@ final class DocumentTest {
         ).asBytes();
         new Assertion<>(
             "Must match with PDF document with a PNG image",
-            expected,
+            new BytesOf(new ResourceOf("document/image-png.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
     }
 
     @Test
     void buildDocumentWithFileContent() throws Exception {
-        final String filename = "src/test/resources/document/text-20k.pdf";
-        final byte[] expected = Files.readAllBytes(
-            new File(filename).toPath()
-        );
         final Id id = new Serial();
         final Font font = new TimesRoman(id, 12);
         final byte[] actual = new Document(
@@ -227,9 +214,7 @@ final class DocumentTest {
                                 800,
                                 100,
                                 new TextOf(
-                                    new File(
-                                        "src/test/resources/text/20k_c1.txt"
-                                    )
+                                    new ResourceOf("text/20k_c1.txt")
                                 )
                             )
                         )
@@ -239,7 +224,7 @@ final class DocumentTest {
         ).asBytes();
         new Assertion<>(
             "Must match with PDF document with a text file",
-            expected,
+            new BytesOf(new ResourceOf("document/text-20k.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
     }
@@ -287,7 +272,7 @@ final class DocumentTest {
             id,
             new Png(
                 id,
-                "src/test/resources/image/logo.png"
+                new BytesOf(new ResourceOf("image/logo.png"))
             ),
             28,
             766
@@ -407,9 +392,7 @@ final class DocumentTest {
                                     800,
                                     100,
                                     new TextOf(
-                                        new File(
-                                            "src/test/resources/text/20k_c1.txt"
-                                        )
+                                        new ResourceOf("text/20k_c1.txt")
                                     )
                                 )
                             )

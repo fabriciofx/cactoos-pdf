@@ -35,6 +35,8 @@ import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Disabled;
@@ -71,9 +73,7 @@ final class JustifyTest {
                                     800,
                                     100,
                                     new TextOf(
-                                        new File(
-                                            "src/test/resources/text/20k_c1.txt"
-                                        )
+                                        new ResourceOf("text/20k_c1.txt")
                                     )
                                 )
                             )
@@ -82,13 +82,9 @@ final class JustifyTest {
                 )
             )
         ).asBytes();
-        final String filename = "src/test/resources/document/justify.pdf";
-        final byte[] expected = Files.readAllBytes(
-            new File(filename).toPath()
-        );
         new Assertion<>(
             "Must match with justified PDF document",
-            expected,
+            new BytesOf(new ResourceOf("document/justify.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
     }
@@ -120,9 +116,7 @@ final class JustifyTest {
                                         800,
                                         100,
                                         new TextOf(
-                                            new File(
-                                                "src/test/resources/text/20k_c1.txt"
-                                            )
+                                            new ResourceOf("text/20k_c1.txt")
                                         )
                                     )
                                 )

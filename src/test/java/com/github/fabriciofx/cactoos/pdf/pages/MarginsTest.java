@@ -37,6 +37,8 @@ import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Disabled;
@@ -91,13 +93,9 @@ final class MarginsTest {
                 )
             )
         ).asBytes();
-        final String filename = "src/test/resources/document/margins.pdf";
-        final byte[] expected = Files.readAllBytes(
-            new File(filename).toPath()
-        );
         new Assertion<>(
             "Must match with margins PDF document",
-            expected,
+            new BytesOf(new ResourceOf("document/margins.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
     }

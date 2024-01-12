@@ -39,6 +39,8 @@ import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
@@ -69,7 +71,10 @@ final class ResourcesTest {
                     id,
                     new Image(
                         id,
-                        new Png(id, "src/test/resources/image/logo.png"),
+                        new Png(
+                            id,
+                            new BytesOf(new ResourceOf("image/logo.png"))
+                        ),
                         28,
                         766
                     )
@@ -98,7 +103,10 @@ final class ResourcesTest {
                         id,
                         new Image(
                             id,
-                            new Png(id, "src/test/resources/image/logo.png"),
+                            new Png(
+                                id,
+                                new BytesOf(new ResourceOf("image/logo.png"))
+                            ),
                             28,
                             766
                         )
@@ -143,9 +151,6 @@ final class ResourcesTest {
 
     @Test
     void documentWithTwoFonts() throws Exception {
-        final byte[] expected = Files.readAllBytes(
-            new File("src/test/resources/document/two-fonts.pdf").toPath()
-        );
         final Id id = new Serial();
         final Font times = new TimesRoman(id, 18);
         final Font helvetica = new Helvetica(id, 18);
@@ -183,7 +188,7 @@ final class ResourcesTest {
         ).asBytes();
         new Assertion<>(
             "Must match with hello world PDF document using two fonts",
-            expected,
+            new BytesOf(new ResourceOf("document/two-fonts.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
     }

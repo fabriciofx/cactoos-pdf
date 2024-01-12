@@ -36,9 +36,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.cactoos.list.ListOf;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Pages.
@@ -104,16 +102,16 @@ public final class DefaultPages implements Pages {
 
     @Override
     public Indirect indirect() throws Exception {
-        final List<Indirect> indirects = new ListOf<>();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Array kds = new Array();
         for (final Page page : this.kids) {
-            indirects.add(page.indirect(this.id));
+            final Indirect indirect = page.indirect(this.id);
+            kds = kds.add(new Text(indirect.reference().asString()));
+            baos.write(indirect.asBytes());
         }
-        final String kds = indirects.stream()
-            .map(def -> new UncheckedText(def.reference()).asString())
-            .collect(Collectors.joining(" "));
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Pages"))
-            .add("Kids", new Array(new Text(kds)))
+            .add("Kids", kds)
             .add("Count", new Int(this.kids.size()))
             .add(
                 "MediaBox",
@@ -123,10 +121,6 @@ public final class DefaultPages implements Pages {
                     new Text(this.fmt.asString())
                 )
             );
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (final Indirect indirect : indirects) {
-            baos.write(indirect.asBytes());
-        }
         return new DefaultIndirect(
             this.id,
             this.generation,

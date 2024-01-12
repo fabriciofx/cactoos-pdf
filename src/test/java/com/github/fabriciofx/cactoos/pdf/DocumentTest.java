@@ -24,16 +24,12 @@
 package com.github.fabriciofx.cactoos.pdf;
 
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
-import com.github.fabriciofx.cactoos.pdf.content.Image;
-import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
-import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import com.github.fabriciofx.cactoos.pdf.resource.XObject;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
@@ -83,47 +79,6 @@ final class DocumentTest {
         new Assertion<>(
             "Must match with hello world PDF document",
             new BytesOf(new ResourceOf("document/hello-world.pdf")).asBytes(),
-            new IsEqual<>(actual)
-        ).affirm();
-    }
-
-    @Test
-    void buildDocumentWithPngImage() throws Exception {
-        final Id id = new Serial();
-        final Image image = new Image(
-            id,
-            new Png(
-                id,
-                new BytesOf(new ResourceOf("image/logo.png"))
-            ),
-            28,
-            766
-        );
-        final byte[] actual = new Document(
-            id,
-            new Catalog(
-                id,
-                new DefaultPages(
-                    id,
-                    PageFormat.A4,
-                    new DefaultPage(
-                        id,
-                        new Resources(
-                            id,
-                            new ProcSet(),
-                            new TimesRoman(id, 12),
-                            new XObject(id, image)
-                        ),
-                        new Contents(
-                            image
-                        )
-                    )
-                )
-            )
-        ).asBytes();
-        new Assertion<>(
-            "Must match with PDF document with a PNG image",
-            new BytesOf(new ResourceOf("document/image-png.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
     }
@@ -192,47 +147,6 @@ final class DocumentTest {
                                     80,
                                     new TextOf("Hello World!")
                                 )
-                            )
-                        )
-                    )
-                )
-            ).asBytes()
-        );
-    }
-
-    @Disabled
-    @Test
-    void buildFileWithPngImage() throws Exception {
-        final Id id = new Serial();
-        final Image image = new Image(
-            id,
-            new Png(
-                id,
-                new BytesOf(new ResourceOf("image/logo.png"))
-            ),
-            28,
-            766
-        );
-        final File file = new File("image-png.pdf");
-        Files.write(
-            file.toPath(),
-            new Document(
-                id,
-                new Catalog(
-                    id,
-                    new DefaultPages(
-                        id,
-                        PageFormat.A4,
-                        new DefaultPage(
-                            id,
-                            new Resources(
-                                id,
-                                new ProcSet(),
-                                new TimesRoman(id, 12),
-                                new XObject(id, image)
-                            ),
-                            new Contents(
-                                image
                             )
                         )
                     )

@@ -38,6 +38,7 @@ import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Symbol;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
+import com.github.fabriciofx.cactoos.pdf.resource.font.ZapfDingbats;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.bytes.BytesOf;
@@ -90,6 +91,7 @@ final class FontTest {
         final Font helvetica = new Helvetica(id, 16);
         final Font courier = new Courier(id, 16);
         final Font symbol = new Symbol(id, 16);
+        final Font zapf = new ZapfDingbats(id, 16);
         final org.cactoos.Text text = new TextOf(
             "The quick brown fox jumps over the lazy dog"
         );
@@ -141,6 +143,14 @@ final class FontTest {
                                 400,
                                 80,
                                 text
+                            ),
+                            new Text(
+                                id,
+                                zapf,
+                                10,
+                                500,
+                                80,
+                                text
                             )
                         )
                     )
@@ -148,7 +158,7 @@ final class FontTest {
             )
         ).asBytes();
         new Assertion<>(
-            "Must match with PDF document with several fonts",
+            "Must match a PDF document with several fonts",
             new BytesOf(new ResourceOf("document/fonts.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
@@ -163,6 +173,7 @@ final class FontTest {
         final Font helvetica = new Helvetica(id, 16);
         final Font courier = new Courier(id, 16);
         final Font symbol = new Symbol(id, 16);
+        final Font zapf = new ZapfDingbats(id, 16);
         final org.cactoos.Text text = new TextOf(
             "The quick brown fox jumps over the lazy dog"
         );
@@ -214,6 +225,14 @@ final class FontTest {
                                     symbol,
                                     10,
                                     400,
+                                    80,
+                                    text
+                                ),
+                                new Text(
+                                    id,
+                                    zapf,
+                                    10,
+                                    500,
                                     80,
                                     text
                                 )

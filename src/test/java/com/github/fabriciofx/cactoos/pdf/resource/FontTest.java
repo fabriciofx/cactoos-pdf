@@ -23,11 +23,29 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Catalog;
+import com.github.fabriciofx.cactoos.pdf.Document;
+import com.github.fabriciofx.cactoos.pdf.Font;
+import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.content.Contents;
+import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
+import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
+import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
+import com.github.fabriciofx.cactoos.pdf.resource.font.Courier;
 import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
+import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
+import com.github.fabriciofx.cactoos.pdf.resource.font.Symbol;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
+import java.io.File;
+import java.nio.file.Files;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
+import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
@@ -63,5 +81,147 @@ final class FontTest {
                 )
             )
         ).affirm();
+    }
+
+    @Test
+    void buildDocumentWithFonts() throws Exception {
+        final Id id = new Serial();
+        final Font times = new TimesRoman(id, 16);
+        final Font helvetica = new Helvetica(id, 16);
+        final Font courier = new Courier(id, 16);
+        final Font symbol = new Symbol(id, 16);
+        final org.cactoos.Text text = new TextOf(
+            "The quick brown fox jumps over the lazy dog"
+        );
+        final byte[] actual = new Document(
+            id,
+            new Catalog(
+                id,
+                new DefaultPages(
+                    id,
+                    PageFormat.A4,
+                    new DefaultPage(
+                        id,
+                        new Resources(
+                            id,
+                            times,
+                            helvetica,
+                            courier,
+                            symbol
+                        ),
+                        new Contents(
+                            new Text(
+                                id,
+                                times,
+                                10,
+                                100,
+                                80,
+                                text
+                            ),
+                            new Text(
+                                id,
+                                helvetica,
+                                10,
+                                200,
+                                80,
+                                text
+                            ),
+                            new Text(
+                                id,
+                                courier,
+                                10,
+                                300,
+                                80,
+                                text
+                            ),
+                            new Text(
+                                id,
+                                symbol,
+                                10,
+                                400,
+                                80,
+                                text
+                            )
+                        )
+                    )
+                )
+            )
+        ).asBytes();
+        new Assertion<>(
+            "Must match with PDF document with several fonts",
+            new BytesOf(new ResourceOf("document/fonts.pdf")).asBytes(),
+            new IsEqual<>(actual)
+        ).affirm();
+    }
+
+    @Disabled
+    @Test
+    void buildFileWithFonts() throws Exception {
+        final File file = new File("fonts.pdf");
+        final Id id = new Serial();
+        final Font times = new TimesRoman(id, 16);
+        final Font helvetica = new Helvetica(id, 16);
+        final Font courier = new Courier(id, 16);
+        final Font symbol = new Symbol(id, 16);
+        final org.cactoos.Text text = new TextOf(
+            "The quick brown fox jumps over the lazy dog"
+        );
+        Files.write(
+            file.toPath(),
+            new Document(
+                id,
+                new Catalog(
+                    id,
+                    new DefaultPages(
+                        id,
+                        PageFormat.A4,
+                        new DefaultPage(
+                            id,
+                            new Resources(
+                                id,
+                                times,
+                                helvetica,
+                                courier,
+                                symbol
+                            ),
+                            new Contents(
+                                new Text(
+                                    id,
+                                    times,
+                                    10,
+                                    100,
+                                    80,
+                                    text
+                                ),
+                                new Text(
+                                    id,
+                                    helvetica,
+                                    10,
+                                    200,
+                                    80,
+                                    text
+                                ),
+                                new Text(
+                                    id,
+                                    courier,
+                                    10,
+                                    300,
+                                    80,
+                                    text
+                                ),
+                                new Text(
+                                    id,
+                                    symbol,
+                                    10,
+                                    400,
+                                    80,
+                                    text
+                                )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
     }
 }

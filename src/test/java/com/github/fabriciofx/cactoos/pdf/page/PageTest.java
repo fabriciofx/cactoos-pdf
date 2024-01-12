@@ -83,7 +83,7 @@ final class PageTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "7 0 obj\n<< /Producer cactoos-pdf >>\nendobj",
+                    "7 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
                     "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
                     "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
                     "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents [3 0 R] /Parent 5 0 R /Rotate 90 >>\nendobj",
@@ -145,7 +145,7 @@ final class PageTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "10 0 obj\n<< /Producer cactoos-pdf >>\nendobj",
+                    "10 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
                     "9 0 obj\n<< /Type /Catalog /Pages 8 0 R >>\nendobj",
                     "8 0 obj\n<< /Type /Pages /Kids [4 0 R 7 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
                     "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents [3 0 R] /Parent 8 0 R >>\nendobj",

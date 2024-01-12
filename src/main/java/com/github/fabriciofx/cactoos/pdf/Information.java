@@ -26,7 +26,6 @@ package com.github.fabriciofx.cactoos.pdf;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Literal;
-import com.github.fabriciofx.cactoos.pdf.type.Text;
 
 /**
  * Document Information Dictionary.
@@ -370,7 +369,7 @@ public final class Information implements Object {
             id.increment(),
             0,
             new Dictionary()
-                .add("Producer", new Text("cactoos-pdf"))
+                .add("Producer", new Literal("cactoos-pdf"))
         );
     }
 

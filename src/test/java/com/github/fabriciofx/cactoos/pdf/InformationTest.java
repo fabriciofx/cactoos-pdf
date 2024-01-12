@@ -101,7 +101,7 @@ final class InformationTest {
                     new Joined(
                         " ",
                         "1 0 obj\n<<",
-                        "/Producer cactoos-pdf",
+                        "/Producer (cactoos-pdf)",
                         ">>\nendobj\n"
                     )
                 )

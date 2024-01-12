@@ -23,15 +23,27 @@
  */
 package com.github.fabriciofx.cactoos.pdf.resource;
 
+import com.github.fabriciofx.cactoos.pdf.Catalog;
+import com.github.fabriciofx.cactoos.pdf.Document;
+import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Png;
+import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
+import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
+import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
+import java.io.File;
+import java.nio.file.Files;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
@@ -127,5 +139,96 @@ final class ResourcesTest {
                 )
             )
         ).affirm();
+    }
+
+    @Test
+    void documentWithTwoFonts() throws Exception {
+        final byte[] expected = Files.readAllBytes(
+            new File("src/test/resources/document/two-fonts.pdf").toPath()
+        );
+        final Id id = new Serial();
+        final Font times = new TimesRoman(id, 18);
+        final Font helvetica = new Helvetica(id, 18);
+        final byte[] actual = new Document(
+            id,
+            new Catalog(
+                id,
+                new DefaultPages(
+                    id,
+                    PageFormat.A4,
+                    new DefaultPage(
+                        id,
+                        new Resources(id, times, helvetica),
+                        new Contents(
+                            new Text(
+                                id,
+                                times,
+                                20,
+                                500,
+                                80,
+                                new TextOf("Hello World!")
+                            ),
+                            new Text(
+                                id,
+                                helvetica,
+                                20,
+                                600,
+                                80,
+                                new TextOf("Hello World!")
+                            )
+                        )
+                    )
+                )
+            )
+        ).asBytes();
+        new Assertion<>(
+            "Must match with hello world PDF document using two fonts",
+            expected,
+            new IsEqual<>(actual)
+        ).affirm();
+    }
+
+    @Disabled
+    @Test
+    void buildDocumentWithTwoFonts() throws Exception {
+        final Id id = new Serial();
+        final Font times = new TimesRoman(id, 18);
+        final Font helvetica = new Helvetica(id, 18);
+        final File file = new File("two-fonts.pdf");
+        Files.write(
+            file.toPath(),
+            new Document(
+                id,
+                new Catalog(
+                    id,
+                    new DefaultPages(
+                        id,
+                        PageFormat.A4,
+                        new DefaultPage(
+                            id,
+                            new Resources(id, times, helvetica),
+                            new Contents(
+                                new Text(
+                                    id,
+                                    times,
+                                    20,
+                                    500,
+                                    80,
+                                    new TextOf("Hello World!")
+                                ),
+                                new Text(
+                                    id,
+                                    helvetica,
+                                    20,
+                                    600,
+                                    80,
+                                    new TextOf("Hello World!")
+                                )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
     }
 }

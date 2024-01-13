@@ -21,9 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.image.png;
+package com.github.fabriciofx.cactoos.pdf.image.jpeg;
 
-import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.image.Body;
 import com.github.fabriciofx.cactoos.pdf.image.Flow;
 import com.github.fabriciofx.cactoos.pdf.image.Header;
@@ -33,29 +32,36 @@ import com.github.fabriciofx.cactoos.pdf.image.Raw;
 import java.util.Arrays;
 
 /**
- * SafePngRaw: Safe decorator for a PNG image raw.
+ * SafeJpegRaw: Safe decorator for a JPEG image raw.
  *
  * @since 0.0.1
  */
-public final class SafePngRaw implements Raw {
+public final class Safe implements Raw {
     /**
-     * PNG file signature.
+     * JPEG file signature (part 1).
      */
-    private static final byte[] SIGNATURE = {
-        (byte) 137, 'P', 'N', 'G', '\r', '\n', 26, '\n',
+    private static final byte[] SIGNATURE_PART1 = {
+        (byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0,
     };
 
     /**
-     * Raw origin.
+     * JPEG file signature (part 2).
      */
-    private final PngRaw origin;
+    private static final byte[] SIGNATURE_PART2 = {
+        (byte) 'J', (byte) 'F', (byte) 'I', (byte) 'F', (byte) 0x00,
+    };
+
+    /**
+     * JPEG origin.
+     */
+    private final JpegRaw origin;
 
     /**
      * Ctor.
      *
      * @param raw Image raw
      */
-    public SafePngRaw(final PngRaw raw) {
+    public Safe(final JpegRaw raw) {
         this.origin = raw;
     }
 
@@ -63,31 +69,14 @@ public final class SafePngRaw implements Raw {
     public Header header() throws Exception {
         final Header header = this.origin.header();
         final Flow flow = new Flow(header.asBytes());
-        if (!Arrays.equals(SafePngRaw.SIGNATURE, flow.asBytes(8))) {
-            throw new InvalidFormatException("Not a PNG image file");
+        if (!Arrays.equals(Safe.SIGNATURE_PART1, flow.asBytes(4))) {
+            throw new InvalidFormatException("Not a valid JPEG image file");
         }
-        flow.skip(4);
-        if (!flow.asString(4).equals("IHDR")) {
-            throw new InvalidFormatException("Incorrect PNG image file");
+        flow.skip(2);
+        if (!Arrays.equals(Safe.SIGNATURE_PART2, flow.asBytes(5))) {
+            throw new InvalidFormatException("Not a valid JPEG image file");
         }
-        if (header.depth() > 8) {
-            throw new InvalidFormatException(
-                "16-bit depth in PNG file not supported"
-            );
-        }
-        if (header.color().space().equals("Unknown")) {
-            throw new InvalidFormatException("Unknown color type");
-        }
-        if (header.compression() != 0) {
-            throw new InvalidFormatException("Unknown compression method");
-        }
-        if (header.filter() != 0) {
-            throw new InvalidFormatException("Unknown filter method");
-        }
-        if (header.interlacing() != 0) {
-            throw new InvalidFormatException("Interlacing not supported");
-        }
-        return this.origin.header();
+        return header;
     }
 
     @Override
@@ -98,12 +87,7 @@ public final class SafePngRaw implements Raw {
 
     @Override
     public Palette palette() throws Exception {
-        final Header header = this.header();
-        final Indirect indirect = this.origin.palette().indirect();
-        if (header.color().space().equals("Indexed")
-            && indirect.asBytes().length == 0) {
-            throw new InvalidFormatException("Missing palette in PNG file");
-        }
+        this.header();
         return this.origin.palette();
     }
 }

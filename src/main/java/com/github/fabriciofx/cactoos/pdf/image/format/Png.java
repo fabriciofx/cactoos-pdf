@@ -30,7 +30,7 @@ import com.github.fabriciofx.cactoos.pdf.image.Header;
 import com.github.fabriciofx.cactoos.pdf.image.Palette;
 import com.github.fabriciofx.cactoos.pdf.image.Raw;
 import com.github.fabriciofx.cactoos.pdf.image.png.PngRaw;
-import com.github.fabriciofx.cactoos.pdf.image.png.SafePngRaw;
+import com.github.fabriciofx.cactoos.pdf.image.png.Safe;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
@@ -76,7 +76,7 @@ public final class Png implements Format {
      */
     public Png(final Id id, final Bytes bytes) {
         this.id = id;
-        this.raw = new SafePngRaw(new PngRaw(this.id, bytes));
+        this.raw = new Safe(new PngRaw(this.id, bytes));
     }
 
     @Override

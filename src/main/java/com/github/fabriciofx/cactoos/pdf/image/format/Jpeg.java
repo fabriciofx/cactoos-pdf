@@ -29,7 +29,7 @@ import com.github.fabriciofx.cactoos.pdf.image.Format;
 import com.github.fabriciofx.cactoos.pdf.image.Header;
 import com.github.fabriciofx.cactoos.pdf.image.Raw;
 import com.github.fabriciofx.cactoos.pdf.image.jpeg.JpegRaw;
-import com.github.fabriciofx.cactoos.pdf.image.jpeg.SafeJpegRaw;
+import com.github.fabriciofx.cactoos.pdf.image.jpeg.Safe;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -73,7 +73,7 @@ public final class Jpeg implements Format {
      */
     public Jpeg(final Id id, final Bytes bytes) {
         this.id = id;
-        this.raw = new SafeJpegRaw(new JpegRaw(this.id, bytes));
+        this.raw = new Safe(new JpegRaw(this.id, bytes));
     }
 
     @Override

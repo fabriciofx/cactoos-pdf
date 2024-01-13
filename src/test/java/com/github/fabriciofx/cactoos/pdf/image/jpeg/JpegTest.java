@@ -94,7 +94,7 @@ final class JpegTest {
 
     @Test
     void safeJpegWidth() throws Exception {
-        final Raw raw = new SafeJpegRaw(
+        final Raw raw = new Safe(
             new JpegRaw(
                 new Serial(),
                 new BytesOf(new ResourceOf("image/sample-1.jpg"))
@@ -109,7 +109,7 @@ final class JpegTest {
 
     @Test
     void safeJpegHeight() throws Exception {
-        final Raw raw = new SafeJpegRaw(
+        final Raw raw = new Safe(
             new JpegRaw(
                 new Serial(),
                 new BytesOf(new ResourceOf("image/sample-1.jpg"))

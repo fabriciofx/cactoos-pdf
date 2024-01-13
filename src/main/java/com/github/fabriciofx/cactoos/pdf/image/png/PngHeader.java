@@ -21,8 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
+package com.github.fabriciofx.cactoos.pdf.image.png;
 
+import com.github.fabriciofx.cactoos.pdf.image.BytesAsInteger;
+import com.github.fabriciofx.cactoos.pdf.image.Header;
 import java.util.Arrays;
 import java.util.Locale;
 import org.cactoos.Bytes;

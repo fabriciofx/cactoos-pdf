@@ -21,62 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
+package com.github.fabriciofx.cactoos.pdf.image;
 
-import com.github.fabriciofx.cactoos.pdf.Id;
-import java.io.File;
-import java.nio.file.Files;
-import org.cactoos.Bytes;
+import com.github.fabriciofx.cactoos.pdf.Content;
 
 /**
- * PngRaw: Raw for a PNG image.
+ * Palette.
  *
  * @since 0.0.1
  */
-public final class PngRaw implements Raw {
-    /**
-     * Id.
-     */
-    private final Id id;
-
-    /**
-     * Bytes.
-     */
-    private final Bytes bytes;
-
-    /**
-     * Ctor.
-     *
-     * @param id Id number
-     * @param filename File name of a PNG image
-     */
-    public PngRaw(final Id id, final String filename) {
-        this(id, () -> Files.readAllBytes(new File(filename).toPath()));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Id number
-     * @param bytes Bytes that represents a PNG image
-     */
-    public PngRaw(final Id id, final Bytes bytes) {
-        this.id = id;
-        this.bytes = bytes;
-    }
-
-    @Override
-    public Header header() throws Exception {
-        return new PngHeader(this.bytes);
-    }
-
-    @Override
-    public Body body() throws Exception {
-        return new PngBody(this.id, this.bytes);
-    }
-
-    @Override
-    public Palette palette() throws Exception {
-        return new PngPalette(this.id, this.bytes);
-    }
+public interface Palette extends Content {
 }

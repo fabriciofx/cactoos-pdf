@@ -25,6 +25,8 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Locale;
 import org.cactoos.text.FormattedText;
 
@@ -34,6 +36,7 @@ import org.cactoos.text.FormattedText;
  * @since 0.0.1
  * @checkstyle BooleanExpressionComplexityCheck (150 lines)
  */
+@SuppressWarnings("PMD.AvoidUsingShortType")
 public final class Flow {
     /**
      * A stream of bytes.
@@ -81,7 +84,7 @@ public final class Flow {
     }
 
     /**
-     * Read length bytes and return an integer that represents these bytes.
+     * Read 4 bytes and return an integer that represents these bytes.
      *
      * @return An integer number
      * @throws Exception if fails
@@ -92,6 +95,17 @@ public final class Flow {
             | ((bytes[1] & 0xFF) << 16)
             | ((bytes[2] & 0xFF) << 8)
             | (bytes[3] & 0xFF);
+    }
+
+    /**
+     * Read 2 bytes and return a short that represents these bytes.
+     *
+     * @return A short number
+     * @throws Exception if fails
+     */
+    public short asShort() throws Exception {
+        final byte[] bytes = this.asBytes(2);
+        return ByteBuffer.wrap(bytes).getShort();
     }
 
     /**
@@ -113,6 +127,21 @@ public final class Flow {
      */
     public long skip(final int length) throws Exception {
         return this.stream.skip(length);
+    }
+
+    /**
+     * Search for a sequence of bytes.
+     *
+     * @param marker Bytes to search for
+     * @throws Exception if fails
+     */
+    public void search(final byte[] marker) throws Exception {
+        while (true) {
+            final byte[] bytes = readNBytes(this.stream, marker.length);
+            if (Arrays.equals(bytes, marker)) {
+                break;
+            }
+        }
     }
 
     /**

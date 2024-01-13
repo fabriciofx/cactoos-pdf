@@ -78,7 +78,7 @@ public final class XObject implements Resource {
 
     @Override
     public Indirect indirect() throws Exception {
-        final Indirect indirect = this.image.content().indirect();
+        final Indirect indirect = this.image.format().indirect();
         final Dictionary dictionary = new Dictionary()
             .add(
                 "XObject",

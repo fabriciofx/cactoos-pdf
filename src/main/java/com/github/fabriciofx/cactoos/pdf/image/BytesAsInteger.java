@@ -21,35 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
+package com.github.fabriciofx.cactoos.pdf.image;
+
+import org.cactoos.Bytes;
+import org.cactoos.Scalar;
 
 /**
- * Image Raw.
+ * BytesAsInteger.
+ *
+ * Convert an array of bytes (4) in an integer.
  *
  * @since 0.0.1
+ * @checkstyle BooleanExpressionComplexityCheck (100 lines)
  */
-public interface Raw {
+public final class BytesAsInteger implements Scalar<Integer> {
     /**
-     * Header.
-     *
-     * @return Image header
-     * @throws Exception if fails
+     * Bytes.
      */
-    Header header() throws Exception;
+    private final Bytes bytes;
 
     /**
-     * Body.
+     * Ctor.
      *
-     * @return Image body
-     * @throws Exception if fails
+     * @param bytes An array of bytes that represents an integer
      */
-    Body body() throws Exception;
+    public BytesAsInteger(final byte[] bytes) {
+        this(() -> bytes);
+    }
 
     /**
-     * Palette.
+     * Ctor.
      *
-     * @return Image palette if there is one
-     * @throws Exception if fails
+     * @param bytes Bytes that represents an integer
      */
-    Palette palette() throws Exception;
+    public BytesAsInteger(final Bytes bytes) {
+        this.bytes = bytes;
+    }
+
+    @Override
+    public Integer value() throws Exception {
+        final byte[] octets = this.bytes.asBytes();
+        return ((octets[0] & 0xFF) << 24)
+            | ((octets[1] & 0xFF) << 16)
+            | ((octets[2] & 0xFF) << 8)
+            | (octets[3] & 0xFF);
+    }
 }

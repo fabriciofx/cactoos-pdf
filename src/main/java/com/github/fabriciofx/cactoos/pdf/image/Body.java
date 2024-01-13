@@ -21,31 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
+package com.github.fabriciofx.cactoos.pdf.image;
+
+import com.github.fabriciofx.cactoos.pdf.Content;
 
 /**
- * InvalidFormatException.
- *
- * Throws this exception when image format is invalid.
+ * Body.
  *
  * @since 0.0.1
  */
-public class InvalidFormatException extends RuntimeException {
-    private static final long serialVersionUID = -4456180910126746406L;
-
-    /**
-     * Ctor.
-     */
-    public InvalidFormatException() {
-        super();
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param msg Exception message
-     */
-    public InvalidFormatException(final String msg) {
-        super(msg);
-    }
+public interface Body extends Content {
 }

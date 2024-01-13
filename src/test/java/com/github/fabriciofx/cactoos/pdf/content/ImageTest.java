@@ -130,4 +130,86 @@ final class ImageTest {
             ).asBytes()
         );
     }
+
+    @Test
+    void buildDocumentWithJpegImage() throws Exception {
+        final Id id = new Serial();
+        final Image image = new Image(
+            id,
+            new Jpeg(
+                id,
+                new BytesOf(new ResourceOf("image/sample-1.jpg"))
+            ),
+            0,
+            100
+        );
+        final byte[] actual = new Document(
+            id,
+            new Catalog(
+                id,
+                new DefaultPages(
+                    id,
+                    PageFormat.A4,
+                    new DefaultPage(
+                        id,
+                        new Resources(
+                            id,
+                            new ProcSet(),
+                            new TimesRoman(id, 12),
+                            new XObject(id, image)
+                        ),
+                        new Contents(
+                            image
+                        )
+                    )
+                )
+            )
+        ).asBytes();
+        new Assertion<>(
+            "Must match with PDF document with a JPEG image",
+            new BytesOf(new ResourceOf("document/image-jpg.pdf")).asBytes(),
+            new IsEqual<>(actual)
+        ).affirm();
+    }
+
+    @Disabled
+    @Test
+    void buildFileWithJpegImage() throws Exception {
+        final Id id = new Serial();
+        final Image image = new Image(
+            id,
+            new Jpeg(
+                id,
+                new BytesOf(new ResourceOf("image/sample-1.jpg"))
+            ),
+            0,
+            100
+        );
+        final File file = new File("image-jpg.pdf");
+        Files.write(
+            file.toPath(),
+            new Document(
+                id,
+                new Catalog(
+                    id,
+                    new DefaultPages(
+                        id,
+                        PageFormat.A4,
+                        new DefaultPage(
+                            id,
+                            new Resources(
+                                id,
+                                new ProcSet(),
+                                new TimesRoman(id, 12),
+                                new XObject(id, image)
+                            ),
+                            new Contents(
+                                image
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
+    }
 }

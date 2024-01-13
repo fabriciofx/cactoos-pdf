@@ -21,14 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
-
-import com.github.fabriciofx.cactoos.pdf.Content;
 
 /**
- * Body.
+ * PNG.
  *
  * @since 0.0.1
  */
-public interface Body extends Content {
-}
+package com.github.fabriciofx.cactoos.pdf.image.png;

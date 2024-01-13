@@ -21,49 +21,75 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
-
-import org.cactoos.Bytes;
-import org.cactoos.Scalar;
+package com.github.fabriciofx.cactoos.pdf.image.png;
 
 /**
- * BytesAsInteger.
- *
- * Convert an array of bytes (4) in an integer.
+ * Color.
  *
  * @since 0.0.1
- * @checkstyle BooleanExpressionComplexityCheck (100 lines)
  */
-public final class BytesAsInteger implements Scalar<Integer> {
+public final class Color {
     /**
-     * Bytes.
+     * Color type.
      */
-    private final Bytes bytes;
+    private final int tpe;
 
     /**
      * Ctor.
      *
-     * @param bytes An array of bytes that represents an integer
+     * @param type Color type
      */
-    public BytesAsInteger(final byte[] bytes) {
-        this(() -> bytes);
+    public Color(final int type) {
+        this.tpe = type;
     }
 
     /**
-     * Ctor.
+     * Color type.
      *
-     * @param bytes Bytes that represents an integer
+     * @return Color type
      */
-    public BytesAsInteger(final Bytes bytes) {
-        this.bytes = bytes;
+    public int type() {
+        return this.tpe;
     }
 
-    @Override
-    public Integer value() throws Exception {
-        final byte[] octets = this.bytes.asBytes();
-        return ((octets[0] & 0xFF) << 24)
-            | ((octets[1] & 0xFF) << 16)
-            | ((octets[2] & 0xFF) << 8)
-            | (octets[3] & 0xFF);
+    /**
+     * Color space.
+     *
+     * @return Color space
+     */
+    public String space() {
+        final String space;
+        switch (this.tpe) {
+            case 0:
+            case 4:
+                space = "DeviceGray";
+                break;
+            case 2:
+            case 6:
+                space = "DeviceRGB";
+                break;
+            case 3:
+                space = "Indexed";
+                break;
+            default:
+                space = "Unknown";
+                break;
+        }
+        return space;
+    }
+
+    /**
+     * Number of colors according to color space.
+     *
+     * @return Number of colors
+     */
+    public int colors() {
+        final int clrs;
+        if (this.space().equals("DeviceRGB")) {
+            clrs = 3;
+        } else {
+            clrs = 1;
+        }
+        return clrs;
     }
 }

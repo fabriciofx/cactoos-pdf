@@ -23,15 +23,14 @@
  */
 package com.github.fabriciofx.cactoos.pdf.content;
 
-import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.image.Header;
+import com.github.fabriciofx.cactoos.pdf.image.Palette;
+import com.github.fabriciofx.cactoos.pdf.image.Raw;
+import com.github.fabriciofx.cactoos.pdf.image.png.PngRaw;
+import com.github.fabriciofx.cactoos.pdf.image.png.SafePngRaw;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
-import com.github.fabriciofx.cactoos.pdf.png.Header;
-import com.github.fabriciofx.cactoos.pdf.png.Palette;
-import com.github.fabriciofx.cactoos.pdf.png.PngRaw;
-import com.github.fabriciofx.cactoos.pdf.png.Raw;
-import com.github.fabriciofx.cactoos.pdf.png.SafePngRaw;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -47,7 +46,7 @@ import org.cactoos.Bytes;
  *
  * @since 0.0.1
  */
-public final class Png implements Content {
+public final class Png implements ImageFormat {
     /**
      * Id.
      */
@@ -79,22 +78,12 @@ public final class Png implements Content {
         this.raw = new SafePngRaw(new PngRaw(this.id, bytes));
     }
 
-    /**
-     * Image width.
-     *
-     * @return Image width in pixels
-     * @throws Exception if fails
-     */
+    @Override
     public int width() throws Exception {
         return this.raw.header().width();
     }
 
-    /**
-     * Image height.
-     *
-     * @return Image height in pixels
-     * @throws Exception if fails
-     */
+    @Override
     public int height() throws Exception {
         return this.raw.header().height();
     }

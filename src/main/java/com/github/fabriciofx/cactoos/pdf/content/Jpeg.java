@@ -21,108 +21,93 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
+package com.github.fabriciofx.cactoos.pdf.content;
 
-import com.github.fabriciofx.cactoos.pdf.Flow;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.image.Header;
+import com.github.fabriciofx.cactoos.pdf.image.Raw;
+import com.github.fabriciofx.cactoos.pdf.image.jpeg.JpegRaw;
+import com.github.fabriciofx.cactoos.pdf.image.jpeg.SafeJpegRaw;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
+import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.nio.file.Files;
 import org.cactoos.Bytes;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.Sticky;
 
 /**
- * PngBody: Represents a PNG image body.
+ * PNG.
  *
  * @since 0.0.1
  */
-public final class PngBody implements Body {
+public final class Jpeg implements ImageFormat {
     /**
      * Id.
      */
-    private final int id;
+    private final Id id;
 
     /**
-     * Generation.
+     * Raw image.
      */
-    private final int generation;
-
-    /**
-     * PNG image body.
-     */
-    private final Scalar<byte[]> bytes;
+    private final Raw raw;
 
     /**
      * Ctor.
      *
      * @param id Id number
-     * @param bytes Bytes that represents a PNG image body
+     * @param filename Image file name
      */
-    public PngBody(final Id id, final Bytes bytes) {
-        this(
-            id.increment(),
-            0,
-            new Sticky<>(
-                () -> {
-                    final Flow flow = new Flow(bytes.asBytes());
-                    final ByteArrayOutputStream body =
-                        new ByteArrayOutputStream();
-                    int len;
-                    flow.skip(33);
-                    do {
-                        len = flow.asInt();
-                        final String type = flow.asString(4);
-                        if (type.equals("IDAT")) {
-                            body.write(flow.asBytes(len));
-                            flow.skip(4);
-                        } else if (type.equals("IEND")) {
-                            break;
-                        } else {
-                            flow.skip(len + 4);
-                        }
-                    } while (len > 0);
-                    return body.toByteArray();
-                }
-            )
-        );
+    public Jpeg(final Id id, final String filename) {
+        this(id, () -> Files.readAllBytes(new File(filename).toPath()));
     }
 
     /**
      * Ctor.
      *
      * @param id Id number
-     * @param generation Generation number
-     * @param bytes Bytes that represents a PNG image body
+     * @param bytes Bytes that represents a PNG image
      */
-    public PngBody(
-        final int id,
-        final int generation,
-        final Scalar<byte[]> bytes
-    ) {
+    public Jpeg(final Id id, final Bytes bytes) {
         this.id = id;
-        this.generation = generation;
-        this.bytes = bytes;
+        this.raw = new SafeJpegRaw(new JpegRaw(this.id, bytes));
     }
 
     @Override
-    public byte[] asStream() throws Exception {
-        return this.bytes.value();
+    public int width() throws Exception {
+        return this.raw.header().width();
+    }
+
+    @Override
+    public int height() throws Exception {
+        return this.raw.header().height();
     }
 
     @Override
     public Indirect indirect() throws Exception {
+        final Header header = this.raw.header();
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
+            .add("Type", new Name("XObject"))
+            .add("Subtype", new Name("Image"))
+            .add("Width", new Int(header.width()))
+            .add("Height", new Int(header.height()))
+            .add("ColorSpace", new Name("DeviceRGB"))
+            .add("BitsPerComponent", new Int(header.depth()))
+            .add("Filter", new Name("DCTDecode"))
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
         return new DefaultIndirect(
-            this.id,
-            this.generation,
+            this.id.increment(),
+            0,
             dictionary
         );
+    }
+
+    @Override
+    public byte[] asStream() throws Exception {
+        return this.raw.body().asStream();
     }
 }

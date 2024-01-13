@@ -21,14 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
-
-import com.github.fabriciofx.cactoos.pdf.Content;
+package com.github.fabriciofx.cactoos.pdf.image;
 
 /**
- * Palette.
+ * Image Raw.
  *
  * @since 0.0.1
  */
-public interface Palette extends Content {
+public interface Raw {
+    /**
+     * Header.
+     *
+     * @return Image header
+     * @throws Exception if fails
+     */
+    Header header() throws Exception;
+
+    /**
+     * Body.
+     *
+     * @return Image body
+     * @throws Exception if fails
+     */
+    Body body() throws Exception;
+
+    /**
+     * Palette.
+     *
+     * @return Image palette if there is one
+     * @throws Exception if fails
+     */
+    Palette palette() throws Exception;
 }

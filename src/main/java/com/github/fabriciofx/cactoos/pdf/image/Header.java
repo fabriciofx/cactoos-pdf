@@ -21,75 +21,78 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
+package com.github.fabriciofx.cactoos.pdf.image;
+
+import com.github.fabriciofx.cactoos.pdf.image.png.Color;
+import org.cactoos.Bytes;
+import org.cactoos.Text;
 
 /**
- * Color.
+ * Header.
  *
  * @since 0.0.1
  */
-public final class Color {
+public interface Header extends Text, Bytes {
     /**
-     * Color type.
+     * Length.
+     *
+     * @return The length
+     * @throws Exception if fails
      */
-    private final int tpe;
+    int length() throws Exception;
 
     /**
-     * Ctor.
-     *
-     * @param type Color type
+     * Width.
+     * @return Image width
+     * @throws Exception if fails
      */
-    public Color(final int type) {
-        this.tpe = type;
-    }
+    int width() throws Exception;
 
     /**
-     * Color type.
+     * Height.
      *
-     * @return Color type
+     * @return Image height
+     * @throws Exception if fails
      */
-    public int type() {
-        return this.tpe;
-    }
+    int height() throws Exception;
+
+    /**
+     * Bit Depth.
+     *
+     * @return Amount of image bit depth
+     * @throws Exception if fails
+     */
+    int depth() throws Exception;
 
     /**
      * Color space.
      *
-     * @return Color space
+     * @return Color type and space
+     * @throws Exception if fails
      */
-    public String space() {
-        final String space;
-        switch (this.tpe) {
-            case 0:
-            case 4:
-                space = "DeviceGray";
-                break;
-            case 2:
-            case 6:
-                space = "DeviceRGB";
-                break;
-            case 3:
-                space = "Indexed";
-                break;
-            default:
-                space = "Unknown";
-                break;
-        }
-        return space;
-    }
+    Color color() throws Exception;
 
     /**
-     * Number of colors according to color space.
+     * Image compression level.
      *
-     * @return Number of colors
+     * @return Image compression level
+     * @throws Exception if fails
      */
-    public int colors() {
-        final int clrs;
-        if (this.space().equals("DeviceRGB")) {
-            clrs = 3;
-        } else {
-            clrs = 1;
-        }
-        return clrs;
-    }
+    int compression() throws Exception;
+
+    /**
+     * Image filter type.
+     *
+     * @return Image filter type
+     * @throws Exception if fails
+     */
+    int filter() throws Exception;
+
+    /**
+     * Image interlacing.
+     *
+     * @return Image interlacing
+     * @throws Exception if fails
+     */
+    int interlacing() throws Exception;
 }

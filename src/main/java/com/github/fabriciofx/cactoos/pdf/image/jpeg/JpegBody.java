@@ -21,26 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
+package com.github.fabriciofx.cactoos.pdf.image.jpeg;
 
-import com.github.fabriciofx.cactoos.pdf.Flow;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.image.Body;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
-import java.io.ByteArrayOutputStream;
 import org.cactoos.Bytes;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.Sticky;
 
 /**
- * PngPalette: Represents a palette of a PNG image.
+ * JpegBody.
  *
  * @since 0.0.1
  */
-public final class PngPalette implements Palette {
+public final class JpegBody implements Body {
     /**
      * Id.
      */
@@ -52,42 +49,18 @@ public final class PngPalette implements Palette {
     private final int generation;
 
     /**
-     * Bytes that represents a palette.
+     * JPEG image body.
      */
-    private final Scalar<byte[]> bytes;
+    private final Bytes bytes;
 
     /**
      * Ctor.
      *
      * @param id Id number
-     * @param bytes Bytes that represents a palette
+     * @param bytes Bytes that represents a JPEG image (all content)
      */
-    public PngPalette(final Id id, final Bytes bytes) {
-        this(
-            id.increment(),
-            0,
-            new Sticky<>(
-                () -> {
-                    final Flow flow = new Flow(bytes.asBytes());
-                    int len;
-                    final ByteArrayOutputStream palette = new ByteArrayOutputStream();
-                    flow.skip(33);
-                    do {
-                        len = flow.asInt();
-                        final String type = flow.asString(4);
-                        if (type.equals("PLTE")) {
-                            palette.write(flow.asBytes(len));
-                            flow.skip(4);
-                        } else if (type.equals("IEND")) {
-                            break;
-                        } else {
-                            flow.skip(len + 4);
-                        }
-                    } while (len > 0);
-                    return palette.toByteArray();
-                }
-            )
-        );
+    public JpegBody(final Id id, final Bytes bytes) {
+        this(id.increment(), 0, bytes);
     }
 
     /**
@@ -95,13 +68,9 @@ public final class PngPalette implements Palette {
      *
      * @param id Id number
      * @param generation Generation number
-     * @param bytes Bytes that represents a palette.
+     * @param bytes Bytes that represents a JPEG image (all content)
      */
-    public PngPalette(
-        final int id,
-        final int generation,
-        final Scalar<byte[]> bytes
-    ) {
+    public JpegBody(final int id, final int generation, final Bytes bytes) {
         this.id = id;
         this.generation = generation;
         this.bytes = bytes;
@@ -109,7 +78,7 @@ public final class PngPalette implements Palette {
 
     @Override
     public byte[] asStream() throws Exception {
-        return this.bytes.value();
+        return this.bytes.asBytes();
     }
 
     @Override

@@ -21,77 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.png;
+package com.github.fabriciofx.cactoos.pdf.content;
 
-import org.cactoos.Bytes;
-import org.cactoos.Text;
+import com.github.fabriciofx.cactoos.pdf.Content;
 
 /**
- * Header.
+ * Image Format.
  *
  * @since 0.0.1
  */
-public interface Header extends Text, Bytes {
+public interface ImageFormat extends Content {
     /**
-     * Length.
+     * Image width.
      *
-     * @return The length
-     * @throws Exception if fails
-     */
-    int length() throws Exception;
-
-    /**
-     * Width.
-     * @return Image width
+     * @return Image width in pixels
      * @throws Exception if fails
      */
     int width() throws Exception;
 
     /**
-     * Height.
+     * Image height.
      *
-     * @return Image height
+     * @return Image height in pixels
      * @throws Exception if fails
      */
     int height() throws Exception;
-
-    /**
-     * Bit Depth.
-     *
-     * @return Amount of image bit depth
-     * @throws Exception if fails
-     */
-    int depth() throws Exception;
-
-    /**
-     * Color space.
-     *
-     * @return Color type and space
-     * @throws Exception if fails
-     */
-    Color color() throws Exception;
-
-    /**
-     * Image compression level.
-     *
-     * @return Image compression level
-     * @throws Exception if fails
-     */
-    int compression() throws Exception;
-
-    /**
-     * Image filter type.
-     *
-     * @return Image filter type
-     * @throws Exception if fails
-     */
-    int filter() throws Exception;
-
-    /**
-     * Image interlacing.
-     *
-     * @return Image interlacing
-     * @throws Exception if fails
-     */
-    int interlacing() throws Exception;
 }

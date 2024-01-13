@@ -23,8 +23,8 @@
  */
 
 /**
- * Tests for PNG.
+ * Image.
  *
  * @since 0.0.1
  */
-package com.github.fabriciofx.cactoos.pdf.png;
+package com.github.fabriciofx.cactoos.pdf.image;

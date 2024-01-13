@@ -53,9 +53,9 @@ public final class Image implements Content {
     private final int generation;
 
     /**
-     * Image PNG.
+     * Image Format.
      */
-    private final Png png;
+    private final ImageFormat fmt;
 
     /**
      * Position X.
@@ -81,25 +81,25 @@ public final class Image implements Content {
      * Ctor.
      *
      * @param id Id number
-     * @param png Raw PNG
+     * @param format Raw image format
      * @param posx Position X
      * @param posy Position Y
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Image(
         final Id id,
-        final Png png,
+        final ImageFormat format,
         final double posx,
         final double posy
     ) {
         this(
             id.increment(),
             0,
-            png,
+            format,
             posx,
             posy,
-            () -> (double) png.width(),
-            () -> (double) png.height()
+            () -> (double) format.width(),
+            () -> (double) format.height()
         );
     }
 
@@ -107,7 +107,7 @@ public final class Image implements Content {
      * Ctor.
      *
      * @param id Id number
-     * @param png Raw PNG
+     * @param format Raw image format
      * @param posx Position X
      * @param posy Position Y
      * @param width Image width
@@ -116,7 +116,7 @@ public final class Image implements Content {
      */
     public Image(
         final Id id,
-        final Png png,
+        final Png format,
         final double posx,
         final double posy,
         final double width,
@@ -125,7 +125,7 @@ public final class Image implements Content {
         this(
             id.increment(),
             0,
-            png,
+            format,
             posx,
             posy,
             () -> width,
@@ -138,7 +138,7 @@ public final class Image implements Content {
      *
      * @param id Id number
      * @param generation Generation number
-     * @param png Raw PNG
+     * @param format Raw image format
      * @param posx Position X
      * @param posy Position Y
      * @param width Image width
@@ -148,7 +148,7 @@ public final class Image implements Content {
     public Image(
         final int id,
         final int generation,
-        final Png png,
+        final ImageFormat format,
         final double posx,
         final double posy,
         final Scalar<Double> width,
@@ -156,7 +156,7 @@ public final class Image implements Content {
     ) {
         this.id = id;
         this.generation = generation;
-        this.png = png;
+        this.fmt = format;
         this.posx = posx;
         this.posy = posy;
         this.width = width;
@@ -195,10 +195,11 @@ public final class Image implements Content {
     }
 
     /**
-     * PNG.
-     * @return The PNG
+     * Image format.
+     *
+     * @return The image format
      */
-    public Png content() {
-        return this.png;
+    public ImageFormat format() {
+        return this.fmt;
     }
 }

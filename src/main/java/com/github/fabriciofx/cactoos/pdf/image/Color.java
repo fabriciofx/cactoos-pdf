@@ -21,75 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.image.png;
+package com.github.fabriciofx.cactoos.pdf.image;
 
 /**
- * Color.
+ * Image Color.
  *
  * @since 0.0.1
  */
-public final class Color {
-    /**
-     * Color type.
-     */
-    private final int tpe;
-
-    /**
-     * Ctor.
-     *
-     * @param type Color type
-     */
-    public Color(final int type) {
-        this.tpe = type;
-    }
-
+public interface Color {
     /**
      * Color type.
      *
      * @return Color type
      */
-    public int type() {
-        return this.tpe;
-    }
+    int type();
 
     /**
      * Color space.
      *
      * @return Color space
      */
-    public String space() {
-        final String space;
-        switch (this.tpe) {
-            case 0:
-            case 4:
-                space = "DeviceGray";
-                break;
-            case 2:
-            case 6:
-                space = "DeviceRGB";
-                break;
-            case 3:
-                space = "Indexed";
-                break;
-            default:
-                space = "Unknown";
-                break;
-        }
-        return space;
-    }
+    String space();
 
     /**
      * Number of colors according to color space.
      *
      * @return Number of colors
      */
-    public int colors() {
-        final int clrs;
-        if (this.space().equals("DeviceRGB")) {
-            clrs = 3;
-        } else {
-            clrs = 1;
-        }
-        return clrs;
-    }
+    int colors();
 }

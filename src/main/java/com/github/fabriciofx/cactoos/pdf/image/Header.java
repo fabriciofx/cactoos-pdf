@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf.image;
 
-import com.github.fabriciofx.cactoos.pdf.image.png.Color;
 import org.cactoos.Bytes;
 import org.cactoos.Text;
 

@@ -23,9 +23,9 @@
  */
 package com.github.fabriciofx.cactoos.pdf.image.jpeg;
 
+import com.github.fabriciofx.cactoos.pdf.image.Color;
 import com.github.fabriciofx.cactoos.pdf.image.Flow;
 import com.github.fabriciofx.cactoos.pdf.image.Header;
-import com.github.fabriciofx.cactoos.pdf.image.png.Color;
 import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.text.FormattedText;
@@ -35,6 +35,18 @@ import org.cactoos.text.Joined;
  * JpegHeader.
  *
  * @since 0.0.1
+ *
+ * FF C0        // Start of Frame marker
+ * XX XX        // Length of the segment (excluding marker and length fields)
+ * XX           // Data precision (usually 8 bits per component)
+ * XX XX        // Image height (2 bytes)
+ * XX XX        // Image width (2 bytes)
+ * XX           // Number of components (usually 3 for color images)
+ * XX           // Component ID (1 byte)
+ * XX           // Horizontal sampling factor (4 bits)
+ * XX           // Vertical sampling factor (4 bits)
+ * XX           // Quantization table ID (1 byte)
+ * ... (repeat the last three lines for each component)
  */
 public final class JpegHeader implements Header {
     /**
@@ -84,9 +96,10 @@ public final class JpegHeader implements Header {
 
     @Override
     public Color color() throws Exception {
-        throw new UnsupportedOperationException(
-            "I can't perform color() in a JPEG header"
-        );
+        final Flow flow = new Flow(this.bytes.asBytes());
+        flow.search(new byte[]{(byte) 0xff, (byte) 0xc0});
+        flow.skip(7);
+        return new JpegColor(flow.asByte());
     }
 
     @Override
@@ -122,12 +135,14 @@ public final class JpegHeader implements Header {
                 "\n",
                 "Width: %d",
                 "Height: %d",
-                "Depth: %d"
+                "Depth: %d",
+                "Color: %s"
             ),
             Locale.ENGLISH,
             this.width(),
             this.height(),
-            this.depth()
+            this.depth(),
+            this.color().space()
         ).asString();
     }
 }

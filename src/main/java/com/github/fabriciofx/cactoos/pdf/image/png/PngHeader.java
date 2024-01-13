@@ -104,8 +104,8 @@ public final class PngHeader implements Header {
     }
 
     @Override
-    public Color color() throws Exception {
-        return new Color(this.bytes.asBytes()[25]);
+    public PngColor color() throws Exception {
+        return new PngColor(this.bytes.asBytes()[25]);
     }
 
     @Override

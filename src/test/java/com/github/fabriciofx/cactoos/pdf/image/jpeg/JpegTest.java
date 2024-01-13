@@ -27,9 +27,11 @@ import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.image.Raw;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
+import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsNumber;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link JpegRaw}.
@@ -74,6 +76,19 @@ final class JpegTest {
             "Must represent the width of a JPEG image",
             raw.header().depth(),
             new IsNumber(8)
+        ).affirm();
+    }
+
+    @Test
+    void headerColorSpace() throws Exception {
+        final Raw raw = new JpegRaw(
+            new Serial(),
+            new BytesOf(new ResourceOf("image/sample-1.jpg"))
+        );
+        new Assertion<>(
+            "Must represent the width of a JPEG image",
+            new TextOf(raw.header().color().space()),
+            new IsText("DeviceRGB")
         ).affirm();
     }
 

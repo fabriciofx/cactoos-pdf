@@ -132,7 +132,6 @@ final class DocumentTest {
 
     @Test
     void buildDocumentWithFontsAndImages() throws Exception {
-        final File file = new File("fonts-images.pdf");
         final Id id = new Serial();
         final Font times = new TimesRoman(id, 16);
         final Font helvetica = new Helvetica(id, 16);

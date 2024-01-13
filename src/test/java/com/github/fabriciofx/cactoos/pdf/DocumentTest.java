@@ -24,14 +24,23 @@
 package com.github.fabriciofx.cactoos.pdf;
 
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
+import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
+import com.github.fabriciofx.cactoos.pdf.image.format.Jpeg;
+import com.github.fabriciofx.cactoos.pdf.image.format.Png;
 import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
+import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import com.github.fabriciofx.cactoos.pdf.resource.XObject;
+import com.github.fabriciofx.cactoos.pdf.resource.font.Courier;
+import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
+import com.github.fabriciofx.cactoos.pdf.resource.font.Symbol;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
+import com.github.fabriciofx.cactoos.pdf.resource.font.ZapfDingbats;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.bytes.BytesOf;
@@ -121,6 +130,76 @@ final class DocumentTest {
         ).affirm();
     }
 
+    @Test
+    void buildDocumentWithFontsAndImages() throws Exception {
+        final File file = new File("fonts-images.pdf");
+        final Id id = new Serial();
+        final Font times = new TimesRoman(id, 16);
+        final Font helvetica = new Helvetica(id, 16);
+        final Font courier = new Courier(id, 16);
+        final Font symbol = new Symbol(id, 16);
+        final Font zapf = new ZapfDingbats(id, 16);
+        final Image cat = new Image(
+            id,
+            new Jpeg(
+                id,
+                new BytesOf(new ResourceOf("image/sample-1.jpg"))
+            ),
+            0,
+            100
+        );
+        final Image logo = new Image(
+            id,
+            new Png(
+                id,
+                new BytesOf(new ResourceOf("image/logo.png"))
+            ),
+            28,
+            766
+        );
+        final org.cactoos.Text text = new TextOf(
+            "The quick brown fox jumps over the lazy dog"
+        );
+        final byte[] actual = new Document(
+            id,
+            new Catalog(
+                id,
+                new DefaultPages(
+                    id,
+                    Format.A4,
+                    new DefaultPage(
+                        id,
+                        new Resources(
+                            id,
+                            times,
+                            helvetica,
+                            courier,
+                            symbol,
+                            zapf,
+                            new ProcSet(),
+                            new XObject(id, cat),
+                            new XObject(id, logo)
+                        ),
+                        new Contents(
+                            cat,
+                            logo,
+                            new Text(id, times, 10, 100, 80, text),
+                            new Text(id, helvetica, 10, 200, 80, text),
+                            new Text(id, courier, 10, 300, 80, text),
+                            new Text(id, symbol, 10, 400, 80, text),
+                            new Text(id, zapf, 10, 500, 80, text)
+                        )
+                    )
+                )
+            )
+        ).asBytes();
+        new Assertion<>(
+            "Must match with PDF document with several fonts and images",
+            new BytesOf(new ResourceOf("document/fonts-images.pdf")).asBytes(),
+            new IsEqual<>(actual)
+        ).affirm();
+    }
+
     @Disabled
     @Test
     void buildFileHelloWorld() throws Exception {
@@ -185,6 +264,75 @@ final class DocumentTest {
                                         new ResourceOf("text/20k_c1.txt")
                                     )
                                 )
+                            )
+                        )
+                    )
+                )
+            ).asBytes()
+        );
+    }
+
+    @Disabled
+    @Test
+    void buildFileWithFontsAndImages() throws Exception {
+        final File file = new File("fonts-images.pdf");
+        final Id id = new Serial();
+        final Font times = new TimesRoman(id, 16);
+        final Font helvetica = new Helvetica(id, 16);
+        final Font courier = new Courier(id, 16);
+        final Font symbol = new Symbol(id, 16);
+        final Font zapf = new ZapfDingbats(id, 16);
+        final Image cat = new Image(
+            id,
+            new Jpeg(
+                id,
+                new BytesOf(new ResourceOf("image/sample-1.jpg"))
+            ),
+            0,
+            100
+        );
+        final Image logo = new Image(
+            id,
+            new Png(
+                id,
+                new BytesOf(new ResourceOf("image/logo.png"))
+            ),
+            28,
+            766
+        );
+        final org.cactoos.Text text = new TextOf(
+            "The quick brown fox jumps over the lazy dog"
+        );
+        Files.write(
+            file.toPath(),
+            new Document(
+                id,
+                new Catalog(
+                    id,
+                    new DefaultPages(
+                        id,
+                        Format.A4,
+                        new DefaultPage(
+                            id,
+                            new Resources(
+                                id,
+                                times,
+                                helvetica,
+                                courier,
+                                symbol,
+                                zapf,
+                                new ProcSet(),
+                                new XObject(id, cat),
+                                new XObject(id, logo)
+                            ),
+                            new Contents(
+                                cat,
+                                logo,
+                                new Text(id, times, 10, 100, 80, text),
+                                new Text(id, helvetica, 10, 200, 80, text),
+                                new Text(id, courier, 10, 300, 80, text),
+                                new Text(id, symbol, 10, 400, 80, text),
+                                new Text(id, zapf, 10, 500, 80, text)
                             )
                         )
                     )

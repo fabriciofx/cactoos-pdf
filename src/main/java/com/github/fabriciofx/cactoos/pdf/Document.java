@@ -23,6 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import com.github.fabriciofx.cactoos.pdf.object.Catalog;
+import com.github.fabriciofx.cactoos.pdf.object.Information;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;

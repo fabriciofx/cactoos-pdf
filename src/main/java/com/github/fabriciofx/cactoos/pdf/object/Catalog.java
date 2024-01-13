@@ -21,8 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf;
+package com.github.fabriciofx.cactoos.pdf.object;
 
+import com.github.fabriciofx.cactoos.pdf.Id;
+import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.Object;
+import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;

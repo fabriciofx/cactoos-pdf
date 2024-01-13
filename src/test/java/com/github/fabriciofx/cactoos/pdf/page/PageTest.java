@@ -23,13 +23,13 @@
  */
 package com.github.fabriciofx.cactoos.pdf.page;
 
-import com.github.fabriciofx.cactoos.pdf.Catalog;
 import com.github.fabriciofx.cactoos.pdf.Document;
 import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
+import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;

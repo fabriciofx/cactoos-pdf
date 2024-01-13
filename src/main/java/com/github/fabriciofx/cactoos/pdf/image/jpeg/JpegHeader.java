@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf.image.jpeg;
 
-import com.github.fabriciofx.cactoos.pdf.Flow;
+import com.github.fabriciofx.cactoos.pdf.image.Flow;
 import com.github.fabriciofx.cactoos.pdf.image.Header;
 import com.github.fabriciofx.cactoos.pdf.image.png.Color;
 import java.util.Locale;

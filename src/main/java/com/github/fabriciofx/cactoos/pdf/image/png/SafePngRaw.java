@@ -23,9 +23,9 @@
  */
 package com.github.fabriciofx.cactoos.pdf.image.png;
 
-import com.github.fabriciofx.cactoos.pdf.Flow;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.image.Body;
+import com.github.fabriciofx.cactoos.pdf.image.Flow;
 import com.github.fabriciofx.cactoos.pdf.image.Header;
 import com.github.fabriciofx.cactoos.pdf.image.InvalidFormatException;
 import com.github.fabriciofx.cactoos.pdf.image.Palette;

@@ -21,10 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.content;
+package com.github.fabriciofx.cactoos.pdf.image.format;
 
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.image.Format;
 import com.github.fabriciofx.cactoos.pdf.image.Header;
 import com.github.fabriciofx.cactoos.pdf.image.Palette;
 import com.github.fabriciofx.cactoos.pdf.image.Raw;
@@ -46,7 +47,7 @@ import org.cactoos.Bytes;
  *
  * @since 0.0.1
  */
-public final class Png implements ImageFormat {
+public final class Png implements Format {
     /**
      * Id.
      */

@@ -21,29 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.content;
-
-import com.github.fabriciofx.cactoos.pdf.Content;
 
 /**
- * Image Format.
+ * Format.
  *
  * @since 0.0.1
  */
-public interface ImageFormat extends Content {
-    /**
-     * Image width.
-     *
-     * @return Image width in pixels
-     * @throws Exception if fails
-     */
-    int width() throws Exception;
-
-    /**
-     * Image height.
-     *
-     * @return Image height in pixels
-     * @throws Exception if fails
-     */
-    int height() throws Exception;
-}
+package com.github.fabriciofx.cactoos.pdf.image.format;

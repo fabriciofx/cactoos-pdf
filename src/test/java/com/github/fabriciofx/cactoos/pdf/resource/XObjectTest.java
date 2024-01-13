@@ -25,8 +25,8 @@ package com.github.fabriciofx.cactoos.pdf.resource;
 
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Image;
-import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
+import com.github.fabriciofx.cactoos.pdf.image.format.Png;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Concatenated;

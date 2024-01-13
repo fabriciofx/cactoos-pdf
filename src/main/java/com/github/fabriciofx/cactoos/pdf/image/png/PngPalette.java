@@ -23,9 +23,9 @@
  */
 package com.github.fabriciofx.cactoos.pdf.image.png;
 
-import com.github.fabriciofx.cactoos.pdf.Flow;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.image.Flow;
 import com.github.fabriciofx.cactoos.pdf.image.Palette;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;

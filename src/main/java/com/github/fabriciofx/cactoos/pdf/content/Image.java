@@ -26,6 +26,8 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.image.Format;
+import com.github.fabriciofx.cactoos.pdf.image.format.Png;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -55,7 +57,7 @@ public final class Image implements Content {
     /**
      * Image Format.
      */
-    private final ImageFormat fmt;
+    private final Format fmt;
 
     /**
      * Position X.
@@ -88,7 +90,7 @@ public final class Image implements Content {
      */
     public Image(
         final Id id,
-        final ImageFormat format,
+        final Format format,
         final double posx,
         final double posy
     ) {
@@ -148,7 +150,7 @@ public final class Image implements Content {
     public Image(
         final int id,
         final int generation,
-        final ImageFormat format,
+        final Format format,
         final double posx,
         final double posy,
         final Scalar<Double> width,
@@ -199,7 +201,7 @@ public final class Image implements Content {
      *
      * @return The image format
      */
-    public ImageFormat format() {
+    public Format format() {
         return this.fmt;
     }
 }

@@ -24,9 +24,9 @@
 package com.github.fabriciofx.cactoos.pdf.image.png;
 
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.content.Png;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.image.Raw;
+import com.github.fabriciofx.cactoos.pdf.image.format.Png;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.bytes.BytesOf;

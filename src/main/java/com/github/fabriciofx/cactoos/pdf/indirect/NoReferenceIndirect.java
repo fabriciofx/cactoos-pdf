@@ -27,29 +27,16 @@ import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.list.ListOf;
-import org.cactoos.text.FormattedText;
 
 /**
  * DefaultIndirect.
  *
  * @since 0.0.1
  */
-public final class DefaultIndirect implements Indirect {
-    /**
-     * Object id.
-     */
-    private final int id;
-
-    /**
-     * Object generation.
-     */
-    private final int generation;
-
+public final class NoReferenceIndirect implements Indirect {
     /**
      * Dictionary.
      */
@@ -63,45 +50,37 @@ public final class DefaultIndirect implements Indirect {
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Object generation
      * @param dictionary Dictionary
      * @param contents Contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public DefaultIndirect(
-        final int id,
-        final int generation,
+    public NoReferenceIndirect(
         final Dictionary dictionary,
         final Bytes... contents
     ) {
-        this(id, generation, dictionary, new ListOf<>(contents));
+        this(dictionary, new ListOf<>(contents));
     }
 
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Object generation
      * @param dictionary Dictionary
      * @param contents Contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public DefaultIndirect(
-        final int id,
-        final int generation,
+    public NoReferenceIndirect(
         final Dictionary dictionary,
         final List<Bytes> contents
     ) {
-        this.id = id;
-        this.generation = generation;
         this.dict = dictionary;
         this.contents = contents;
     }
 
     @Override
     public Reference reference() {
-        return new Reference(this.id, this.generation);
+        throw new UnsupportedOperationException(
+            "This indirect has not reference"
+        );
     }
 
     @Override
@@ -112,16 +91,6 @@ public final class DefaultIndirect implements Indirect {
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                Locale.ENGLISH,
-                this.id,
-                this.generation
-            ).asString().getBytes(StandardCharsets.UTF_8)
-        );
-        baos.write(this.dict.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         for (final Bytes bytes : this.contents) {
             baos.write(bytes.asBytes());
         }

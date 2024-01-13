@@ -27,19 +27,16 @@ import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.list.ListOf;
-import org.cactoos.text.FormattedText;
 
 /**
  * DefaultIndirect.
  *
  * @since 0.0.1
  */
-public final class DefaultIndirect implements Indirect {
+public final class NoDictionaryIndirect implements Indirect {
     /**
      * Object id.
      */
@@ -51,11 +48,6 @@ public final class DefaultIndirect implements Indirect {
     private final int generation;
 
     /**
-     * Dictionary.
-     */
-    private final Dictionary dict;
-
-    /**
      * Content.
      */
     private final List<Bytes> contents;
@@ -65,17 +57,15 @@ public final class DefaultIndirect implements Indirect {
      *
      * @param id Object id
      * @param generation Object generation
-     * @param dictionary Dictionary
      * @param contents Contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public DefaultIndirect(
+    public NoDictionaryIndirect(
         final int id,
         final int generation,
-        final Dictionary dictionary,
         final Bytes... contents
     ) {
-        this(id, generation, dictionary, new ListOf<>(contents));
+        this(id, generation, new ListOf<>(contents));
     }
 
     /**
@@ -83,19 +73,16 @@ public final class DefaultIndirect implements Indirect {
      *
      * @param id Object id
      * @param generation Object generation
-     * @param dictionary Dictionary
      * @param contents Contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public DefaultIndirect(
+    public NoDictionaryIndirect(
         final int id,
         final int generation,
-        final Dictionary dictionary,
         final List<Bytes> contents
     ) {
         this.id = id;
         this.generation = generation;
-        this.dict = dictionary;
         this.contents = contents;
     }
 
@@ -106,22 +93,14 @@ public final class DefaultIndirect implements Indirect {
 
     @Override
     public Dictionary dictionary() {
-        return this.dict;
+        throw new UnsupportedOperationException(
+            "This indirect has not dictionary"
+        );
     }
 
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
-            new FormattedText(
-                "%d %d obj\n",
-                Locale.ENGLISH,
-                this.id,
-                this.generation
-            ).asString().getBytes(StandardCharsets.UTF_8)
-        );
-        baos.write(this.dict.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
         for (final Bytes bytes : this.contents) {
             baos.write(bytes.asBytes());
         }

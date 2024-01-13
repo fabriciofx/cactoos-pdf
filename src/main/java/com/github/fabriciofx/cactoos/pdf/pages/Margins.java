@@ -26,9 +26,8 @@ package com.github.fabriciofx.cactoos.pdf.pages;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
-import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
+import com.github.fabriciofx.cactoos.pdf.indirect.NoDictionaryIndirect;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -140,10 +139,9 @@ public final class Margins implements Pages {
             );
         }
         matcher.appendTail(stream);
-        return new DefaultIndirect(
+        return new NoDictionaryIndirect(
             indirect.reference().id(),
             indirect.reference().generation(),
-            new Dictionary(),
             new BytesOf(stream)
         );
     }

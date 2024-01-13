@@ -25,7 +25,7 @@ package com.github.fabriciofx.cactoos.pdf.resource.font;
 
 import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
-import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
+import com.github.fabriciofx.cactoos.pdf.indirect.NoReferenceIndirect;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
@@ -98,6 +98,6 @@ public abstract class FontEnvelope implements Font {
                     new Text(indirect.reference().asString())
                 )
             );
-        return new DefaultIndirect(dictionary, indirect);
+        return new NoReferenceIndirect(dictionary, indirect);
     }
 }

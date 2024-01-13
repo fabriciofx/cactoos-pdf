@@ -21,49 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.content;
+package com.github.fabriciofx.cactoos.pdf.indirect;
 
-import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
-import com.github.fabriciofx.cactoos.pdf.Object;
-import com.github.fabriciofx.cactoos.pdf.indirect.ContentIndirect;
+import com.github.fabriciofx.cactoos.pdf.text.Reference;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import org.cactoos.list.ListEnvelope;
+import org.cactoos.Bytes;
 import org.cactoos.list.ListOf;
 
 /**
- * Contents.
+ * ContentIndirect.
  *
  * @since 0.0.1
  */
-public final class Contents extends ListEnvelope<Content> implements Object {
+public final class ContentIndirect implements Indirect {
+    /**
+     * Content.
+     */
+    private final List<Bytes> contents;
+
     /**
      * Ctor.
      *
-     * @param objects An array of objects
+     * @param contents An array of contents (Bytes)
      */
-    public Contents(final Content... objects) {
-        this(new ListOf<>(objects));
+    public ContentIndirect(final Bytes... contents) {
+        this(new ListOf<>(contents));
     }
 
     /**
      * Ctor.
      *
-     * @param list A list of objects
+     * @param contents A list of contents (Bytes)
      */
-    public Contents(
-        final List<Content> list
-    ) {
-        super(list);
+    public ContentIndirect(final List<Bytes> contents) {
+        this.contents = contents;
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Reference reference() {
+        throw new UnsupportedOperationException(
+            "This indirect has not reference"
+        );
+    }
+
+    @Override
+    public Dictionary dictionary() {
+        throw new UnsupportedOperationException(
+            "This indirect has not dictionary"
+        );
+    }
+
+    @Override
+    public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (final Object obj : this) {
-            baos.write(obj.indirect().asBytes());
+        for (final Bytes bytes : this.contents) {
+            baos.write(bytes.asBytes());
         }
-        return new ContentIndirect(baos::toByteArray);
+        return baos.toByteArray();
     }
 }

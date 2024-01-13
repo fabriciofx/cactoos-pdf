@@ -28,16 +28,16 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Test case for {@link PageFormat}.
+ * Test case for {@link Format}.
  *
  * @since 0.0.1
  */
-final class PageFormatTest {
+final class FormatTest {
     @Test
     void size() {
         new Assertion<>(
             "Must print correct A4 page's width and height",
-            PageFormat.A4,
+            Format.A4,
             new IsText("595.28 841.89")
         ).affirm();
     }

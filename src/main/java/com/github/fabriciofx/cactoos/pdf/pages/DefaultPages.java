@@ -28,7 +28,7 @@ import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
-import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
@@ -57,7 +57,7 @@ public final class DefaultPages implements Pages {
     /**
      * Pages size.
      */
-    private final PageFormat fmt;
+    private final Format fmt;
 
     /**
      * Pages.
@@ -73,7 +73,7 @@ public final class DefaultPages implements Pages {
      */
     public DefaultPages(
         final Id id,
-        final PageFormat format,
+        final Format format,
         final Page... kids
     ) {
         this(id.increment(), 0, format, kids);
@@ -91,7 +91,7 @@ public final class DefaultPages implements Pages {
     public DefaultPages(
         final int id,
         final int generation,
-        final PageFormat format,
+        final Format format,
         final Page... kids
     ) {
         this.id = id;
@@ -135,7 +135,7 @@ public final class DefaultPages implements Pages {
     }
 
     @Override
-    public PageFormat format() {
+    public Format format() {
         return this.fmt;
     }
 }

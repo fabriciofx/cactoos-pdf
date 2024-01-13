@@ -29,11 +29,11 @@ import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
 /**
- * PageSize.
+ * Format.
  *
  * @since 0.0.1
  */
-public enum PageFormat implements Text {
+public enum Format implements Text {
     /**
      * A1 page size.
      */
@@ -95,7 +95,7 @@ public enum PageFormat implements Text {
      * @param width Page's width
      * @param height Page's height
      */
-    PageFormat(final double width, final double height) {
+    Format(final double width, final double height) {
         this.width = width;
         this.height = height;
     }

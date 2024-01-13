@@ -27,7 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
-import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -154,7 +154,7 @@ public final class Margins implements Pages {
     }
 
     @Override
-    public PageFormat format() {
+    public Format format() {
         return this.origin.format();
     }
 }

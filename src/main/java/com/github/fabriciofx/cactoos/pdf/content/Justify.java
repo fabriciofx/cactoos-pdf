@@ -26,7 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
-import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.nio.charset.StandardCharsets;
@@ -74,7 +74,7 @@ public final class Justify implements Content {
         final double scale = 72.0 / 25.4;
         final double rmargin = 28.35 / scale;
         final double cmargin = rmargin / 10.0;
-        final double width = PageFormat.A4.width() / scale - 2 * rmargin;
+        final double width = Format.A4.width() / scale - 2 * rmargin;
         final double fontsize = this.origin.font().size() / scale;
         final double wmax = (width - 2 * cmargin) * 1000 / fontsize;
         int idx = 0;

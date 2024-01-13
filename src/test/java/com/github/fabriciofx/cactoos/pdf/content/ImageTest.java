@@ -30,7 +30,7 @@ import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.image.format.Jpeg;
 import com.github.fabriciofx.cactoos.pdf.image.format.Png;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
-import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
@@ -69,7 +69,7 @@ final class ImageTest {
                 id,
                 new DefaultPages(
                     id,
-                    PageFormat.A4,
+                    Format.A4,
                     new DefaultPage(
                         id,
                         new Resources(
@@ -114,7 +114,7 @@ final class ImageTest {
                     id,
                     new DefaultPages(
                         id,
-                        PageFormat.A4,
+                        Format.A4,
                         new DefaultPage(
                             id,
                             new Resources(
@@ -151,7 +151,7 @@ final class ImageTest {
                 id,
                 new DefaultPages(
                     id,
-                    PageFormat.A4,
+                    Format.A4,
                     new DefaultPage(
                         id,
                         new Resources(
@@ -196,7 +196,7 @@ final class ImageTest {
                     id,
                     new DefaultPages(
                         id,
-                        PageFormat.A4,
+                        Format.A4,
                         new DefaultPage(
                             id,
                             new Resources(

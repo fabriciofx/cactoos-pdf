@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import com.github.fabriciofx.cactoos.pdf.page.PageFormat;
+import com.github.fabriciofx.cactoos.pdf.page.Format;
 
 /**
  * Pages.
@@ -44,5 +44,5 @@ public interface Pages extends Object {
      *
      * @return Page format.
      */
-    PageFormat format();
+    Format format();
 }

@@ -66,7 +66,7 @@ final class Rotate90Test {
                         id,
                         new DefaultPages(
                             id,
-                            PageFormat.A4,
+                            Format.A4,
                             new Rotate90(
                                 new DefaultPage(
                                     id,
@@ -125,7 +125,7 @@ final class Rotate90Test {
                 id,
                 new DefaultPages(
                     id,
-                    PageFormat.A4,
+                    Format.A4,
                     new DefaultPage(
                         id,
                         new Resources(id, font),
@@ -190,7 +190,7 @@ final class Rotate90Test {
                     id,
                     new DefaultPages(
                         id,
-                        PageFormat.A4,
+                        Format.A4,
                         new DefaultPage(
                             id,
                             new Resources(id, font),

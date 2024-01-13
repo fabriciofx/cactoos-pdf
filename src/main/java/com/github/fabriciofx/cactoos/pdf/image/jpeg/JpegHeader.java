@@ -76,7 +76,10 @@ public final class JpegHeader implements Header {
 
     @Override
     public int depth() throws Exception {
-        return 8;
+        final Flow flow = new Flow(this.bytes.asBytes());
+        flow.search(new byte[]{(byte) 0xff, (byte) 0xc0});
+        flow.skip(2);
+        return Math.max(flow.asByte(), 8);
     }
 
     @Override

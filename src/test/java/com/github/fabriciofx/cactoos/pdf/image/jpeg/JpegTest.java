@@ -65,6 +65,19 @@ final class JpegTest {
     }
 
     @Test
+    void headerDepth() throws Exception {
+        final Raw raw = new JpegRaw(
+            new Serial(),
+            new BytesOf(new ResourceOf("image/sample-1.jpg"))
+        );
+        new Assertion<>(
+            "Must represent the width of a JPEG image",
+            raw.header().depth(),
+            new IsNumber(8)
+        ).affirm();
+    }
+
+    @Test
     void safeJpegWidth() throws Exception {
         final Raw raw = new SafeJpegRaw(
             new JpegRaw(

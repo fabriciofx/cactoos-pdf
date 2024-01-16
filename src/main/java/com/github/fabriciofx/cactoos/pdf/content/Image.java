@@ -36,7 +36,6 @@ import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
-import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
@@ -78,16 +77,6 @@ public final class Image implements Content {
     private final double posy;
 
     /**
-     * Width.
-     */
-    private final Scalar<Double> width;
-
-    /**
-     * Height.
-     */
-    private final Scalar<Double> height;
-
-    /**
      * Ctor.
      *
      * @param id Id number
@@ -108,40 +97,7 @@ public final class Image implements Content {
             id,
             format,
             posx,
-            posy,
-            () -> (double) format.width(),
-            () -> (double) format.height()
-        );
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param id Id number
-     * @param format Raw image format
-     * @param posx Position X
-     * @param posy Position Y
-     * @param width Image width
-     * @param height Image height
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public Image(
-        final Id id,
-        final Format format,
-        final double posx,
-        final double posy,
-        final double width,
-        final double height
-    ) {
-        this(
-            id.increment(),
-            0,
-            id,
-            format,
-            posx,
-            posy,
-            () -> width,
-            () -> height
+            posy
         );
     }
 
@@ -150,12 +106,10 @@ public final class Image implements Content {
      *
      * @param num Object number
      * @param generation Generation number
-     * @param id Id
+     * @param id Id number
      * @param format Raw image format
      * @param posx Position X
      * @param posy Position Y
-     * @param width Image width
-     * @param height Image height
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Image(
@@ -164,9 +118,7 @@ public final class Image implements Content {
         final Id id,
         final Format format,
         final double posx,
-        final double posy,
-        final Scalar<Double> width,
-        final Scalar<Double> height
+        final double posy
     ) {
         this.num = num;
         this.generation = generation;
@@ -174,8 +126,6 @@ public final class Image implements Content {
         this.fmt = format;
         this.posx = posx;
         this.posy = posy;
-        this.width = width;
-        this.height = height;
     }
 
     /**
@@ -190,10 +140,10 @@ public final class Image implements Content {
     @Override
     public byte[] asStream() throws Exception {
         return new FormattedText(
-            "q %.2f 0 0 %.2f %.2f %.2f cm /%s Do Q",
+            "q %d 0 0 %d %.2f %.2f cm /%s Do Q",
             Locale.ENGLISH,
-            this.width.value(),
-            this.height.value(),
+            this.fmt.width(),
+            this.fmt.height(),
             this.posx,
             this.posy,
             this.name()

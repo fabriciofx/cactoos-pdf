@@ -60,21 +60,18 @@ final class DocumentTest {
         final Font font = new TimesRoman(id, 18);
         final byte[] actual = new Document(
             id,
-            new Catalog(
+            new DefaultPages(
                 id,
-                new DefaultPages(
+                new DefaultPage(
                     id,
-                    new DefaultPage(
-                        id,
-                        new Contents(
-                            new Text(
-                                id,
-                                font,
-                                0,
-                                500,
-                                80,
-                                new TextOf("Hello World!")
-                            )
+                    new Contents(
+                        new Text(
+                            id,
+                            font,
+                            0,
+                            500,
+                            80,
+                            new TextOf("Hello World!")
                         )
                     )
                 )
@@ -93,22 +90,19 @@ final class DocumentTest {
         final Font font = new TimesRoman(id, 12);
         final byte[] actual = new Document(
             id,
-            new Catalog(
+            new DefaultPages(
                 id,
-                new DefaultPages(
+                new DefaultPage(
                     id,
-                    new DefaultPage(
-                        id,
-                        new Contents(
-                            new Text(
-                                id,
-                                font,
-                                20,
-                                800,
-                                100,
-                                new TextOf(
-                                    new ResourceOf("text/20k_c1.txt")
-                                )
+                    new Contents(
+                        new Text(
+                            id,
+                            font,
+                            20,
+                            800,
+                            100,
+                            new TextOf(
+                                new ResourceOf("text/20k_c1.txt")
                             )
                         )
                     )
@@ -153,21 +147,18 @@ final class DocumentTest {
         );
         final byte[] actual = new Document(
             id,
-            new Catalog(
+            new DefaultPages(
                 id,
-                new DefaultPages(
+                new DefaultPage(
                     id,
-                    new DefaultPage(
-                        id,
-                        new Contents(
-                            cat,
-                            logo,
-                            new Text(id, times, 10, 100, 80, text),
-                            new Text(id, helvetica, 10, 200, 80, text),
-                            new Text(id, courier, 10, 300, 80, text),
-                            new Text(id, symbol, 10, 400, 80, text),
-                            new Text(id, zapf, 10, 500, 80, text)
-                        )
+                    new Contents(
+                        cat,
+                        logo,
+                        new Text(id, times, 10, 100, 80, text),
+                        new Text(id, helvetica, 10, 200, 80, text),
+                        new Text(id, courier, 10, 300, 80, text),
+                        new Text(id, symbol, 10, 400, 80, text),
+                        new Text(id, zapf, 10, 500, 80, text)
                     )
                 )
             )
@@ -189,21 +180,18 @@ final class DocumentTest {
             file.toPath(),
             new Document(
                 id,
-                new Catalog(
+                new DefaultPages(
                     id,
-                    new DefaultPages(
+                    new DefaultPage(
                         id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                new Text(
-                                    id,
-                                    font,
-                                    0,
-                                    500,
-                                    80,
-                                    new TextOf("Hello World!")
-                                )
+                        new Contents(
+                            new Text(
+                                id,
+                                font,
+                                0,
+                                500,
+                                80,
+                                new TextOf("Hello World!")
                             )
                         )
                     )
@@ -222,22 +210,19 @@ final class DocumentTest {
             file.toPath(),
             new Document(
                 id,
-                new Catalog(
+                new DefaultPages(
                     id,
-                    new DefaultPages(
+                    new DefaultPage(
                         id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                new Text(
-                                    id,
-                                    font,
-                                    20,
-                                    800,
-                                    100,
-                                    new TextOf(
-                                        new ResourceOf("text/20k_c1.txt")
-                                    )
+                        new Contents(
+                            new Text(
+                                id,
+                                font,
+                                20,
+                                800,
+                                100,
+                                new TextOf(
+                                    new ResourceOf("text/20k_c1.txt")
                                 )
                             )
                         )
@@ -282,21 +267,18 @@ final class DocumentTest {
             file.toPath(),
             new Document(
                 id,
-                new Catalog(
+                new DefaultPages(
                     id,
-                    new DefaultPages(
+                    new DefaultPage(
                         id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                cat,
-                                logo,
-                                new Text(id, times, 10, 100, 80, text),
-                                new Text(id, helvetica, 10, 200, 80, text),
-                                new Text(id, courier, 10, 300, 80, text),
-                                new Text(id, symbol, 10, 400, 80, text),
-                                new Text(id, zapf, 10, 500, 80, text)
-                            )
+                        new Contents(
+                            cat,
+                            logo,
+                            new Text(id, times, 10, 100, 80, text),
+                            new Text(id, helvetica, 10, 200, 80, text),
+                            new Text(id, courier, 10, 300, 80, text),
+                            new Text(id, symbol, 10, 400, 80, text),
+                            new Text(id, zapf, 10, 500, 80, text)
                         )
                     )
                 )

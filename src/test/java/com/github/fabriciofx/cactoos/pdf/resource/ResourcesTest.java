@@ -155,29 +155,26 @@ final class ResourcesTest {
         final Font helvetica = new Helvetica(id, 18);
         final byte[] actual = new Document(
             id,
-            new Catalog(
+            new DefaultPages(
                 id,
-                new DefaultPages(
+                new DefaultPage(
                     id,
-                    new DefaultPage(
-                        id,
-                        new Contents(
-                            new Text(
-                                id,
-                                times,
-                                20,
-                                500,
-                                80,
-                                new TextOf("Hello World!")
-                            ),
-                            new Text(
-                                id,
-                                helvetica,
-                                20,
-                                600,
-                                80,
-                                new TextOf("Hello World!")
-                            )
+                    new Contents(
+                        new Text(
+                            id,
+                            times,
+                            20,
+                            500,
+                            80,
+                            new TextOf("Hello World!")
+                        ),
+                        new Text(
+                            id,
+                            helvetica,
+                            20,
+                            600,
+                            80,
+                            new TextOf("Hello World!")
                         )
                     )
                 )
@@ -201,29 +198,26 @@ final class ResourcesTest {
             file.toPath(),
             new Document(
                 id,
-                new Catalog(
+                new DefaultPages(
                     id,
-                    new DefaultPages(
+                    new DefaultPage(
                         id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                new Text(
-                                    id,
-                                    times,
-                                    20,
-                                    500,
-                                    80,
-                                    new TextOf("Hello World!")
-                                ),
-                                new Text(
-                                    id,
-                                    helvetica,
-                                    20,
-                                    600,
-                                    80,
-                                    new TextOf("Hello World!")
-                                )
+                        new Contents(
+                            new Text(
+                                id,
+                                times,
+                                20,
+                                500,
+                                80,
+                                new TextOf("Hello World!")
+                            ),
+                            new Text(
+                                id,
+                                helvetica,
+                                20,
+                                600,
+                                80,
+                                new TextOf("Hello World!")
                             )
                         )
                     )

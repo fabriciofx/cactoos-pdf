@@ -1,9 +1,9 @@
 %PDF-1.3
 %Детел§у РДЖ
-14 0 obj
+13 0 obj
 << /Producer (cactoos-pdf) >>
 endobj
-13 0 obj
+14 0 obj
 << /Type /Catalog /Pages 12 0 R >>
 endobj
 12 0 obj
@@ -70,5 +70,5 @@ BT /F5 16 Tf 10.00 500.00 Td 19.20 TL
 ET
 endstream
 endobj
-trailer << /Root 13 0 R /Size 16 /Info 14 0 R >>
+trailer << /Root 14 0 R /Size 16 /Info 13 0 R >>
 %%EOF

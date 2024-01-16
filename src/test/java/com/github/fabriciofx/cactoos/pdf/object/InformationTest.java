@@ -131,21 +131,18 @@ final class InformationTest {
                         "ModDate", date.asString(),
                         "Keywords", "cactoos pdf elegant objects"
                     ),
-                    new Catalog(
+                    new DefaultPages(
                         id,
-                        new DefaultPages(
+                        new DefaultPage(
                             id,
-                            new DefaultPage(
-                                id,
-                                new Contents(
-                                    new Text(
-                                        id,
-                                        font,
-                                        0,
-                                        500,
-                                        80,
-                                        new TextOf("Hello World!")
-                                    )
+                            new Contents(
+                                new Text(
+                                    id,
+                                    font,
+                                    0,
+                                    500,
+                                    80,
+                                    new TextOf("Hello World!")
                                 )
                             )
                         )

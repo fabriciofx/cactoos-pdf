@@ -53,21 +53,18 @@ final class PageTest {
             new TextOf(
                 new Document(
                     id,
-                    new Catalog(
+                    new DefaultPages(
                         id,
-                        new DefaultPages(
-                            id,
-                            new Rotate90(
-                                new DefaultPage(
-                                    id,
-                                    new Contents(
-                                        new Text(
-                                            id,
-                                            new TimesRoman(id, 18),
-                                            0,
-                                            0,
-                                            new TextOf("Hello World!")
-                                        )
+                        new Rotate90(
+                            new DefaultPage(
+                                id,
+                                new Contents(
+                                    new Text(
+                                        id,
+                                        new TimesRoman(id, 18),
+                                        0,
+                                        0,
+                                        new TextOf("Hello World!")
                                     )
                                 )
                             )
@@ -79,14 +76,14 @@ final class PageTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "6 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
-                    "5 0 obj\n<< /Type /Catalog /Pages 4 0 R >>\nendobj",
+                    "5 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
+                    "6 0 obj\n<< /Type /Catalog /Pages 4 0 R >>\nendobj",
                     "4 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
                     "3 0 obj\n<< /Type /Page /Resources 7 0 R /Contents [2 0 R] /Parent 4 0 R /Rotate 90 >>\nendobj",
                     "7 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>\nendobj",
                     "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
                     "2 0 obj\n<< /Length 58 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello World!) Tj T*\nET\nendstream\nendobj",
-                    "trailer << /Root 5 0 R /Size 8 /Info 6 0 R >>",
+                    "trailer << /Root 6 0 R /Size 8 /Info 5 0 R >>",
                     "%%EOF"
                 )
             )
@@ -102,32 +99,29 @@ final class PageTest {
             new TextOf(
                 new Document(
                     id,
-                    new Catalog(
+                    new DefaultPages(
                         id,
-                        new DefaultPages(
+                        new DefaultPage(
                             id,
-                            new DefaultPage(
-                                id,
-                                new Contents(
-                                    new Text(
-                                        id,
-                                        font,
-                                        0,
-                                        0,
-                                        new TextOf("Hello")
-                                    )
+                            new Contents(
+                                new Text(
+                                    id,
+                                    font,
+                                    0,
+                                    0,
+                                    new TextOf("Hello")
                                 )
-                            ),
-                            new DefaultPage(
-                                id,
-                                new Contents(
-                                    new Text(
-                                        id,
-                                        font,
-                                        0,
-                                        0,
-                                        new TextOf("World")
-                                    )
+                            )
+                        ),
+                        new DefaultPage(
+                            id,
+                            new Contents(
+                                new Text(
+                                    id,
+                                    font,
+                                    0,
+                                    0,
+                                    new TextOf("World")
                                 )
                             )
                         )
@@ -138,8 +132,8 @@ final class PageTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "8 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
-                    "7 0 obj\n<< /Type /Catalog /Pages 6 0 R >>\nendobj",
+                    "7 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
+                    "8 0 obj\n<< /Type /Catalog /Pages 6 0 R >>\nendobj",
                     "6 0 obj\n<< /Type /Pages /Kids [3 0 R 5 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
                     "3 0 obj\n<< /Type /Page /Resources 9 0 R /Contents [2 0 R] /Parent 6 0 R >>\nendobj",
                     "9 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>\nendobj",
@@ -149,7 +143,7 @@ final class PageTest {
                     "10 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>\nendobj",
                     "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
                     "4 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(World) Tj T*\nET\nendstream\nendobj",
-                    "trailer << /Root 7 0 R /Size 11 /Info 8 0 R >>",
+                    "trailer << /Root 8 0 R /Size 11 /Info 7 0 R >>",
                     "%%EOF"
                 )
             )

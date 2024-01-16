@@ -54,23 +54,20 @@ final class JustifyTest {
         final Font font = new TimesRoman(id, 12);
         final byte[] actual = new Document(
             id,
-            new Catalog(
+            new DefaultPages(
                 id,
-                new DefaultPages(
+                new DefaultPage(
                     id,
-                    new DefaultPage(
-                        id,
-                        new Contents(
-                            new Justify(
-                                new Text(
-                                    id,
-                                    font,
-                                    20,
-                                    800,
-                                    100,
-                                    new TextOf(
-                                        new ResourceOf("text/20k_c1.txt")
-                                    )
+                    new Contents(
+                        new Justify(
+                            new Text(
+                                id,
+                                font,
+                                20,
+                                800,
+                                100,
+                                new TextOf(
+                                    new ResourceOf("text/20k_c1.txt")
                                 )
                             )
                         )
@@ -95,23 +92,20 @@ final class JustifyTest {
             file.toPath(),
             new Document(
                 id,
-                new Catalog(
+                new DefaultPages(
                     id,
-                    new DefaultPages(
+                    new DefaultPage(
                         id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                new Justify(
-                                    new Text(
-                                        id,
-                                        font,
-                                        20,
-                                        800,
-                                        100,
-                                        new TextOf(
-                                            new ResourceOf("text/20k_c1.txt")
-                                        )
+                        new Contents(
+                            new Justify(
+                                new Text(
+                                    id,
+                                    font,
+                                    20,
+                                    800,
+                                    100,
+                                    new TextOf(
+                                        new ResourceOf("text/20k_c1.txt")
                                     )
                                 )
                             )

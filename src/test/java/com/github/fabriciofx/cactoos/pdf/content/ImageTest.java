@@ -60,15 +60,12 @@ final class ImageTest {
         );
         final byte[] actual = new Document(
             id,
-            new Catalog(
+            new DefaultPages(
                 id,
-                new DefaultPages(
+                new DefaultPage(
                     id,
-                    new DefaultPage(
-                        id,
-                        new Contents(
-                            image
-                        )
+                    new Contents(
+                        image
                     )
                 )
             )
@@ -98,15 +95,12 @@ final class ImageTest {
             file.toPath(),
             new Document(
                 id,
-                new Catalog(
+                new DefaultPages(
                     id,
-                    new DefaultPages(
+                    new DefaultPage(
                         id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                image
-                            )
+                        new Contents(
+                            image
                         )
                     )
                 )
@@ -128,15 +122,12 @@ final class ImageTest {
         );
         final byte[] actual = new Document(
             id,
-            new Catalog(
+            new DefaultPages(
                 id,
-                new DefaultPages(
+                new DefaultPage(
                     id,
-                    new DefaultPage(
-                        id,
-                        new Contents(
-                            image
-                        )
+                    new Contents(
+                        image
                     )
                 )
             )
@@ -166,15 +157,12 @@ final class ImageTest {
             file.toPath(),
             new Document(
                 id,
-                new Catalog(
+                new DefaultPages(
                     id,
-                    new DefaultPages(
+                    new DefaultPage(
                         id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                image
-                            )
+                        new Contents(
+                            image
                         )
                     )
                 )

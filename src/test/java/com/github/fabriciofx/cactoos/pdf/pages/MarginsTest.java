@@ -70,20 +70,17 @@ final class MarginsTest {
                 id,
                 "Title", "Hello World"
             ),
-            new Catalog(
-                id,
-                new Margins(
-                    2.5,
-                    2.5,
-                    2.5,
-                    2.5,
-                    new DefaultPages(
+            new Margins(
+                2.5,
+                2.5,
+                2.5,
+                2.5,
+                new DefaultPages(
+                    id,
+                    new DefaultPage(
                         id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                new Text(id, font, 0, 500, 60, 14, content)
-                            )
+                        new Contents(
+                            new Text(id, font, 0, 500, 60, 14, content)
                         )
                     )
                 )
@@ -121,20 +118,17 @@ final class MarginsTest {
                     id,
                     "Title", "Hello World"
                 ),
-                new Catalog(
-                    id,
-                    new Margins(
-                        2.5,
-                        2.5,
-                        2.5,
-                        2.5,
-                        new DefaultPages(
+                new Margins(
+                    2.5,
+                    2.5,
+                    2.5,
+                    2.5,
+                    new DefaultPages(
+                        id,
+                        new DefaultPage(
                             id,
-                            new DefaultPage(
-                                id,
-                                new Contents(
-                                    new Text(id, font, 0, 500, 60, 14, content)
-                                )
+                            new Contents(
+                                new Text(id, font, 0, 500, 60, 14, content)
                             )
                         )
                     )

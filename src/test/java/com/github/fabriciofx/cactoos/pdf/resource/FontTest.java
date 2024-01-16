@@ -96,7 +96,78 @@ final class FontTest {
         );
         final byte[] actual = new Document(
             id,
-            new Catalog(
+            new DefaultPages(
+                id,
+                new DefaultPage(
+                    id,
+                    new Contents(
+                        new Text(
+                            id,
+                            times,
+                            10,
+                            100,
+                            80,
+                            text
+                        ),
+                        new Text(
+                            id,
+                            helvetica,
+                            10,
+                            200,
+                            80,
+                            text
+                        ),
+                        new Text(
+                            id,
+                            courier,
+                            10,
+                            300,
+                            80,
+                            text
+                        ),
+                        new Text(
+                            id,
+                            symbol,
+                            10,
+                            400,
+                            80,
+                            text
+                        ),
+                        new Text(
+                            id,
+                            zapf,
+                            10,
+                            500,
+                            80,
+                            text
+                        )
+                    )
+                )
+            )
+        ).asBytes();
+        new Assertion<>(
+            "Must match a PDF document with several fonts",
+            new BytesOf(new ResourceOf("document/fonts.pdf")).asBytes(),
+            new IsEqual<>(actual)
+        ).affirm();
+    }
+
+    @Disabled
+    @Test
+    void buildFileWithFonts() throws Exception {
+        final File file = new File("fonts.pdf");
+        final Id id = new Serial();
+        final Font times = new TimesRoman(id, 16);
+        final Font helvetica = new Helvetica(id, 16);
+        final Font courier = new Courier(id, 16);
+        final Font symbol = new Symbol(id, 16);
+        final Font zapf = new ZapfDingbats(id, 16);
+        final org.cactoos.Text text = new TextOf(
+            "The quick brown fox jumps over the lazy dog"
+        );
+        Files.write(
+            file.toPath(),
+            new Document(
                 id,
                 new DefaultPages(
                     id,
@@ -142,83 +213,6 @@ final class FontTest {
                                 500,
                                 80,
                                 text
-                            )
-                        )
-                    )
-                )
-            )
-        ).asBytes();
-        new Assertion<>(
-            "Must match a PDF document with several fonts",
-            new BytesOf(new ResourceOf("document/fonts.pdf")).asBytes(),
-            new IsEqual<>(actual)
-        ).affirm();
-    }
-
-    @Disabled
-    @Test
-    void buildFileWithFonts() throws Exception {
-        final File file = new File("fonts.pdf");
-        final Id id = new Serial();
-        final Font times = new TimesRoman(id, 16);
-        final Font helvetica = new Helvetica(id, 16);
-        final Font courier = new Courier(id, 16);
-        final Font symbol = new Symbol(id, 16);
-        final Font zapf = new ZapfDingbats(id, 16);
-        final org.cactoos.Text text = new TextOf(
-            "The quick brown fox jumps over the lazy dog"
-        );
-        Files.write(
-            file.toPath(),
-            new Document(
-                id,
-                new Catalog(
-                    id,
-                    new DefaultPages(
-                        id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                new Text(
-                                    id,
-                                    times,
-                                    10,
-                                    100,
-                                    80,
-                                    text
-                                ),
-                                new Text(
-                                    id,
-                                    helvetica,
-                                    10,
-                                    200,
-                                    80,
-                                    text
-                                ),
-                                new Text(
-                                    id,
-                                    courier,
-                                    10,
-                                    300,
-                                    80,
-                                    text
-                                ),
-                                new Text(
-                                    id,
-                                    symbol,
-                                    10,
-                                    400,
-                                    80,
-                                    text
-                                ),
-                                new Text(
-                                    id,
-                                    zapf,
-                                    10,
-                                    500,
-                                    80,
-                                    text
-                                )
                             )
                         )
                     )

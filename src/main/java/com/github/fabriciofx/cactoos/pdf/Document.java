@@ -75,6 +75,31 @@ public final class Document implements Bytes {
      * Ctor.
      *
      * @param id Id number
+     * @param information Information
+     * @param pages Pages
+     */
+    public Document(
+        final Id id,
+        final Information information,
+        final Pages pages
+    ) {
+        this(id, information, new Catalog(id, pages));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
+     * @param pages Pages
+     */
+    public Document(final Id id, final Pages pages) {
+        this(id, new Information(id), new Catalog(id, pages));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
      * @param catalog Catalog
      */
     public Document(final Id id, final Catalog catalog) {

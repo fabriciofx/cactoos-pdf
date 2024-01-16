@@ -25,6 +25,7 @@ We are not happy with current Java PDF solutions because:
 <dependency>
   <groupId>com.github.fabriciofx</groupId>
   <artifactId>cactoos-pdf</artifactId>
+  <version>0.0.1</version>
 </dependency>
 ```
 
@@ -39,39 +40,22 @@ Here an example how to build a Hello World PDF file using our API:
 
 ```java
 final File file = new File("HelloWorld.pdf");
-final Date date = new Date(2023, 12, 11, 20, 11, 32, "Etc/GMT-3");
+final Id id = new Serial();
 Files.write(
     file.toPath(),
     new Document(
-        new Information(
-            "Title", "Hello World",
-            "Subject", "PDF document",
-            "Author", "Fabricio Cabral",
-            "Creator", "cactoos-pdf",
-            "Producer", "cactoos-pdf",
-            "CreationDate", date.asString(),
-            "ModDate", date.asString(),
-            "Keywords", "cactoos pdf elegant objects"
-        ),
-        new Catalog(
-            new DefaultPages(
-                PageFormat.A4,
-                new DefaultPage(
-                    new Resources(
-                        new Font(
-                            new FontFamily("Times-Roman", "Type1"),
-                            "F1"
-                        )
-                    ),
-                    new Contents(
-                        new FlateEncode(
-                            new Text(
-                                18,
-                                0,
-                                0,
-                                "Hello World"
-                            )
-                        )
+        id,
+        new DefaultPages(
+            id,
+            new DefaultPage(
+                id,
+                new Contents(
+                    new Text(
+                        id,
+                        new TimesRoman(id, 18),
+                        0,
+                        500,
+                        new TextOf("Hello World")
                     )
                 )
             )

@@ -28,7 +28,6 @@ import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.image.format.Jpeg;
 import com.github.fabriciofx.cactoos.pdf.image.format.Png;
-import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import java.io.File;

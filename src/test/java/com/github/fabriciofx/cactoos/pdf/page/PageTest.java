@@ -29,7 +29,6 @@ import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
-import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import org.cactoos.text.Joined;

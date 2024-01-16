@@ -33,9 +33,6 @@ import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
-import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
-import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import com.github.fabriciofx.cactoos.pdf.resource.XObject;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Courier;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Symbol;
@@ -71,7 +68,6 @@ final class DocumentTest {
                     Format.A4,
                     new DefaultPage(
                         id,
-                        new Resources(id, font),
                         new Contents(
                             new Text(
                                 id,
@@ -106,7 +102,6 @@ final class DocumentTest {
                     Format.A4,
                     new DefaultPage(
                         id,
-                        new Resources(id, font),
                         new Contents(
                             new Text(
                                 id,
@@ -168,17 +163,6 @@ final class DocumentTest {
                     Format.A4,
                     new DefaultPage(
                         id,
-                        new Resources(
-                            id,
-                            times,
-                            helvetica,
-                            courier,
-                            symbol,
-                            zapf,
-                            new ProcSet(),
-                            new XObject(id, cat),
-                            new XObject(id, logo)
-                        ),
                         new Contents(
                             cat,
                             logo,
@@ -216,7 +200,6 @@ final class DocumentTest {
                         Format.A4,
                         new DefaultPage(
                             id,
-                            new Resources(id, font),
                             new Contents(
                                 new Text(
                                     id,
@@ -251,7 +234,6 @@ final class DocumentTest {
                         Format.A4,
                         new DefaultPage(
                             id,
-                            new Resources(id, font),
                             new Contents(
                                 new Text(
                                     id,
@@ -313,17 +295,6 @@ final class DocumentTest {
                         Format.A4,
                         new DefaultPage(
                             id,
-                            new Resources(
-                                id,
-                                times,
-                                helvetica,
-                                courier,
-                                symbol,
-                                zapf,
-                                new ProcSet(),
-                                new XObject(id, cat),
-                                new XObject(id, logo)
-                            ),
                             new Contents(
                                 cat,
                                 logo,

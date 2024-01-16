@@ -26,14 +26,18 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.image.Format;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
+import com.github.fabriciofx.cactoos.pdf.resource.XObject;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Locale;
 import org.cactoos.Scalar;
+import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -44,14 +48,19 @@ import org.cactoos.text.UncheckedText;
  */
 public final class Image implements Content {
     /**
-     * Id.
+     * Number.
      */
-    private final int id;
+    private final int num;
 
     /**
      * Generation.
      */
     private final int generation;
+
+    /**
+     * Id.
+     */
+    private final Id id;
 
     /**
      * Image Format.
@@ -96,6 +105,7 @@ public final class Image implements Content {
         this(
             id.increment(),
             0,
+            id,
             format,
             posx,
             posy,
@@ -126,6 +136,7 @@ public final class Image implements Content {
         this(
             id.increment(),
             0,
+            id,
             format,
             posx,
             posy,
@@ -137,8 +148,9 @@ public final class Image implements Content {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param num Object number
      * @param generation Generation number
+     * @param id Id
      * @param format Raw image format
      * @param posx Position X
      * @param posy Position Y
@@ -147,16 +159,18 @@ public final class Image implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Image(
-        final int id,
+        final int num,
         final int generation,
+        final Id id,
         final Format format,
         final double posx,
         final double posy,
         final Scalar<Double> width,
         final Scalar<Double> height
     ) {
-        this.id = id;
+        this.num = num;
         this.generation = generation;
+        this.id = id;
         this.fmt = format;
         this.posx = posx;
         this.posy = posy;
@@ -170,7 +184,7 @@ public final class Image implements Content {
      * @return The image name
      */
     public String name() {
-        return new UncheckedText(new FormattedText("I%d", this.id)).asString();
+        return new UncheckedText(new FormattedText("I%d", this.num)).asString();
     }
 
     @Override
@@ -187,12 +201,17 @@ public final class Image implements Content {
     }
 
     @Override
+    public List<Resource> resource() {
+        return new ListOf<>(new XObject(this.id, this));
+    }
+
+    @Override
     public Indirect indirect() throws Exception {
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new DefaultIndirect(this.id, this.generation, dictionary);
+        return new DefaultIndirect(this.num, this.generation, dictionary);
     }
 
     /**

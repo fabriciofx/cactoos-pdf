@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf.image.format;
 
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.image.Format;
 import com.github.fabriciofx.cactoos.pdf.image.Header;
 import com.github.fabriciofx.cactoos.pdf.image.Raw;
@@ -37,7 +38,9 @@ import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.File;
 import java.nio.file.Files;
+import java.util.List;
 import org.cactoos.Bytes;
+import org.cactoos.list.ListOf;
 
 /**
  * PNG.
@@ -110,5 +113,10 @@ public final class Jpeg implements Format {
     @Override
     public byte[] asStream() throws Exception {
         return this.raw.body().asStream();
+    }
+
+    @Override
+    public List<Resource> resource() {
+        return new ListOf<>();
     }
 }

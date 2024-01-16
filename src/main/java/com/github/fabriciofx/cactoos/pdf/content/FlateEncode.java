@@ -25,16 +25,19 @@ package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 
 /**
@@ -76,6 +79,11 @@ public final class FlateEncode implements Content {
             deflater.end();
         }
         return baos.toByteArray();
+    }
+
+    @Override
+    public List<Resource> resource() {
+        return new ListOf<>();
     }
 
     @Override

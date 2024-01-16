@@ -31,7 +31,6 @@ import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
-import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
@@ -49,9 +48,8 @@ final class PageTest {
     @Test
     void buildDocumentWithRotatePage() {
         final Id id = new Serial();
-        final Font font = new TimesRoman(id, 18);
         new Assertion<>(
-            "Must represent a PDF document",
+            "Must represent a PDF document with rotated page",
             new TextOf(
                 new Document(
                     id,
@@ -63,11 +61,10 @@ final class PageTest {
                             new Rotate90(
                                 new DefaultPage(
                                     id,
-                                    new Resources(id, font),
                                     new Contents(
                                         new Text(
                                             id,
-                                            font,
+                                            new TimesRoman(id, 18),
                                             0,
                                             0,
                                             new TextOf("Hello World!")
@@ -83,14 +80,14 @@ final class PageTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "7 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
-                    "6 0 obj\n<< /Type /Catalog /Pages 5 0 R >>\nendobj",
-                    "5 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
-                    "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents [3 0 R] /Parent 5 0 R /Rotate 90 >>\nendobj",
-                    "2 0 obj\n<< /Font << /F1 1 0 R >> >>\nendobj",
+                    "6 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
+                    "5 0 obj\n<< /Type /Catalog /Pages 4 0 R >>\nendobj",
+                    "4 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj",
+                    "3 0 obj\n<< /Type /Page /Resources 7 0 R /Contents [2 0 R] /Parent 4 0 R /Rotate 90 >>\nendobj",
+                    "7 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>\nendobj",
                     "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
-                    "3 0 obj\n<< /Length 58 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello World!) Tj T*\nET\nendstream\nendobj",
-                    "trailer << /Root 6 0 R /Size 8 /Info 7 0 R >>",
+                    "2 0 obj\n<< /Length 58 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello World!) Tj T*\nET\nendstream\nendobj",
+                    "trailer << /Root 5 0 R /Size 8 /Info 6 0 R >>",
                     "%%EOF"
                 )
             )
@@ -113,7 +110,6 @@ final class PageTest {
                             Format.A4,
                             new DefaultPage(
                                 id,
-                                new Resources(id, font),
                                 new Contents(
                                     new Text(
                                         id,
@@ -126,7 +122,6 @@ final class PageTest {
                             ),
                             new DefaultPage(
                                 id,
-                                new Resources(id, font),
                                 new Contents(
                                     new Text(
                                         id,
@@ -145,18 +140,18 @@ final class PageTest {
                 new Joined(
                     "\n",
                     "%PDF-1.3\n%���������",
-                    "10 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
-                    "9 0 obj\n<< /Type /Catalog /Pages 8 0 R >>\nendobj",
-                    "8 0 obj\n<< /Type /Pages /Kids [4 0 R 7 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
-                    "4 0 obj\n<< /Type /Page /Resources 2 0 R /Contents [3 0 R] /Parent 8 0 R >>\nendobj",
-                    "2 0 obj\n<< /Font << /F1 1 0 R >> >>\nendobj",
+                    "8 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj",
+                    "7 0 obj\n<< /Type /Catalog /Pages 6 0 R >>\nendobj",
+                    "6 0 obj\n<< /Type /Pages /Kids [3 0 R 5 0 R] /Count 2 /MediaBox [0 0 595.28 841.89] >>\nendobj",
+                    "3 0 obj\n<< /Type /Page /Resources 9 0 R /Contents [2 0 R] /Parent 6 0 R >>\nendobj",
+                    "9 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>\nendobj",
                     "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
-                    "3 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello) Tj T*\nET\nendstream\nendobj",
-                    "7 0 obj\n<< /Type /Page /Resources 5 0 R /Contents [6 0 R] /Parent 8 0 R >>\nendobj",
-                    "5 0 obj\n<< /Font << /F1 1 0 R >> >>\nendobj",
+                    "2 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello) Tj T*\nET\nendstream\nendobj",
+                    "5 0 obj\n<< /Type /Page /Resources 10 0 R /Contents [4 0 R] /Parent 6 0 R >>\nendobj",
+                    "10 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>\nendobj",
                     "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
-                    "6 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(World) Tj T*\nET\nendstream\nendobj",
-                    "trailer << /Root 9 0 R /Size 11 /Info 10 0 R >>",
+                    "4 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(World) Tj T*\nET\nendstream\nendobj",
+                    "trailer << /Root 7 0 R /Size 11 /Info 8 0 R >>",
                     "%%EOF"
                 )
             )

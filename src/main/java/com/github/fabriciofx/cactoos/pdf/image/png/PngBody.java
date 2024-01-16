@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf.image.png;
 
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.image.Body;
 import com.github.fabriciofx.cactoos.pdf.image.Flow;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
@@ -32,8 +33,10 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 import org.cactoos.Bytes;
 import org.cactoos.Scalar;
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Sticky;
 
 /**
@@ -112,6 +115,11 @@ public final class PngBody implements Body {
     @Override
     public byte[] asStream() throws Exception {
         return this.bytes.value();
+    }
+
+    @Override
+    public List<Resource> resource() {
+        return new ListOf<>();
     }
 
     @Override

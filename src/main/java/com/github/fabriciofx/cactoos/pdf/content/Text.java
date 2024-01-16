@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.text.Escaped;
 import com.github.fabriciofx.cactoos.pdf.text.Multiline;
@@ -34,7 +35,9 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Locale;
+import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -231,6 +234,11 @@ public final class Text implements Content {
             this.leading,
             out.toString()
         ).asString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    @Override
+    public List<Resource> resource() {
+        return new ListOf<>(this.typeface);
     }
 
     @Override

@@ -31,7 +31,6 @@ import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
-import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
@@ -63,7 +62,6 @@ final class JustifyTest {
                     Format.A4,
                     new DefaultPage(
                         id,
-                        new Resources(id, font),
                         new Contents(
                             new Justify(
                                 new Text(
@@ -106,7 +104,6 @@ final class JustifyTest {
                         Format.A4,
                         new DefaultPage(
                             id,
-                            new Resources(id, font),
                             new Contents(
                                 new Justify(
                                     new Text(

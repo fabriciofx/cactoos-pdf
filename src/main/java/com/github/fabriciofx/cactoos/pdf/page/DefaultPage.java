@@ -27,14 +27,21 @@ import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Page;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
+import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
+import java.util.List;
+import org.cactoos.Scalar;
+import org.cactoos.list.ListOf;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * PageDefault.
@@ -44,9 +51,9 @@ import com.github.fabriciofx.cactoos.pdf.type.Text;
 @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 public final class DefaultPage implements Page {
     /**
-     * Id.
+     * Number object.
      */
-    private final int id;
+    private final int num;
 
     /**
      * Generation.
@@ -56,7 +63,7 @@ public final class DefaultPage implements Page {
     /**
      * Resources.
      */
-    private final Resources resources;
+    private final Scalar<Resources> resources;
 
     /**
      * Page contents.
@@ -65,42 +72,52 @@ public final class DefaultPage implements Page {
 
     /**
      * Ctor.
+     *
      * @param id Id number
-     * @param resources List of resources
      * @param contents Page contents
      */
     public DefaultPage(
         final Id id,
-        final Resources resources,
         final Contents contents
     ) {
-        this(id.increment(), 0, resources, contents);
+        this(id.increment(), 0, id, contents);
     }
 
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param num Object number
      * @param generation Generation number
-     * @param resources List of resources
+     * @param id Id number
      * @param contents Page contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public DefaultPage(
-        final int id,
+        final int num,
         final int generation,
-        final Resources resources,
+        final Id id,
         final Contents contents
     ) {
-        this.id = id;
+        this.num = num;
         this.generation = generation;
-        this.resources = resources;
         this.contents = contents;
+        this.resources = new Sticky<>(
+            () -> {
+                final List<Resource> rscrs = new ListOf<>();
+                rscrs.add(new ProcSet());
+                for (final Content content : contents) {
+                    if (!content.resource().isEmpty()) {
+                        rscrs.add(content.resource().get(0));
+                    }
+                }
+                return new Resources(id.increment(), 0, rscrs);
+            }
+        );
     }
 
     @Override
     public Resources resources() {
-        return this.resources;
+        return new Unchecked<>(this.resources).value();
     }
 
     @Override
@@ -110,7 +127,7 @@ public final class DefaultPage implements Page {
 
     @Override
     public Indirect indirect(final int parent) throws Exception {
-        final Indirect resrcs = this.resources.indirect();
+        final Indirect resrcs = this.resources().indirect();
         final Indirect conts = this.contents.indirect();
         Array refs = new Array();
         for (final Content content : this.contents) {
@@ -122,7 +139,7 @@ public final class DefaultPage implements Page {
             .add("Contents", refs)
             .add("Parent", new Text(new Reference(parent, 0).asString()));
         return new DefaultIndirect(
-            this.id,
+            this.num,
             this.generation,
             dictionary,
             resrcs,

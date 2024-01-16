@@ -163,7 +163,6 @@ final class ResourcesTest {
                     Format.A4,
                     new DefaultPage(
                         id,
-                        new Resources(id, times, helvetica),
                         new Contents(
                             new Text(
                                 id,
@@ -211,7 +210,6 @@ final class ResourcesTest {
                         Format.A4,
                         new DefaultPage(
                             id,
-                            new Resources(id, times, helvetica),
                             new Contents(
                                 new Text(
                                     id,

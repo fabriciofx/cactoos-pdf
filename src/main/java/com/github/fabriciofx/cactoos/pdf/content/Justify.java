@@ -25,14 +25,17 @@ package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -119,6 +122,11 @@ public final class Justify implements Content {
         }
         stream.append("ET");
         return stream.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    @Override
+    public List<Resource> resource() {
+        return new ListOf<>();
     }
 
     @Override

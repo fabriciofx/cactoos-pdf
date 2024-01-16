@@ -104,14 +104,6 @@ final class FontTest {
                     Format.A4,
                     new DefaultPage(
                         id,
-                        new Resources(
-                            id,
-                            times,
-                            helvetica,
-                            courier,
-                            symbol,
-                            zapf
-                        ),
                         new Contents(
                             new Text(
                                 id,
@@ -189,14 +181,6 @@ final class FontTest {
                         Format.A4,
                         new DefaultPage(
                             id,
-                            new Resources(
-                                id,
-                                times,
-                                helvetica,
-                                courier,
-                                symbol,
-                                zapf
-                            ),
                             new Contents(
                                 new Text(
                                     id,

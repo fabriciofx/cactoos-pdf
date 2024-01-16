@@ -25,12 +25,15 @@ package com.github.fabriciofx.cactoos.pdf.image.jpeg;
 
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.image.Body;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
+import java.util.List;
 import org.cactoos.Bytes;
+import org.cactoos.list.ListOf;
 
 /**
  * JpegBody.
@@ -79,6 +82,11 @@ public final class JpegBody implements Body {
     @Override
     public byte[] asStream() throws Exception {
         return this.bytes.asBytes();
+    }
+
+    @Override
+    public List<Resource> resource() {
+        return new ListOf<>();
     }
 
     @Override

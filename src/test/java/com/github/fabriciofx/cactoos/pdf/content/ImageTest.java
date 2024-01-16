@@ -32,10 +32,6 @@ import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
-import com.github.fabriciofx.cactoos.pdf.resource.ProcSet;
-import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import com.github.fabriciofx.cactoos.pdf.resource.XObject;
-import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
 import org.cactoos.bytes.BytesOf;
@@ -72,12 +68,6 @@ final class ImageTest {
                     Format.A4,
                     new DefaultPage(
                         id,
-                        new Resources(
-                            id,
-                            new ProcSet(),
-                            new TimesRoman(id, 12),
-                            new XObject(id, image)
-                        ),
                         new Contents(
                             image
                         )
@@ -117,12 +107,6 @@ final class ImageTest {
                         Format.A4,
                         new DefaultPage(
                             id,
-                            new Resources(
-                                id,
-                                new ProcSet(),
-                                new TimesRoman(id, 12),
-                                new XObject(id, image)
-                            ),
                             new Contents(
                                 image
                             )
@@ -154,12 +138,6 @@ final class ImageTest {
                     Format.A4,
                     new DefaultPage(
                         id,
-                        new Resources(
-                            id,
-                            new ProcSet(),
-                            new TimesRoman(id, 12),
-                            new XObject(id, image)
-                        ),
                         new Contents(
                             image
                         )
@@ -199,12 +177,6 @@ final class ImageTest {
                         Format.A4,
                         new DefaultPage(
                             id,
-                            new Resources(
-                                id,
-                                new ProcSet(),
-                                new TimesRoman(id, 12),
-                                new XObject(id, image)
-                            ),
                             new Contents(
                                 image
                             )

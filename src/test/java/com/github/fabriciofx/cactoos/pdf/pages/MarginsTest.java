@@ -33,7 +33,6 @@ import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.object.Information;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
-import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
@@ -84,7 +83,6 @@ final class MarginsTest {
                         Format.A4,
                         new DefaultPage(
                             id,
-                            new Resources(id, font),
                             new Contents(
                                 new Text(id, font, 0, 500, 60, 14, content)
                             )
@@ -137,7 +135,6 @@ final class MarginsTest {
                             Format.A4,
                             new DefaultPage(
                                 id,
-                                new Resources(id, font),
                                 new Contents(
                                     new Text(id, font, 0, 500, 60, 14, content)
                                 )

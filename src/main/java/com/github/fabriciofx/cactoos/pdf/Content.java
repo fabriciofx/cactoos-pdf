@@ -23,6 +23,8 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
+import java.util.List;
+
 /**
  * Content.
  *
@@ -37,4 +39,11 @@ public interface Content extends Object {
      * @throws Exception if fails
      */
     byte[] asStream() throws Exception;
+
+    /**
+     * Resource content.
+     *
+     * @return The resource if there is one
+     */
+    List<Resource> resource();
 }

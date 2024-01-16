@@ -77,14 +77,14 @@ public final class Symbol extends FontEnvelope {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param size Font size in points
      */
-    public Symbol(final int id, final int generation, final int size) {
+    public Symbol(final int number, final int generation, final int size) {
         super(
-            id,
-            new FontFamily(id, generation, "Symbol", "Type1"),
+            number,
+            new FontFamily(number, generation, "Symbol", "Type1"),
             size
         );
     }

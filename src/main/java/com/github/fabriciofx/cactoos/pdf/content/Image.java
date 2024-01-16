@@ -47,12 +47,12 @@ import org.cactoos.text.UncheckedText;
  */
 public final class Image implements Content {
     /**
-     * Number.
+     * Object number.
      */
-    private final int num;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -104,7 +104,7 @@ public final class Image implements Content {
     /**
      * Ctor.
      *
-     * @param num Object number
+     * @param number Object number
      * @param generation Generation number
      * @param id Id number
      * @param format Raw image format
@@ -113,14 +113,14 @@ public final class Image implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Image(
-        final int num,
+        final int number,
         final int generation,
         final Id id,
         final Format format,
         final double posx,
         final double posy
     ) {
-        this.num = num;
+        this.number = number;
         this.generation = generation;
         this.id = id;
         this.fmt = format;
@@ -134,7 +134,9 @@ public final class Image implements Content {
      * @return The image name
      */
     public String name() {
-        return new UncheckedText(new FormattedText("I%d", this.num)).asString();
+        return new UncheckedText(
+            new FormattedText("I%d", this.number)
+        ).asString();
     }
 
     @Override
@@ -161,7 +163,7 @@ public final class Image implements Content {
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new DefaultIndirect(this.num, this.generation, dictionary);
+        return new DefaultIndirect(this.number, this.generation, dictionary);
     }
 
     /**

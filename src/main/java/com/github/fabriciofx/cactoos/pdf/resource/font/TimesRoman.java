@@ -77,14 +77,14 @@ public final class TimesRoman extends FontEnvelope {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param size Font size in points
      */
-    public TimesRoman(final int id, final int generation, final int size) {
+    public TimesRoman(final int number, final int generation, final int size) {
         super(
-            id,
-            new FontFamily(id, generation, "Times-Roman", "Type1"),
+            number,
+            new FontFamily(number, generation, "Times-Roman", "Type1"),
             size
         );
     }

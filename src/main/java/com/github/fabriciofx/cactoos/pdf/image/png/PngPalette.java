@@ -46,12 +46,12 @@ import org.cactoos.scalar.Sticky;
  */
 public final class PngPalette implements Palette {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -97,16 +97,16 @@ public final class PngPalette implements Palette {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
-     * @param bytes Bytes that represents a palette.
+     * @param bytes Bytes that represents a palette
      */
     public PngPalette(
-        final int id,
+        final int number,
         final int generation,
         final Scalar<byte[]> bytes
     ) {
-        this.id = id;
+        this.number = number;
         this.generation = generation;
         this.bytes = bytes;
     }
@@ -128,7 +128,7 @@ public final class PngPalette implements Palette {
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
         return new DefaultIndirect(
-            this.id,
+            this.number,
             this.generation,
             dictionary
         );

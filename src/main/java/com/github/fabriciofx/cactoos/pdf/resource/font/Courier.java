@@ -45,14 +45,14 @@ public final class Courier extends FontEnvelope {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param size Font size in points
      */
-    public Courier(final int id, final int generation, final int size) {
+    public Courier(final int number, final int generation, final int size) {
         super(
-            id,
-            new FontFamily(id, generation, "Courier", "Type1"),
+            number,
+            new FontFamily(number, generation, "Courier", "Type1"),
             size
         );
     }

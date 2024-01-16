@@ -42,12 +42,12 @@ import org.cactoos.list.ListOf;
  */
 public final class JpegBody implements Body {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -69,12 +69,12 @@ public final class JpegBody implements Body {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param bytes Bytes that represents a JPEG image (all content)
      */
-    public JpegBody(final int id, final int generation, final Bytes bytes) {
-        this.id = id;
+    public JpegBody(final int number, final int generation, final Bytes bytes) {
+        this.number = number;
         this.generation = generation;
         this.bytes = bytes;
     }
@@ -96,7 +96,7 @@ public final class JpegBody implements Body {
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
         return new DefaultIndirect(
-            this.id,
+            this.number,
             this.generation,
             dictionary
         );

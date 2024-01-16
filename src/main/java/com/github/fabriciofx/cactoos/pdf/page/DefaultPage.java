@@ -51,12 +51,12 @@ import org.cactoos.scalar.Unchecked;
 @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 public final class DefaultPage implements Page {
     /**
-     * Number object.
+     * Object number.
      */
-    private final int num;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -86,19 +86,19 @@ public final class DefaultPage implements Page {
     /**
      * Ctor.
      *
-     * @param num Object number
+     * @param number Object number
      * @param generation Generation number
      * @param id Id number
      * @param contents Page contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public DefaultPage(
-        final int num,
+        final int number,
         final int generation,
         final Id id,
         final Contents contents
     ) {
-        this.num = num;
+        this.number = number;
         this.generation = generation;
         this.contents = contents;
         this.resources = new Sticky<>(
@@ -139,7 +139,7 @@ public final class DefaultPage implements Page {
             .add("Contents", refs)
             .add("Parent", new Text(new Reference(parent, 0).asString()));
         return new DefaultIndirect(
-            this.num,
+            this.number,
             this.generation,
             dictionary,
             resrcs,

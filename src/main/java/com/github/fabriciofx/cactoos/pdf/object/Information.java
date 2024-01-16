@@ -38,12 +38,12 @@ import com.github.fabriciofx.cactoos.pdf.type.Literal;
 @SuppressWarnings("PMD.ExcessiveParameterList")
 public final class Information implements Object {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -379,22 +379,22 @@ public final class Information implements Object {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param metadata Metadata
      */
     public Information(
-        final int id,
+        final int number,
         final int generation,
         final Dictionary metadata
     ) {
-        this.id = id;
+        this.number = number;
         this.generation = generation;
         this.metadata = metadata;
     }
 
     @Override
     public Indirect indirect() throws Exception {
-        return new DefaultIndirect(this.id, this.generation, this.metadata);
+        return new DefaultIndirect(this.number, this.generation, this.metadata);
     }
 }

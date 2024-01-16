@@ -37,12 +37,12 @@ import com.github.fabriciofx.cactoos.pdf.type.Name;
  */
 public final class FontFamily implements Resource {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -74,19 +74,19 @@ public final class FontFamily implements Resource {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param base Font base
      * @param subtype Font subtype
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public FontFamily(
-        final int id,
+        final int number,
         final int generation,
         final String base,
         final String subtype
     ) {
-        this.id = id;
+        this.number = number;
         this.generation = generation;
         this.base = base;
         this.subtype = subtype;
@@ -98,6 +98,6 @@ public final class FontFamily implements Resource {
             .add("Type", new Name("Font"))
             .add("BaseFont", new Name(this.base))
             .add("Subtype", new Name(this.subtype));
-        return new DefaultIndirect(this.id, this.generation, dictionary);
+        return new DefaultIndirect(this.number, this.generation, dictionary);
     }
 }

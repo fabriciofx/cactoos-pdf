@@ -77,14 +77,18 @@ public final class ZapfDingbats extends FontEnvelope {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param size Font size in points
      */
-    public ZapfDingbats(final int id, final int generation, final int size) {
+    public ZapfDingbats(
+        final int number,
+        final int generation,
+        final int size
+    ) {
         super(
-            id,
-            new FontFamily(id, generation, "ZapfDingbats", "Type1"),
+            number,
+            new FontFamily(number, generation, "ZapfDingbats", "Type1"),
             size
         );
     }

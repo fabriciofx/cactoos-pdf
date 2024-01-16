@@ -77,14 +77,14 @@ public final class Helvetica extends FontEnvelope {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param size Font size in points
      */
-    public Helvetica(final int id, final int generation, final int size) {
+    public Helvetica(final int number, final int generation, final int size) {
         super(
-            id,
-            new FontFamily(id, generation, "Helvetica", "Type1"),
+            number,
+            new FontFamily(number, generation, "Helvetica", "Type1"),
             size
         );
     }

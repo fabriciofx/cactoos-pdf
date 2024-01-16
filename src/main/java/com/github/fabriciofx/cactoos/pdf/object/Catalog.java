@@ -39,12 +39,12 @@ import com.github.fabriciofx.cactoos.pdf.type.Text;
  */
 public final class Catalog implements Object {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -66,12 +66,12 @@ public final class Catalog implements Object {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param pages Pages
      */
-    public Catalog(final int id, final int generation, final Pages pages) {
-        this.id = id;
+    public Catalog(final int number, final int generation, final Pages pages) {
+        this.number = number;
         this.generation = generation;
         this.pages = pages;
     }
@@ -83,7 +83,7 @@ public final class Catalog implements Object {
             .add("Type", new Name("Catalog"))
             .add("Pages", new Text(indirect.reference().asString()));
         return new DefaultIndirect(
-            this.id,
+            this.number,
             this.generation,
             dictionary,
             indirect

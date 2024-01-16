@@ -38,12 +38,12 @@ import org.cactoos.list.ListOf;
  */
 public final class NoDictionaryIndirect implements Indirect {
     /**
-     * Object id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Object generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -55,40 +55,40 @@ public final class NoDictionaryIndirect implements Indirect {
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Object generation
+     * @param number Object number
+     * @param generation Generation number
      * @param contents Contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public NoDictionaryIndirect(
-        final int id,
+        final int number,
         final int generation,
         final Bytes... contents
     ) {
-        this(id, generation, new ListOf<>(contents));
+        this(number, generation, new ListOf<>(contents));
     }
 
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Object generation
+     * @param number Object number
+     * @param generation Generation number
      * @param contents Contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public NoDictionaryIndirect(
-        final int id,
+        final int number,
         final int generation,
         final List<Bytes> contents
     ) {
-        this.id = id;
+        this.number = number;
         this.generation = generation;
         this.contents = contents;
     }
 
     @Override
     public Reference reference() {
-        return new Reference(this.id, this.generation);
+        return new Reference(this.number, this.generation);
     }
 
     @Override

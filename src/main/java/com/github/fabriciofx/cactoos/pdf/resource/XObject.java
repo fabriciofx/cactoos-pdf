@@ -39,12 +39,12 @@ import org.cactoos.bytes.BytesOf;
  */
 public final class XObject implements Resource {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -66,12 +66,12 @@ public final class XObject implements Resource {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param image Image
      */
-    public XObject(final int id, final int generation, final Image image) {
-        this.id = id;
+    public XObject(final int number, final int generation, final Image image) {
+        this.number = number;
         this.generation = generation;
         this.image = image;
     }
@@ -88,7 +88,7 @@ public final class XObject implements Resource {
                 )
             );
         return new DefaultIndirect(
-            this.id,
+            this.number,
             this.generation,
             dictionary,
             new BytesOf(indirect.asBytes())

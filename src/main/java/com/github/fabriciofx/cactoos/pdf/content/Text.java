@@ -47,12 +47,12 @@ import org.cactoos.text.FormattedText;
  */
 public final class Text implements Content {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -173,7 +173,7 @@ public final class Text implements Content {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param font Font
      * @param posx Position X
@@ -184,7 +184,7 @@ public final class Text implements Content {
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Text(
-        final int id,
+        final int number,
         final int generation,
         final Font font,
         final double posx,
@@ -193,7 +193,7 @@ public final class Text implements Content {
         final double leading,
         final org.cactoos.Text content
     ) {
-        this.id = id;
+        this.number = number;
         this.generation = generation;
         this.typeface = font;
         this.posx = posx;
@@ -247,6 +247,6 @@ public final class Text implements Content {
         final Dictionary dictionary = new Dictionary()
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new DefaultIndirect(this.id, this.generation, dictionary);
+        return new DefaultIndirect(this.number, this.generation, dictionary);
     }
 }

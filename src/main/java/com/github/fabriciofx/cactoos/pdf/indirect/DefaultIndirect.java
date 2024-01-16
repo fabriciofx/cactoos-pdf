@@ -41,12 +41,12 @@ import org.cactoos.text.FormattedText;
  */
 public final class DefaultIndirect implements Indirect {
     /**
-     * Object id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Object generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -63,37 +63,37 @@ public final class DefaultIndirect implements Indirect {
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Object generation
+     * @param number Object number
+     * @param generation Generation number
      * @param dictionary Dictionary
      * @param contents Contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public DefaultIndirect(
-        final int id,
+        final int number,
         final int generation,
         final Dictionary dictionary,
         final Bytes... contents
     ) {
-        this(id, generation, dictionary, new ListOf<>(contents));
+        this(number, generation, dictionary, new ListOf<>(contents));
     }
 
     /**
      * Ctor.
      *
-     * @param id Object id
-     * @param generation Object generation
+     * @param number Object number
+     * @param generation Generation number
      * @param dictionary Dictionary
      * @param contents Contents
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public DefaultIndirect(
-        final int id,
+        final int number,
         final int generation,
         final Dictionary dictionary,
         final List<Bytes> contents
     ) {
-        this.id = id;
+        this.number = number;
         this.generation = generation;
         this.dict = dictionary;
         this.contents = contents;
@@ -101,7 +101,7 @@ public final class DefaultIndirect implements Indirect {
 
     @Override
     public Reference reference() {
-        return new Reference(this.id, this.generation);
+        return new Reference(this.number, this.generation);
     }
 
     @Override
@@ -116,7 +116,7 @@ public final class DefaultIndirect implements Indirect {
             new FormattedText(
                 "%d %d obj\n",
                 Locale.ENGLISH,
-                this.id,
+                this.number,
                 this.generation
             ).asString().getBytes(StandardCharsets.UTF_8)
         );

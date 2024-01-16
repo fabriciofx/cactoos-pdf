@@ -40,9 +40,9 @@ import org.cactoos.text.UncheckedText;
  */
 public abstract class FontEnvelope implements Font {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
      * Family.
@@ -57,24 +57,26 @@ public abstract class FontEnvelope implements Font {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param family Font family
      * @param size Font size
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public FontEnvelope(
-        final int id,
+        final int number,
         final FontFamily family,
         final int size
     ) {
-        this.id = id;
+        this.number = number;
         this.family = family;
         this.points = size;
     }
 
     @Override
     public String name() {
-        return new UncheckedText(new FormattedText("F%d", this.id)).asString();
+        return new UncheckedText(
+            new FormattedText("F%d", this.number)
+        ).asString();
     }
 
     @Override

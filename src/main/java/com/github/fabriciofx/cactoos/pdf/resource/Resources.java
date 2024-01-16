@@ -41,12 +41,12 @@ import org.cactoos.list.ListOf;
 public final class Resources extends ListEnvelope<Resource>
     implements Resource {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -66,32 +66,32 @@ public final class Resources extends ListEnvelope<Resource>
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param elements An array of elements (Resource)
      */
     public Resources(
-        final int id,
+        final int number,
         final int generation,
         final Resource... elements
     ) {
-        this(id, generation, new ListOf<>(elements));
+        this(number, generation, new ListOf<>(elements));
     }
 
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param list A list of elements (Resource)
      */
     public Resources(
-        final int id,
+        final int number,
         final int generation,
         final List<Resource> list
     ) {
         super(list);
-        this.id = id;
+        this.number = number;
         this.generation = generation;
     }
 
@@ -110,7 +110,7 @@ public final class Resources extends ListEnvelope<Resource>
             baos.write(indirect.asBytes());
         }
         return new DefaultIndirect(
-            this.id,
+            this.number,
             this.generation,
             dictionary,
             baos::toByteArray

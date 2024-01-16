@@ -45,12 +45,12 @@ import org.cactoos.list.ListOf;
  */
 public final class DefaultPages implements Pages {
     /**
-     * Id.
+     * Object number.
      */
-    private final int id;
+    private final int number;
 
     /**
-     * Generation.
+     * Generation number.
      */
     private final int generation;
 
@@ -82,19 +82,19 @@ public final class DefaultPages implements Pages {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param number Object number
      * @param generation Generation number
      * @param format Page's size
      * @param kids Some Page
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public DefaultPages(
-        final int id,
+        final int number,
         final int generation,
         final Format format,
         final Page... kids
     ) {
-        this.id = id;
+        this.number = number;
         this.generation = generation;
         this.fmt = format;
         this.kids = new ListOf<>(kids);
@@ -105,7 +105,7 @@ public final class DefaultPages implements Pages {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Array kds = new Array();
         for (final Page page : this.kids) {
-            final Indirect indirect = page.indirect(this.id);
+            final Indirect indirect = page.indirect(this.number);
             kds = kds.add(new Text(indirect.reference().asString()));
             baos.write(indirect.asBytes());
         }
@@ -122,7 +122,7 @@ public final class DefaultPages implements Pages {
                 )
             );
         return new DefaultIndirect(
-            this.id,
+            this.number,
             this.generation,
             dictionary,
             baos::toByteArray

@@ -64,7 +64,6 @@ final class Rotate90Test {
                         id,
                         new DefaultPages(
                             id,
-                            Format.A4,
                             new Rotate90(
                                 new DefaultPage(
                                     id,

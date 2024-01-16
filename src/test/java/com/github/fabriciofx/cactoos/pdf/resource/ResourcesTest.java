@@ -33,7 +33,6 @@ import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.image.format.Png;
 import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
-import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
@@ -160,7 +159,6 @@ final class ResourcesTest {
                 id,
                 new DefaultPages(
                     id,
-                    Format.A4,
                     new DefaultPage(
                         id,
                         new Contents(
@@ -207,7 +205,6 @@ final class ResourcesTest {
                     id,
                     new DefaultPages(
                         id,
-                        Format.A4,
                         new DefaultPage(
                             id,
                             new Contents(

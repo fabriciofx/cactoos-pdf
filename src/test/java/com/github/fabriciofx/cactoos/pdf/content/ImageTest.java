@@ -30,7 +30,6 @@ import com.github.fabriciofx.cactoos.pdf.image.format.Jpeg;
 import com.github.fabriciofx.cactoos.pdf.image.format.Png;
 import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
-import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import java.io.File;
 import java.nio.file.Files;
@@ -65,7 +64,6 @@ final class ImageTest {
                 id,
                 new DefaultPages(
                     id,
-                    Format.A4,
                     new DefaultPage(
                         id,
                         new Contents(
@@ -104,7 +102,6 @@ final class ImageTest {
                     id,
                     new DefaultPages(
                         id,
-                        Format.A4,
                         new DefaultPage(
                             id,
                             new Contents(
@@ -135,7 +132,6 @@ final class ImageTest {
                 id,
                 new DefaultPages(
                     id,
-                    Format.A4,
                     new DefaultPage(
                         id,
                         new Contents(
@@ -174,7 +170,6 @@ final class ImageTest {
                     id,
                     new DefaultPages(
                         id,
-                        Format.A4,
                         new DefaultPage(
                             id,
                             new Contents(

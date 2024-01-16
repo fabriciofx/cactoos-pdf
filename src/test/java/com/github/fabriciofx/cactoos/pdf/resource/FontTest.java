@@ -31,7 +31,6 @@ import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
-import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Courier;
 import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
@@ -101,7 +100,6 @@ final class FontTest {
                 id,
                 new DefaultPages(
                     id,
-                    Format.A4,
                     new DefaultPage(
                         id,
                         new Contents(
@@ -178,7 +176,6 @@ final class FontTest {
                     id,
                     new DefaultPages(
                         id,
-                        Format.A4,
                         new DefaultPage(
                             id,
                             new Contents(

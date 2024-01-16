@@ -68,6 +68,19 @@ public final class DefaultPages implements Pages {
      * Ctor.
      *
      * @param id Id number
+     * @param kids Some Page
+     */
+    public DefaultPages(
+        final Id id,
+        final Page... kids
+    ) {
+        this(id.increment(), 0, Format.A4, kids);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param id Id number
      * @param format Page's size
      * @param kids Some Page
      */

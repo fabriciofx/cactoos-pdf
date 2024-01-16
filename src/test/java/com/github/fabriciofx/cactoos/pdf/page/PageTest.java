@@ -57,7 +57,6 @@ final class PageTest {
                         id,
                         new DefaultPages(
                             id,
-                            Format.A4,
                             new Rotate90(
                                 new DefaultPage(
                                     id,
@@ -107,7 +106,6 @@ final class PageTest {
                         id,
                         new DefaultPages(
                             id,
-                            Format.A4,
                             new DefaultPage(
                                 id,
                                 new Contents(

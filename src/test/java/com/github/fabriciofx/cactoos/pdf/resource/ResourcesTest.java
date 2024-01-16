@@ -35,15 +35,12 @@ import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
-import java.io.File;
-import java.nio.file.Files;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
@@ -184,44 +181,5 @@ final class ResourcesTest {
             new BytesOf(new ResourceOf("document/two-fonts.pdf")).asBytes(),
             new IsEqual<>(actual)
         ).affirm();
-    }
-
-    @Disabled
-    @Test
-    void buildDocumentWithTwoFonts() throws Exception {
-        final Id id = new Serial();
-        final Font times = new TimesRoman(id, 18);
-        final Font helvetica = new Helvetica(id, 18);
-        final File file = new File("two-fonts.pdf");
-        Files.write(
-            file.toPath(),
-            new Document(
-                id,
-                new DefaultPages(
-                    id,
-                    new DefaultPage(
-                        id,
-                        new Contents(
-                            new Text(
-                                id,
-                                times,
-                                20,
-                                500,
-                                80,
-                                new TextOf("Hello World!")
-                            ),
-                            new Text(
-                                id,
-                                helvetica,
-                                20,
-                                600,
-                                80,
-                                new TextOf("Hello World!")
-                            )
-                        )
-                    )
-                )
-            ).asBytes()
-        );
     }
 }

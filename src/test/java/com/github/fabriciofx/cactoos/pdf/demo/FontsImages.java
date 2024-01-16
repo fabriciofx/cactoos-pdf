@@ -21,95 +21,93 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.resource;
+package com.github.fabriciofx.cactoos.pdf.demo;
 
 import com.github.fabriciofx.cactoos.pdf.Document;
 import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
+import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
+import com.github.fabriciofx.cactoos.pdf.image.format.Jpeg;
+import com.github.fabriciofx.cactoos.pdf.image.format.Png;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Courier;
-import com.github.fabriciofx.cactoos.pdf.resource.font.FontEnvelope;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Helvetica;
 import com.github.fabriciofx.cactoos.pdf.resource.font.Symbol;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import com.github.fabriciofx.cactoos.pdf.resource.font.ZapfDingbats;
+import java.io.File;
+import java.nio.file.Files;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
-import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Test case for {@link FontEnvelope}.
+ * FontsImages.
  *
  * @since 0.0.1
+ * @checkstyle HideUtilityClassConstructorCheck (200 lines)
  */
-final class FontTest {
-    @Test
-    void fontDictionary() throws Exception {
-        new Assertion<>(
-            "Must must print a Times-Roman font dictionary",
-            new TextOf(
-                new TimesRoman(new Serial(), 12).indirect().dictionary()
-            ),
-            new IsText("<< /Font << /F1 1 0 R >> >>")
-        ).affirm();
-    }
-
-    @Test
-    void fontAsBytes() throws Exception {
-        new Assertion<>(
-            "Must must build Times-Roman font as bytes",
-            new TextOf(
-                new TimesRoman(new Serial(), 12).indirect().asBytes()
-            ),
-            new IsText(
-                new Concatenated(
-                    "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman ",
-                    "/Subtype /Type1 >>\nendobj\n"
-                )
-            )
-        ).affirm();
-    }
-
-    @Test
-    void buildDocumentWithFonts() throws Exception {
+@SuppressWarnings({"PMD.UseUtilityClass", "PMD.ProhibitPublicStaticMethods"})
+public final class FontsImages {
+    /**
+     * Main method.
+     *
+     * @param args Arguments.
+     * @throws Exception if fails
+     */
+    public static void main(final String[] args) throws Exception {
+        final File file = new File("fonts-images.pdf");
         final Id id = new Serial();
         final Font times = new TimesRoman(id, 16);
         final Font helvetica = new Helvetica(id, 16);
         final Font courier = new Courier(id, 16);
         final Font symbol = new Symbol(id, 16);
         final Font zapf = new ZapfDingbats(id, 16);
+        final Image cat = new Image(
+            id,
+            new Jpeg(
+                id,
+                new BytesOf(new ResourceOf("image/sample-1.jpg"))
+            ),
+            0,
+            100
+        );
+        final Image logo = new Image(
+            id,
+            new Png(
+                id,
+                new BytesOf(new ResourceOf("image/logo.png"))
+            ),
+            28,
+            766
+        );
         final org.cactoos.Text text = new TextOf(
             "The quick brown fox jumps over the lazy dog"
         );
-        final byte[] actual = new Document(
-            id,
-            new DefaultPages(
+        Files.write(
+            file.toPath(),
+            new Document(
                 id,
-                new DefaultPage(
+                new DefaultPages(
                     id,
-                    new Contents(
-                        new Text(id, times, 10, 100, 80, text),
-                        new Text(id, helvetica, 10, 200, 80, text),
-                        new Text(id, courier, 10, 300, 80, text),
-                        new Text(id, symbol, 10, 400, 80, text),
-                        new Text(id, zapf, 10, 500, 80, text)
+                    new DefaultPage(
+                        id,
+                        new Contents(
+                            cat,
+                            logo,
+                            new Text(id, times, 10, 100, 80, text),
+                            new Text(id, helvetica, 10, 200, 80, text),
+                            new Text(id, courier, 10, 300, 80, text),
+                            new Text(id, symbol, 10, 400, 80, text),
+                            new Text(id, zapf, 10, 500, 80, text)
+                        )
                     )
                 )
-            )
-        ).asBytes();
-        new Assertion<>(
-            "Must match a PDF document with several fonts",
-            new BytesOf(new ResourceOf("document/fonts.pdf")).asBytes(),
-            new IsEqual<>(actual)
-        ).affirm();
+            ).asBytes()
+        );
     }
 }

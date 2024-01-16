@@ -64,6 +64,8 @@ Files.write(
 );
 
 ```
+More examples can be found [here](https://github.com/fabriciofx/cactoos-pdf/tree/main/src/test/java/com/github/fabriciofx/cactoos/pdf/demo).
+
 
 ## Contributions
 

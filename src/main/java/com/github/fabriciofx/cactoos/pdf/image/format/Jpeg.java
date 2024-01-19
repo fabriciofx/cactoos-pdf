@@ -49,9 +49,14 @@ import org.cactoos.list.ListOf;
  */
 public final class Jpeg implements Format {
     /**
-     * Id.
+     * Object number.
      */
-    private final Id id;
+    private final int number;
+
+    /**
+     * Generation number.
+     */
+    private final int generation;
 
     /**
      * Raw image.
@@ -75,8 +80,27 @@ public final class Jpeg implements Format {
      * @param bytes Bytes that represents a PNG image
      */
     public Jpeg(final Id id, final Bytes bytes) {
-        this.id = id;
-        this.raw = new Safe(new JpegRaw(this.id, bytes));
+        this(id.increment(), 0, id, bytes);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param number Object number
+     * @param generation Generation number
+     * @param id Id number
+     * @param bytes Bytes that represent a JPEG image
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Jpeg(
+        final int number,
+        final int generation,
+        final Id id,
+        final Bytes bytes
+    ) {
+        this.number = number;
+        this.generation = generation;
+        this.raw = new Safe(new JpegRaw(id, bytes));
     }
 
     @Override
@@ -103,11 +127,7 @@ public final class Jpeg implements Format {
             .add("Filter", new Name("DCTDecode"))
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
-        return new DefaultIndirect(
-            this.id.increment(),
-            0,
-            dictionary
-        );
+        return new DefaultIndirect(this.number, this.generation, dictionary);
     }
 
     @Override

@@ -101,11 +101,14 @@ public final class Logged implements Id {
     @Override
     public int increment() {
         final int num = this.origin.increment();
+        final StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+        final String method = stack[2].getMethodName();
         this.logger.log(
             this.level.value(),
             new UncheckedText(
                 new FormattedText(
-                    "Increment: was %d become %d from %s",
+                    "%s called increment(): was %d become %d from %s",
+                    method,
                     num,
                     num + 1,
                     this.source
@@ -118,11 +121,14 @@ public final class Logged implements Id {
     @Override
     public Integer value() throws Exception {
         final int num = this.origin.value();
+        final StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+        final String method = stack[2].getMethodName();
         this.logger.log(
             this.level.value(),
             new UncheckedText(
                 new FormattedText(
-                    "Value: %d from %s",
+                    "%s called value(): %d from %s",
+                    method,
                     num,
                     this.source
                 )

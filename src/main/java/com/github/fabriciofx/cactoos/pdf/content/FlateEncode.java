@@ -95,7 +95,7 @@ public final class FlateEncode implements Content {
             .with(new Stream(stream));
         final Indirect indirect = this.origin.indirect();
         return new DefaultIndirect(
-            indirect.reference().id(),
+            indirect.reference().number(),
             indirect.reference().generation(),
             dictionary
         );

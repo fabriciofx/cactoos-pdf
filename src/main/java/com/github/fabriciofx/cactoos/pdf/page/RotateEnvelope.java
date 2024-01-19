@@ -77,7 +77,7 @@ public abstract class RotateEnvelope implements Page {
             new Int(this.angle)
         );
         return new DefaultIndirect(
-            indirect.reference().id(),
+            indirect.reference().number(),
             indirect.reference().generation(),
             dictionary,
             this.resources().indirect(),

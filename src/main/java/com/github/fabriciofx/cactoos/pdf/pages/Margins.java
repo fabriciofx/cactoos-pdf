@@ -140,7 +140,7 @@ public final class Margins implements Pages {
         }
         matcher.appendTail(stream);
         return new NoDictionaryIndirect(
-            indirect.reference().id(),
+            indirect.reference().number(),
             indirect.reference().generation(),
             new BytesOf(stream)
         );

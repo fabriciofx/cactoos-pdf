@@ -134,7 +134,7 @@ public final class Justify implements Content {
         final Indirect indirect = this.origin.indirect();
         final byte[] stream = this.asStream();
         return new DefaultIndirect(
-            indirect.reference().id(),
+            indirect.reference().number(),
             indirect.reference().generation(),
             indirect.dictionary()
                 .add("Length", new Int(stream.length))

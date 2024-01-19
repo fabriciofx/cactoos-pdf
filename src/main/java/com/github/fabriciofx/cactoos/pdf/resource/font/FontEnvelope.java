@@ -109,7 +109,6 @@ public abstract class FontEnvelope implements Font {
         final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
-        indirects.add(this.indirect());
         this.family.print(indirects);
     }
 }

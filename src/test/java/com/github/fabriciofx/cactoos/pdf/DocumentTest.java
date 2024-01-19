@@ -37,11 +37,15 @@ import com.github.fabriciofx.cactoos.pdf.resource.font.Symbol;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import com.github.fabriciofx.cactoos.pdf.resource.font.ZapfDingbats;
 import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.HeadOf;
+import org.cactoos.io.InputOf;
 import org.cactoos.io.ResourceOf;
+import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Document}.
@@ -162,6 +166,32 @@ final class DocumentTest {
             "Must match with PDF document with several fonts and images",
             new BytesOf(new ResourceOf("document/fonts-images.pdf")).asBytes(),
             new IsEqual<>(actual)
+        ).affirm();
+    }
+
+    @Test
+    void crossReference() {
+        new Assertion<>(
+            "Must match",
+            new TextOf(
+                new HeadOf(
+                    new InputOf(
+                        new BytesOf(new ResourceOf("document/hello-world.pdf"))
+                    ),
+                    374
+                )
+            ),
+            new IsText(
+                new Concatenated(
+                    "%PDF-1.3\n",
+                    "%���������\n",
+                    "5 0 obj\n<< /Producer (cactoos-pdf) >>\nendobj\n",
+                    "6 0 obj\n<< /Type /Catalog /Pages 4 0 R >>\nendobj\n",
+                    "4 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 /MediaBox [0 0 595.28 841.89] >>\nendobj\n",
+                    "3 0 obj\n<< /Type /Page /Resources 7 0 R /Contents [2 0 R] /Parent 4 0 R >>\nendobj\n",
+                    "7 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>\nendobj\n"
+                )
+            )
         ).affirm();
     }
 }

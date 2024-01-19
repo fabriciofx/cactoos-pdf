@@ -61,7 +61,7 @@ final class XObjectTest {
                     766
                 )
             ).indirect().dictionary(),
-            new IsText("<< /XObject << /I1 6 0 R >> >>")
+            new IsText("<< /XObject << /I1 7 0 R >> >>")
         ).affirm();
     }
 
@@ -87,8 +87,8 @@ final class XObjectTest {
             new AllOf<>(
                 new StartsWith(
                     new Concatenated(
-                        "2 0 obj\n<< /XObject << /I1 6 0 R >> >>\nendobj\n",
-                        "6 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 4 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
+                        "3 0 obj\n<< /XObject << /I1 7 0 R >> >>\nendobj\n",
+                        "7 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 5 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
                     )
                 ),
                 new EndsWith(

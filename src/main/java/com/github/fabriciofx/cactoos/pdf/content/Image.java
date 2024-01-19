@@ -57,9 +57,9 @@ public final class Image implements Content {
     private final int generation;
 
     /**
-     * Id.
+     * Resource.
      */
-    private final Id id;
+    private final Resource resrc;
 
     /**
      * Image Format.
@@ -122,10 +122,10 @@ public final class Image implements Content {
     ) {
         this.number = number;
         this.generation = generation;
-        this.id = id;
         this.fmt = format;
         this.posx = posx;
         this.posy = posy;
+        this.resrc = new XObject(id, this);
     }
 
     /**
@@ -154,7 +154,7 @@ public final class Image implements Content {
 
     @Override
     public List<Resource> resource() {
-        return new ListOf<>(new XObject(this.id, this));
+        return new ListOf<>(this.resrc);
     }
 
     @Override

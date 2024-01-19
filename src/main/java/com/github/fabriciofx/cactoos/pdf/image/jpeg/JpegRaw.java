@@ -39,14 +39,14 @@ import org.cactoos.Bytes;
  */
 public final class JpegRaw implements Raw {
     /**
-     * Id.
+     * JPEG header.
      */
-    private final Id id;
+    private final Header hdr;
 
     /**
-     * Bytes.
+     * JPEG body.
      */
-    private final Bytes bytes;
+    private final Body bdy;
 
     /**
      * Ctor.
@@ -65,18 +65,18 @@ public final class JpegRaw implements Raw {
      * @param bytes Bytes that represents a JPEG image
      */
     public JpegRaw(final Id id, final Bytes bytes) {
-        this.id = id;
-        this.bytes = bytes;
+        this.hdr = new JpegHeader(bytes);
+        this.bdy = new JpegBody(id, bytes);
     }
 
     @Override
     public Header header() throws Exception {
-        return new JpegHeader(this.bytes);
+        return this.hdr;
     }
 
     @Override
     public Body body() throws Exception {
-        return new JpegBody(this.id, this.bytes);
+        return this.bdy;
     }
 
     @Override

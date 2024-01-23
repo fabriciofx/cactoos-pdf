@@ -26,10 +26,6 @@ package com.github.fabriciofx.cactoos.pdf.indirect;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-import org.cactoos.Bytes;
-import org.cactoos.list.ListOf;
 
 /**
  * DefaultIndirect.
@@ -43,37 +39,12 @@ public final class NoReferenceIndirect implements Indirect {
     private final Dictionary dict;
 
     /**
-     * Content.
-     */
-    private final List<Bytes> contents;
-
-    /**
      * Ctor.
      *
      * @param dictionary Dictionary
-     * @param contents Contents
-     * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public NoReferenceIndirect(
-        final Dictionary dictionary,
-        final Bytes... contents
-    ) {
-        this(dictionary, new ListOf<>(contents));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param dictionary Dictionary
-     * @param contents Contents
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public NoReferenceIndirect(
-        final Dictionary dictionary,
-        final List<Bytes> contents
-    ) {
+    public NoReferenceIndirect(final Dictionary dictionary) {
         this.dict = dictionary;
-        this.contents = contents;
     }
 
     @Override
@@ -90,10 +61,6 @@ public final class NoReferenceIndirect implements Indirect {
 
     @Override
     public byte[] asBytes() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (final Bytes bytes : this.contents) {
-            baos.write(bytes.asBytes());
-        }
-        return baos.toByteArray();
+        return new byte[0];
     }
 }

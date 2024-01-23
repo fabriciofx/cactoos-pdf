@@ -29,7 +29,6 @@ import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
-import com.github.fabriciofx.cactoos.pdf.object.Information;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
@@ -70,10 +69,6 @@ public final class Margins {
             file.toPath(),
             new Document(
                 id,
-                new Information(
-                    id,
-                    "Title", "Hello World"
-                ),
                 new com.github.fabriciofx.cactoos.pdf.pages.Margins(
                     2.5,
                     2.5,

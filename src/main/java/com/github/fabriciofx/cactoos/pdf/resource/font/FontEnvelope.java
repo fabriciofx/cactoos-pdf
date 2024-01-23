@@ -29,6 +29,7 @@ import com.github.fabriciofx.cactoos.pdf.indirect.NoReferenceIndirect;
 import com.github.fabriciofx.cactoos.pdf.resource.FontFamily;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
+import java.io.OutputStream;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -100,6 +101,12 @@ public abstract class FontEnvelope implements Font {
                     new Text(indirect.reference().asString())
                 )
             );
-        return new NoReferenceIndirect(dictionary, indirect);
+        return new NoReferenceIndirect(dictionary);
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
+        this.family.print(output);
     }
 }

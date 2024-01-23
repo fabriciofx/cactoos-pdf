@@ -37,6 +37,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.List;
 import org.cactoos.Bytes;
@@ -80,7 +81,7 @@ public final class Jpeg implements Format {
      * @param bytes Bytes that represents a PNG image
      */
     public Jpeg(final Id id, final Bytes bytes) {
-        this(id.increment(), 0, id, bytes);
+        this(id.increment(), 0, bytes);
     }
 
     /**
@@ -88,19 +89,17 @@ public final class Jpeg implements Format {
      *
      * @param number Object number
      * @param generation Generation number
-     * @param id Id number
      * @param bytes Bytes that represent a JPEG image
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Jpeg(
         final int number,
         final int generation,
-        final Id id,
         final Bytes bytes
     ) {
         this.number = number;
         this.generation = generation;
-        this.raw = new Safe(new JpegRaw(id, bytes));
+        this.raw = new Safe(new JpegRaw(bytes));
     }
 
     @Override
@@ -128,6 +127,11 @@ public final class Jpeg implements Format {
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
         return new DefaultIndirect(this.number, this.generation, dictionary);
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
     }
 
     @Override

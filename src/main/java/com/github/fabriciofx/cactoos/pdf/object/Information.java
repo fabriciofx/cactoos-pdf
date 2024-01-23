@@ -29,6 +29,7 @@ import com.github.fabriciofx.cactoos.pdf.Object;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Literal;
+import java.io.OutputStream;
 
 /**
  * Document Information Dictionary.
@@ -396,5 +397,10 @@ public final class Information implements Object {
     @Override
     public Indirect indirect() throws Exception {
         return new DefaultIndirect(this.number, this.generation, this.metadata);
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
     }
 }

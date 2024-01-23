@@ -39,13 +39,10 @@ import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.IsText;
-import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link Resources}.
@@ -78,7 +75,7 @@ final class ResourcesTest {
             new IsText(
                 new Concatenated(
                     "<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]",
-                    " /Font << /F1 1 0 R >> /XObject << /I2 9 0 R >> >>"
+                    " /Font << /F1 1 0 R >> /XObject << /I4 2 0 R >> >>"
                 )
             )
         ).affirm();
@@ -108,18 +105,8 @@ final class ResourcesTest {
                     )
                 ).indirect().asBytes()
             ),
-            new AllOf<>(
-                new StartsWith(
-                    new Concatenated(
-                        "5 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> /XObject << /I2 9 0 R >> >>\nendobj\n",
-                        "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj\n",
-                        "4 0 obj\n<< /XObject << /I2 9 0 R >> >>\nendobj\n",
-                        "9 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 7 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
-                    )
-                ),
-                new EndsWith(
-                    "\nendstream\nendobj\n"
-                )
+            new IsText(
+                "7 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> /XObject << /I4 2 0 R >> >>\nendobj\n"
             )
         ).affirm();
     }

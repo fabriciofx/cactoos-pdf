@@ -125,29 +125,27 @@ public final class Document implements Bytes {
 
     @Override
     public byte[] asBytes() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
+        final ByteArrayOutputStream output = new ByteArrayOutputStream();
+        output.write(
             new FormattedText(
                 "%%PDF-%s\n",
                 Locale.ENGLISH,
                 Document.VERSION
             ).asString().getBytes(StandardCharsets.UTF_8)
         );
-        baos.write(Document.SIGNATURE);
-        final Indirect info = this.information.indirect();
-        baos.write(info.asBytes());
-        final Indirect clog = this.catalog.indirect();
-        baos.write(clog.asBytes());
-        baos.write(
+        output.write(Document.SIGNATURE);
+        this.information.print(output);
+        this.catalog.print(output);
+        output.write(
             new FormattedText(
                 "trailer << /Root %s /Size %d /Info %s >>\n",
                 Locale.ENGLISH,
-                clog.reference().asString(),
+                this.catalog.indirect().reference().asString(),
                 this.id.value(),
-                info.reference().asString()
+                this.information.indirect().reference().asString()
             ).asString().getBytes(StandardCharsets.UTF_8)
         );
-        baos.write(Document.EOF.getBytes(StandardCharsets.UTF_8));
-        return baos.toByteArray();
+        output.write(Document.EOF.getBytes(StandardCharsets.UTF_8));
+        return output.toByteArray();
     }
 }

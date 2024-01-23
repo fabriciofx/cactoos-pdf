@@ -33,6 +33,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 import org.cactoos.Bytes;
 import org.cactoos.Scalar;
@@ -132,5 +133,10 @@ public final class PngPalette implements Palette {
             this.generation,
             dictionary
         );
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
     }
 }

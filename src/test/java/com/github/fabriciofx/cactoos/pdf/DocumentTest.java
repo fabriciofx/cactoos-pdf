@@ -53,7 +53,6 @@ final class DocumentTest {
     @Test
     void buildDocumentHelloWorld() throws Exception {
         final Id id = new Serial();
-        final Font font = new TimesRoman(id, 18);
         final byte[] actual = new Document(
             id,
             new DefaultPages(
@@ -63,7 +62,7 @@ final class DocumentTest {
                     new Contents(
                         new Text(
                             id,
-                            font,
+                            new TimesRoman(id, 18),
                             0,
                             500,
                             80,

@@ -26,8 +26,7 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Object;
-import com.github.fabriciofx.cactoos.pdf.indirect.ContentIndirect;
-import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
@@ -41,10 +40,10 @@ public final class Contents extends ListEnvelope<Content> implements Object {
     /**
      * Ctor.
      *
-     * @param objects An array of objects
+     * @param elements An array of elements
      */
-    public Contents(final Content... objects) {
-        this(new ListOf<>(objects));
+    public Contents(final Content... elements) {
+        this(new ListOf<>(elements));
     }
 
     /**
@@ -52,18 +51,21 @@ public final class Contents extends ListEnvelope<Content> implements Object {
      *
      * @param list A list of objects
      */
-    public Contents(
-        final List<Content> list
-    ) {
+    public Contents(final List<Content> list) {
         super(list);
     }
 
     @Override
     public Indirect indirect() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (final Object obj : this) {
-            baos.write(obj.indirect().asBytes());
+        throw new UnsupportedOperationException(
+            "there is no indirect to contents"
+        );
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        for (final Content content : this) {
+            content.print(output);
         }
-        return new ContentIndirect(baos::toByteArray);
     }
 }

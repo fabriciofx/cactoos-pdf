@@ -103,19 +103,14 @@ final class PngTest {
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         expected.write(
             new Concatenated(
-                "6 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 ",
-                "/Height 71 /ColorSpace [/Indexed /DeviceRGB 63 4 0 R] ",
+                "1 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 ",
+                "/Height 71 /ColorSpace [/Indexed /DeviceRGB 63 2 0 R] ",
                 "/BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << ",
                 "/Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 ",
                 ">> /Mask [0 0] /Length 2086 >>\nstream\n"
             ).asString().getBytes(StandardCharsets.UTF_8)
         );
         expected.write(raw.body().asStream());
-        expected.write(
-            "\nendstream\nendobj\n4 0 obj\n<< /Length 192 >>\nstream\n"
-                .getBytes(StandardCharsets.UTF_8)
-        );
-        expected.write(raw.palette().asStream());
         expected.write(
             "\nendstream\nendobj\n".getBytes(StandardCharsets.UTF_8)
         );

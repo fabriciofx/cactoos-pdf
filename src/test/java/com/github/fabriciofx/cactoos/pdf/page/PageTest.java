@@ -140,7 +140,6 @@ final class PageTest {
                     "2 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(Hello) Tj T*\nET\nendstream\nendobj",
                     "5 0 obj\n<< /Type /Page /Resources 10 0 R /Contents [4 0 R] /Parent 6 0 R >>\nendobj",
                     "10 0 obj\n<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>\nendobj",
-                    "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>\nendobj",
                     "4 0 obj\n<< /Length 51 >>\nstream\nBT /F1 18 Tf 0.00 0.00 Td 21.60 TL\n(World) Tj T*\nET\nendstream\nendobj",
                     "trailer << /Root 8 0 R /Size 11 /Info 7 0 R >>",
                     "%%EOF"

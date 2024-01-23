@@ -39,7 +39,6 @@ import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import com.github.fabriciofx.cactoos.pdf.resource.font.ZapfDingbats;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
-import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -60,22 +59,6 @@ final class FontTest {
                 new TimesRoman(new Serial(), 12).indirect().dictionary()
             ),
             new IsText("<< /Font << /F1 1 0 R >> >>")
-        ).affirm();
-    }
-
-    @Test
-    void fontAsBytes() throws Exception {
-        new Assertion<>(
-            "Must must build Times-Roman font as bytes",
-            new TextOf(
-                new TimesRoman(new Serial(), 12).indirect().asBytes()
-            ),
-            new IsText(
-                new Concatenated(
-                    "1 0 obj\n<< /Type /Font /BaseFont /Times-Roman ",
-                    "/Subtype /Type1 >>\nendobj\n"
-                )
-            )
         ).affirm();
     }
 

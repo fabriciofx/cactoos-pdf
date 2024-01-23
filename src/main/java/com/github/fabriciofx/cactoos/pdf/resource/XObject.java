@@ -30,7 +30,7 @@ import com.github.fabriciofx.cactoos.pdf.content.Image;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
-import org.cactoos.bytes.BytesOf;
+import java.io.OutputStream;
 
 /**
  * XObject.
@@ -90,8 +90,12 @@ public final class XObject implements Resource {
         return new DefaultIndirect(
             this.number,
             this.generation,
-            dictionary,
-            new BytesOf(indirect.asBytes())
+            dictionary
         );
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
     }
 }

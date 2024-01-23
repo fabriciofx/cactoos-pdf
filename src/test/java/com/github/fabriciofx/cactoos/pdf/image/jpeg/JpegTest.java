@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf.image.jpeg;
 
-import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.image.Raw;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
@@ -43,7 +42,6 @@ final class JpegTest {
     @Test
     void headerWidth() throws Exception {
         final Raw raw = new JpegRaw(
-            new Serial(),
             new BytesOf(new ResourceOf("image/sample-1.jpg"))
         );
         new Assertion<>(
@@ -56,7 +54,6 @@ final class JpegTest {
     @Test
     void headerHeight() throws Exception {
         final Raw raw = new JpegRaw(
-            new Serial(),
             new BytesOf(new ResourceOf("image/sample-1.jpg"))
         );
         new Assertion<>(
@@ -69,7 +66,6 @@ final class JpegTest {
     @Test
     void headerDepth() throws Exception {
         final Raw raw = new JpegRaw(
-            new Serial(),
             new BytesOf(new ResourceOf("image/sample-1.jpg"))
         );
         new Assertion<>(
@@ -82,7 +78,6 @@ final class JpegTest {
     @Test
     void headerColorSpace() throws Exception {
         final Raw raw = new JpegRaw(
-            new Serial(),
             new BytesOf(new ResourceOf("image/sample-1.jpg"))
         );
         new Assertion<>(
@@ -96,7 +91,6 @@ final class JpegTest {
     void safeJpegWidth() throws Exception {
         final Raw raw = new Safe(
             new JpegRaw(
-                new Serial(),
                 new BytesOf(new ResourceOf("image/sample-1.jpg"))
             )
         );
@@ -111,7 +105,6 @@ final class JpegTest {
     void safeJpegHeight() throws Exception {
         final Raw raw = new Safe(
             new JpegRaw(
-                new Serial(),
                 new BytesOf(new ResourceOf("image/sample-1.jpg"))
             )
         );
@@ -125,7 +118,6 @@ final class JpegTest {
     @Test
     void body() throws Exception {
         final Raw raw = new JpegRaw(
-            new Serial(),
             new BytesOf(new ResourceOf("image/sample-1.jpg"))
         );
         new Assertion<>(

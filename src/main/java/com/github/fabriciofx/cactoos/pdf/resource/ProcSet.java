@@ -28,6 +28,7 @@ import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.NoReferenceIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import java.io.OutputStream;
 
 /**
  * ProcSet.
@@ -43,5 +44,10 @@ public final class ProcSet implements Resource {
                 new Array("PDF", "Text", "ImageB", "ImageC", "ImageI")
             );
         return new NoReferenceIndirect(dictionary);
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        // Empty of purpose.
     }
 }

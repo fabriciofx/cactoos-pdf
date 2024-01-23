@@ -32,12 +32,12 @@ import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
-import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 
 /**
@@ -83,7 +83,7 @@ public final class FlateEncode implements Content {
 
     @Override
     public List<Resource> resource() {
-        return new ListOf<>();
+        return this.origin.resource();
     }
 
     @Override
@@ -99,5 +99,10 @@ public final class FlateEncode implements Content {
             indirect.reference().generation(),
             dictionary
         );
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
     }
 }

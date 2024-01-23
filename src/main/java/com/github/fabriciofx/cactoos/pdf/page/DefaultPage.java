@@ -37,6 +37,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
+import java.io.OutputStream;
 import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
@@ -128,7 +129,6 @@ public final class DefaultPage implements Page {
     @Override
     public Indirect indirect(final int parent) throws Exception {
         final Indirect resrcs = this.resources().indirect();
-        final Indirect conts = this.contents.indirect();
         Array refs = new Array();
         for (final Content content : this.contents) {
             refs = refs.add(new Text(content.indirect().reference().asString()));
@@ -141,9 +141,17 @@ public final class DefaultPage implements Page {
         return new DefaultIndirect(
             this.number,
             this.generation,
-            dictionary,
-            resrcs,
-            conts
+            dictionary
         );
+    }
+
+    @Override
+    public void print(
+        final OutputStream output,
+        final int parent
+    ) throws Exception {
+        output.write(this.indirect(parent).asBytes());
+        this.resources().print(output);
+        this.contents().print(output);
     }
 }

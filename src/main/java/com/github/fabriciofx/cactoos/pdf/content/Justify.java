@@ -30,12 +30,12 @@ import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -126,7 +126,7 @@ public final class Justify implements Content {
 
     @Override
     public List<Resource> resource() {
-        return new ListOf<>();
+        return this.origin.resource();
     }
 
     @Override
@@ -140,5 +140,10 @@ public final class Justify implements Content {
                 .add("Length", new Int(stream.length))
                 .with(new Stream(stream))
         );
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
     }
 }

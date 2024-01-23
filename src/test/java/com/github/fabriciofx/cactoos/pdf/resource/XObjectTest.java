@@ -29,14 +29,10 @@ import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.image.format.Png;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
-import org.cactoos.text.Concatenated;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.IsText;
-import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link XObject}.
@@ -61,7 +57,7 @@ final class XObjectTest {
                     766
                 )
             ).indirect().dictionary(),
-            new IsText("<< /XObject << /I1 7 0 R >> >>")
+            new IsText("<< /XObject << /I3 1 0 R >> >>")
         ).affirm();
     }
 
@@ -84,16 +80,8 @@ final class XObjectTest {
                     )
                 ).indirect().asBytes()
             ),
-            new AllOf<>(
-                new StartsWith(
-                    new Concatenated(
-                        "3 0 obj\n<< /XObject << /I1 7 0 R >> >>\nendobj\n",
-                        "7 0 obj\n<< /Type /XObject /Subtype /Image /Width 104 /Height 71 /ColorSpace [/Indexed /DeviceRGB 63 5 0 R] /BitsPerComponent 8 /Filter /FlateDecode /DecodeParms << /Predictor 15 /Colors 1 /BitsPerComponent 8 /Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
-                    )
-                ),
-                new EndsWith(
-                    "\nendstream\nendobj\n"
-                )
+            new IsText(
+                "5 0 obj\n<< /XObject << /I3 1 0 R >> >>\nendobj\n"
             )
         ).affirm();
     }

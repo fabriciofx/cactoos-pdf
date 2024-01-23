@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.cactoos.pdf.image.jpeg;
 
-import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.image.Body;
 import com.github.fabriciofx.cactoos.pdf.image.Header;
 import com.github.fabriciofx.cactoos.pdf.image.Palette;
@@ -51,22 +50,20 @@ public final class JpegRaw implements Raw {
     /**
      * Ctor.
      *
-     * @param id Id number
      * @param filename File name of a JPEG image
      */
-    public JpegRaw(final Id id, final String filename) {
-        this(id, () -> Files.readAllBytes(new File(filename).toPath()));
+    public JpegRaw(final String filename) {
+        this(() -> Files.readAllBytes(new File(filename).toPath()));
     }
 
     /**
      * Ctor.
      *
-     * @param id Id number
      * @param bytes Bytes that represents a JPEG image
      */
-    public JpegRaw(final Id id, final Bytes bytes) {
+    public JpegRaw(final Bytes bytes) {
         this.hdr = new JpegHeader(bytes);
-        this.bdy = new JpegBody(id, bytes);
+        this.bdy = new JpegBody(bytes);
     }
 
     @Override

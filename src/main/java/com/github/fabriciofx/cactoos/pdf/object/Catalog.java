@@ -31,6 +31,7 @@ import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
+import java.io.OutputStream;
 
 /**
  * Catalog.
@@ -85,8 +86,13 @@ public final class Catalog implements Object {
         return new DefaultIndirect(
             this.number,
             this.generation,
-            dictionary,
-            indirect
+            dictionary
         );
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
+        this.pages.print(output);
     }
 }

@@ -33,13 +33,6 @@ import com.github.fabriciofx.cactoos.pdf.page.Format;
 @SuppressWarnings("PMD.ExtendsObject")
 public interface Pages extends Object {
     /**
-     * Add a {@link Page}.
-     *
-     * @param page An PDF page
-     */
-    void add(Page page);
-
-    /**
      * Page format.
      *
      * @return Page format.

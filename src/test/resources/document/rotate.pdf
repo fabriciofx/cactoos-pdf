@@ -13,7 +13,10 @@ endobj
 << /Type /Page /Resources 11 0 R /Contents [2 0 R] /Parent 8 0 R >>
 endobj
 11 0 obj
-<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] >>
+<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>
+endobj
+1 0 obj
+<< /Type /Font /BaseFont /Times-Roman /Subtype /Type1 >>
 endobj
 2 0 obj
 << /Length 287 /Filter /FlateDecode >>
@@ -26,7 +29,7 @@ endobj
 << /Type /Page /Resources 12 0 R /Contents [4 0 R] /Parent 8 0 R /Rotate 90 >>
 endobj
 12 0 obj
-<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] >>
+<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>
 endobj
 4 0 obj
 << /Length 287 /Filter /FlateDecode >>
@@ -39,7 +42,7 @@ endobj
 << /Type /Page /Resources 13 0 R /Contents [6 0 R] /Parent 8 0 R >>
 endobj
 13 0 obj
-<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] >>
+<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI] /Font << /F1 1 0 R >> >>
 endobj
 6 0 obj
 << /Length 287 /Filter /FlateDecode >>

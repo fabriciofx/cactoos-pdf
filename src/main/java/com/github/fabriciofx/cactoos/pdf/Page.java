@@ -25,6 +25,7 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
+import java.io.OutputStream;
 
 /**
  * PageDefault.
@@ -55,4 +56,13 @@ public interface Page {
      * @throws Exception if fails
      */
     Indirect indirect(int parent) throws Exception;
+
+    /**
+     * Print object.
+     *
+     * @param output Output to print
+     * @param parent Parent number
+     * @throws Exception if fails
+     */
+    void print(OutputStream output, int parent) throws Exception;
 }

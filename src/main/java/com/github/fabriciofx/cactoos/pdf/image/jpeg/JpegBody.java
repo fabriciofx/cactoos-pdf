@@ -23,14 +23,10 @@
  */
 package com.github.fabriciofx.cactoos.pdf.image.jpeg;
 
-import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.image.Body;
-import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import com.github.fabriciofx.cactoos.pdf.type.Int;
-import com.github.fabriciofx.cactoos.pdf.type.Stream;
+import java.io.OutputStream;
 import java.util.List;
 import org.cactoos.Bytes;
 import org.cactoos.list.ListOf;
@@ -42,16 +38,6 @@ import org.cactoos.list.ListOf;
  */
 public final class JpegBody implements Body {
     /**
-     * Object number.
-     */
-    private final int number;
-
-    /**
-     * Generation number.
-     */
-    private final int generation;
-
-    /**
      * JPEG image body.
      */
     private final Bytes bytes;
@@ -59,23 +45,9 @@ public final class JpegBody implements Body {
     /**
      * Ctor.
      *
-     * @param id Id number
      * @param bytes Bytes that represents a JPEG image (all content)
      */
-    public JpegBody(final Id id, final Bytes bytes) {
-        this(id.increment(), 0, bytes);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param number Object number
-     * @param generation Generation number
-     * @param bytes Bytes that represents a JPEG image (all content)
-     */
-    public JpegBody(final int number, final int generation, final Bytes bytes) {
-        this.number = number;
-        this.generation = generation;
+    public JpegBody(final Bytes bytes) {
         this.bytes = bytes;
     }
 
@@ -91,14 +63,13 @@ public final class JpegBody implements Body {
 
     @Override
     public Indirect indirect() throws Exception {
-        final byte[] stream = this.asStream();
-        final Dictionary dictionary = new Dictionary()
-            .add("Length", new Int(stream.length))
-            .with(new Stream(stream));
-        return new DefaultIndirect(
-            this.number,
-            this.generation,
-            dictionary
+        throw new UnsupportedOperationException(
+            "there is not indirect in jpeg body"
         );
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        // Empty of purpose.
     }
 }

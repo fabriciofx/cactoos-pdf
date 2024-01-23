@@ -40,6 +40,7 @@ import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.List;
 import org.cactoos.Bytes;
@@ -52,9 +53,14 @@ import org.cactoos.list.ListOf;
  */
 public final class Png implements Format {
     /**
-     * Id.
+     * Object number.
      */
-    private final Id id;
+    private final int number;
+
+    /**
+     * Object generation.
+     */
+    private final int generation;
 
     /**
      * Raw image.
@@ -74,12 +80,31 @@ public final class Png implements Format {
     /**
      * Ctor.
      *
-     * @param id Id number
+     * @param id Object id
      * @param bytes Bytes that represents a PNG image
      */
     public Png(final Id id, final Bytes bytes) {
-        this.id = id;
-        this.raw = new Safe(new PngRaw(this.id, bytes));
+        this(id.increment(), 0, id, bytes);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param number Object number
+     * @param generation Object generation
+     * @param id Object id
+     * @param bytes Bytes that represents a PNG image
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public Png(
+        final int number,
+        final int generation,
+        final Id id,
+        final Bytes bytes
+    ) {
+        this.number = number;
+        this.generation = generation;
+        this.raw = new Safe(new PngRaw(id, bytes));
     }
 
     @Override
@@ -129,11 +154,16 @@ public final class Png implements Format {
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
         return new DefaultIndirect(
-            this.id.increment(),
-            0,
-            dictionary,
-            pal
+            this.number,
+            this.generation,
+            dictionary
         );
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
+        this.raw.palette().print(output);
     }
 
     @Override

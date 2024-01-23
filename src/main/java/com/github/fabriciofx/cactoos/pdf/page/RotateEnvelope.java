@@ -30,6 +30,7 @@ import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
+import java.io.OutputStream;
 
 /**
  * Rotate envelope.
@@ -79,9 +80,17 @@ public abstract class RotateEnvelope implements Page {
         return new DefaultIndirect(
             indirect.reference().number(),
             indirect.reference().generation(),
-            dictionary,
-            this.resources().indirect(),
-            this.contents().indirect()
+            dictionary
         );
+    }
+
+    @Override
+    public void print(
+        final OutputStream output,
+        final int parent
+    ) throws Exception {
+        output.write(this.indirect(parent).asBytes());
+        this.resources().print(output);
+        this.contents().print(output);
     }
 }

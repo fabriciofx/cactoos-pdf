@@ -34,8 +34,9 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
-import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.List;
+import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
 
 /**
@@ -43,7 +44,7 @@ import org.cactoos.list.ListOf;
  *
  * @since 0.0.1
  */
-public final class DefaultPages implements Pages {
+public final class DefaultPages extends ListEnvelope<Page> implements Pages {
     /**
      * Object number.
      */
@@ -60,21 +61,16 @@ public final class DefaultPages implements Pages {
     private final Format fmt;
 
     /**
-     * Pages.
-     */
-    private final List<Page> kids;
-
-    /**
      * Ctor.
      *
      * @param id Id number
-     * @param kids Some Page
+     * @param kids Some Pages
      */
     public DefaultPages(
         final Id id,
         final Page... kids
     ) {
-        this(id.increment(), 0, Format.A4, kids);
+        this(id.increment(), 0, Format.A4, new ListOf<>(kids));
     }
 
     /**
@@ -89,7 +85,7 @@ public final class DefaultPages implements Pages {
         final Format format,
         final Page... kids
     ) {
-        this(id.increment(), 0, format, kids);
+        this(id.increment(), 0, format, new ListOf<>(kids));
     }
 
     /**
@@ -98,34 +94,32 @@ public final class DefaultPages implements Pages {
      * @param number Object number
      * @param generation Generation number
      * @param format Page's size
-     * @param kids Some Page
+     * @param kids Some Pages
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public DefaultPages(
         final int number,
         final int generation,
         final Format format,
-        final Page... kids
+        final List<Page> kids
     ) {
+        super(kids);
         this.number = number;
         this.generation = generation;
         this.fmt = format;
-        this.kids = new ListOf<>(kids);
     }
 
     @Override
     public Indirect indirect() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Array kds = new Array();
-        for (final Page page : this.kids) {
+        for (final Page page : this) {
             final Indirect indirect = page.indirect(this.number);
             kds = kds.add(new Text(indirect.reference().asString()));
-            baos.write(indirect.asBytes());
         }
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Pages"))
             .add("Kids", kds)
-            .add("Count", new Int(this.kids.size()))
+            .add("Count", new Int(this.size()))
             .add(
                 "MediaBox",
                 new Array(
@@ -137,14 +131,16 @@ public final class DefaultPages implements Pages {
         return new DefaultIndirect(
             this.number,
             this.generation,
-            dictionary,
-            baos::toByteArray
+            dictionary
         );
     }
 
     @Override
-    public void add(final Page page) {
-        this.kids.add(page);
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
+        for (final Page page : this) {
+            page.print(output, this.number);
+        }
     }
 
     @Override

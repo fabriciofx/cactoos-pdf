@@ -28,10 +28,8 @@ import com.github.fabriciofx.cactoos.pdf.text.Reference;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Locale;
-import org.cactoos.Bytes;
-import org.cactoos.list.ListOf;
+import java.util.Objects;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -56,47 +54,20 @@ public final class DefaultIndirect implements Indirect {
     private final Dictionary dict;
 
     /**
-     * Content.
-     */
-    private final List<Bytes> contents;
-
-    /**
      * Ctor.
      *
      * @param number Object number
      * @param generation Generation number
      * @param dictionary Dictionary
-     * @param contents Contents
-     * @checkstyle ParameterNumberCheck (10 lines)
      */
     public DefaultIndirect(
         final int number,
         final int generation,
-        final Dictionary dictionary,
-        final Bytes... contents
-    ) {
-        this(number, generation, dictionary, new ListOf<>(contents));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param number Object number
-     * @param generation Generation number
-     * @param dictionary Dictionary
-     * @param contents Contents
-     * @checkstyle ParameterNumberCheck (10 lines)
-     */
-    public DefaultIndirect(
-        final int number,
-        final int generation,
-        final Dictionary dictionary,
-        final List<Bytes> contents
+        final Dictionary dictionary
     ) {
         this.number = number;
         this.generation = generation;
         this.dict = dictionary;
-        this.contents = contents;
     }
 
     @Override
@@ -111,8 +82,8 @@ public final class DefaultIndirect implements Indirect {
 
     @Override
     public byte[] asBytes() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write(
+        final ByteArrayOutputStream output = new ByteArrayOutputStream();
+        output.write(
             new FormattedText(
                 "%d %d obj\n",
                 Locale.ENGLISH,
@@ -120,11 +91,19 @@ public final class DefaultIndirect implements Indirect {
                 this.generation
             ).asString().getBytes(StandardCharsets.UTF_8)
         );
-        baos.write(this.dict.asBytes());
-        baos.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
-        for (final Bytes bytes : this.contents) {
-            baos.write(bytes.asBytes());
-        }
-        return baos.toByteArray();
+        output.write(this.dict.asBytes());
+        output.write("\nendobj\n".getBytes(StandardCharsets.UTF_8));
+        return output.toByteArray();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return obj instanceof DefaultIndirect
+            && DefaultIndirect.class.cast(obj).number == this.number;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.number, this.generation, this.dict);
     }
 }

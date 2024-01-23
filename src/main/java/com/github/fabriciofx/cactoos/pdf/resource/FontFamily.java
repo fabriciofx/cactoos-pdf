@@ -29,6 +29,8 @@ import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
+import java.io.OutputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Font Family.
@@ -55,6 +57,11 @@ public final class FontFamily implements Resource {
      * Font subtype.
      */
     private final String subtype;
+
+    /**
+     * Printed.
+     */
+    private final AtomicBoolean printed;
 
     /**
      * Ctor.
@@ -90,6 +97,7 @@ public final class FontFamily implements Resource {
         this.generation = generation;
         this.base = base;
         this.subtype = subtype;
+        this.printed = new AtomicBoolean(false);
     }
 
     @Override
@@ -99,5 +107,12 @@ public final class FontFamily implements Resource {
             .add("BaseFont", new Name(this.base))
             .add("Subtype", new Name(this.subtype));
         return new DefaultIndirect(this.number, this.generation, dictionary);
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        if (this.printed.compareAndSet(false, true)) {
+            output.write(this.indirect().asBytes());
+        }
     }
 }

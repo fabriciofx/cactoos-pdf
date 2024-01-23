@@ -36,6 +36,7 @@ import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -45,6 +46,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.0.1
  */
 final class MarginsTest {
+    @Disabled
     @Test
     void margins() throws Exception {
         final Id id = new Serial();

@@ -33,6 +33,7 @@ import com.github.fabriciofx.cactoos.pdf.resource.XObject;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
@@ -164,6 +165,12 @@ public final class Image implements Content {
             .add("Length", new Int(stream.length))
             .with(new Stream(stream));
         return new DefaultIndirect(this.number, this.generation, dictionary);
+    }
+
+    @Override
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
+        this.fmt.print(output);
     }
 
     /**

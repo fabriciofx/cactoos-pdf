@@ -24,14 +24,16 @@
 package com.github.fabriciofx.cactoos.pdf.pages;
 
 import com.github.fabriciofx.cactoos.pdf.Indirect;
-import com.github.fabriciofx.cactoos.pdf.Page;
 import com.github.fabriciofx.cactoos.pdf.Pages;
-import com.github.fabriciofx.cactoos.pdf.indirect.NoDictionaryIndirect;
+import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
+import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Stream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -139,16 +141,22 @@ public final class Margins implements Pages {
             );
         }
         matcher.appendTail(stream);
-        return new NoDictionaryIndirect(
+        final Dictionary dictionary = indirect.dictionary().with(
+            new Stream(
+                stream.toString().getBytes(StandardCharsets.UTF_8)
+            )
+        );
+        return new DefaultIndirect(
             indirect.reference().number(),
             indirect.reference().generation(),
-            new BytesOf(stream)
+            dictionary
         );
     }
 
     @Override
-    public void add(final Page page) {
-        this.origin.add(page);
+    public void print(final OutputStream output) throws Exception {
+        output.write(this.indirect().asBytes());
+        this.origin.print(output);
     }
 
     @Override

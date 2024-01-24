@@ -25,7 +25,6 @@ package com.github.fabriciofx.cactoos.pdf;
 
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
 import com.github.fabriciofx.cactoos.pdf.resource.Resources;
-import java.io.OutputStream;
 
 /**
  * PageDefault.
@@ -33,7 +32,7 @@ import java.io.OutputStream;
  * @since 0.0.1
  */
 @SuppressWarnings("PMD.ExtendsObject")
-public interface Page {
+public interface Page extends Object {
     /**
      * Page Resources.
      *
@@ -47,22 +46,4 @@ public interface Page {
      * @return Contents
      */
     Contents contents();
-
-    /**
-     * Build an Indirect.
-     *
-     * @param parent Page's parent
-     * @return An indirect
-     * @throws Exception if fails
-     */
-    Indirect indirect(int parent) throws Exception;
-
-    /**
-     * Print object.
-     *
-     * @param output Output to print
-     * @param parent Parent number
-     * @throws Exception if fails
-     */
-    void print(OutputStream output, int parent) throws Exception;
 }

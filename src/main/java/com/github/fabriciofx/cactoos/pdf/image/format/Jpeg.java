@@ -113,7 +113,7 @@ public final class Jpeg implements Format {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         final Header header = this.raw.header();
         final byte[] stream = this.asStream();
         final Dictionary dictionary = new Dictionary()
@@ -130,7 +130,10 @@ public final class Jpeg implements Format {
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         output.write(this.indirect().asBytes());
     }
 

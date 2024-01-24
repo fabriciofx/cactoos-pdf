@@ -395,12 +395,15 @@ public final class Information implements Object {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         return new DefaultIndirect(this.number, this.generation, this.metadata);
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         output.write(this.indirect().asBytes());
     }
 }

@@ -71,8 +71,8 @@ public abstract class RotateEnvelope implements Page {
     }
 
     @Override
-    public Indirect indirect(final int parent) throws Exception {
-        final Indirect indirect = this.origin.indirect(parent);
+    public Indirect indirect(final int... parent) throws Exception {
+        final Indirect indirect = this.origin.indirect(parent[0]);
         final Dictionary dictionary = indirect.dictionary().add(
             "Rotate",
             new Int(this.angle)
@@ -87,9 +87,9 @@ public abstract class RotateEnvelope implements Page {
     @Override
     public void print(
         final OutputStream output,
-        final int parent
+        final int... parent
     ) throws Exception {
-        output.write(this.indirect(parent).asBytes());
+        output.write(this.indirect(parent[0]).asBytes());
         this.resources().print(output);
         this.contents().print(output);
     }

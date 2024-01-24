@@ -118,7 +118,7 @@ public final class Png implements Format {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         final Header header = this.raw.header();
         final Palette palette = this.raw.palette();
         final Indirect pal = palette.indirect();
@@ -161,7 +161,10 @@ public final class Png implements Format {
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         output.write(this.indirect().asBytes());
         this.raw.palette().print(output);
     }

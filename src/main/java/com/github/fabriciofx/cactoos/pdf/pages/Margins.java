@@ -115,7 +115,7 @@ public final class Margins implements Pages {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         final Indirect indirect = this.origin.indirect();
         final Pattern pattern = Pattern.compile("BT.*TL");
         final Matcher matcher = pattern.matcher(
@@ -154,7 +154,10 @@ public final class Margins implements Pages {
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         output.write(this.indirect().asBytes());
         this.origin.print(output);
     }

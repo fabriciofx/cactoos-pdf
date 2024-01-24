@@ -56,14 +56,17 @@ public final class Contents extends ListEnvelope<Content> implements Object {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         throw new UnsupportedOperationException(
             "there is no indirect to contents"
         );
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         for (final Content content : this) {
             content.print(output);
         }

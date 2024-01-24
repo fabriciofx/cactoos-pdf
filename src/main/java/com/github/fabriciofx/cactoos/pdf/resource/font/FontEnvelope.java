@@ -91,7 +91,7 @@ public abstract class FontEnvelope implements Font {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         final Indirect indirect = this.family.indirect();
         final Dictionary dictionary = new Dictionary()
             .add(
@@ -105,7 +105,10 @@ public abstract class FontEnvelope implements Font {
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         output.write(this.indirect().asBytes());
         this.family.print(output);
     }

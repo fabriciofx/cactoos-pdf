@@ -110,7 +110,7 @@ public final class DefaultPages extends ListEnvelope<Page> implements Pages {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         Array kds = new Array();
         for (final Page page : this) {
             final Indirect indirect = page.indirect(this.number);
@@ -136,7 +136,10 @@ public final class DefaultPages extends ListEnvelope<Page> implements Pages {
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         output.write(this.indirect().asBytes());
         for (final Page page : this) {
             page.print(output, this.number);

@@ -96,7 +96,7 @@ public final class Resources extends ListEnvelope<Resource>
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         final List<Indirect> indirects = new ListOf<>();
         for (final Resource resource : this) {
             indirects.add(resource.indirect());
@@ -113,7 +113,10 @@ public final class Resources extends ListEnvelope<Resource>
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         output.write(this.indirect().asBytes());
         for (final Resource resource : this) {
             resource.print(output);

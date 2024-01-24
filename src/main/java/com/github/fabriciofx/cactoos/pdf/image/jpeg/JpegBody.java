@@ -62,14 +62,17 @@ public final class JpegBody implements Body {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         throw new UnsupportedOperationException(
             "there is not indirect in jpeg body"
         );
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         // Empty of purpose.
     }
 }

@@ -98,14 +98,17 @@ public final class PngBody implements Body {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         throw new UnsupportedOperationException(
             "There is no indirect into PNG body"
         );
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         // Empty of purpose.
     }
 }

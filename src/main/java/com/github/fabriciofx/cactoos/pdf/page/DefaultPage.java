@@ -127,7 +127,7 @@ public final class DefaultPage implements Page {
     }
 
     @Override
-    public Indirect indirect(final int parent) throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         final Indirect resrcs = this.resources().indirect();
         Array refs = new Array();
         for (final Content content : this.contents) {
@@ -137,7 +137,7 @@ public final class DefaultPage implements Page {
             .add("Type", new Name("Page"))
             .add("Resources", new Text(resrcs.reference().asString()))
             .add("Contents", refs)
-            .add("Parent", new Text(new Reference(parent, 0).asString()));
+            .add("Parent", new Text(new Reference(parent[0], 0).asString()));
         return new DefaultIndirect(
             this.number,
             this.generation,
@@ -148,7 +148,7 @@ public final class DefaultPage implements Page {
     @Override
     public void print(
         final OutputStream output,
-        final int parent
+        final int... parent
     ) throws Exception {
         output.write(this.indirect(parent).asBytes());
         this.resources().print(output);

@@ -101,7 +101,7 @@ public final class FontFamily implements Resource {
     }
 
     @Override
-    public Indirect indirect() throws Exception {
+    public Indirect indirect(final int... parent) throws Exception {
         final Dictionary dictionary = new Dictionary()
             .add("Type", new Name("Font"))
             .add("BaseFont", new Name(this.base))
@@ -110,7 +110,10 @@ public final class FontFamily implements Resource {
     }
 
     @Override
-    public void print(final OutputStream output) throws Exception {
+    public void print(
+        final OutputStream output,
+        final int... parent
+    ) throws Exception {
         if (this.printed.compareAndSet(false, true)) {
             output.write(this.indirect().asBytes());
         }

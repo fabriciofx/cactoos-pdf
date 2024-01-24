@@ -34,16 +34,18 @@ public interface Object {
     /**
      * Object indirect.
      *
+     * @param parent Parent number, if there is one
      * @return An object indirect
      * @throws Exception if fails
      */
-    Indirect indirect() throws Exception;
+    Indirect indirect(int... parent) throws Exception;
 
     /**
      * Print object.
      *
      * @param output Output to print
+     * @param parent Parent number, if there is one
      * @throws Exception if fails
      */
-    void print(OutputStream output) throws Exception;
+    void print(OutputStream output, int... parent) throws Exception;
 }

@@ -27,6 +27,7 @@ import com.github.fabriciofx.cactoos.pdf.Document;
 import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Id;
 import com.github.fabriciofx.cactoos.pdf.content.Contents;
+import com.github.fabriciofx.cactoos.pdf.content.Justify;
 import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
@@ -34,16 +35,17 @@ import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
 import java.io.File;
 import java.nio.file.Files;
-import org.cactoos.text.Joined;
+import org.cactoos.io.ResourceOf;
+import org.cactoos.text.TextOf;
 
 /**
- * Margins.
+ * Justify.
  *
  * @since 0.0.1
  * @checkstyle HideUtilityClassConstructorCheck (200 lines)
  */
 @SuppressWarnings({"PMD.UseUtilityClass", "PMD.ProhibitPublicStaticMethods"})
-public final class Margins {
+public class JustifyText {
     /**
      * Main method.
      *
@@ -52,34 +54,28 @@ public final class Margins {
      */
     public static void main(final String[] args) throws Exception {
         final Id id = new Serial();
-        final org.cactoos.Text content = new Joined(
-            " ",
-            "Lorem ea et aliquip culpa aute amet elit nostrud culpa veniam",
-            "dolore eu irure incididunt. Velit officia occaecat est",
-            "adipisicing mollit veniam. Minim sunt est culpa labore.",
-            "Ut culpa et nulla sunt labore aliqua ipsum laborum nostrud sit",
-            "deserunt officia labore. Sunt laboris id labore sit ex. Eiusmod",
-            "nulla eu incididunt excepteur minim officia dolore veniam",
-            "labore enim quis reprehenderit. Magna in laboris irure enim non",
-            "deserunt laborum mollit labore id amet."
-        );
         final Font font = new TimesRoman(id, 12);
-        final File file = new File("margins.pdf");
+        final File file = new File("justify.pdf");
         Files.write(
             file.toPath(),
             new Document(
                 id,
-                new com.github.fabriciofx.cactoos.pdf.pages.Margins(
-                    2.5,
-                    2.5,
-                    2.5,
-                    2.5,
-                    new DefaultPages(
+                new DefaultPages(
+                    id,
+                    new DefaultPage(
                         id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                new Text(id, font, 0, 500, 60, 14, content)
+                        new Contents(
+                            new Justify(
+                                new Text(
+                                    id,
+                                    font,
+                                    20,
+                                    800,
+                                    100,
+                                    new TextOf(
+                                        new ResourceOf("text/20k_c1.txt")
+                                    )
+                                )
                             )
                         )
                     )

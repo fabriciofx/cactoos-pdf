@@ -26,7 +26,6 @@ package com.github.fabriciofx.cactoos.pdf.image.jpeg;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.image.Body;
-import java.io.OutputStream;
 import java.util.List;
 import org.cactoos.Bytes;
 import org.cactoos.list.ListOf;
@@ -70,7 +69,7 @@ public final class JpegBody implements Body {
 
     @Override
     public void print(
-        final OutputStream output,
+        final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
         // Empty of purpose.

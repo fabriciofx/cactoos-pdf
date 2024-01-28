@@ -27,8 +27,10 @@ import com.github.fabriciofx.cactoos.pdf.object.Catalog;
 import com.github.fabriciofx.cactoos.pdf.object.Information;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Locale;
 import org.cactoos.Bytes;
+import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -134,8 +136,12 @@ public final class Document implements Bytes {
             ).asString().getBytes(StandardCharsets.UTF_8)
         );
         output.write(Document.SIGNATURE);
-        this.information.print(output);
-        this.catalog.print(output);
+        final List<Indirect> indirects = new ListOf<>();
+        this.information.print(indirects);
+        this.catalog.print(indirects);
+        for (final Indirect indirect : indirects) {
+            output.write(indirect.asBytes());
+        }
         output.write(
             new FormattedText(
                 "trailer << /Root %s /Size %d /Info %s >>\n",

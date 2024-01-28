@@ -28,7 +28,7 @@ import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.NoReferenceIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Array;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import java.io.OutputStream;
+import java.util.List;
 
 /**
  * ProcSet.
@@ -48,7 +48,7 @@ public final class ProcSet implements Resource {
 
     @Override
     public void print(
-        final OutputStream output,
+        final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
         // Empty of purpose.

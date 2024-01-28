@@ -32,7 +32,6 @@ import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
@@ -103,9 +102,9 @@ public final class FlateEncode implements Content {
 
     @Override
     public void print(
-        final OutputStream output,
+        final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
-        output.write(this.indirect().asBytes());
+        indirects.add(this.indirect());
     }
 }

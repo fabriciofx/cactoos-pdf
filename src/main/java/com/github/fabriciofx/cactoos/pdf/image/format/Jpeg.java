@@ -37,7 +37,6 @@ import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.io.File;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.List;
 import org.cactoos.Bytes;
@@ -131,10 +130,10 @@ public final class Jpeg implements Format {
 
     @Override
     public void print(
-        final OutputStream output,
+        final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
-        output.write(this.indirect().asBytes());
+        indirects.add(this.indirect());
     }
 
     @Override

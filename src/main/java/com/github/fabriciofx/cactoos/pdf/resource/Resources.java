@@ -28,7 +28,6 @@ import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
-import java.io.OutputStream;
 import java.util.List;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
@@ -114,12 +113,12 @@ public final class Resources extends ListEnvelope<Resource>
 
     @Override
     public void print(
-        final OutputStream output,
+        final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
-        output.write(this.indirect().asBytes());
+        indirects.add(this.indirect());
         for (final Resource resource : this) {
-            resource.print(output);
+            resource.print(indirects);
         }
     }
 }

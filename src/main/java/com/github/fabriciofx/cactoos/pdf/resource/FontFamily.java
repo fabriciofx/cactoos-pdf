@@ -29,7 +29,7 @@ import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
-import java.io.OutputStream;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -111,11 +111,11 @@ public final class FontFamily implements Resource {
 
     @Override
     public void print(
-        final OutputStream output,
+        final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
         if (this.printed.compareAndSet(false, true)) {
-            output.write(this.indirect().asBytes());
+            indirects.add(this.indirect());
         }
     }
 }

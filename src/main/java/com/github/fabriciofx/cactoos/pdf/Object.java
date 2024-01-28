@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.cactoos.pdf;
 
-import java.io.OutputStream;
+import java.util.List;
 
 /**
  * Represent any PDF object.
@@ -43,9 +43,9 @@ public interface Object {
     /**
      * Print object.
      *
-     * @param output Output to print
+     * @param indirects List of indirects to print
      * @param parent Parent number, if there is one
      * @throws Exception if fails
      */
-    void print(OutputStream output, int... parent) throws Exception;
+    void print(List<Indirect> indirects, int... parent) throws Exception;
 }

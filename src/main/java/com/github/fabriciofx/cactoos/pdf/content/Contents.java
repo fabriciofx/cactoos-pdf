@@ -26,7 +26,6 @@ package com.github.fabriciofx.cactoos.pdf.content;
 import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
 import com.github.fabriciofx.cactoos.pdf.Object;
-import java.io.OutputStream;
 import java.util.List;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
@@ -64,11 +63,11 @@ public final class Contents extends ListEnvelope<Content> implements Object {
 
     @Override
     public void print(
-        final OutputStream output,
+        final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
         for (final Content content : this) {
-            content.print(output);
+            content.print(indirects);
         }
     }
 }

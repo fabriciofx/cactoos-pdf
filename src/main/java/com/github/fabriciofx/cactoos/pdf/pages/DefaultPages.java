@@ -34,7 +34,6 @@ import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
 import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
-import java.io.OutputStream;
 import java.util.List;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;
@@ -137,12 +136,12 @@ public final class DefaultPages extends ListEnvelope<Page> implements Pages {
 
     @Override
     public void print(
-        final OutputStream output,
+        final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
-        output.write(this.indirect().asBytes());
+        indirects.add(this.indirect());
         for (final Page page : this) {
-            page.print(output, this.number);
+            page.print(indirects, this.number);
         }
     }
 

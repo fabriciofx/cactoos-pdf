@@ -40,7 +40,6 @@ import com.github.fabriciofx.cactoos.pdf.type.Name;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import com.github.fabriciofx.cactoos.pdf.type.Text;
 import java.io.File;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.List;
 import org.cactoos.Bytes;
@@ -162,11 +161,11 @@ public final class Png implements Format {
 
     @Override
     public void print(
-        final OutputStream output,
+        final List<Indirect> indirects,
         final int... parent
     ) throws Exception {
-        output.write(this.indirect().asBytes());
-        this.raw.palette().print(output);
+        indirects.add(this.indirect());
+        this.raw.palette().print(indirects);
     }
 
     @Override

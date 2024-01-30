@@ -124,7 +124,7 @@ public final class Document implements Bytes {
             output.write(indirect.asBytes());
         }
         output.write(
-            new CrossReference(
+            new XrefTable(
                 this.id,
                 this.information,
                 this.catalog,
@@ -176,7 +176,7 @@ public final class Document implements Bytes {
      *
      * @since 0.0.1
      */
-    private static final class CrossReference implements Scalar<byte[]> {
+    private static final class XrefTable implements Scalar<byte[]> {
         /**
          * Object Id.
          */
@@ -204,6 +204,7 @@ public final class Document implements Bytes {
 
         /**
          * Ctor.
+         *
          * @param id Object id
          * @param information Information
          * @param catalog Catalog
@@ -211,7 +212,7 @@ public final class Document implements Bytes {
          * @param indirects Indirects list
          * @checkstyle ParameterNumberCheck (10 lines)
          */
-        CrossReference(
+        XrefTable(
             final Id id,
             final Information information,
             final Catalog catalog,

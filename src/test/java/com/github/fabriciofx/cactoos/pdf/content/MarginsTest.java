@@ -21,37 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.demo;
+package com.github.fabriciofx.cactoos.pdf.content;
 
 import com.github.fabriciofx.cactoos.pdf.Document;
 import com.github.fabriciofx.cactoos.pdf.Font;
 import com.github.fabriciofx.cactoos.pdf.Id;
-import com.github.fabriciofx.cactoos.pdf.content.Contents;
-import com.github.fabriciofx.cactoos.pdf.content.Text;
 import com.github.fabriciofx.cactoos.pdf.id.Serial;
 import com.github.fabriciofx.cactoos.pdf.page.DefaultPage;
+import com.github.fabriciofx.cactoos.pdf.page.Format;
 import com.github.fabriciofx.cactoos.pdf.pages.DefaultPages;
-import com.github.fabriciofx.cactoos.pdf.pages.Margins;
 import com.github.fabriciofx.cactoos.pdf.resource.font.TimesRoman;
-import java.io.File;
-import java.nio.file.Files;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Joined;
+import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Margins.
+ * Test case for {@link Margins}.
  *
  * @since 0.0.1
- * @checkstyle HideUtilityClassConstructorCheck (200 lines)
  */
-@SuppressWarnings({"PMD.UseUtilityClass", "PMD.ProhibitPublicStaticMethods"})
-public final class MarginsPage {
-    /**
-     * Main method.
-     *
-     * @param args Arguments.
-     * @throws Exception if fails
-     */
-    public static void main(final String[] args) throws Exception {
+final class MarginsTest {
+    @Test
+    void margins() throws Exception {
         final Id id = new Serial();
         final org.cactoos.Text content = new Joined(
             " ",
@@ -65,27 +59,29 @@ public final class MarginsPage {
             "deserunt laborum mollit labore id amet."
         );
         final Font font = new TimesRoman(id, 12);
-        final File file = new File("margins.pdf");
-        Files.write(
-            file.toPath(),
-            new Document(
+        final byte[] actual = new Document(
+            id,
+            new DefaultPages(
                 id,
-                new Margins(
-                    2.5,
-                    2.5,
-                    2.5,
-                    2.5,
-                    new DefaultPages(
-                        id,
-                        new DefaultPage(
-                            id,
-                            new Contents(
-                                new Text(id, font, 0, 500, 60, 14, content)
-                            )
+                new DefaultPage(
+                    id,
+                    new Contents(
+                        new Margins(
+                            2.5,
+                            2.5,
+                            2.5,
+                            2.5,
+                            Format.A4,
+                            new Text(id, font, 0, 500, 60, 14, content)
                         )
                     )
                 )
-            ).asBytes()
-        );
+            )
+        ).asBytes();
+        new Assertion<>(
+            "Must match with margins PDF document",
+            new BytesOf(new ResourceOf("document/margins.pdf")).asBytes(),
+            new IsEqual<>(actual)
+        ).affirm();
     }
 }

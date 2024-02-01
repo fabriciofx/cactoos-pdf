@@ -33,6 +33,7 @@ import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsNumber;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
@@ -40,6 +41,7 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class DictionaryTest {
     @Test
     void dictionary() {
@@ -223,6 +225,24 @@ final class DictionaryTest {
                     "/XObject << /I1 5 0 R >> >>"
                 )
             )
+        ).affirm();
+    }
+
+    @Test
+    void dictionaryUpdateStream() throws Exception {
+        final String msga = "Hello World!";
+        final String msgb = "New message, with a new Hello World!";
+        final Dictionary dictionary = new Dictionary()
+            .add("Length", new Int(msga.length()))
+            .with(new Stream(msga.getBytes()));
+        final Dictionary changed = dictionary
+            .add("Length", new Int(msgb.length()))
+            .with(new Stream(msgb.getBytes()));
+        final Int length = changed.get("Length");
+        new Assertion<>(
+            "Must update a stream in a dictionary",
+            length.value(),
+            new IsNumber(36)
         ).affirm();
     }
 }

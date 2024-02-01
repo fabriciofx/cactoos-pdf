@@ -21,13 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.cactoos.pdf.pages;
+package com.github.fabriciofx.cactoos.pdf.content;
 
+import com.github.fabriciofx.cactoos.pdf.Content;
 import com.github.fabriciofx.cactoos.pdf.Indirect;
-import com.github.fabriciofx.cactoos.pdf.Pages;
+import com.github.fabriciofx.cactoos.pdf.Resource;
 import com.github.fabriciofx.cactoos.pdf.indirect.DefaultIndirect;
 import com.github.fabriciofx.cactoos.pdf.page.Format;
-import com.github.fabriciofx.cactoos.pdf.type.Dictionary;
+import com.github.fabriciofx.cactoos.pdf.type.Int;
 import com.github.fabriciofx.cactoos.pdf.type.Stream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -45,10 +46,11 @@ import org.cactoos.text.FormattedText;
     {
         "PMD.UnusedPrivateField",
         "PMD.SingularField",
-        "PMD.UseUnderscoresInNumericLiterals"
+        "PMD.UseUnderscoresInNumericLiterals",
+        "PMD.StringInstantiation"
     }
 )
-public final class Margins implements Pages {
+public final class Margins implements Content {
     /**
      * One centimeter in points.
      *
@@ -77,17 +79,22 @@ public final class Margins implements Pages {
     private final double left;
 
     /**
-     * Pages.
+     * Page Format.
      */
-    private final Pages origin;
+    private final Format format;
+
+    /**
+     * Text.
+     */
+    private final Text origin;
 
     /**
      * Ctor.
      *
-     * @param pages Pages
+     * @param text Text to be decorated
      */
-    public Margins(final Pages pages) {
-        this(1.0, 1.0, 1.0, 1.0, pages);
+    public Margins(final Text text) {
+        this(1.0, 1.0, 1.0, 1.0, Format.A4, text);
     }
 
     /**
@@ -97,7 +104,8 @@ public final class Margins implements Pages {
      * @param right Right margin
      * @param bottom Bottom margin
      * @param left Left margin
-     * @param pages Pages to be decorated
+     * @param format Page format
+     * @param text Text to be decorated
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     public Margins(
@@ -105,21 +113,22 @@ public final class Margins implements Pages {
         final double right,
         final double bottom,
         final double left,
-        final Pages pages
+        final Format format,
+        final Text text
     ) {
         this.top = top;
         this.right = right;
         this.bottom = bottom;
         this.left = left;
-        this.origin = pages;
+        this.format = format;
+        this.origin = text;
     }
 
     @Override
-    public Indirect indirect(final int... parent) throws Exception {
-        final Indirect indirect = this.origin.indirect();
+    public byte[] asStream() throws Exception {
         final Pattern pattern = Pattern.compile("BT.*TL");
         final Matcher matcher = pattern.matcher(
-            new String(indirect.asBytes())
+            new String(this.origin.asStream())
         );
         final StringBuffer stream = new StringBuffer();
         while (matcher.find()) {
@@ -135,22 +144,31 @@ public final class Margins implements Pages {
                     fontname,
                     fontsize,
                     this.left * Margins.ONE_CM,
-                    this.format().height() - this.top * Margins.ONE_CM,
+                    this.format.height() - this.top * Margins.ONE_CM,
                     leading
                 ).asString()
             );
         }
         matcher.appendTail(stream);
-        final Dictionary dictionary = indirect.dictionary().with(
-            new Stream(
-                stream.toString().getBytes(StandardCharsets.UTF_8)
-            )
-        );
+        return stream.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    @Override
+    public Indirect indirect(final int... parent) throws Exception {
+        final Indirect indirect = this.origin.indirect();
+        final byte[] stream = this.asStream();
         return new DefaultIndirect(
             indirect.reference().number(),
             indirect.reference().generation(),
-            dictionary
+            indirect.dictionary()
+                .add("Length", new Int(stream.length))
+                .with(new Stream(stream))
         );
+    }
+
+    @Override
+    public List<Resource> resource() {
+        return this.origin.resource();
     }
 
     @Override
@@ -159,11 +177,5 @@ public final class Margins implements Pages {
         final int... parent
     ) throws Exception {
         indirects.add(this.indirect());
-        this.origin.print(indirects);
-    }
-
-    @Override
-    public Format format() {
-        return this.origin.format();
     }
 }

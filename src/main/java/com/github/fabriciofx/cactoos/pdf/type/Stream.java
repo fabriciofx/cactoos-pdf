@@ -68,7 +68,7 @@ public final class Stream implements Type<byte[]> {
     @Override
     public byte[] asBytes() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        baos.write("stream\n".getBytes(StandardCharsets.UTF_8));
+        baos.write("\nstream\n".getBytes(StandardCharsets.UTF_8));
         baos.write(this.bytes.asBytes());
         baos.write("\nendstream".getBytes(StandardCharsets.UTF_8));
         return baos.toByteArray();

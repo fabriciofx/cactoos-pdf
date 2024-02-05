@@ -106,16 +106,14 @@ public final class Dictionary implements Type<Dictionary> {
 
     @Override
     public byte[] asBytes() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream output = new ByteArrayOutputStream();
         if (!this.entries.isEmpty()) {
-            baos.write(this.asString().getBytes(StandardCharsets.UTF_8));
+            output.write(this.asString().getBytes(StandardCharsets.UTF_8));
         }
         if (!this.stream.isEmpty()) {
-            baos.write("\nstream\n".getBytes(StandardCharsets.UTF_8));
-            baos.write(this.stream.get(0).value());
-            baos.write("\nendstream".getBytes(StandardCharsets.UTF_8));
+            output.write(this.stream.get(0).asBytes());
         }
-        return baos.toByteArray();
+        return output.toByteArray();
     }
 
     /**

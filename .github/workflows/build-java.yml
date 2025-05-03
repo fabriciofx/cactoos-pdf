@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 ---
-name: build-and-release-java
+name: build-java
 'on':
   push:
     branches:
@@ -29,32 +29,30 @@ name: build-and-release-java
     branches:
       - main
 jobs:
-  build-and-release-java:
+  build-java:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-24.04, windows-2022]
         java: [11, 17, 23]
     steps:
-      - name: Code checkout
+      - name: Code Checkout
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
       - name: Install Maven in Linux
         if: runner.os == 'Linux'
         run: |
           sudo apt update
           sudo apt install -y maven
-          mvn -v
       - name: Install Maven in Windows
         if: runner.os == 'Windows'
         run: |
           choco install maven -y
-          mvn -v
-      - name: Configure Java SDK
+      - name: Setup Java SDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-      - name: Configure Maven packages cache
+      - name: Configure Maven Cache
         uses: actions/cache@v4
         with:
           path: ~/.m2/repository
@@ -62,9 +60,9 @@ jobs:
           key: ${{ runner.os }}-jdk-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
-      - name: Check Java version
+      - name: Check Java Version
         run: java -version
-      - name: Check Maven version
+      - name: Check Maven Version
         run: mvn -version
-      - name: Build project
+      - name: Build Project
         run: mvn --errors --batch-mode clean install -Pqulice

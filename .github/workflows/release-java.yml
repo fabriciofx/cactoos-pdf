@@ -36,22 +36,35 @@ jobs:
         os: [ubuntu-24.04, windows-2022]
         java: [11, 17, 23]
     steps:
-      - uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
-      - uses: actions/setup-java@v4
+      - name: Code checkout
+        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+      - name: Install Maven in Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install -y maven
+          mvn -v
+      - name: Install Maven in Windows
+        if: runner.os == 'Windows'
+        run: |
+          choco install maven -y
+          mvn -v
+      - name: Configure Java SDK
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-      - name: Install maven
-        run: |
-          sudo apt update
-          sudo apt -y install maven
-      - uses: actions/cache@v4
+      - name: Configure Maven packages cache
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           # yamllint disable-line rule:line-length
           key: ${{ runner.os }}-jdk-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
-      - run: java -version
-      - run: mvn -version
-      - run: mvn --errors --batch-mode clean install -Pqulice
+      - name: Check Java version
+        run: java -version
+      - name: Check Maven version
+        run: mvn -version
+      - name: Build project
+        run: mvn --errors --batch-mode clean install -Pqulice

@@ -1,3 +1,5 @@
+# Cactoos-PDF
+
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 [![Java Profiler](https://www.ej-technologies.com/images/product_banners/jprofiler_small.png)](https://www.ej-technologies.com/products/jprofiler/overview.html)
@@ -10,7 +12,8 @@
 
 ## Introduction
 
-**Cactoos PDF** is a collection of object-oriented Java classes to build a [PDF](https://en.wikipedia.org/wiki/PDF) document.
+**Cactoos-PDF** is a collection of object-oriented Java classes to build a
+[PDF](https://en.wikipedia.org/wiki/PDF) document.
 
 **Motivation**.
 We are not happy with current Java PDF solutions because:
@@ -31,10 +34,10 @@ We are not happy with current Java PDF solutions because:
 
 Java version required: 1.8+.
 
-
 ### Usage
 
-**WARNING**: Cactoos PDF is in a VERY early development stage. So the API can change at any moment.
+**WARNING**: Cactoos PDF is in a VERY early development stage. So the API can
+change at any moment.
 
 Here an example how to build a Hello World PDF file using our API:
 
@@ -62,23 +65,20 @@ Files.write(
         )
     ).asBytes()
 );
-
 ```
-More examples can be found [here](https://github.com/fabriciofx/cactoos-pdf/tree/main/src/test/java/com/github/fabriciofx/cactoos/pdf/demo).
 
+More examples can be found [here](https://github.com/fabriciofx/cactoos-pdf/tree/main/src/test/java/com/github/fabriciofx/cactoos/pdf/demo).
 
 ## Contributions
 
 Contributions are welcome! Please, open an issue before submit any kind (ideas,
 documentation, code, ...) of contribution.
 
-
 ### How compile it?
 
+```bash
+mvn clean install -Pqulice
 ```
-$ mvn clean install -Pqulice
-```
-
 
 ## License
 
@@ -104,11 +104,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
 ## Acknowledgements
 
 David West ([Blog](http://davewest.us/)) for:
+
 - [Object Thinking](http://amzn.to/2BVeiNl) Book
 
-[@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](https://wwww.yegor256.com)) for:
-- [Elegant Objects](https://www.yegor256.com/elegant-objects.html) [Vol. 1](http://amzn.to/2BXdZSs) and [Vol. 2](http://amzn.to/2BuFFP4) books
+[@yegor256](https://github.com/yegor256) as Yegor Bugayenko
+([Blog](https://wwww.yegor256.com)) for:
+
+- [Elegant Objects](https://www.yegor256.com/elegant-objects.html)
+[Vol. 1](http://amzn.to/2BXdZSs) and [Vol. 2](http://amzn.to/2BuFFP4) books

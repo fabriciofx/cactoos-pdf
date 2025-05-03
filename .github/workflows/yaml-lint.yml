@@ -32,5 +32,9 @@ jobs:
   yaml-lint:
     runs-on: ubuntu-24.04
     steps:
+      - name: Install yamllint
+        run: |
+          sudo apt update
+          sudo apt -y install yamllint
       - uses: actions/checkout@v4
       - uses: ibiqlik/action-yamllint@v3

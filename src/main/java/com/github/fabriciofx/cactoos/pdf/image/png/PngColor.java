@@ -75,7 +75,7 @@ public final class PngColor implements Color {
     @Override
     public int colors() {
         final int clrs;
-        if (this.space().equals("DeviceRGB")) {
+        if ("DeviceRGB".equals(this.space())) {
             clrs = 3;
         } else {
             clrs = 1;

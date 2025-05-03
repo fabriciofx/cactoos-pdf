@@ -33,6 +33,7 @@ import org.cactoos.text.UncheckedText;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 public enum Format implements Text {
     /**
      * A1 page size.

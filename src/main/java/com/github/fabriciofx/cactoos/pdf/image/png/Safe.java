@@ -67,7 +67,7 @@ public final class Safe implements Raw {
             throw new InvalidFormatException("Not a PNG image file");
         }
         flow.skip(4);
-        if (!flow.asString(4).equals("IHDR")) {
+        if (!"IHDR".equals(flow.asString(4))) {
             throw new InvalidFormatException("Incorrect PNG image file");
         }
         if (header.depth() > 8) {
@@ -75,7 +75,7 @@ public final class Safe implements Raw {
                 "16-bit depth in PNG file not supported"
             );
         }
-        if (header.color().space().equals("Unknown")) {
+        if ("Unknown".equals(header.color().space())) {
             throw new InvalidFormatException("Unknown color type");
         }
         if (header.compression() != 0) {
@@ -100,7 +100,7 @@ public final class Safe implements Raw {
     public Palette palette() throws Exception {
         final Header header = this.header();
         final Indirect indirect = this.origin.palette().indirect();
-        if (header.color().space().equals("Indexed")
+        if ("Indexed".equals(header.color().space())
             && indirect.asBytes().length == 0) {
             throw new InvalidFormatException("Missing palette in PNG file");
         }

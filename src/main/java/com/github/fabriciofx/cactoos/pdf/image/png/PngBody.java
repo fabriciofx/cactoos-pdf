@@ -62,10 +62,10 @@ public final class PngBody implements Body {
                     do {
                         len = flow.asInt();
                         final String type = flow.asString(4);
-                        if (type.equals("IDAT")) {
+                        if ("IDAT".equals(type)) {
                             body.write(flow.asBytes(len));
                             flow.skip(4);
-                        } else if (type.equals("IEND")) {
+                        } else if ("IEND".equals(type)) {
                             break;
                         } else {
                             flow.skip(len + 4);

@@ -79,10 +79,10 @@ public final class PngPalette implements Palette {
                     do {
                         len = flow.asInt();
                         final String type = flow.asString(4);
-                        if (type.equals("PLTE")) {
+                        if ("PLTE".equals(type)) {
                             palette.write(flow.asBytes(len));
                             flow.skip(4);
-                        } else if (type.equals("IEND")) {
+                        } else if ("IEND".equals(type)) {
                             break;
                         } else {
                             flow.skip(len + 4);

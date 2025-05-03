@@ -32,12 +32,13 @@ jobs:
   action-lint:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - name: Download actionlint
+      - name: Code Checkout
+        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+      - name: Downloads and Installs actionlint
         id: get_actionlint
         # yamllint disable-line rule:line-length
         run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
         shell: bash
-      - name: Check workflow files
+      - name: Checks Workflow Files
         run: ${{ steps.get_actionlint.outputs.executable }} -color
         shell: bash

@@ -43,7 +43,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y maven
-      - name: Install Maven in Windows
+      - name: Installs Maven in Windows
         if: runner.os == 'Windows'
         run: |
           choco install maven -y
@@ -52,7 +52,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-      - name: Configure Maven Cache
+      - name: Configures Maven Cache
         uses: actions/cache@v4
         with:
           path: ~/.m2/repository
@@ -60,9 +60,9 @@ jobs:
           key: ${{ runner.os }}-jdk-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
-      - name: Check Java Version
+      - name: Checks Java Version
         run: java -version
-      - name: Check Maven Version
+      - name: Checks Maven Version
         run: mvn -version
-      - name: Build Project
+      - name: Builds Project
         run: mvn --errors --batch-mode clean install -Pqulice

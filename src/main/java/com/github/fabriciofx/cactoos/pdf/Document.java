@@ -30,7 +30,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 import org.cactoos.Bytes;
-import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 
@@ -119,7 +118,7 @@ public final class Document implements Bytes {
         this.information.print(indirects);
         this.catalog.print(indirects);
         final Header header = new Header();
-        output.write(header.value());
+        output.write(header.asBytes());
         for (final Indirect indirect : indirects) {
             output.write(indirect.asBytes());
         }
@@ -130,7 +129,7 @@ public final class Document implements Bytes {
                 this.catalog,
                 header,
                 indirects
-            ).value()
+            ).asBytes()
         );
         output.write(Document.EOF.getBytes(StandardCharsets.UTF_8));
         return output.toByteArray();
@@ -141,7 +140,7 @@ public final class Document implements Bytes {
      *
      * @since 0.0.1
      */
-    private static final class Header implements Scalar<byte[]> {
+    private static final class Header implements Bytes {
         /**
          * PDF Version.
          */
@@ -157,7 +156,7 @@ public final class Document implements Bytes {
         };
 
         @Override
-        public byte[] value() throws Exception {
+        public byte[] asBytes() throws Exception {
             final ByteArrayOutputStream out = new ByteArrayOutputStream();
             out.write(
                 new FormattedText(
@@ -176,7 +175,7 @@ public final class Document implements Bytes {
      *
      * @since 0.0.1
      */
-    private static final class XrefTable implements Scalar<byte[]> {
+    private static final class XrefTable implements Bytes {
         /**
          * Object Id.
          */
@@ -227,7 +226,7 @@ public final class Document implements Bytes {
         }
 
         @Override
-        public byte[] value() throws Exception {
+        public byte[] asBytes() throws Exception {
             final ByteArrayOutputStream out = new ByteArrayOutputStream();
             out.write(
                 new FormattedText(
@@ -236,13 +235,13 @@ public final class Document implements Bytes {
                     this.id.value()
                 ).asString().getBytes(StandardCharsets.UTF_8)
             );
-            int total = this.header.value().length;
+            int total = this.header.asBytes().length;
             final int[] table = new int[this.id.value() - 1];
             for (int idx = 0; idx < this.indirects.size(); ++idx) {
                 final int number = this.indirects.get(idx).reference()
                     .number() - 1;
                 total = total + this.indirects.get(idx).asBytes().length;
-                int sum = this.header.value().length;
+                int sum = this.header.asBytes().length;
                 for (int count = 0; count < idx; ++count) {
                     sum = sum + this.indirects.get(count).asBytes().length;
                 }
@@ -258,7 +257,7 @@ public final class Document implements Bytes {
                 );
             }
             out.write(
-                new Trailer(this.id, this.information, this.catalog).value()
+                new Trailer(this.id, this.information, this.catalog).asBytes()
             );
             out.write(
                 new FormattedText(
@@ -276,7 +275,7 @@ public final class Document implements Bytes {
      *
      * @since 0.0.1
      */
-    private static final class Trailer implements Scalar<byte[]> {
+    private static final class Trailer implements Bytes {
         /**
          * Object Id.
          */
@@ -310,7 +309,7 @@ public final class Document implements Bytes {
         }
 
         @Override
-        public byte[] value() throws Exception {
+        public byte[] asBytes() throws Exception {
             return new FormattedText(
                 "trailer\n<< /Size %d /Root %s /Info %s >>\n",
                 Locale.ENGLISH,

@@ -41,6 +41,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
+      - name: Install maven
+        run: |
+          sudo apt update
+          sudo apt -y install maven
       - uses: actions/cache@v4
         with:
           path: ~/.m2/repository

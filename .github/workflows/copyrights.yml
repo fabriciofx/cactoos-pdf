@@ -35,7 +35,7 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
       - name: Checks Copyright Header in Files
-        uses: yegor256/copyrights-action@0.0.10
+        uses: yegor256/copyrights-action@0.0.12
         with:
           ignore: >-
             **/*.properties

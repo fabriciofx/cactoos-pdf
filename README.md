@@ -1,3 +1,7 @@
+<!--
+SPDX-FileCopyrightText: Copyright (C) 2023-2025 Fabrício Barros Cabral
+SPDX-License-Identifier: MIT
+-->
 # Cactoos-PDF
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
@@ -18,7 +22,8 @@
 **Motivation**.
 We are not happy with current Java PDF solutions because:
 
-1. Their code aren't truly object-oriented, i.e. they aren't obey these [design principles](http://www.elegantobjects.org#principles)
+1. Their code aren't truly object-oriented, i.e. they aren't obey these [design
+   principles](http://www.elegantobjects.org#principles)
 
 2. Their license code aren't really free to do anything, like MIT or BSD license
 
@@ -67,7 +72,8 @@ Files.write(
 );
 ```
 
-More examples can be found [here](https://github.com/fabriciofx/cactoos-pdf/tree/main/src/test/java/com/github/fabriciofx/cactoos/pdf/demo).
+More examples can be found in
+[demo](https://github.com/fabriciofx/cactoos-pdf/tree/main/src/test/java/com/github/fabriciofx/cactoos/pdf/demo).
 
 ## Contributions
 
@@ -84,25 +90,24 @@ mvn clean install -Pqulice
 
 The MIT License (MIT)
 
-Copyright (C) 2023-2024 Fabrício Barros Cabral
+Copyright (C) 2023-2025 Fabrício Barros Cabral
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Acknowledgements
 

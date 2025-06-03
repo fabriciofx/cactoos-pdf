@@ -36,6 +36,7 @@ path = [
     "**/*.puml",
     "**/aspell.en.pws",
     "**/DEPENDS.txt",
+    "**/*.properties",
     "aspell.en.pws",
     "**/CNAME",
     "DEPENDS.txt",

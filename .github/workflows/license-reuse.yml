@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Copyright (C) 2025 Fabrício Barros Cabral
 # SPDX-License-Identifier: MIT
 ---
-name: markdown-lint
+name: license-reuse
 'on':
   push:
     branches:
@@ -9,17 +9,12 @@ name: markdown-lint
   pull_request:
     branches:
       - main
-concurrency:
-  group: markdown-lint-${{ github.ref }}
-  cancel-in-progress: true
 jobs:
-  markdown-lint:
+  license-reuse:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Lint Markdown files
-        uses: DavidAnson/markdownlint-cli2-action@v20
-        with:
-          globs: '**/*.md'
+      - name: REUSE Compliance check
+        uses: fsfe/reuse-action@v5

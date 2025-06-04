@@ -11,11 +11,12 @@ import com.github.fabriciofx.cactoos.pdf.image.Color;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 public final class PngColor implements Color {
     /**
      * Color type.
      */
-    private final int tpe;
+    private final int type;
 
     /**
      * Ctor.
@@ -23,18 +24,18 @@ public final class PngColor implements Color {
      * @param type Color type
      */
     public PngColor(final int type) {
-        this.tpe = type;
+        this.type = type;
     }
 
     @Override
     public int type() {
-        return this.tpe;
+        return this.type;
     }
 
     @Override
     public String space() {
         final String space;
-        switch (this.tpe) {
+        switch (this.type) {
             case 0:
             case 4:
                 space = "DeviceGray";

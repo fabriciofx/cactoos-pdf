@@ -11,11 +11,12 @@ import com.github.fabriciofx.cactoos.pdf.image.Color;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 public final class JpegColor implements Color {
     /**
      * Color type.
      */
-    private final int tpe;
+    private final int type;
 
     /**
      * Ctor.
@@ -23,18 +24,18 @@ public final class JpegColor implements Color {
      * @param type Color type
      */
     public JpegColor(final int type) {
-        this.tpe = type;
+        this.type = type;
     }
 
     @Override
     public int type() {
-        return this.tpe;
+        return this.type;
     }
 
     @Override
     public String space() {
         final String space;
-        switch (this.tpe) {
+        switch (this.type) {
             case 3:
                 space = "DeviceRGB";
                 break;

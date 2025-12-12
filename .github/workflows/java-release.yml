@@ -29,7 +29,7 @@ jobs:
           server-username: ${{ secrets.OSSRH_USERNAME }}
           server-password: ${{ secrets.OSSRH_PASSWORD }}
       - name: Configure maven cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2/repository
           key: ubuntu-jdk-11-maven-${{ hashFiles('**/pom.xml') }}

@@ -25,7 +25,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 0.0.1
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.ExcessiveMethodLength"})
+@SuppressWarnings({
+    "PMD.UnitTestShouldIncludeAssert",
+    "PMD.UnnecessaryLocalRule"
+})
 final class Rotate90Test {
     @Test
     void buildDocumentAndRotate() throws Exception {

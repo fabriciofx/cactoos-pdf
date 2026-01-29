@@ -60,18 +60,17 @@ public final class XObject implements Resource {
     @Override
     public Indirect indirect(final int... parent) throws Exception {
         final Indirect indirect = this.image.format().indirect();
-        final Dictionary dictionary = new Dictionary()
-            .add(
-                "XObject",
-                new Dictionary().add(
-                    this.image.name(),
-                    new Text(indirect.reference().asString())
-                )
-            );
         return new DefaultIndirect(
             this.number,
             this.generation,
-            dictionary
+            new Dictionary()
+                .add(
+                    "XObject",
+                    new Dictionary().add(
+                        this.image.name(),
+                        new Text(indirect.reference().asString())
+                    )
+                )
         );
     }
 

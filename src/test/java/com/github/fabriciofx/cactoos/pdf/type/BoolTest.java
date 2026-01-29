@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.UnitTestShouldIncludeAssert")
 final class BoolTest {
     @Test
     void value() throws Exception {

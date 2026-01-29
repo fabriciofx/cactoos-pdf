@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.UnitTestShouldIncludeAssert")
 final class TextTest {
     @Test
     void oneline() throws Exception {

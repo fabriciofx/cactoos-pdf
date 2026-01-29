@@ -74,15 +74,16 @@ public abstract class FontEnvelope implements Font {
     @Override
     public Indirect indirect(final int... parent) throws Exception {
         final Indirect indirect = this.family.indirect();
-        final Dictionary dictionary = new Dictionary()
-            .add(
-                "Font",
-                new Dictionary().add(
-                    this.name(),
-                    new Text(indirect.reference().asString())
+        return new NoReferenceIndirect(
+            new Dictionary()
+                .add(
+                    "Font",
+                    new Dictionary().add(
+                        this.name(),
+                        new Text(indirect.reference().asString())
+                    )
                 )
-            );
-        return new NoReferenceIndirect(dictionary);
+        );
     }
 
     @Override

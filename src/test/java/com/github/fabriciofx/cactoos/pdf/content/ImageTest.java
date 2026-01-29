@@ -22,6 +22,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 0.0.1
  */
+@SuppressWarnings({
+    "PMD.UnitTestShouldIncludeAssert",
+    "PMD.UnnecessaryLocalRule"
+})
 final class ImageTest {
     @Test
     void buildDocumentWithPngImage() throws Exception {

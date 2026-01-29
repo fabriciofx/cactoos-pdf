@@ -108,20 +108,21 @@ public final class DefaultPage implements Page {
 
     @Override
     public Indirect indirect(final int... parent) throws Exception {
-        final Indirect resrcs = this.resources().indirect();
         Array refs = new Array();
         for (final Content content : this.contents) {
             refs = refs.add(new Text(content.indirect().reference().asString()));
         }
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("Page"))
-            .add("Resources", new Text(resrcs.reference().asString()))
-            .add("Contents", refs)
-            .add("Parent", new Text(new Reference(parent[0], 0).asString()));
         return new DefaultIndirect(
             this.number,
             this.generation,
-            dictionary
+            new Dictionary()
+                .add("Type", new Name("Page"))
+                .add(
+                    "Resources",
+                    new Text(this.resources().indirect().reference().asString())
+                )
+                .add("Contents", refs)
+                .add("Parent", new Text(new Reference(parent[0], 0).asString()))
         );
     }
 

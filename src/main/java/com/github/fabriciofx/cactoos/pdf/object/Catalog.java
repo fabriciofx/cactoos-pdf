@@ -61,13 +61,12 @@ public final class Catalog implements Object {
     @Override
     public Indirect indirect(final int... parent) throws Exception {
         final Indirect indirect = this.pages.indirect();
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("Catalog"))
-            .add("Pages", new Text(indirect.reference().asString()));
         return new DefaultIndirect(
             this.number,
             this.generation,
-            dictionary
+            new Dictionary()
+                .add("Type", new Name("Catalog"))
+                .add("Pages", new Text(indirect.reference().asString()))
         );
     }
 

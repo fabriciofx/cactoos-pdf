@@ -13,7 +13,6 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.ShortMethodName")
 public final class Reference implements Text {
     /**
      * Object number.

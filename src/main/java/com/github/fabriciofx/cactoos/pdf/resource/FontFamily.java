@@ -76,11 +76,14 @@ public final class FontFamily implements Resource {
 
     @Override
     public Indirect indirect(final int... parent) throws Exception {
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("Font"))
-            .add("BaseFont", new Name(this.base))
-            .add("Subtype", new Name(this.subtype));
-        return new DefaultIndirect(this.number, this.generation, dictionary);
+        return new DefaultIndirect(
+            this.number,
+            this.generation,
+            new Dictionary()
+                .add("Type", new Name("Font"))
+                .add("BaseFont", new Name(this.base))
+                .add("Subtype", new Name(this.subtype))
+        );
     }
 
     @Override

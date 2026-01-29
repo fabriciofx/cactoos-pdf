@@ -25,6 +25,10 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.0.1
  */
+@SuppressWarnings({
+    "PMD.UnitTestShouldIncludeAssert",
+    "PMD.UnnecessaryLocalRule"
+})
 final class PngTest {
     @Test
     void header() throws Exception {

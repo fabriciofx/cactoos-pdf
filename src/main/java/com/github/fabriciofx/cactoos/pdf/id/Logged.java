@@ -19,7 +19,7 @@ import org.cactoos.text.UncheckedText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings({"PMD.LoggerIsNotStaticFinal", "PMD.MoreThanOneLogger"})
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class Logged implements Id {
     /**
      * The Id.

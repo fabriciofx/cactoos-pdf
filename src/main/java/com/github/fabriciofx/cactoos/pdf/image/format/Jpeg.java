@@ -96,17 +96,20 @@ public final class Jpeg implements Format {
     public Indirect indirect(final int... parent) throws Exception {
         final Header header = this.raw.header();
         final byte[] stream = this.asStream();
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("XObject"))
-            .add("Subtype", new Name("Image"))
-            .add("Width", new Int(header.width()))
-            .add("Height", new Int(header.height()))
-            .add("ColorSpace", new Name("DeviceRGB"))
-            .add("BitsPerComponent", new Int(header.depth()))
-            .add("Filter", new Name("DCTDecode"))
-            .add("Length", new Int(stream.length))
-            .with(new Stream(stream));
-        return new DefaultIndirect(this.number, this.generation, dictionary);
+        return new DefaultIndirect(
+            this.number,
+            this.generation,
+            new Dictionary()
+                .add("Type", new Name("XObject"))
+                .add("Subtype", new Name("Image"))
+                .add("Width", new Int(header.width()))
+                .add("Height", new Int(header.height()))
+                .add("ColorSpace", new Name("DeviceRGB"))
+                .add("BitsPerComponent", new Int(header.depth()))
+                .add("Filter", new Name("DCTDecode"))
+                .add("Length", new Int(stream.length))
+                .with(new Stream(stream))
+        );
     }
 
     @Override

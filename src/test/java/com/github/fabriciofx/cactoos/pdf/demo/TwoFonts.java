@@ -24,7 +24,7 @@ import org.cactoos.text.TextOf;
  * @since 0.0.1
  * @checkstyle HideUtilityClassConstructorCheck (200 lines)
  */
-@SuppressWarnings({"PMD.UseUtilityClass", "PMD.ProhibitPublicStaticMethods"})
+@SuppressWarnings({"PMD.UseUtilityClass", "PMD.UnnecessaryLocalRule"})
 public final class TwoFonts {
     /**
      * Main method.

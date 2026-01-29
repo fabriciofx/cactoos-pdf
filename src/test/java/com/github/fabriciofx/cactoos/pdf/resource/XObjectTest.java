@@ -20,6 +20,7 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.UnitTestShouldIncludeAssert")
 final class XObjectTest {
     @Test
     void xobjectDictionary() throws Exception {

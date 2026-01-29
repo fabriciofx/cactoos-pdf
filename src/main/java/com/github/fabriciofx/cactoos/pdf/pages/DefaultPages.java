@@ -96,22 +96,21 @@ public final class DefaultPages extends ListEnvelope<Page> implements Pages {
             final Indirect indirect = page.indirect(this.number);
             kds = kds.add(new Text(indirect.reference().asString()));
         }
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("Pages"))
-            .add("Kids", kds)
-            .add("Count", new Int(this.size()))
-            .add(
-                "MediaBox",
-                new Array(
-                    new Int(0),
-                    new Int(0),
-                    new Text(this.fmt.asString())
-                )
-            );
         return new DefaultIndirect(
             this.number,
             this.generation,
-            dictionary
+            new Dictionary()
+                .add("Type", new Name("Pages"))
+                .add("Kids", kds)
+                .add("Count", new Int(this.size()))
+                .add(
+                    "MediaBox",
+                    new Array(
+                        new Int(0),
+                        new Int(0),
+                        new Text(this.fmt.asString())
+                    )
+                )
         );
     }
 

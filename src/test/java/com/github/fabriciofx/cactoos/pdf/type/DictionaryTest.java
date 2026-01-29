@@ -6,6 +6,7 @@ package com.github.fabriciofx.cactoos.pdf.type;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.InputOf;
@@ -22,7 +23,11 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({
+    "PMD.AvoidDuplicateLiterals",
+    "PMD.UnitTestShouldIncludeAssert",
+    "PMD.UnnecessaryLocalRule"
+})
 final class DictionaryTest {
     @Test
     void dictionary() {
@@ -116,9 +121,11 @@ final class DictionaryTest {
         );
         final Stream stream = new Stream(content);
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
-        expected.write("<< /Length 2373 >>\nstream\n".getBytes());
+        expected.write(
+            "<< /Length 2373 >>\nstream\n".getBytes(StandardCharsets.UTF_8)
+        );
         expected.write(content.asBytes());
-        expected.write("\nendstream".getBytes());
+        expected.write("\nendstream".getBytes(StandardCharsets.UTF_8));
         new Assertion<>(
             "Must represent a dictionary with a stream",
             new Dictionary()
@@ -150,10 +157,10 @@ final class DictionaryTest {
                 "/ColorSpace [/Indexed /DeviceRGB 63 6 0 R] /DecodeParms",
                 "<< /Predictor 15 /Colors 1 /BitsPerComponent 8",
                 "/Columns 104 >> /Mask [0 0] /Length 2086 >>\nstream\n"
-            ).asString().getBytes()
+            ).asString().getBytes(StandardCharsets.UTF_8)
         );
         expected.write(content);
-        expected.write("\nendstream".getBytes());
+        expected.write("\nendstream".getBytes(StandardCharsets.UTF_8));
         new Assertion<>(
             "Must represent a dictionary for an image",
             new Dictionary()
@@ -211,14 +218,14 @@ final class DictionaryTest {
 
     @Test
     void dictionaryUpdateStream() throws Exception {
-        final String msga = "Hello World!";
-        final String msgb = "New message, with a new Hello World!";
+        final String hello = "Hello World!";
+        final String msg = "New message, with a new Hello World!";
         final Dictionary dictionary = new Dictionary()
-            .add("Length", new Int(msga.length()))
-            .with(new Stream(msga.getBytes()));
+            .add("Length", new Int(hello.length()))
+            .with(new Stream(hello.getBytes(StandardCharsets.UTF_8)));
         final Dictionary changed = dictionary
-            .add("Length", new Int(msgb.length()))
-            .with(new Stream(msgb.getBytes()));
+            .add("Length", new Int(msg.length()))
+            .with(new Stream(msg.getBytes(StandardCharsets.UTF_8)));
         final Int length = changed.get("Length");
         new Assertion<>(
             "Must update a stream in a dictionary",

@@ -33,7 +33,10 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.ExcessiveMethodLength"})
+@SuppressWarnings({
+    "PMD.UnitTestShouldIncludeAssert",
+    "PMD.UnnecessaryLocalRule"
+})
 final class DocumentTest {
     @Test
     void buildDocumentHelloWorld() throws Exception {

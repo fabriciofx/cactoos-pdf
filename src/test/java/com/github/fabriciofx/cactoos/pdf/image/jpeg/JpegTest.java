@@ -18,7 +18,11 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({
+    "PMD.AvoidDuplicateLiterals",
+    "PMD.UnitTestShouldIncludeAssert",
+    "PMD.UnnecessaryLocalRule"
+})
 final class JpegTest {
     @Test
     void headerWidth() throws Exception {

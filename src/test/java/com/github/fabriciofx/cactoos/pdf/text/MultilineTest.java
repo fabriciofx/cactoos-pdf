@@ -17,6 +17,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings({
+    "PMD.UnitTestShouldIncludeAssert",
+    "PMD.UnnecessaryLocalRule"
+})
 final class MultilineTest {
     @Test
     void multilineAnEmptyText() {

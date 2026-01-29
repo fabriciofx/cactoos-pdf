@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.IsNumber;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.UnitTestShouldIncludeAssert")
 final class SerialTest {
     @Test
     void startInOne() {

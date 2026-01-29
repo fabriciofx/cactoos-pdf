@@ -17,6 +17,7 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class Date implements Text {
     /**
      * ZonedDateTime.

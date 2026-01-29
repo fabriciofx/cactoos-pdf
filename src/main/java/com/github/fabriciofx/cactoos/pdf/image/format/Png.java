@@ -101,42 +101,40 @@ public final class Png implements Format {
     public Indirect indirect(final int... parent) throws Exception {
         final Header header = this.raw.header();
         final Palette palette = this.raw.palette();
-        final Indirect pal = palette.indirect();
         final byte[] stream = this.asStream();
-        final Dictionary dictionary = new Dictionary()
-            .add("Type", new Name("XObject"))
-            .add("Subtype", new Name("Image"))
-            .add("Width", new Int(header.width()))
-            .add("Height", new Int(header.height()))
-            .add(
-                "ColorSpace",
-                new Array(
-                    new Name(header.color().space()),
-                    new Name("DeviceRGB"),
-                    new Int(palette.asStream().length / 3 - 1),
-                    new Text(pal.reference().asString())
-                )
-            )
-            .add("BitsPerComponent", new Int(header.depth()))
-            .add("Filter", new Name("FlateDecode"))
-            .add(
-                "DecodeParms",
-                new Dictionary()
-                    .add("Predictor", new Int(15))
-                    .add(
-                        "Colors",
-                        new Int(header.color().colors())
-                    )
-                    .add("BitsPerComponent", new Int(header.depth()))
-                    .add("Columns", new Int(header.width()))
-            )
-            .add("Mask", new Array(new Int(0), new Int(0)))
-            .add("Length", new Int(stream.length))
-            .with(new Stream(stream));
         return new DefaultIndirect(
             this.number,
             this.generation,
-            dictionary
+            new Dictionary()
+                .add("Type", new Name("XObject"))
+                .add("Subtype", new Name("Image"))
+                .add("Width", new Int(header.width()))
+                .add("Height", new Int(header.height()))
+                .add(
+                    "ColorSpace",
+                    new Array(
+                        new Name(header.color().space()),
+                        new Name("DeviceRGB"),
+                        new Int(palette.asStream().length / 3 - 1),
+                        new Text(palette.indirect().reference().asString())
+                    )
+                )
+                .add("BitsPerComponent", new Int(header.depth()))
+                .add("Filter", new Name("FlateDecode"))
+                .add(
+                    "DecodeParms",
+                    new Dictionary()
+                        .add("Predictor", new Int(15))
+                        .add(
+                            "Colors",
+                            new Int(header.color().colors())
+                        )
+                        .add("BitsPerComponent", new Int(header.depth()))
+                        .add("Columns", new Int(header.width()))
+                )
+                .add("Mask", new Array(new Int(0), new Int(0)))
+                .add("Length", new Int(stream.length))
+                .with(new Stream(stream))
         );
     }
 

@@ -25,6 +25,7 @@ import org.cactoos.scalar.LengthOf;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class FlateEncode implements Content {
     /**
      * The content.

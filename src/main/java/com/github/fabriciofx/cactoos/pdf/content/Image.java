@@ -141,10 +141,13 @@ public final class Image implements Content {
     @Override
     public Indirect indirect(final int... parent) throws Exception {
         final byte[] stream = this.asStream();
-        final Dictionary dictionary = new Dictionary()
-            .add("Length", new Int(stream.length))
-            .with(new Stream(stream));
-        return new DefaultIndirect(this.number, this.generation, dictionary);
+        return new DefaultIndirect(
+            this.number,
+            this.generation,
+            new Dictionary()
+                .add("Length", new Int(stream.length))
+                .with(new Stream(stream))
+        );
     }
 
     @Override

@@ -23,7 +23,6 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.StringInstantiation")
 public final class Justify implements Content {
     /**
      * Text.

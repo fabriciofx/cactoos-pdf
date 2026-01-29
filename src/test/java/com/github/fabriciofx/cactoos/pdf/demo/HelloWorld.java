@@ -22,7 +22,7 @@ import org.cactoos.text.TextOf;
  * @since 0.0.1
  * @checkstyle HideUtilityClassConstructorCheck (200 lines)
  */
-@SuppressWarnings({"PMD.UseUtilityClass", "PMD.ProhibitPublicStaticMethods"})
+@SuppressWarnings("PMD.UseUtilityClass")
 public final class HelloWorld {
     /**
      * Main method.
@@ -31,10 +31,9 @@ public final class HelloWorld {
      * @throws Exception if fails
      */
     public static void main(final String[] args) throws Exception {
-        final File file = new File("hello-world.pdf");
         final Id id = new Serial();
         Files.write(
-            file.toPath(),
+            new File("hello-world.pdf").toPath(),
             new Document(
                 id,
                 new DefaultPages(

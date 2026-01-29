@@ -11,7 +11,7 @@ import com.github.fabriciofx.cactoos.pdf.page.Format;
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.ExtendsObject")
+@SuppressWarnings({"PMD.ExtendsObject", "PMD.ImplicitFunctionalInterface"})
 public interface Pages extends Object {
     /**
      * Page format.

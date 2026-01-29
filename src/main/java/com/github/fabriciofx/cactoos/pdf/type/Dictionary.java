@@ -19,6 +19,7 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class Dictionary implements Type<Dictionary> {
     /**
      * Entries.
@@ -131,18 +132,18 @@ public final class Dictionary implements Type<Dictionary> {
         final Map<Name, Type<?>> elements = new LinkedHashMap<>(this.entries);
         for (final Name name : dictionary.entries.keySet()) {
             if (elements.containsKey(name)) {
-                final Dictionary dicta = dictionary.get(name.value());
-                final Dictionary dictb = (Dictionary) elements.get(name);
-                dictb.entries.putAll(dicta.entries);
+                final Dictionary origin = dictionary.get(name.value());
+                final Dictionary target = (Dictionary) elements.get(name);
+                target.entries.putAll(origin.entries);
             } else {
                 elements.putAll(dictionary.entries);
             }
         }
-        Dictionary dictio = new Dictionary(elements);
+        Dictionary result = new Dictionary(elements);
         if (!dictionary.stream.isEmpty()) {
-            dictio = dictio.with(dictionary.stream.get(0));
+            result = result.with(dictionary.stream.get(0));
         }
-        return dictio;
+        return result;
     }
 
     /**

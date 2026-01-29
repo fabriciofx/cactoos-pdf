@@ -7,6 +7,7 @@ package com.github.fabriciofx.cactoos.pdf.image;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Locale;
 import org.cactoos.text.FormattedText;
@@ -17,7 +18,6 @@ import org.cactoos.text.FormattedText;
  * @since 0.0.1
  * @checkstyle BooleanExpressionComplexityCheck (150 lines)
  */
-@SuppressWarnings("PMD.AvoidUsingShortType")
 public final class Flow {
     /**
      * A stream of bytes.
@@ -50,7 +50,10 @@ public final class Flow {
      * @throws Exception if fails
      */
     public String asString(final int length) throws Exception {
-        return new String(readNBytes(this.stream, length));
+        return new String(
+            readNBytes(this.stream, length),
+            StandardCharsets.UTF_8
+        );
     }
 
     /**
@@ -85,8 +88,7 @@ public final class Flow {
      * @throws Exception if fails
      */
     public short asShort() throws Exception {
-        final byte[] bytes = this.asBytes(2);
-        return ByteBuffer.wrap(bytes).getShort();
+        return ByteBuffer.wrap(this.asBytes(2)).getShort();
     }
 
     /**
@@ -118,8 +120,7 @@ public final class Flow {
      */
     public void search(final byte[] marker) throws Exception {
         while (true) {
-            final byte[] bytes = readNBytes(this.stream, marker.length);
-            if (Arrays.equals(bytes, marker)) {
+            if (Arrays.equals(readNBytes(this.stream, marker.length), marker)) {
                 break;
             }
         }

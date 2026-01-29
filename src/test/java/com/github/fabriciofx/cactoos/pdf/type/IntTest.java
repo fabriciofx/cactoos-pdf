@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.IsNumber;
  *
  * @since 0.0.1
  */
+@SuppressWarnings("PMD.UnitTestShouldIncludeAssert")
 final class IntTest {
     @Test
     void value() throws Exception {

@@ -17,7 +17,6 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings("PMD.StringInstantiation")
 public final class Stream implements Type<byte[]> {
     /**
      * Value.
@@ -61,7 +60,7 @@ public final class Stream implements Type<byte[]> {
         return new FormattedText(
             "\nstream\n%s\nendstream",
             Locale.ENGLISH,
-            new String(this.bytes.asBytes())
+            new String(this.bytes.asBytes(), StandardCharsets.UTF_8)
         ).asString();
     }
 

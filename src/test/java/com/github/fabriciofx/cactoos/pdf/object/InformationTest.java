@@ -28,6 +28,10 @@ import org.llorllale.cactoos.matchers.StartsWith;
  *
  * @since 0.0.1
  */
+@SuppressWarnings({
+    "PMD.UnitTestShouldIncludeAssert",
+    "PMD.UnnecessaryLocalRule"
+})
 final class InformationTest {
     @Test
     void info() throws Exception {

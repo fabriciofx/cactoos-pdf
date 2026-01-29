@@ -23,14 +23,7 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.0.1
  */
-@SuppressWarnings(
-    {
-        "PMD.UnusedPrivateField",
-        "PMD.SingularField",
-        "PMD.UseUnderscoresInNumericLiterals",
-        "PMD.StringInstantiation"
-    }
-)
+@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.UnnecessaryLocalRule"})
 public final class Margins implements Content {
     /**
      * One centimeter in points.

@@ -23,7 +23,7 @@ import org.cactoos.text.TextOf;
  * @since 0.0.1
  * @checkstyle HideUtilityClassConstructorCheck (200 lines)
  */
-@SuppressWarnings({"PMD.UseUtilityClass", "PMD.ProhibitPublicStaticMethods"})
+@SuppressWarnings("PMD.UseUtilityClass")
 public final class FileContent {
     /**
      * Main method.
@@ -33,9 +33,8 @@ public final class FileContent {
      */
     public static void main(final String[] args) throws Exception {
         final Id id = new Serial();
-        final File file = new File("text-20k.pdf");
         Files.write(
-            file.toPath(),
+            new File("text-20k.pdf").toPath(),
             new Document(
                 id,
                 new DefaultPages(

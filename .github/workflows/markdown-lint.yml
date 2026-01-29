@@ -6,20 +6,14 @@ name: markdown-lint
   push:
     branches:
       - main
+      - master
   pull_request:
     branches:
       - main
-concurrency:
-  group: markdown-lint-${{ github.ref }}
-  cancel-in-progress: true
+      - master
+permissions:
+  contents: read
 jobs:
   markdown-lint:
-    timeout-minutes: 15
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-      - name: Lint Markdown files
-        uses: DavidAnson/markdownlint-cli2-action@v22
-        with:
-          globs: '**/*.md'
+    # yamllint disable-line rule:line-length
+    uses: fabriciofx/github-workflows/.github/workflows/markdown-lint-template.yml@main

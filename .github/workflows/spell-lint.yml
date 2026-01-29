@@ -1,8 +1,7 @@
 # SPDX-FileCopyrightText: Copyright (C) 2023-2025 Fabrício Barros Cabral
 # SPDX-License-Identifier: MIT
 ---
-# yamllint disable rule:line-length
-name: java-build
+name: spell-lint
 'on':
   push:
     branches:
@@ -15,5 +14,6 @@ name: java-build
 permissions:
   contents: read
 jobs:
-  java-build:
-    uses: fabriciofx/github-workflows/.github/workflows/java-build-template.yml@main
+  spell-lint:
+    # yamllint disable-line rule:line-length
+    uses: fabriciofx/github-workflows/.github/workflows/spell-lint-template.yml@main

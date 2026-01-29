@@ -1,20 +1,19 @@
 # SPDX-FileCopyrightText: Copyright (C) 2023-2025 Fabrício Barros Cabral
 # SPDX-License-Identifier: MIT
 ---
+# yamllint disable rule:line-length
 name: license-reuse
 'on':
   push:
     branches:
       - main
+      - master
   pull_request:
     branches:
       - main
+      - master
+permissions:
+  contents: read
 jobs:
   license-reuse:
-    timeout-minutes: 15
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-      - name: REUSE Compliance check
-        uses: fsfe/reuse-action@v6
+    uses: fabriciofx/github-workflows/.github/workflows/license-reuse-template.yml@main

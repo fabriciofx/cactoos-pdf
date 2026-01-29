@@ -6,18 +6,14 @@ name: yaml-lint
   push:
     branches:
       - main
+      - master
   pull_request:
     branches:
       - main
+      - master
+permissions:
+  contents: read
 jobs:
   yaml-lint:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-      - name: Download and install yamllint
-        run: |
-          sudo apt update
-          sudo apt -y install yamllint
-      - name: Lint YAML files
-        uses: ibiqlik/action-yamllint@v3
+    # yamllint disable-line rule:line-length
+    uses: fabriciofx/github-workflows/.github/workflows/yaml-lint-template.yml@main

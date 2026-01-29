@@ -142,13 +142,13 @@ final class DictionaryTest {
                 "image/logo.png"
             )
         );
-        final ByteArrayInputStream bais = new ByteArrayInputStream(
+        final ByteArrayInputStream stream = new ByteArrayInputStream(
             image.asBytes()
         );
-        if (bais.skip(287) != 287) {
+        if (stream.skip(287) != 287) {
             throw new IllegalStateException("I can't skip 287 bytes");
         }
-        final byte[] content = new BytesOf(new InputOf(bais)).asBytes();
+        final byte[] content = new BytesOf(new InputOf(stream)).asBytes();
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         expected.write(
             new Joined(

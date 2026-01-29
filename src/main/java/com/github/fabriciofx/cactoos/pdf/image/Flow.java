@@ -129,17 +129,17 @@ public final class Flow {
     /**
      * Read n bytes from a ByteArrayInputStream.
      *
-     * @param bais A ByteArrayInputStream
+     * @param stream A ByteArrayInputStream
      * @param length Amount of bytes to read
      * @return Bytes read
      * @throws Exception if fails
      */
     private static byte[] readNBytes(
-        final ByteArrayInputStream bais,
+        final ByteArrayInputStream stream,
         final int length
     ) throws Exception {
         final byte[] buffer = new byte[length];
-        final int read = bais.read(buffer);
+        final int read = stream.read(buffer);
         if (read != length) {
             throw new IOException(
                 new FormattedText(

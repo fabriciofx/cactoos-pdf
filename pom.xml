@@ -75,11 +75,8 @@ SPDX-License-Identifier: MIT
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.14.1</version>
-          <configuration combine.self="override">
-            <release>11</release>
-            <compilerArgs>
-              <arg>-Xpkginfo:always</arg>
-            </compilerArgs>
+          <configuration>
+            <release>17</release>
           </configuration>
         </plugin>
         <plugin>

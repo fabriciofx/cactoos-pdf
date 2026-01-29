@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: Copyright (C) 2023-2025 Fabrício Barros Cabral
+SPDX-FileCopyrightText: Copyright (C) 2023-2026 Fabrício Barros Cabral
 SPDX-License-Identifier: MIT
 -->
 # Cactoos-PDF
@@ -90,7 +90,7 @@ mvn clean install -Pqulice
 
 The MIT License (MIT)
 
-Copyright (C) 2023-2025 Fabrício Barros Cabral
+Copyright (C) 2023-2026 Fabrício Barros Cabral
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

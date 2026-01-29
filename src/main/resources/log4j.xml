@@ -3,6 +3,7 @@
 SPDX-FileCopyrightText: Copyright (C) 2023-2025 Fabrício Barros Cabral
 SPDX-License-Identifier: MIT
 -->
+<!-- simian-off -->
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration debug="false">
   <!--Console appender -->
@@ -16,3 +17,4 @@ SPDX-License-Identifier: MIT
     <appender-ref ref="stdout"/>
   </root>
 </log4j:configuration>
+<!-- simian-on -->

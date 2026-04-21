@@ -110,7 +110,7 @@ SPDX-License-Identifier: MIT
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.59.0</version>
+      <version>0.60.0</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
